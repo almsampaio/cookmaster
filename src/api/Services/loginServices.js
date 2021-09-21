@@ -33,7 +33,7 @@ const userLogin = async (email, password) => {
 
   return ({
     code: HTTP_STATUS_OK,
-    message: token,
+    token,
     });
 };
 
