@@ -7,6 +7,16 @@ const jwtConfig = {
   expiresIn: '15m',
 };
 
+const checkEmail = async (email) => {
+  if (!email) return { status: 400, message: { message: 'Invalid entries. Try again.' } };
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    .test(email)) return { status: 400, message: { message: 'Invalid entries. Try again.' } };
+  if (await usersModel.getByEmail(email)) {
+      return { status: 409, message: { message: 'Email already registered' } };
+  }
+  return false;
+};
+
 const checkData = (data) => {
   if (!data) return true;
   return false;
@@ -14,12 +24,9 @@ const checkData = (data) => {
 
 const create = async (name, email, password) => {
   const returnObject = { status: 400, message: { message: 'Invalid entries. Try again.' } };
-  if (checkData(name)) return returnObject;
-  if (checkData(password)) return returnObject;
-  if (checkData(email)) return returnObject;
-  if ((await usersModel.getByEmail(email))) {
-    return { status: 409, message: { message: 'Email already registered' } };
-  }
+  if (checkData(name) || checkData(password) || checkData(email)) return returnObject;
+  const emailCheck = await checkEmail(email);
+  if (emailCheck) return emailCheck;
   const message = await usersModel.create(name, email, password);
   return { status: 201, message };
 };
