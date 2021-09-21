@@ -13,7 +13,7 @@ const login = async (req, res, next) => {
   const token = await userService.login(email, password);
 
   if (token.message) return next(token);
-  res.status(200).json(token);
+  res.status(200).json({ token });
 };
 
 module.exports = {
