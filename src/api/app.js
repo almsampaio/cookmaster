@@ -4,6 +4,7 @@ const usersRouter = require('../routes/usersRouter');
 
 const app = express();
 app.use(bodyParser.json());
+app.use(usersRouter);
 
 // Não remover esse end-point, ele é necessário para o avaliador
 app.get('/', (request, response) => {
@@ -11,6 +12,8 @@ app.get('/', (request, response) => {
 });
 // Não remover esse end-point, ele é necessário para o avaliador
 
-app.use(usersRouter);
+app.use('*', (_req, res) => {
+  res.status(404).send('<h1>Page Not Found</h1>');
+});
 
 module.exports = app;
