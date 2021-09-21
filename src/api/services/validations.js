@@ -1,4 +1,5 @@
 const Joi = require('joi');
+const usersModels = require('../models/users');
 // const jwt = require('jsonwebtoken');
 
 // const JWT_SECRET  = 'meuSegredo';
@@ -12,6 +13,13 @@ const validateBodyUsers = (body) => {
   if (error) return { error, isJoy: true, verb: 'post' };
   return false;
 };
+
+const validateSingle= async (email) => {
+  
+  return false;
+};
+
+
 
 module.exports = {
   validateBodyUsers,

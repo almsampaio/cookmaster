@@ -1,19 +1,25 @@
 const { ObjectId } = require('mongodb');
 const mongoConnection = require('./connection');
 
-
-const getAllUsers= async (email) => {
-  const getById = await mongoConnection.getConnection()
-  .then((db) => db.collection('users').find({ _id: ObjectId(id) }).toArray())
-      .then((products) => products.map(serialize));
-
+const getAllUsers = async (email) => {
+  const getAll = await mongoConnection.getConnection()
+  .then((db) => db.collection('users').find().toArray()); 
+};
 
 const getUserByEmail = async (email) => {
-  const getById = await mongoConnection.getConnection()
-  .then((db) => db.collection('users').find({ _id: ObjectId(id) }).toArray())
-      .then((products) => products.map(serialize));
+  const getByEmail = await mongoConnection.getConnection()
+  .then((db) => db.collection('users').find({ email }).toArray()); 
+};
 
-  
+const postUsers = async ({ name, email, password }) => {
+  const usersCollection = await mongoConnection.getConnection()
+    .then((db) => db.collection('users'));
+
+  const inserted = await usersCollection.insertOne({ name, email, password })
+    .then((res) => res.ops[0]);
+  return { user: inserted };
+};
+
 module.exports = {
-  // postUsers,
-}
+  postUsers,
+};
