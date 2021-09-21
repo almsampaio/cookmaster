@@ -1,4 +1,5 @@
 const getAllRecipes = require('./getAllRecipes');
+const getRecipeById = require('./getRecipeById');
 const insertRecipe = require('./insertRecipe');
 const insertUserController = require('./insertUserControler');
 const loginController = require('./loginController');
@@ -8,4 +9,5 @@ module.exports = {
     loginController,
     insertRecipe,
     getAllRecipes,
+    getRecipeById,
 };

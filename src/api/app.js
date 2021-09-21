@@ -10,6 +10,7 @@ const {
   loginController,
   insertRecipe,
   getAllRecipes,
+  getRecipeById,
 } = require('../controlers');
 
 const app = express();
@@ -28,6 +29,8 @@ app.post('/login/', validateLoginFields, loginController);
 
 app.post('/recipes', validateRecipe, insertRecipe);
 
-app.get('/recipes', getAllRecipes);
+app.get('/recipes/', getAllRecipes);
+
+app.get('/recipes/:id', getRecipeById);
 
 module.exports = app;

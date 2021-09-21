@@ -5,6 +5,7 @@ const insertOne = require('./insertOne');
 const validateEmail = require('./validateEmail');
 const takeToken = require('./takeToken');
 const getAll = require('./getAll');
+const getById = require('./getById');
 
 module.exports = {
     validateEmail,
@@ -14,4 +15,5 @@ module.exports = {
     getOne,
     takeToken,
     getAll,
+    getById,
 };
