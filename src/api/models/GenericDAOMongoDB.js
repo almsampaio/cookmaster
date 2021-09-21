@@ -72,6 +72,10 @@ class GenericDAOMongoDB {
     return (await this.collection).findOne({ id }, options);
   }
 
+  async findOneByQuery(query, options = {}) {
+    return (await this.collection).findOne(query, options);
+  }
+
   async findAndDeleteById(id) {
     return (await this.collection).findOneAndDelete({ id });
   }
@@ -80,20 +84,20 @@ class GenericDAOMongoDB {
     return (await this.collection).findOneAndDelete({ _id: ObjectId(_id) });
   }
 
-  async findAndUpdateById(id, data, options = { returnDocument: 'after' }) {
+  async findAndUpdateById(id, data, options = { returnOriginal: false }) {
     return (await this.collection).findOneAndUpdate({ id }, { $set: { ...data } }, options);
   }
 
-  async findAndUpdateByObjectId(_id, data, options = { returnDocument: 'after' }) {
+  async findAndUpdateByObjectId(_id, data, options = { returnOriginal: false }) {
     return (await this.collection)
       .findOneAndUpdate({ _id: ObjectId(_id) }, { $set: { ...data } }, options);
   }
 
-  async findAndUpdateByQuery(query, update, options = { returnDocument: 'after' }) {
+  async findAndUpdateByQuery(query, update, options = { returnOriginal: false }) {
     return (await this.collection).findOneAndUpdate(query, update, options);
   }
 
-  async findAndUpdateByObjectIdNoSet(_id, expr, options = { returnDocument: 'after' }) {
+  async findAndUpdateByObjectIdNoSet(_id, expr, options = { returnOriginal: false }) {
     return (await this.collection).findOneAndUpdate({ _id: ObjectId(_id) }, expr, options);
   }
 
