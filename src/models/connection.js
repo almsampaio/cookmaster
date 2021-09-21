@@ -3,10 +3,10 @@ const { MongoClient } = require('mongodb');
 const DB = 'Cookmaster';
 
 // Evaluator
-// const URL = 'mongodb://mongodb:27017/Cookmaster';
+const URL = 'mongodb://mongodb:27017/Cookmaster';
 
 // Local
-const URL = 'mongodb://127.0.0.1:27017/Cookmaster';
+// const URL = 'mongodb://127.0.0.1:27017/Cookmaster';
 
 const OPTIONS = {
   useNewUrlParser: true,
