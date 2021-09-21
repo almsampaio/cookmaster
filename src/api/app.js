@@ -33,6 +33,6 @@ app.get('/recipes/:id', recipesController.getOneRecipe);
 app.put('/recipes/:id', authBasic, recipesController.editOneRecipe);
 app.delete('/recipes/:id', authBasic, recipesController.deleteOneRecipe);
 app.put('/recipes/:id/image/', authBasic, upload.single('image'), recipesController.addImage);
-app.get('/images/:id.jpeg', recipesController.showImage);
+app.get('/images/:id', recipesController.showImage);
 
 module.exports = app;
