@@ -21,5 +21,6 @@ app.post('/login', Users.generetorToken);
 app.post('/recipes', Wares.authToken, Recipes.create);
 app.get('/recipes', Recipes.getAll);
 app.get('/recipes/:id', Recipes.getById);
+app.put('/recipes/:id', Wares.authToken, Recipes.update);
 
 module.exports = app;

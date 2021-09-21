@@ -30,8 +30,17 @@ const getById = async (id) => {
   return { status: 200, data: recipe };
 };
 
+const update = async (id, data, userId) => {
+  const checkedId = ObjectId.isValid(id);
+  if (!checkedId) return { status: 404, err: { message: 'recipe not found' } };
+
+  const recipe = await Recipes.update(id, data, userId);
+  return { status: 200, data: recipe };
+};
+
 module.exports = {
   create,
   getAll,
   getById,
+  update,
 };
