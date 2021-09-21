@@ -12,7 +12,7 @@ const validateUserInfo = (name, email, password) => {
 
 const userValidation = (req, res, next) => {
   const { name, email, password } = req.body;
-  if (!validateEmail(email) || !validateUserInfo(name, email, password)) {
+  if (!validateUserInfo(name, email, password) || !validateEmail(email)) {
    return res.status(400).json({ message: 'Invalid entries. Try again.' });
   }
   next();
