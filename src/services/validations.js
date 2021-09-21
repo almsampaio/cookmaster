@@ -2,8 +2,10 @@ const errorGenerator = require('../utils/errorGenerator');
 const errorMsg = require('../utils/errorMessages');
 const usersModel = require('../models/usersModel');
 
+const regexEmail = /\S+@\S+\.\S+/;
+
 const validateUserCreation = async (name, email, password) => {
-  if (!name || !email || !password) {
+  if (!name || !email || !password || !regexEmail.test(email)) {
     const errorMessage = errorGenerator(errorMsg.invalidEntries);
     return { errorMessage };
   }

@@ -19,7 +19,7 @@ const createUser = async (name, email, password) => {
   const role = 'user';
   const result = await connection.collection('users').insertOne({ name, email, password, role });
 
-  return { _id: result.insertedId, name, email, password, role };
+  return { user: { name, email, role, id: result.insertedId } };
 };
 
 module.exports = {
