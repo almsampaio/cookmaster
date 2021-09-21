@@ -1,4 +1,3 @@
-const { ObjectID } = require('bson');
 const jwt = require('jsonwebtoken');
 const userModels = require('../Models/usersModel');
 
@@ -17,12 +16,12 @@ const generateToken = (user) => {
 
 const registerUser = async (userObj) => {
   const emailExists = await userModels.findByEmail(userObj.email);
+  console.log(emailExists);
   if (emailExists) return builtError(409, 'Email already registered');
 
   const result = await userModels.registerUser(userObj);
-  const { _id: id } = result;
-  if (!ObjectID.isValid(id)) return builtError(500, 'Internal error');
-  return { user: result };
+  const { password, ...newUser } = result;
+  return { user: newUser };
 };
 
 const login = async (email, password) => {
