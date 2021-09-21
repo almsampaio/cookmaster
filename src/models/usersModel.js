@@ -1,10 +1,10 @@
 const connection = require('../../seed');
 
 const create = async (user) => {
-  const { name, email, password } = user;
+  const { name, email, password, role } = user;
   const db = await connection();
-  const result = await db.collection('users').insertOne({ name, email, password });
-  console.log(result);
+  const { ops } = await db.collection('users').insertOne({ name, email, password, role });
+  return ops[0];
 };
 
 module.exports = {
