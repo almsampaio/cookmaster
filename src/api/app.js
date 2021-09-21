@@ -10,11 +10,13 @@ app.get('/', (request, response) => {
 
 const bodyParser = require('body-parser');
 const usersRouter = require('../routes/users');
+const loginRouter = require('../routes/login');
 const { error } = require('../middlewares/error');
 
 app.use(bodyParser.json());
 
 app.use('/users', usersRouter);
+app.use('/login', loginRouter);
 
 app.use(error);
 
