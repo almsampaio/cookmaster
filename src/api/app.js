@@ -9,6 +9,7 @@ const {
   insertUserController,
   loginController,
   insertRecipe,
+  getAllRecipes,
 } = require('../controlers');
 
 const app = express();
@@ -26,5 +27,7 @@ app.post('/users/', validateUser, insertUserController);
 app.post('/login/', validateLoginFields, loginController);
 
 app.post('/recipes', validateRecipe, insertRecipe);
+
+app.get('/recipes', getAllRecipes);
 
 module.exports = app;

@@ -4,6 +4,7 @@ const getOne = require('./getOne');
 const insertOne = require('./insertOne');
 const validateEmail = require('./validateEmail');
 const takeToken = require('./takeToken');
+const getAll = require('./getAll');
 
 module.exports = {
     validateEmail,
@@ -12,4 +13,5 @@ module.exports = {
     getToken,
     getOne,
     takeToken,
+    getAll,
 };
