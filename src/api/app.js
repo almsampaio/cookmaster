@@ -1,6 +1,7 @@
 const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
+const userController = require('../controllers/user');
 
 const app = express();
 
@@ -14,8 +15,6 @@ app.get('/', (request, response) => {
 });
 // Não remover esse end-point, ele é necessário para o avaliador
 
-app.post('/users', (req, res) => {
-  res.send();
-});
+app.post('/users', userController.addProduct);
 
 module.exports = app;

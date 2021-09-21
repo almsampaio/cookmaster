@@ -1,5 +1,4 @@
 const userModel = require('../models/user');
-const errors = require('./errors');
 
 const MSG_ERROR = 'Invalid entries. Try again';
 
