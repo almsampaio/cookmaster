@@ -3,8 +3,8 @@ const httpStatus = require('../util/statusHttp');
 
 const create = async (req, res) => {
   const result = await services.create(req.body);
-  if (result.message) return res.status(httpStatus.BAD_REQUEST).json(result);
-  res.status(201).json(result);
+  if (result.msg) return res.status(result.status).json(result.msg);
+  res.status(httpStatus.CREATED).json(result);
 };
 
 module.exports = {
