@@ -13,4 +13,6 @@ app.get('/', (request, response) => {
 
 app.post('/users', Users.create);
 
+app.post('/login', Users.tokenGen);
+
 module.exports = app;

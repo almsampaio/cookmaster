@@ -6,6 +6,13 @@ const create = async (req, res) => {
   res.status(status).json(data);
 };
 
+const tokenGen = async (req, res) => {
+  const { status, token, err } = await Users.tokenGen(req.body);
+  if (err) return res.status(status).json(err);
+  res.status(status).json({ token });
+};
+
 module.exports = {
   create,
+  tokenGen,
 };
