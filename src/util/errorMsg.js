@@ -1,5 +1,5 @@
 const invalidEntries = {
-  message: 'Invalid entries. Try again',
+  message: 'Invalid entries. Try again.',
 };
 
 module.exports = {
