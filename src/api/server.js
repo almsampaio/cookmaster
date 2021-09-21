@@ -13,3 +13,5 @@ app.post('/users', [
   Validation.validatePassword,
   Users.createUser,
   ]);
+
+app.post('/login', Users.userLogin);

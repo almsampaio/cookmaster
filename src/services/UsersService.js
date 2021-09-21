@@ -1,4 +1,7 @@
+const jwt = require('jsonwebtoken');
 const Users = require('../models/UsersModel');
+
+const secret = 'meusecret';
 
 const createUser = async (name, email, password) => {
   const findUser = await Users.findUserByEmail(email);
@@ -7,6 +10,23 @@ const createUser = async (name, email, password) => {
   return { status: 201, data: { user: newUser } };
 };
 
+const userLogin = async (email, password) => {
+  if (!email || !password) return { status: 401, message: 'All fields must be filled' };
+  const myUser = await Users.findUserByEmail(email);
+  if (!myUser || myUser.password !== password) {
+    return { status: 401, message: 'Incorrect username or password' };
+  }
+  const jwtConfig = {
+    expiresIn: '7d',
+    algorithm: 'HS256',
+  };
+  const { _id, role } = myUser;
+  const userPayload = { _id, email, role };
+  const token = jwt.sign(userPayload, secret, jwtConfig);
+  return { status: 200, token };
+};
+
 module.exports = {
   createUser,
+  userLogin,
 };

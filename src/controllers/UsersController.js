@@ -7,6 +7,14 @@ const createUser = async (req, res) => {
   res.status(status).json(data);
 };
 
+const userLogin = async (req, res) => {
+  const { email, password } = req.body;
+  const { status, message, token } = await Users.userLogin(email, password);
+  if (message) return res.status(status).json({ message });
+  res.status(status).json({ token });
+};
+
 module.exports = {
   createUser,
+  userLogin,
 };
