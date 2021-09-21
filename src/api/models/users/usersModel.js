@@ -16,7 +16,14 @@ const readByEmailModel = async (email) => {
   return result;
 };
 
+const readByEmailAndPasswordModel = async (email, password) => {
+  const db = await connection();
+  const result = await db.collection('users').findOne({ email, password });
+  return result;
+};
+
 module.exports = {
   createModel,
   readByEmailModel,
+  readByEmailAndPasswordModel,
 };

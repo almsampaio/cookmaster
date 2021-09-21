@@ -1,10 +1,13 @@
 const {
   HTTP_CONFLICT,
+  HTTP_UNAUTHORIZED,
   HTTP_CREATED,
+  HTTP_OK_STATUS,
 } = require('../../schemas/status');
 
 const {
   createServices,
+  createTokenServices,
 } = require('../../services/users/usersService');
 
 const createController = async (req, res) => {
@@ -23,6 +26,20 @@ const createController = async (req, res) => {
   });
 };
 
+const createTokenController = async (req, res) => {
+  const { email, password } = req.body;
+  const { message, token } = await createTokenServices(email, password);
+
+  if (!token) {
+    return res.status(HTTP_UNAUTHORIZED).json({ message });
+  }
+
+  return res.status(HTTP_OK_STATUS).json({
+    token,
+  });
+};
+
 module.exports = {
   createController,
+  createTokenController,
 };
