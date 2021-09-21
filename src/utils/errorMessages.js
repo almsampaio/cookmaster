@@ -1,9 +1,11 @@
 const INVALID_ENTRIES = {
-  message: 'Invalid entries. Try again',
+  status: 400,
+  err: { message: 'Invalid entries. Try again.' },
 };
 
 const EMAIL_ALREADY_EXISTS = {
-  message: 'Email already registred',
+  status: 409,
+  err: { message: 'Email already registered' },
 };
 
 module.exports = {

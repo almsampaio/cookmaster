@@ -1,5 +1,6 @@
 const Joi = require('joi');
 const errorMessages = require('../utils/errorMessages');
+const status = require('../utils/httpStatus');
 const models = require('../models');
 
 const verifyEmail = (email) => {
@@ -14,16 +15,19 @@ const createUser = async (body, role = 'user') => {
   const { name, email, password } = body;
 
   if (!name || verifyEmail(email) || !password) {
-    return errorMessages.INVALID_ENTRIES;
+    throw errorMessages.INVALID_ENTRIES;
   }
 
   const checkEmail = await models.getByEmail(email);
   
-  if (checkEmail) return errorMessages.EMAIL_ALREADY_EXISTS;
+  if (checkEmail) throw errorMessages.EMAIL_ALREADY_EXISTS;
 
-  await models.createUser(newBody);
+  const user = await models.createUser(newBody);
 
-  return ('ok');
+  return {
+    status: status.CREATED_STATUS,
+    user,
+  };
 };
 
 module.exports = {
