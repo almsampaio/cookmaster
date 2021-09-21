@@ -18,7 +18,7 @@ const validateEmail = async (req, res, next) => {
   }
 
   if (findedEmail) {
-    return res.status(409).json({ message: ' Email already registered ' });
+    return res.status(409).json({ message: 'Email already registered' });
   }
 
   next();

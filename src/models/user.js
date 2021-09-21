@@ -6,6 +6,7 @@ const createUser = async (name, password, email) => {
   return {
     name,
     email,
+    role: 'user',
     _id: newUser.insertedId,
   };
 };
