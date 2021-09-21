@@ -2,9 +2,9 @@ const usersModel = require('../models/usersModel');
 
 const checkCreateData = (name, email, password) => {
   const message = { message: 'Invalid entries. Try again.' };
-  if (!name || !email || !password) return { status: 401, message };
+  if (!name || !email || !password) return { status: 400, message };
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/
-    .test(email)) return { status: 401, message };
+    .test(email)) return { status: 400, message };
   return false;
 };
 
