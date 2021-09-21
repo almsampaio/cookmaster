@@ -21,7 +21,6 @@ const create = async (name, email, password) => {
     return { status: 409, message: { message: 'Email already registered' } };
   }
   const message = await usersModel.create(name, email, password);
-  console.log(message);
   return { status: 201, message };
 };
 
