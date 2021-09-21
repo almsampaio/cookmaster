@@ -10,8 +10,6 @@ const registerUser = async ({ name, password, email }) => {
     role: 'user',
   });
 
-  console.log(ops);
-
   return ops[0];
 };
 

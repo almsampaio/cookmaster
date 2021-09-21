@@ -2,6 +2,7 @@ const bodyParser = require('body-parser');
 const express = require('express');
 
 const usersController = require('../controllers/users');
+const loginController = require('../controllers/login');
 const errors = require('../middlewares/errors');
 
 const app = express();
@@ -14,6 +15,9 @@ app.get('/', (request, response) => {
 
 app.route('/users')
   .post(usersController.registerUser);
+
+app.route('/login')
+  .post(loginController.login);
 
 app.use(errors);
 
