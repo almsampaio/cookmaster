@@ -1,4 +1,6 @@
 const invalidEntries = { message: 'Invalid entries. Try again.' };
+const SECRET = 'meusupersegredo';
+const jwt = require('jsonwebtoken');
 const userModel = require('../models/userModels');
 
 function validateEmail(email) {
@@ -36,8 +38,29 @@ const register = async (name, email, password) => {
     return createdUser;
   };
 
+const findByCredentials = async (email, password) => {
+    if (!email || !password) {
+        return (
+     { status: 401, message: 'All fields must be filled' }
+        ); 
+                        }
+
+    const userSearch = await userModel.findByEmail(email);
+
+    if (!userSearch || userSearch.password !== password) {
+        return (
+        { status: 401, message: 'Incorrect username or password' }
+); 
+}
+
+    const { password: _, ...userPayload } = userSearch;
+
+    const token = jwt.sign(userPayload, SECRET);
+        return ({ token });
+    };
 module.exports = {
     validateEmail,
     validatePassword,
     register,
+    findByCredentials,
     }; 
