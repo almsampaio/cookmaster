@@ -23,6 +23,16 @@ const create = async (user) => {
   };
 };
 
+const findByEmail = async (email) => {
+  const usersCollection = await mongoConnection.getConnection()
+  .then((db) => db.collection(COLLECTION_NAME));
+
+  const emailFound = await usersCollection.findOne({ email });
+
+  return emailFound;
+};
+
 module.exports = {
   create,
+  findByEmail,
 };
