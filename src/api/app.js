@@ -14,7 +14,7 @@ app.get('/', (request, response) => {
 });
 
 const apiRoutes = express.Router();
-apiRoutes.post('/users', userMiddlewares.validateNewUser, routes.createUsers);
+apiRoutes.post('/users', userMiddlewares.validateNewUser, routes.createUser);
 apiRoutes.post('/login', routes.login);
 
 app.use(apiRoutes);
