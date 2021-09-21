@@ -4,11 +4,11 @@ const { validate } = require('email-validator');
 const jwt = require('jsonwebtoken');
 const { usersModel } = require('../models');
 const { unauthorizedError } = require('../validations/Errors');
+const { secret } = require('../validations/auth/secret');
 
 const jwtConfig = {
   algorithm: 'HS256',
 };
-const secret = 'seusecretdetoken';
 
 exports.login = async ({ email, password }) => {
   if ([email, password].some(isUndefined)) {
