@@ -6,6 +6,13 @@ const getAll = async () => {
   return result;
 };
 
+const create = async (recipe) => {
+  const db = await connection();
+  const { ops } = await db.collection('recipes').insertOne(recipe);
+  return ops[0];  
+};
+
 module.exports = {
   getAll,
+  create,
 };
