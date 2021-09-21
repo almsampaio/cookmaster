@@ -38,9 +38,18 @@ const update = async (id, data, userId) => {
   return { status: 200, data: recipe };
 };
 
+const remove = async (id) => {
+  const checkedId = ObjectId.isValid(id);
+  if (!checkedId) return { status: 404, err: { message: 'recipe not found' } };
+
+  await Recipes.remove(id);
+  return { status: 204 };
+};
+
 module.exports = {
   create,
   getAll,
   getById,
   update,
+  remove,
 };

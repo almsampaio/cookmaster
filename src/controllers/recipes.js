@@ -31,9 +31,18 @@ const update = async (req, res) => {
   res.status(status).json(data);
 };
 
+const remove = async (req, res) => {
+  const { id } = req.params;
+  const { status, err } = await Recipes.remove(id);
+  if (err) return res.status(status).json(err);
+
+  res.status(status).send();
+};
+
 module.exports = {
   create,
   getAll,
   getById,
   update,
+  remove,
 };
