@@ -1,21 +1,21 @@
-// const jwt = require('jsonwebtoken');
+const jwt = require('jsonwebtoken');
 
-// const userModel = require('../models/userModels');
+const userModel = require('../models/userModels');
 
-// const SECRET = 'meusupersegredo';
+const SECRET = 'meusupersegredo';
 
-// module.exports = async (req, res, next) => {
-//   try {
-//     const token = req.headers.authorization;
+module.exports = async (req, res, next) => {
+  try {
+    const token = req.headers.authorization;
 
-//     const { username } = jwt.verify(token, SECRET);
+    const { email } = jwt.verify(token, SECRET);
 
-//     const user = await userModel.findByUsername(username);
+    const { _id } = await userModel.findByEmail(email);
 
-//     req.user = user;
+    req.user = _id;
 
-//     next();
-//   } catch (_e) {
-//     res.status(401).json({ message: 'Invalid Token' });
-//   }
-// }; 
+    next();
+  } catch (_e) {
+    res.status(401).json({ message: 'jwt malformed' });
+  }
+}; 
