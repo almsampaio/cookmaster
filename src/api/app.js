@@ -6,6 +6,8 @@ const recipeController = require('../controllers/recipesController');
 const app = express();
 app.use(bodyParser.json());
 
+app.get('/users', userController.getAll);
+
 app.post('/users', userController.create);
 
 app.post('/login', userController.findUser);

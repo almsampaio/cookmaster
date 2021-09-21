@@ -11,6 +11,11 @@ const getToken = async (user) => {
   return token;
 };
 
+const getAll = async () => {
+  const result = await models.getAll();
+  return result;
+};
+
 const create = async (user) => {
   const validatedName = util.checkName(user.name);
   if (validatedName) return validatedName;
@@ -33,6 +38,7 @@ const findUser = async (user) => {
 };
 
 module.exports = {
+  getAll,
   create,
   findUser,
 };

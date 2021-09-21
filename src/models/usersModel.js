@@ -1,5 +1,11 @@
 const connection = require('../../seed');
 
+const getAll = async () => {
+  const db = await connection();
+  const result = await db.collection('users').find().toArray();
+  return result;
+};
+
 const findByEmail = async (mail) => {
   const db = await connection();
   const result = await db.collection('users').find({ email: mail }).toArray();
@@ -13,6 +19,7 @@ const create = async (user) => {
 };
 
 module.exports = {
+  getAll,
   create,
   findByEmail,
 };
