@@ -1,13 +1,13 @@
 const { ObjectId } = require('mongodb');
 const mongoConnection = require('./connection');
 
-const checkEmail = async (paramEmail) => {
+const checkEmail = async (email) => {
   const db = await mongoConnection.getConnection();
-  const result = await db.collection('users').findOne({ email: paramEmail });
+  const result = await db.collection('users').findOne({ email });
   if (!result) return null;
   return {
     error: {
-      code: 'alreadyExists',
+      code: 'conflict',
       message: 'Email already registered',
     },
   };
@@ -29,6 +29,14 @@ const registerUser = async (name, email, password) => {
   } };
 };
 
+const login = async (email, password) => {
+  const db = await mongoConnection.getConnection();
+  const user = await db.collection('users').findOne({ email, password });
+  if (!user) return null;
+  return user;
+};
+
 module.exports = {
   registerUser,
+  login,
 };

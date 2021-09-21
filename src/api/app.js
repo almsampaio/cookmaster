@@ -13,6 +13,7 @@ app.get('/', (request, response) => {
 // Não remover esse end-point, ele é necessário para o avaliador
 
 app.post('/users', userControllers.registerUser);
+app.post('/login', userControllers.login);
 
 app.use(errorMiddleware);
 
