@@ -2,9 +2,9 @@ const Joi = require('joi');
 const { builtError } = require('../Services/usersServices');
 
 const schemaNewUser = Joi.object({
-  name: Joi.string().min(3).required(),
+  name: Joi.string().required(),
   email: Joi.string().email().required(),
-  password: Joi.string().pattern(new RegExp('^[a-zA-Z0-9]{8,30}$')).required(),
+  password: Joi.string().required(),
   role: Joi.string(),
 });
 
@@ -17,7 +17,7 @@ const validateNewUser = (req, _res, next) => {
 
 const validateLogin = (req, _res, next) => {
   const { email, password } = req.body;
-  const valideEmail = /^[a-zA-Z0-9]{8,30}$/i;
+  const valideEmail = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]/i;
   if (!email || !password) return next(builtError(401, 'All fields must be filled'));
   if (!valideEmail.test(email) || password.length < 8) {
     return next(builtError(401, 'Incorrect username or password'));
