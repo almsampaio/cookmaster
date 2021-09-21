@@ -1,4 +1,4 @@
-const productsModel = require('../models/productsModel');
+const recipesModel = require('../models/recipesModel');
 
 const checkProductInfo = (name, quantity) => {
   const testResult = { 
@@ -21,7 +21,7 @@ const checkProductInfo = (name, quantity) => {
 };
 
 const checkProductExists = async (name) => {
-  const product = await productsModel.findByName(name);
+  const product = await recipesModel.findByName(name);
   const testResult = { errorInfo: {}, flag: false };
   if (product) {
     testResult.errorInfo = { err: {
@@ -35,7 +35,7 @@ const checkProductExists = async (name) => {
 };
 
 const getAll = async () => {
-  const products = await productsModel.getAll();
+  const products = await recipesModel.getAll();
   return {
     response: { products },
     status: 200,
@@ -43,7 +43,7 @@ const getAll = async () => {
 };
 
 const findById = async (id) => {
-  const product = await productsModel.findById(id);
+  const product = await recipesModel.findById(id);
   if (!product) {
     return {
       response: {
@@ -66,7 +66,7 @@ const deleteById = async (id) => {
   if (productExists.status === 422) {
     return productExists;
   }
-  await productsModel.deleteById(id);
+  await recipesModel.deleteById(id);
   return {
     response: productExists.response,
     status: 200,
@@ -82,7 +82,7 @@ const create = async (name, quantity) => {
   if (productExists.flag) {
     return { response: productExists.errorInfo, status: 422 };
   }
-  const productCreated = await productsModel.create(name, quantity);
+  const productCreated = await recipesModel.create(name, quantity);
   return { response: productCreated, status: 201 };
 };
 
@@ -95,7 +95,7 @@ const update = async (id, name, quantity) => {
   if (productExists.status === 422) {
     return productExists;
   }
-  const productUpdated = await productsModel.update(id, name, quantity);
+  const productUpdated = await recipesModel.update(id, name, quantity);
   return {
     response: productUpdated,
     status: 200,
