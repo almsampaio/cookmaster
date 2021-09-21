@@ -15,7 +15,9 @@ async function register(req, res, next) {
 
     const newUserId = await usersService.register(user);
 
-    res.status(200).json({
+    delete user.password;
+
+    res.status(201).json({
       user: {
         ...user,
         _id: newUserId,
