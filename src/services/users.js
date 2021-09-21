@@ -1,7 +1,7 @@
 const model = require('../models/users');
 
 const createUser = async ({ name, email, password }) => {
-  const alreadyExists = await model.findUserByemail(email);
+  const alreadyExists = await model.findUserByEmail(email);
 
   if (alreadyExists) return { error: { code: 409, message: 'Email already registered' } };
 
