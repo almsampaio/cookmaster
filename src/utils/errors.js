@@ -10,7 +10,21 @@ const emailError = {
     status: 409 },
 };
 
+const loginError = {
+  error: { 
+    message: 'All fields must be filled',
+    status: 401 },
+};
+
+const credentialsError = {
+  error: { 
+    message: 'Incorrect username or password',
+    status: 401 },
+};
+
 module.exports = {
   createError,
   emailError,
+  loginError,
+  credentialsError,
 };

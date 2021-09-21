@@ -1,6 +1,9 @@
 const usersModel = require('../models/usersModel');
 const { createError, 
-  emailError } = require('../utils/errors');
+  emailError,
+  loginError,
+  credentialsError } = require('../utils/errors');
+const { createToken } = require('../auth/tokenCreation');
 
 const validate = (name, email, password) => {
   const emailPattern = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
@@ -18,6 +21,17 @@ const createUser = async (name, email, password) => {
   return user;
 };
 
+const loginUser = async (email, password) => {
+  if (!email || !password) return loginError;
+
+  const findByEmail = await usersModel.findByEmail(email);
+  if (!findByEmail || password !== findByEmail.password) return credentialsError;
+
+  const token = createToken(findByEmail);
+  return token;
+};
+
 module.exports = {
   createUser,
+  loginUser,
 };
