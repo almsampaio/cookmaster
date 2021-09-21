@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
-const secret = process.env.SECRET;
+const secret = process.env.SECRET || 'minhasenhasupersecreta';
 
 const createToken = (user) => {
   const { password: _, ...payload } = user;

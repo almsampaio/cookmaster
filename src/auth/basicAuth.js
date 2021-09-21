@@ -3,7 +3,7 @@ const { jwtError, withoutTokenError } = require('../utils/errors');
 
 require('dotenv').config();
 
-const secret = process.env.SECRET;
+const secret = process.env.SECRET || 'minhasenhasupersecreta';
 
 const verify = (token) => {
   const payload = jwt.verify(token, secret);
