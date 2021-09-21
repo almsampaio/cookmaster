@@ -1,11 +1,24 @@
 const express = require('express');
+const bodyParser = require('body-parser');
+const routes = require('./routes');
+const { handleErrors } = require('../Middlewares/erros');
+const userMiddlewares = require('../Middlewares/usersMid');
 
 const app = express();
 
-// Não remover esse end-point, ele é necessário para o avaliador
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
 app.get('/', (request, response) => {
   response.send();
 });
-// Não remover esse end-point, ele é necessário para o avaliador
+
+const apiRoutes = express.Router();
+apiRoutes.post('/users', userMiddlewares.validateNewUser, routes.createUsers);
+
+app.use(apiRoutes);
+app.use(handleErrors);
 
 module.exports = app;
+
+// FONTE: https://github.com/tryber/nodejs-jwt-base-project/blob/block-28-3/src/api/app.js

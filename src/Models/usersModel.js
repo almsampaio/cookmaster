@@ -1,7 +1,7 @@
 const connect = require('./connection');
 
 const registerUser = async (userObj) => {
-  const userId = await connect().then((db) =>
+  const userId = await connect.getConnection().then((db) =>
     db.collection('users').insertOne(userObj))
     .then((result) => result.insertedId);
 
@@ -9,7 +9,7 @@ const registerUser = async (userObj) => {
 };
 
 const findByEmail = async (email) => {
-  const usersCollection = await connect()
+  const usersCollection = await connect.getConnection()
     .then((db) => db.collection('users'));
 
   const user = await usersCollection.findOne({ email });

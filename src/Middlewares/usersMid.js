@@ -8,12 +8,12 @@ const schemaNewUser = Joi.object({
 });
 
 const validateNewUser = (req, _res, next) => {
-    const check = schemaNewUser.validate(req.body);
+  const check = schemaNewUser.validate(req.body);
 
-    if (check.error) next(check.error);
-    next();
+  if (check.error) return next(check.error);
+  next();
 };
 
 module.exports = {
-    validateNewUser,
+  validateNewUser,
 };
