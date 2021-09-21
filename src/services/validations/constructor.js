@@ -1,22 +1,22 @@
 function Validation(condition) {
   this.statusCode = {
+    badRequest: { status: 400, message: 'Invalid entries. Try again.' },
     notFound: { status: 404, code: 'not_found' },
-    unprocessableEntity: { status: 422, code: 'invalid_data' },
+    conflict: { status: 409, message: 'Email already registered' },
    };
   this.condition = condition;
 }
 
-Validation.prototype.newError = function newError(status, code, message) {
+Validation.prototype.newError = function newError(status, message) {
   const error = new Error(message);
   error.status = status;
-  error.code = code;
   throw error;
 };
 
-Validation.prototype.validate = function validate(message, statusName) {
-  const { status, code } = this.statusCode[statusName];
+Validation.prototype.validate = function validate(statusName) {
+  const { status, message } = this.statusCode[statusName];
 
-  if (!this.condition) this.newError(status, code, message);
+  if (!this.condition) this.newError(status, message);
 };
 
 module.exports = Validation;
