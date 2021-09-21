@@ -31,10 +31,16 @@ const remove = async (id) => {
   await db.collection('recipes').deleteOne({ _id: ObjectId(id) });
 };
 
+const updateFile = async (id, image) => {
+  const db = await getConnection();
+  await db.collection('recipes').updateOne({ _id: ObjectId(id) }, { $set: { image } });
+};
+
 module.exports = {
   create,
   getAll,
   getById,
   update,
   remove,
+  updateFile,
 };

@@ -39,10 +39,20 @@ const remove = async (req, res) => {
   res.status(status).send();
 };
 
+const updateFile = async (req, res) => {
+  const { id } = req.params;
+  const { filename } = req.file;
+  const { status, data, err } = await Recipes.updateFile(id, filename);
+  if (err) return res.status(status).json(err);
+
+  res.status(status).json(data);
+};
+
 module.exports = {
   create,
   getAll,
   getById,
   update,
   remove,
+  updateFile,
 };

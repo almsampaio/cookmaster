@@ -46,10 +46,22 @@ const remove = async (id) => {
   return { status: 204 };
 };
 
+const updateFile = async (id, filename) => {
+  const checkedId = ObjectId.isValid(id);
+  if (!checkedId) return { status: 404, err: { message: 'recipe not found' } };
+
+  const image = `localhost:3000/src/uploads/${filename}`;
+  await Recipes.updateFile(id, image);
+  const recipe = await Recipes.getById(id);
+
+  return { status: 200, data: recipe };
+};
+
 module.exports = {
   create,
   getAll,
   getById,
   update,
   remove,
+  updateFile,
 };
