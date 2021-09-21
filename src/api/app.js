@@ -2,6 +2,8 @@ require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
 
+const usersRouter = require('../routes/usersRouter');
+
 const app = express();
 app.use(bodyParser.json());
 
@@ -9,6 +11,8 @@ app.use(bodyParser.json());
 app.get('/', (req, res) => {
   res.send();
 });
+
+app.use('/users', usersRouter);
 
 app.use((err, _req, res, _next) => {
   const { status, code, message } = err;
