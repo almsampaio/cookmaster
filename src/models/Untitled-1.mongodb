@@ -1,0 +1,3 @@
+use('Cookmaster');
+
+db.users.findOne({ email: "roo@email.com" })
