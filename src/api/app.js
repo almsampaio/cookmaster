@@ -19,5 +19,6 @@ app.post('/login', Users.generetorToken);
 
 // Recipes
 app.post('/recipes', Wares.authToken, Recipes.create);
+app.get('/recipes', Recipes.getAll);
 
 module.exports = app;

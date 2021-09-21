@@ -15,6 +15,12 @@ const create = async (data, userId) => {
   return { status: 201, data: { recipe } };
 };
 
+const getAll = async () => {
+  const recipes = await Recipes.getAll();
+  return { status: 200, data: recipes };
+};
+
 module.exports = {
   create,
+  getAll,
 };
