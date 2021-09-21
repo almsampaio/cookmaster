@@ -11,7 +11,7 @@ const create = async (payload, token) => {
     const { _id: userId } = await User.findByEmail(email);
     if (!userId) return builtError(401, 'jwt malformed');
     const recipeId = await Recipes.create({ userId, ...payload });
-    return { recipe: { recipeId, userId, ...payload } };  
+    return { recipe: { _id: recipeId, userId, ...payload } }; 
   } catch ({ message }) {
     return builtError(401, message);
   }
