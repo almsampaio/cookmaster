@@ -22,9 +22,23 @@ const credentialsError = {
     status: 401 },
 };
 
+const jwtError = {
+  error: { 
+    message: 'jwt malformed',
+    status: 401 },
+};
+
+const withoutTokenError = {
+  error: { 
+    message: 'missing auth token',
+    status: 401 },
+};
+
 module.exports = {
   createError,
   emailError,
   loginError,
   credentialsError,
+  jwtError,
+  withoutTokenError,
 };
