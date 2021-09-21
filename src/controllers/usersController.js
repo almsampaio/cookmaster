@@ -2,6 +2,7 @@ const rescue = require('express-rescue');
 const Joi = require('joi');
 
 const service = require('../services/usersService');
+const login = require('./login');
 
 const ERROR_MESSAGE = 'Invalid entries. Try again.';
 
@@ -33,4 +34,5 @@ const create = rescue(async (req, res) => {
 
 module.exports = {
   create,
+  login,
 };
