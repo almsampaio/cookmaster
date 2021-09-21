@@ -1,9 +1,9 @@
-const Yup = require('yup');
-// https://www.youtube.com/watch?v=KwrJSwWhIDI&ab_channel=PedroTech
-const userSchema = Yup.object({
-  name: Yup.string().required(),
-  email: Yup.string().email().required(),
-  password: Yup.string().required(),
+const Joi = require('joi');
+
+const userSchema = Joi.object({
+  name: Joi.string().required(),
+  email: Joi.string().email().required(),
+  password: Joi.string().required(),
 });
 
-module.exports = userSchema;
+module.exports = { userSchema };
