@@ -22,7 +22,16 @@ const checkEmail = async (email) => {
   return false;
 };
 
+const checkBody = (body) => {
+  const { email, password } = body;
+  if (!email || !password) {
+    return { status: httpStatus.UNAUTHORIZED, msg: errorMsg.missingFields };
+  }
+  return false;
+};
+
 module.exports = {
   checkName,
   checkEmail,
+  checkBody,
 };
