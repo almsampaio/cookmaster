@@ -34,6 +34,12 @@ const withoutTokenError = {
     status: 401 },
 };
 
+const recipeError = {
+  error: { 
+    message: 'recipe not found',
+    status: 404 },
+};
+
 module.exports = {
   createError,
   emailError,
@@ -41,4 +47,5 @@ module.exports = {
   credentialsError,
   jwtError,
   withoutTokenError,
+  recipeError,
 };
