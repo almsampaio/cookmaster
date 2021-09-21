@@ -20,7 +20,16 @@ const getByEmail = async (email) => {
   return userByEmail;
 };
 
+const login = async (email, password) => {
+  const usersCollection = await mongoConnection.getConnection()
+    .then((db) => db.collection('users'));
+
+  const logged = await usersCollection.findOne({ email, password });
+  return logged;
+};
+
 module.exports = {
   create,
   getByEmail,
+  login,
 };
