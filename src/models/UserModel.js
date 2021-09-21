@@ -17,7 +17,8 @@ const create = async (user) => {
   return {
     user: {
       _id,
-      ...user,
+      name,
+      email,
       ...role,
     },
   };
