@@ -1,4 +1,4 @@
-const { userRegisterService } = require('./usersService');
+const { userRegisterService } = require('./loginService');
 
 async function userRegisterController(_req, res) {
   const teste = await userRegisterService();

@@ -1,4 +1,4 @@
-const { userRegisterModel } = require('./usersModel');
+const { userRegisterModel } = require('./loginModel');
 
 async function userRegisterService() {
   const teste = await userRegisterModel();
