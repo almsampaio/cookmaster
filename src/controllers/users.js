@@ -5,7 +5,7 @@ const createUser = async (req, res, next) => {
 
   const response = await service.createUser({ name, email, password });
 
-  if (response.error) next(response);
+  if (response.error) return next(response);
 
   return res.status(201).json(response);
 };
