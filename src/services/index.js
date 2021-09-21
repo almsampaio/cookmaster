@@ -1,13 +1,15 @@
 const doesEmailExists = require('./doesEmailExists');
 const getToken = require('./getToken');
-const getOneUser = require('./getOneUser');
-const insertOneUser = require('./insertOneUser');
+const getOne = require('./getOne');
+const insertOne = require('./insertOne');
 const validateEmail = require('./validateEmail');
+const takeToken = require('./takeToken');
 
 module.exports = {
     validateEmail,
     doesEmailExists,
-    insertOneUser,
+    insertOne,
     getToken,
-    getOneUser,
+    getOne,
+    takeToken,
 };

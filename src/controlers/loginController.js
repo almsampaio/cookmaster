@@ -1,8 +1,8 @@
-const { getOneUser, getToken } = require('../services');
+const { getOne, getToken } = require('../services');
 
 const loginController = async (req, res) => {
     const { email, password } = req.body;
-    const user = await getOneUser({ email, password });
+    const user = await getOne('users', { email, password });
     delete user.password;
     delete user.name;
     const token = getToken(user);

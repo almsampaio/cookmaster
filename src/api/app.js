@@ -3,10 +3,12 @@ const express = require('express');
 const {
   validateUser,
   validateLoginFields,
+  validateRecipe,
 } = require('../midlewares');
 const {
   insertUserController,
   loginController,
+  insertRecipe,
 } = require('../controlers');
 
 const app = express();
@@ -22,5 +24,7 @@ app.get('/', (request, response) => {
 app.post('/users/', validateUser, insertUserController);
 
 app.post('/login/', validateLoginFields, loginController);
+
+app.post('/recipes', validateRecipe, insertRecipe);
 
 module.exports = app;
