@@ -17,7 +17,7 @@ const generateToken = (user) => {
 
 const registerUser = async (userObj) => {
   const emailExists = await userModels.findByEmail(userObj.email);
-  if (emailExists) return builtError(409, 'Email already registred');
+  if (emailExists) return builtError(409, 'Email already registered');
 
   const result = await userModels.registerUser(userObj);
   const { _id: id } = result;
