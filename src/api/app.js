@@ -8,4 +8,14 @@ app.get('/', (request, response) => {
 });
 // Não remover esse end-point, ele é necessário para o avaliador
 
+const bodyParser = require('body-parser');
+const usersRouter = require('../routes/users');
+const { error } = require('../middlewares/error');
+
+app.use(bodyParser.json());
+
+app.use('/users', usersRouter);
+
+app.use(error);
+
 module.exports = app;
