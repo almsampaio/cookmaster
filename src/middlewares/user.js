@@ -1,20 +1,19 @@
-const findEmail = require('../models/user');
+const { findEmail } = require('../models/user');
 
 const validateName = (req, res, next) => {
   const { name } = req.body;
-  console.log(name);
   if (!name || name === '' || typeof name !== 'string') {
     return res.status(400).json({ message: 'Invalid entries. Try again.' });
   }
   next();
 };
 
-const validateEmail = (req, res, next) => {
+const validateEmail = async (req, res, next) => {
   const { email } = req.body;
   const emailRegex = /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
-  const findedEmail = findEmail(email);
+  const findedEmail = await findEmail(email);
 
-  if (!email || !email.test(emailRegex) || typeof email !== 'string') {
+  if (!email || !emailRegex.test(email) || typeof email !== 'string') {
     return res.status(400).json({ message: 'Invalid entries. Try again.' });
   }
 
