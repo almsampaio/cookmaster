@@ -37,11 +37,11 @@ const login = async (email, pwd) => {
   if ((checkData(email))) return returnObject;
   const user = await usersModel.login(email, pwd);
   if ((!user)) {
-    return { status: 401, message: { message: 'Incorrect usarname or password' } };
+    return { status: 401, message: { message: 'Incorrect username or password' } };
   }
   const { password, name, ...userWithoutPasswordAndName } = user;
   const token = jwt.sign({ data: userWithoutPasswordAndName }, secret, jwtConfig);
-  return { status: 401, message: { token } };
+  return { status: 200, message: { token } };
 };
 
 module.exports = {
