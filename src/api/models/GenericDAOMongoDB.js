@@ -27,11 +27,21 @@ class GenericDAOMongoDB {
   async getNextSequenceId() {
     const db = await connection();
 
-    const { value: { autoIncrement } } = await db.collection('counters').findOneAndUpdate(
+    const { value } = await db.collection('counters').findOneAndUpdate(
       { _id: this.nameCollection },
       { $inc: { autoIncrement: 1 } },
     );
-    return autoIncrement;
+
+    if (value === null) {
+      await this.createCounter();
+      const { value: { autoIncrement } } = await db.collection('counters').findOneAndUpdate(
+        { _id: this.nameCollection },
+        { $inc: { autoIncrement: 1 } },
+      );
+      return autoIncrement;
+    }
+    
+    return value.autoIncrement;
   }
 
   async aggregate(pipeline) {
