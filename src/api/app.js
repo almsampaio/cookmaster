@@ -2,7 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const routes = require('./routes');
 const { handleErrors } = require('../Middlewares/erros');
-const userMiddlewares = require('../Middlewares/usersMid');
+const { validateNewUser, validateLogin } = require('../Middlewares/usersMid');
 
 const app = express();
 
@@ -14,8 +14,8 @@ app.get('/', (request, response) => {
 });
 
 const apiRoutes = express.Router();
-apiRoutes.post('/users', userMiddlewares.validateNewUser, routes.createUser);
-apiRoutes.post('/login', routes.login);
+apiRoutes.post('/users', validateNewUser, routes.createUser);
+apiRoutes.post('/login', validateLogin, routes.login);
 
 app.use(apiRoutes);
 app.use(handleErrors);

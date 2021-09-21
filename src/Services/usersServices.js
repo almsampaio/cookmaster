@@ -14,14 +14,11 @@ const registerUser = async (userObj) => {
 };
 
 const login = async (email, password) => {
-  const valideEmail = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+\.([a-z]+)?$/i;
-  if (!email || !password) return builtError(401, 'All fields must be filled');
-  if (!valideEmail.test(email) || password.length < 8) {
+  const user = await userModels.findByEmail(email);
+  if (!user || user.password !== password) {
     return builtError(401, 'Incorrect username or password');
   }
-
-  const token = await userModels.login(email, password);
-  return token;
+  return user;
 };
 
 module.exports = {
