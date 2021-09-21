@@ -6,6 +6,4 @@ const recipeSchema = new mongoose.Schema({
   preparation: String,
 });
 
-exports.recipeModel = mongoose.model('recipes', recipeSchema);
-
-exports.isValidID = mongoose.Types.ObjectId.isValid;
+module.exports = mongoose.model('recipes', recipeSchema);

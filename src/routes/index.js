@@ -1,5 +1,7 @@
 const path = require('path');
 const express = require('../utils/express-rest');
+const { usersController } = require('../controllers');
+const { loginController } = require('../controllers');
 
 const routes = express.Router();
 
@@ -9,5 +11,7 @@ routes.get('/', (_req, res) => {
   res.send('Hi');
 });
 // Não remover esse end-point, ele é necessário para o avaliador
+routes.post('/users', usersController.create);
+routes.post('/login', loginController.login);
 
 module.exports = routes;

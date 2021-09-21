@@ -7,6 +7,4 @@ const userSchema = new mongoose.Schema({
   role: String,
 });
 
-exports.userModel = mongoose.model('users', userSchema);
-
-exports.isValidID = mongoose.Types.ObjectId.isValid;
+module.exports = mongoose.model('users', userSchema);
