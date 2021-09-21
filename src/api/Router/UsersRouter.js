@@ -1,9 +1,9 @@
 const express = require('express');
 
-const { usersController } = require('../../MSC/CONTROLLERS');
+const { userRegisterController } = require('../../MSC/users');
 
 const router = express.Router();
 
-router.post('/', usersController.register);
+router.post('/', userRegisterController);
 
 module.exports = router;
