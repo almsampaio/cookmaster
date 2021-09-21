@@ -14,7 +14,7 @@ const create = async (name, email, password) => {
     return { status: 409, message: { message: 'Email already registered' } };
   }
   const message = await usersModel.create(name, email, password);
-  return { status: 200, message };
+  return { status: 201, message };
 };
 
 module.exports = {
