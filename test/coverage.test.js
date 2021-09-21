@@ -29,12 +29,12 @@ afterAll(async () => {
   await exec('rm -rf coverage .nyc_output');
 });
 
-describe
+describe.skip
   .each([
     [11,30,50], 
     [13,60,100],
     [14,90,150]
-  ]).skip
+  ])
   (
     '%p - Crie testes de integração que cubram no mínimo %p porcento dos arquivos em src com um mínimo de %p linhas cobertas', 
     (_testId, percentage, coveredLines) => {
