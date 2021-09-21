@@ -17,11 +17,12 @@ const create = async (name, email, password) => {
 
   const { _id } = await findByEmail(email);
 
-  return {
+  return { user: {
     _id,
     name,
     email,
     role,
+    },
   };
 };
 
