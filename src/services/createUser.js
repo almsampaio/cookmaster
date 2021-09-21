@@ -1,6 +1,6 @@
 const Joi = require('joi');
 const errorMessages = require('../utils/errorMessages');
-const status = require('../utils/httpStatus');
+const httpStatus = require('../utils/httpStatus');
 const models = require('../models');
 
 const verifyEmail = (email) => {
@@ -9,7 +9,7 @@ const verifyEmail = (email) => {
   return error;
 };
 
-const createUser = async (body, role = 'user') => {
+module.exports = async (body, role = 'user') => {
   const newBody = { ...body, role };
 
   const { name, email, password } = body;
@@ -25,11 +25,7 @@ const createUser = async (body, role = 'user') => {
   const user = await models.createUser(newBody);
 
   return {
-    status: status.CREATED_STATUS,
+    status: httpStatus.CREATED_STATUS,
     user,
   };
-};
-
-module.exports = {
-  createUser,
 };

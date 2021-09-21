@@ -1,9 +1,7 @@
 const mongoConnection = require('./connection');
 
-const getProductByEmail = async (email) => {
+module.exports = async (email) => {
   const db = await mongoConnection.getConnection();
   const result = await db.collection('users').findOne({ email });
   return result;
 };
-
-module.exports = getProductByEmail; 
