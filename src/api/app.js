@@ -12,4 +12,7 @@ app.get('/', (request, response) => {
 // Users
 app.post('/users', Users.create);
 
+// Login
+app.post('/login', Users.generetorToken);
+
 module.exports = app;
