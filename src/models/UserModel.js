@@ -33,7 +33,17 @@ const findByEmail = async (email) => {
   return emailFound;
 };
 
+// const findByUsername = async (username) => {
+//   const usersCollection = await mongoConnection.getConnection()
+//   .then((db) => db.collection(COLLECTION_NAME));
+
+//   const usernameFound = usersCollection.findOne({ username });
+
+//   return usernameFound;
+// };
+
 module.exports = {
   create,
   findByEmail,
+  // findByUsername,
 };
