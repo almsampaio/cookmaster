@@ -1,6 +1,5 @@
 const Joi = require('joi');
 const jwt = require('jsonwebtoken');
-// const userServices = require('../services/user');
 const userModels = require('../models/user');
 
 const registerJoi = Joi.object({
@@ -24,7 +23,7 @@ const registerUser = async (req, res, next) => {
   res.status(201).json(result);
 };
 
-const JWT_SECRET = 'verysecrettoken';
+const JWT_SECRET = 'test123';
 const JWT_CONFIG = {
   expiresIn: '1d',
   algorithm: 'HS256',
@@ -43,9 +42,14 @@ const login = async (req, res, _next) => {
   const { email, password } = req.body;
   const result = await userModels.login(email, password);
   if (!result) return res.status(401).json({ message: 'Incorrect username or password' });
-
-  const token = jwt.sign(result, JWT_SECRET, JWT_CONFIG);
-  res.status(200).json(token);
+  const { _id } = result;
+  const payload = {
+    id: _id,
+    email: result.email,
+    role: result.role,
+  };
+  const token = jwt.sign({ data: payload }, JWT_SECRET, JWT_CONFIG);
+  res.status(200).json({ token, result });
 };
 
 module.exports = {

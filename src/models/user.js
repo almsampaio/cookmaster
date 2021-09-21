@@ -1,4 +1,3 @@
-const { ObjectId } = require('mongodb');
 const mongoConnection = require('./connection');
 
 const checkEmail = async (email) => {
@@ -25,7 +24,7 @@ const registerUser = async (name, email, password) => {
     name,
     email, 
     role: 'user',
-    _id: ObjectId(id),
+    id,
   } };
 };
 
