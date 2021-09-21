@@ -64,4 +64,24 @@ async function userCreateValidations(req, res, next) {
   next();
 }
 
-module.exports = userCreateValidations;
+async function loginValidations(req, res, next) {
+  const { email, password } = req.body;
+
+  if (email && !validateEmailFormat(email)) {
+    return res.status(401).json({
+      message: 'Incorrect username or password',
+    });
+  }
+
+  if (
+    !email 
+    || !passwordValidation(password)) {
+    return res.status(401).json({
+      message: 'All fields must be filled',
+    });
+  }
+
+  next();
+}
+
+module.exports = { userCreateValidations, loginValidations };
