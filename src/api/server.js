@@ -1,7 +1,8 @@
 const app = require('./app');
 
 const Users = require('../controllers/UsersController');
-const Validation = require('../middlewares/middlewares');
+const Recipes = require('../controllers/RecipesController');
+const Validation = require('../middlewares/validations');
 
 const PORT = 3000;
 
@@ -15,3 +16,5 @@ app.post('/users', [
   ]);
 
 app.post('/login', Users.userLogin);
+
+app.post('/recipes', Validation.validateRecipeInfo, Validation.validateJWT, Recipes.createRecipe);
