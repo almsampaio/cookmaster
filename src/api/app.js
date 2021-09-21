@@ -1,11 +1,24 @@
+require('dotenv').config();
 const express = require('express');
+const bodyParser = require('body-parser');
 
 const app = express();
+app.use(bodyParser.json());
 
 // Não remover esse end-point, ele é necessário para o avaliador
-app.get('/', (request, response) => {
-  response.send();
+app.get('/', (req, res) => {
+  res.send();
 });
-// Não remover esse end-point, ele é necessário para o avaliador
+
+app.use((err, _req, res, _next) => {
+  const { status, code, message } = err;
+
+  res.status(status).json({
+    err: {
+      code,
+      message,
+    },
+  });
+});
 
 module.exports = app;
