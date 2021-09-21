@@ -8,6 +8,12 @@ const schemaNewUser = Joi.object({
   role: Joi.string(),
 });
 
+const schemaNewRecipe = Joi.object({
+  name: Joi.string().required(),
+  ingredients: Joi.string().required(),
+  preparation: Joi.string().required(),
+});
+
 const validateNewUser = (req, _res, next) => {
   const check = schemaNewUser.validate(req.body);
 
@@ -25,7 +31,15 @@ const validateLogin = (req, _res, next) => {
   next();
 };
 
+const validateNewRecipe = (req, _res, next) => {
+  const check = schemaNewRecipe.validate(req.body);
+
+  if (check.error) return next(check.error);
+  next();
+};
+
 module.exports = {
   validateNewUser,
   validateLogin,
+  validateNewRecipe,
 };
