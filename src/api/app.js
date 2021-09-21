@@ -4,6 +4,7 @@ const express = require('express');
 const errorMiddleware = require('../middlewares/error');
 
 const app = express();
+require('dotenv').config();
 
 const users = require('../routes/users');
 const login = require('../routes/login');
