@@ -48,4 +48,16 @@ const update = async (id, recipe) => {
   return result.value;  
 };
 
-module.exports = { create, getAll, getById, update };
+const exlude = async (id) => {
+  if (!isValidID(id)) return null;
+
+  const filter = { _id: ObjectId(id) };
+
+  const db = await getConnection();
+
+  const result = await db.collection(RECIPES).findOneAndDelete(filter);
+
+  return result.ok ? result.value : null;
+};
+
+module.exports = { create, getAll, getById, update, exlude };

@@ -3,7 +3,7 @@ const SECRET = require('../secret');
 
 const validateJWT = async (req, _res, next) => {
   const token = req.headers.authorization;
-
+  
   if (!token) {
     next({ missingToken: true });
   }

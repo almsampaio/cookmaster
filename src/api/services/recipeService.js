@@ -8,7 +8,25 @@ const exceptions = {
     },
 };
 
+const verifyIfUserHaveAuthorization = async (recipeId, userId) => {
+  const getRecipe = await recipeModel.getById(recipeId);
+
+  if (!getRecipe) return false;
+
+  const getUser = await userModel.findById(userId);
+
+  if (getRecipe.userId !== userId && getUser.role !== 'admin') {
+    return false;
+  } 
+
+  return true;
+};
+
+// ----------------------------------------------------- || ----------------------------------------------------- //
+
 const create = async (recipe) => recipeModel.create(recipe);
+
+// ----------------------------------------------------- || ----------------------------------------------------- //
 
 const getById = async (id) => {
   const result = await recipeModel.getById(id);
@@ -18,22 +36,32 @@ const getById = async (id) => {
   return result;
 };
 
+// ----------------------------------------------------- || ----------------------------------------------------- //
+
 const getAll = async () => recipeModel.getAll();
 
+// ----------------------------------------------------- || ----------------------------------------------------- //
+
 const update = async (recipeId, recipe, userId) => {
-  const getRecipe = await recipeModel.getById(recipeId);
+  const authorizedUser = verifyIfUserHaveAuthorization(recipeId, userId);
 
-  if (getRecipe.error) return { error: exceptions.recipeNotFound };
-
-  const getUser = await userModel.findById(userId);
-
-  if (getRecipe.userId !== userId && getUser.role !== 'admin') {
-    return { error: exceptions.recipeNotFound };
-  } 
+  if (!authorizedUser) return { error: exceptions.recipeNotFound };
 
   const result = await recipeModel.update(recipeId, recipe);
 
   return result;
 };
 
-module.exports = { create, getAll, getById, update };
+// ----------------------------------------------------- || ----------------------------------------------------- //
+
+const exclude = async (recipeId, userId) => {
+  const authorizedUser = verifyIfUserHaveAuthorization(recipeId, userId);
+  
+  if (!authorizedUser) return { error: exceptions.recipeNotFound };
+
+  const result = await recipeModel.exlude(recipeId);
+
+  return result;
+};
+
+module.exports = { create, getAll, getById, update, exclude };

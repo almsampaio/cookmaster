@@ -17,6 +17,11 @@ router.put('/:id', [
   recipeController.update,
 ]);
 
+router.delete('/:id', [
+  validateJWT,
+  recipeController.exclude,
+]);
+
 router.get('/:id', recipeController.getById);
 
 router.get('/', recipeController.getAll);
