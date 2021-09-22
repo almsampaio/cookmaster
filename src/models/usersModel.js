@@ -19,7 +19,6 @@ const findByEmail = async (email) => {
 };
 
 const create = async (name, email, password, role) => {
-  console.log('create usermodel');
   const db = await connection();
   const userCreated = await db.collection(collectionName)
     .insertOne({ name, email, password, role })

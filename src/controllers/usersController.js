@@ -7,7 +7,6 @@ const findById = async (req, res) => {
 };
 
 const create = async (req, res) => {
-  console.log('create usercontroler');
   const { name, email, password } = req.body;
   const result = await usersService.create(name, email, password);
   return res.status(result.status).json(result.response);

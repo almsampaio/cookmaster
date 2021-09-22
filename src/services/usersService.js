@@ -46,7 +46,6 @@ const isUserValid = async (name, email, password) => {
 };
 
 const create = async (name, email, password) => {
-  console.log('create userservice');
   const { isValid, response, status } = await isUserValid(name, email, password);
   if (!isValid) {
     return { response, status };
