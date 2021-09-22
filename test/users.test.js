@@ -28,7 +28,7 @@ describe('1 - Crie um endpoint para o cadastro de usuários', () => {
     await connection.close();
   });
 
-  it.skip('Será validado que o campo "name" é obrigatório', async () => {
+  it('Será validado que o campo "name" é obrigatório', async () => {
     await frisby
       .post(`${url}/users/`,
         {
@@ -43,7 +43,7 @@ describe('1 - Crie um endpoint para o cadastro de usuários', () => {
       });
   });
 
-  it.skip('Será validado que o campo "email" é obrigatório', async () => {
+  it('Será validado que o campo "email" é obrigatório', async () => {
     await frisby
       .post(`${url}/users/`,
         {
@@ -58,7 +58,7 @@ describe('1 - Crie um endpoint para o cadastro de usuários', () => {
       });
   });
 
-  it.skip('Será validado que não é possível cadastrar usuário com o campo email inválido', async () => {
+  it('Será validado que não é possível cadastrar usuário com o campo email inválido', async () => {
     await frisby
       .post(`${url}/users/`,
         {
@@ -74,7 +74,7 @@ describe('1 - Crie um endpoint para o cadastro de usuários', () => {
       });
   });
 
-  it.skip('Será validado que o campo "senha" é obrigatório', async () => {
+  it('Será validado que o campo "senha" é obrigatório', async () => {
     await frisby
       .post(`${url}/users/`,
         {
