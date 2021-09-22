@@ -8,10 +8,20 @@ async function createUser(req, res) {
     return res.status(createNewUser.error.status)
       .json({ message: createNewUser.error.message });
   }
-  console.log({ user: createNewUser });
   return res.status(201).json(createNewUser);
+}
+
+async function loginUser(req, res) {
+  const { email, password } = req.body;
+  const user = await usersService.loginUser(email, password);
+  console.log(user);
+  if (user.error) {
+    return res.status(user.error.status).json({ message: user.error.message });
+  }
+  return res.status(200).json(user.token);
 }
 
 module.exports = {
   createUser,
+  loginUser,
 };
