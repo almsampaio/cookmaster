@@ -12,7 +12,14 @@ const getAll = async () => {
   return allUsers;
 };
 
+const getByEmail = async (email) => {
+  const db = await connection();
+  const user = await db.collection('users').findOne({ email });
+  return user;
+};
+
 module.exports = {
   create,
   getAll,
+  getByEmail,
 };
