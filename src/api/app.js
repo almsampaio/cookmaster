@@ -4,6 +4,8 @@ const bodyParser = require('body-parser');
 
 const UserController = require('../controllers/UserController');
 const LoginController = require('../controllers/LoginController');
+const RecipeController = require('../controllers/RecipeController');
+const authMiddleware = require('../middlewares/authMiddleware');
 
 const app = express();
 app.use(bodyParser.json());
@@ -16,5 +18,6 @@ app.get('/', (request, response) => {
 
 app.post('/users/', UserController.create);
 app.post('/login', LoginController.login);
+app.post('/recipes', authMiddleware.authLogin, RecipeController.create);
 
 module.exports = app;

@@ -16,7 +16,7 @@ const authLogin = async (req, res, next) => {
 
     next();
   } catch (_e) {
-    res.status(401).json({ message: 'Invalid Token' });
+    res.status(401).json({ message: 'jwt malformed' });
   }
 };
 
