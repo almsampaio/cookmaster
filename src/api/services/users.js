@@ -1,5 +1,9 @@
+const jwt = require('jsonwebtoken');
+
 const usersModels = require('../models/users');
 const validations = require('./validations');
+
+const JWT_SECRET = 'meuSegredo';
 
 const createUsers = async ({ name, email, password }) => {
   const validateInsertedBodyError = validations
@@ -21,8 +25,11 @@ const loginUsers = async ({ email, password }) => {
   // const validateSingleUserEmailError = await validations
   //   .validateSingleUserEmail(email);
   // if (validateSingleUserEmailError) return validateSingleUserEmailError;
+  const userLogaded = await usersModels.createUsers({ email, password });
+  const { user } = userLogaded;
+  const token = jwt.sign(user, JWT_SECRET);
 
-  return usersModels.createUsers({ email, password });
+  return token;
 };
 
 module.exports = {

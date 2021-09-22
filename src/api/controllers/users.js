@@ -14,8 +14,8 @@ const loginUsers = async (req, res, next) => {
   const LoginUsers = await usersServices.loginUsers({ email, password });
   
   if (LoginUsers.error) return next(LoginUsers);
-
-  res.status(201).json(LoginUsers);
+  
+  res.status(200).json({ token: LoginUsers });
 };
 
 module.exports = {

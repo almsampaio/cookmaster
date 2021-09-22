@@ -35,7 +35,6 @@ const validateBodyLoginUsers = async (body) => {
   const existsThisUser = await usersModels.getUserByEmail(body.email);
 
   if (error.error || !existsThisUser.length) {
-    console.log('entrou');
  return { 
     verb: 'post', item: 'loginUsers', error, isJoy: true, filled: true, 
   }; 
