@@ -12,4 +12,10 @@ module.exports = {
 
     return recipes;
   },
+
+  async findOne(id) {
+    const recipe = await recipesModel.findById(id);
+
+    return recipe;
+  },
 };

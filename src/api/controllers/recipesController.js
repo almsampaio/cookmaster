@@ -15,4 +15,12 @@ module.exports = {
 
     return res.status(200).json(recipes);
   },
+
+  async show(req, res) {
+    const { id } = req.params;
+
+    const recipe = await recipesService.findOne(id);
+
+    return res.status(200).json(recipe);
+  },
 };
