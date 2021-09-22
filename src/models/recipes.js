@@ -4,7 +4,7 @@ const mongoConnection = require('./connection');
 const registerRecipe = async (name, ingredients, preparation, userId) => {
     const db = await mongoConnection.getConnection();
     const { insertedId: id } = await db.collection('recipes')
-      .insertOne({ name, ingredients, preparation });
+      .insertOne({ name, ingredients, preparation, userId });
   
     return { recipe: {
       name,
@@ -21,7 +21,7 @@ const listRecipes = async () => {
   return result;
 };
 
-const listRecipesById = async (id) => {
+const listRecipeById = async (id) => {
   const isValid = ObjectId.isValid(id);
   if (!isValid) return null;
 
@@ -30,8 +30,18 @@ const listRecipesById = async (id) => {
   return result;
 };
 
+const editRecipe = async (id, data) => {
+  const db = await mongoConnection.getConnection();
+  await db.collection('recipes').updateOne(
+    { _id: ObjectId(id) }, { $set: { ...data } },
+  );
+  const result = await listRecipeById(id);
+  return result;
+};
+
 module.exports = {
   registerRecipe,
   listRecipes,
-  listRecipesById,
+  listRecipeById,
+  editRecipe,
 };
