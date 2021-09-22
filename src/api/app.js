@@ -27,7 +27,8 @@ app.route('/recipes')
 
 app.route('/recipes/:id')
   .get(recipesController.getRecipeById)
-  .put(authenticate, recipesController.editRecipeById);
+  .put(authenticate, recipesController.editRecipeById)
+  .delete(authenticate, recipesController.deleteRecipeById);
 
 app.use(errors);
 
