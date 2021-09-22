@@ -39,10 +39,25 @@ const deleteRecipe = async (id) => {
   return response;
 };
 
-module.exports = {
-  createRecipe,
-  getAllRecipes,
-  getRecipeById,
-  updateRecipe,
-  deleteRecipe,
-};
+const addImage = async (payload) => {
+  const { recipeId, loggedUserId, role } = payload;
+  const recipe = await getRecipeById(recipeId);
+
+  if (recipe.error) return recipe;
+
+  if (`${loggedUserId}` === `${recipe.userId}` || role === 'admin') {
+    const imgUrl = `localhost:3000/src/uploads/${recipeId}.jpeg`;
+    const response = await model.addImage(recipeId, imgUrl);
+    return response;
+  }
+    return { error: { code: 401, message: 'You have no permission' } };
+  };
+
+  module.exports = {
+    createRecipe,
+    getAllRecipes,
+    getRecipeById,
+    updateRecipe,
+    deleteRecipe,
+    addImage,
+  };
