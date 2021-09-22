@@ -14,8 +14,8 @@ const findByEmail = async (email) => {
 };
 const login = async (email, password) => {
   const db = await getConnection();
-  const result = await db.collection('users').insertOne({ email, password });
-  return result;
+  const searchUser = await db.collection('users').findOne({ email, password });
+  return searchUser;
 };
 
 module.exports = { createUser, findByEmail, login };

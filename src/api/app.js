@@ -1,7 +1,8 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const controller = require('../controllers/users');
-const valid = require('./validations/validations');
+const valid = require('./validations/users');
+const validUser = require('./validations/login');
 
 const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -16,5 +17,7 @@ app.get('/', (request, response) => {
 app.post('/users', [
   valid.validateName, valid.validEmail, valid.validPassword, controller.createUser,
 ]);
+
+app.post('/login', [validUser.validEmail, validUser.validPassword, controller.login]);
 
 module.exports = app;
