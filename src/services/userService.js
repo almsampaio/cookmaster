@@ -8,4 +8,4 @@ const createUser = async (name, email, passWord) => {
 
 module.exports = {
   createUser,
-}
+};

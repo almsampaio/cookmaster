@@ -3,7 +3,6 @@ const bodyParser = require('body-parser');
 const errorHandler = require('../middleware/erroHandler');
 const userRouter = require('../routers/usersRouter');
 
-
 const app = express();
 app.use(bodyParser.json());
 app.use('/users', userRouter, errorHandler);
