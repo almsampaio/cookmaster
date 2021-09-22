@@ -3,6 +3,7 @@ const connection = require('./connection');
 const findOnebyEmail = async (email) => {
   const db = await connection();
   const result = await db.collection('users').findOne({ email });
+  
   return result;
   };
 
