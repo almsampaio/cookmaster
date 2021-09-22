@@ -1,20 +1,19 @@
 const { ObjectId } = require('mongodb');
 const recipeModel = require('../../models/recipes/recipeModel');
 
-const createRecipeService = async (name, ingredients, preparation, authorId) => {
+const createRecipeService = async (name, ingredients, preparation, userId) => {
     if (!name || !ingredients || !preparation) {
         return { status: 400, message: { message: 'Invalid entries. Try again.' } };
     }
     
     const recipe = await recipeModel
-        .createRecipeModel(name, ingredients, preparation, authorId);
+        .createRecipeModel(name, ingredients, preparation, userId);
 
     return { status: 201, message: { recipe } };
 };
 
 const getAllRecipesService = async () => {
     // just proxy
-
     const recipes = await recipeModel.getAllRecipesModel();
     return recipes;
 };
@@ -28,14 +27,40 @@ const getRecipeByIdService = async (id) => {
     return { status: 200, message: recipe };
 };
 
-const editRecipeService = async (id, name, ingredients, preparation) => {
-    if (!ObjectId.isValid(id)) return { status: 404, message: 'recipe not found' };
+const editRecipeService = async (params) => {
+    const { id, name, ingredients, preparation, userId, role } = params;
     const objId = ObjectId(id);    
-    await recipeModel.editRecipeModel(objId, name, ingredients, preparation);
+    const getRecipe = await getRecipeByIdService(id);
+
+    if (!ObjectId.isValid(id) || getRecipe.message === null) {
+        return { status: 401, message: { message: 'recipe not found' } };
+    }
+
+    if (userId !== getRecipe.message.userId || role !== 'admin') { 
+        return objId;
+    }
+    
+    await recipeModel
+    .editRecipeModel(objId, name, ingredients, preparation, role);
 
     const { message } = await getRecipeByIdService(id);
     
     return { status: 200, message };
+};
+
+const deleteRecipeService = async (id, userId, role) => {
+    if (!ObjectId.isValid(id)) {
+        return '400';
+    }
+
+    const getRecipe = await getRecipeByIdService(id);
+
+    if (role !== 'admin' && userId !== getRecipe.message.userId) {
+        return false;
+    }
+    
+    await recipeModel.deleteRecipeModel(id);
+    return true;
 };
 
 module.exports = { 
@@ -43,4 +68,5 @@ module.exports = {
     getAllRecipesService,
     getRecipeByIdService,
     editRecipeService,
+    deleteRecipeService,
 };

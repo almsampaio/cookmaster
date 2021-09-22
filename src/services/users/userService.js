@@ -49,7 +49,7 @@ const loginService = async (email, password) => {
     const { _id } = user;
 
     const tokenPayload = {
-        id: _id,
+        userId: _id,
         email: user.email,
         role: user.role,
     };

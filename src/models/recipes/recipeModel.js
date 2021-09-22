@@ -1,9 +1,9 @@
 const connection = require('../connection');
 
-const createRecipeModel = async (name, ingredients, preparation, authorId) => {
+const createRecipeModel = async (name, ingredients, preparation, userId) => {
     const db = await connection();
     const recipe = await db.collection('recipes')
-        .insertOne({ name, ingredients, preparation, authorId });
+        .insertOne({ name, ingredients, preparation, userId });
 
     return recipe.ops[0];
 };
@@ -32,9 +32,15 @@ const editRecipeModel = async (objId, name, ingredients, preparation) => {
     return recipe;
 };
 
+const deleteRecipeModel = async (id) => {
+    const db = await connection();
+    await db.collection('recipes').deleteOne({ _id: id });
+};
+
 module.exports = { 
     createRecipeModel, 
     getAllRecipesModel,
     getRecipeByIdModel,
     editRecipeModel,
+    deleteRecipeModel,
 };
