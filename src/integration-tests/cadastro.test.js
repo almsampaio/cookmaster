@@ -56,7 +56,7 @@ describe('POST /users', () => {
       await usersCollection.insertOne({
         name: 'user-fake',
         password: 'senha-fake',
-        email: 'email-fake',
+        email: 'email-fake@gmail.com',
       });
 
       response = await chai.request(server)
@@ -64,7 +64,7 @@ describe('POST /users', () => {
         .send({
           name: 'user-fake',
           password: 'senha-fake',
-          email: 'email-fake',
+          email: 'email-fake@gmail.com',
         });
     });
 
@@ -82,6 +82,35 @@ describe('POST /users', () => {
 
     it('message tem o valor "Email already registered"', () => {
       expect(response.body.message).to.be.equal('Email already registered');
+    })
+  })
+
+  describe('Quando o email informado é inválido', () => {
+    let response;
+    before(async () => {
+      response = await chai.request(server)
+        .get('/users')
+        .send({
+          name: 'user-fake',
+          password: 'senha-fake',
+          email: 'email-fake',
+        });
+    });
+
+    it('retorna o status 400', () => {
+      expect(response).to.have.status(400);
+    });
+
+    it('retorna um objeto no body', () => {
+      expect(response.body).to.be.an('object');
+    })
+
+    it('objeto da resposta possui a propriedade "message"', () => {
+      expect(response).to.have.property('message');
+    })
+
+    it('message tem o valor "Email already registered"', () => {
+      expect(response.body.message).to.be.equal('Invalid entries. Try again.');
     })
   })
 

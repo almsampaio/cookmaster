@@ -23,7 +23,18 @@ const verifyEmail = async (email) => {
   }
 };
 
+const validateRecipeInfo = (name, ingredients, preparation) => {
+  const errorObj = {
+    code: 400,
+    message: 'Invalid entries. Try again.',
+  };
+  if (!name || !ingredients || !preparation) {
+    return errorObj;
+  }
+};
+
 module.exports = {
   validateEntries,
   verifyEmail,
+  validateRecipeInfo,
 };
