@@ -32,10 +32,11 @@ const listRecipeById = async (req, res, _next) => {
   res.status(200).json(result);
 };
 
-const editRecipe = async (req, res, _next) => {
+const editRecipe = async (req, res, next) => {
   const { id } = req.params;
   const { id: userId, role } = req.user;
   const result = await recipeServices.editRecipe(id, req.body, userId, role);
+  if (result.error) return next(result.error);
   res.status(200).json(result);
 };
 
