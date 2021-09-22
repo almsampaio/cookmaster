@@ -23,9 +23,7 @@ const create = async (user) => {
   const newUser = await connectionDb.collection('users')
   .insertOne({ email, pass, name, role });
 
-  console.log(newUser);
-
-  return newUser;
+  return newUser.ops[0];
 };
 
 module.exports = {
