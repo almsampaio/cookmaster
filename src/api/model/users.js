@@ -12,7 +12,14 @@ const findEmail = async (email) => {
   return value;
 };
 
+const findUser = async (email, password) => {
+  const value = await connection()
+    .then((db) => db.collection('users').findOne({ $and: [{ email }, { password }] }));
+  return value;
+};
+
 module.exports = {
   addUser,
   findEmail,
+  findUser,
 };

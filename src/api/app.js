@@ -17,6 +17,8 @@ app.post('/test', async (req, res) => {
 
 app.post('/users', controllerUsers.addUser);
 
+app.post('/login', controllerUsers.findUser);
+
 app.use((err, _req, res, _next) => {
   const { message, status } = err;
   res.status(status).json({ message });

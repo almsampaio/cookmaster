@@ -1,3 +1,4 @@
+const jwt = require('jsonwebtoken');
 const ModelUsers = require('../model/users');
 
 const re = /\S+@\S+\.\S+/;
@@ -8,6 +9,14 @@ const validateUser = (name, password, email) => {
   if (!name) return null;
 
   if (!email || !re.test(email)) return null;
+
+  if (!password) return null;
+
+  return true;
+};
+
+const validateEmailAndPassword = (email, password) => {
+  if (!email) return null;
 
   if (!password) return null;
 
@@ -28,6 +37,23 @@ const addUser = async (name, password, email) => {
   return insert;
 };
 
+const findUser = async (email, password) => {
+  const user = await ModelUsers.findUser(email, password);
+
+  const validations = validateEmailAndPassword(email, password);
+
+  if (!validations) throw util(401, 'All fields must be filled');
+
+  if (!user) throw util(401, 'Incorrect username or password');
+
+  const payload = { email, password };
+
+  const token = jwt.sign(payload, 'Cookemaster');
+
+  return token;
+};
+
 module.exports = {
   addUser,
+  findUser,
 };
