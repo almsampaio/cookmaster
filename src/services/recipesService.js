@@ -1,11 +1,13 @@
 const Joi = require('joi');
 const recipesModel = require('../models/recipesModel');
 
+const NOT_FOUND_STATUS = 404;
 const BAD_REQUEST_STATUS = 400;
 const CREATED_STATUS = 201;
 const OK_STATUS = 200;
 
 const msg400 = 'Invalid entries. Try again.';
+const ERROR_404 = 'recipe not found';
 
 const schemaRecipes = Joi.object({
   name: Joi.string().required(),
@@ -35,7 +37,16 @@ const getRecipesServices = async () => {
   };
 };
 
+const getByIdRecipeServices = async (id) => {
+  const result = await recipesModel.getByIdRecipeModels(id);
+  if (!result) {
+    return { status: NOT_FOUND_STATUS, result: { message: ERROR_404 } };
+  }
+  return { status: OK_STATUS, result };
+};
+
 module.exports = {
   register,
   getRecipesServices,
+  getByIdRecipeServices,
 };
