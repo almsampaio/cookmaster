@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken');
+const JwtAuthError = require('../../lib/errors/JwtAuthError');
 const { SECRET } = require('../services/login');
 
 module.exports = (req, res, next) => {
@@ -7,6 +8,7 @@ module.exports = (req, res, next) => {
     req.user = payload;
     next();
   } catch (error) {
-    return res.status(401).json({ message: 'jwt malformed' });
+    error.message = JwtAuthError(error.message);
+    return res.status(401).json({ message: error.message });
   }
 };
