@@ -304,7 +304,7 @@ describe('4 - Crie um endpoint para a listagem de receitas', () => {
   });
 });
 
-describe.skip('5 - Crie um endpoint para visualizar uma receita específica', () => {
+describe('5 - Crie um endpoint para visualizar uma receita específica', () => {
   let connection;
   let db;
 
@@ -389,7 +389,7 @@ describe.skip('5 - Crie um endpoint para visualizar uma receita específica', ()
       });
   });
 
-  it.skip('Será validado que é possível listar uma receita específica estando autenticado', async () => {
+  it('Será validado que é possível listar uma receita específica estando autenticado', async () => {
     let resultRecipe;
 
     await frisby

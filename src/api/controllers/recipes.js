@@ -12,15 +12,24 @@ const createRecipes = async (req, res, next) => {
 };
 
 const getAllRecipes = async (req, res, next) => {
-  const token = req.headers.authorization;
-  const GetAllRecipes = await recipesServices.getAllRecipes(token);
+  const GetAllRecipes = await recipesServices.getAllRecipes();
   
   if (GetAllRecipes.error) return next(GetAllRecipes);
 
   res.status(200).json(GetAllRecipes);
 };
 
+const getRecipesById = async (req, res, next) => {
+  const { id } = req.params;
+  const GetRecipesById = await recipesServices.getRecipesById(id);
+  
+  if (GetRecipesById.error) return next(GetRecipesById);
+
+  res.status(200).json(GetRecipesById);
+};
+
 module.exports = {
   createRecipes,
   getAllRecipes,
+  getRecipesById,
 };

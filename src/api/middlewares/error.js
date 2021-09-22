@@ -29,10 +29,18 @@ function errorsPost(err, res) {
   if (err.item === 'createRecipes') return errorsPostRecipes(err, res);
 }
 
+function errorsGetRecipes(err, res) {
+  return res.status(404).json({ message: 'recipe not found' });
+}
+
+function errorsGet(err, res) {
+  if (err.item === 'getRecipesById') return errorsGetRecipes(err, res);
+}
+
 module.exports = (err, _req, res, _next) => {
-  if (err.verb === 'post') {
-    return errorsPost(err, res);
-  }
+  if (err.verb === 'post') return errorsPost(err, res);
+  
+  if (err.verb === 'get') return errorsGet(err, res);
 
   return res.status(500).json({ message: 'Internal server error' });
 };

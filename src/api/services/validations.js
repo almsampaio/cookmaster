@@ -61,10 +61,16 @@ const validateTokenToCreateRecipes = async (token) => {
   }
 };
 
+const validateRecipeExists = async (id, recipe) => {
+  if (!recipe) return { verb: 'get', item: 'getRecipesById', error: true };
+  return false;
+}; 
+
 module.exports = {
   validateBodyCreateUsers,
   validateSingleUserEmail,
   validateBodyLoginUsers,
   validateBodyCreateRecipes,
   validateTokenToCreateRecipes,
+  validateRecipeExists,
 };

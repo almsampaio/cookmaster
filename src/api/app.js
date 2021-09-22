@@ -21,7 +21,7 @@ app.post('/users', usersControllers.createUsers);
 app.post('/login', usersControllers.loginUsers);
 app.post('/recipes', recipesControllers.createRecipes);
 app.get('/recipes', recipesControllers.getAllRecipes);
-// app.use('/images', express.static('src/uploads/'));
+app.get('/recipes/:id', recipesControllers.getRecipesById);
 
 app.use(middlewares);
 

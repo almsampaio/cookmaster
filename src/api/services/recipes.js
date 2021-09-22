@@ -13,13 +13,20 @@ const createRecipes = async ({ name, ingredients, preparation }, token) => {
   return recipesModels.createRecipes({ name, ingredients, preparation }, validateToken.payload);
 };
 
-const getAllRecipes = async (_token) => recipesModels.getAllRecipes();
+const getAllRecipes = async () => recipesModels.getAllRecipes();
   
-  // const validateToken = await validations
-  //   .validateTokenToCreateRecipes(token);
-  // if (validateToken.error) return validateToken;
+const getRecipesById = async (id) => {
+  const recipeById = await recipesModels.getRecipesById(id);
+  const validateRecipeExists = await validations
+    .validateRecipeExists(id, recipeById);
+  
+  if (validateRecipeExists) return validateRecipeExists;
+   
+  return recipeById;
+};
 
 module.exports = {
   createRecipes,
   getAllRecipes,
+  getRecipesById,
 };
