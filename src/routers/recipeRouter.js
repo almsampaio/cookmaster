@@ -4,7 +4,7 @@ const authorization = require('../auth/verifyToken');
 
 const router = express.Router();
 
-// router.get('/', null);
+router.get('/', recipeController.getAllRecipes);
 // router.get('/:id', null);
 router.post('/', authorization.verifyAuthorization, recipeController.insertRecipe);
 // router.put('/:id', null);

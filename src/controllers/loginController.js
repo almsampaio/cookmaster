@@ -9,6 +9,7 @@ app.use(bodyParser.json());
 const loginController = rescue(async (req, res) => {
   const { email, password } = req.body;
   const result = await loginService.loginService(email, password);
+
   if (result.err) {
     return res.status(result.err.status).json({ message: result.err.message });
   }
