@@ -83,10 +83,31 @@ const deleteInfo = async (id, role, userId) => {
   }
 };
 
+const updateImage = async (id, image, role, userId) => {
+  if (!ObjectId.isValid(id)) return null;
+
+  const recipe = await connection()
+    .then((db) => db.collection('recipes').findOne(new ObjectId(id)));
+
+  if (!recipe) return null;
+
+  if (recipe.userId === userId || role === 'admin') {
+    await connection()
+    .then((db) => db.collection('recipes')
+    .updateOne(recipe, { $set: { image } }));
+
+  const newRecipe = await connection()
+    .then((db) => db.collection('recipes').findOne(new ObjectId(id)));
+
+  return newRecipe;
+  }
+};
+
 module.exports = {
   create,
   getAll,
   findById,
   update,
   deleteInfo,
+  updateImage,
 };
