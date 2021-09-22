@@ -3,6 +3,7 @@ const app = require('./app');
 const Users = require('../controllers/UsersController');
 const Recipes = require('../controllers/RecipesController');
 const Validation = require('../middlewares/validations');
+const upload = require('../middlewares/fileUploader');
 
 const PORT = 3000;
 
@@ -26,3 +27,10 @@ app.get('/recipes/:id', Recipes.getRecipeById);
 app.put('/recipes/:id', Validation.checkToken, Validation.validateJWT, Recipes.updateRecipe);
 
 app.delete('/recipes/:id', Validation.checkToken, Recipes.deleteRecipe);
+
+app.put('/recipes/:id/image', [
+  Validation.checkToken,
+  Validation.validateJWT,
+  upload.single('image'),
+  Recipes.uploadImage,
+  ]);
