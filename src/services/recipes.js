@@ -1,5 +1,4 @@
 const recipeModel = require('../models/recipes');
-// const { getToken } = require('./token');
 
 const INVALID = 'Invalid entries. Try again.';
 
@@ -19,9 +18,6 @@ const addRecipe = async (recipe) => {
   const newRecipe = { name, ingredients, preparation, authorId };
   const insertedRecipe = await recipeModel.addRecipe(newRecipe);
 
-//   if (insertedRecipe === false) {
-//     return { message: 'Email already registered', error: 409 };
-// }
   return insertedRecipe;
 };
 
