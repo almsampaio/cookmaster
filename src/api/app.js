@@ -1,5 +1,7 @@
 const bodyParser = require('body-parser');
 const express = require('express');
+const multer = require('multer');
+const storage = require('./storage');
 const {
   validateUser,
   validateLoginFields,
@@ -14,9 +16,12 @@ const {
   getRecipeById,
   updateRecipe,
   deleteRecipe,
+  insertImage,
 } = require('../controlers');
 
 const app = express();
+
+const upload = multer({ storage });
 
 app.use(bodyParser.json());
 
@@ -35,6 +40,8 @@ app.post('/recipes', validateRecipe, insertRecipe);
 app.get('/recipes/', getAllRecipes);
 
 app.get('/recipes/:id', getRecipeById);
+
+app.put('/recipes/:id/image', validateAuthetication, upload.single('image'), insertImage);
 
 app.put('/recipes/:id', validateAuthetication, updateRecipe);
 

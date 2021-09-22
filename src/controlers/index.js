@@ -1,6 +1,7 @@
 const deleteRecipe = require('./deleteRecipe');
 const getAllRecipes = require('./getAllRecipes');
 const getRecipeById = require('./getRecipeById');
+const insertImage = require('./insertImage');
 const insertRecipe = require('./insertRecipe');
 const insertUserController = require('./insertUserControler');
 const loginController = require('./loginController');
@@ -14,4 +15,5 @@ module.exports = {
     getRecipeById,
     updateRecipe,
     deleteRecipe,
+    insertImage,
 };
