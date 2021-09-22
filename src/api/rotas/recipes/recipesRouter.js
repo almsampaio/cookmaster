@@ -10,6 +10,7 @@ const {
 const {
   createController,
   readAllController,
+  readByIdController,
 } = require('../../controllers/recipes/recipesController');
 
 const router = Router();
@@ -26,6 +27,11 @@ router.post(
 router.get(
   '/',
   readAllController,
+);
+
+router.get(
+  '/:id',
+  readByIdController,
 );
 
 module.exports = router;

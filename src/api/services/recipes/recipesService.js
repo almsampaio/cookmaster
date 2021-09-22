@@ -1,6 +1,7 @@
 const {
   createModel,
   readAllModel,
+  readByIdModel,
 } = require('../../models/recipes/recipesModel');
 
 const createServices = async (name, ingredients, preparation, userId) => {
@@ -15,7 +16,18 @@ const readAllServices = async () => {
   return { data };
 };
 
+const readByIdServices = async (id) => {
+  const data = await readByIdModel(id);
+
+  if (!data) {
+    return { message: 'recipe not found' };
+  }
+
+  return { data };
+};
+
 module.exports = {
   createServices,
   readAllServices,
+  readByIdServices,
 };
