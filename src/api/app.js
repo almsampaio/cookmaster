@@ -16,7 +16,10 @@ app.get('/', (request, response) => {
 
 app.post('/users', userControllers.registerUser);
 app.post('/login', userControllers.login);
+
 app.post('/recipes', validateJWT, recipeControllers.registerRecipe);
+app.get('/recipes', recipeControllers.listRecipes);
+app.get('/recipes/:id', recipeControllers.listRecipesById);
 
 app.use(errorMiddleware);
 
