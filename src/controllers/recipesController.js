@@ -11,11 +11,18 @@ const createRecipe = async (req, res) => {
     return res.status(400).json({ message: 'Invalid entries. Try again.' });
    }
 
-   const recipe = await recipesService.createRecipe(name, ingredients, preparation, userId);
+  const recipe = await recipesService.createRecipe(name, ingredients, preparation, userId);
 
   res.status(201).json(recipe);
 };
 
+const getAllRecipes = async (_req, res) => {
+  const recipe = await recipesService.getAllRecipes();
+
+  res.status(200).json(recipe);
+};
+
 module.exports = {
   createRecipe,
+  getAllRecipes,
 }; 
