@@ -1,6 +1,12 @@
 const RecipeModel = require('../models/RecipeModel');
 const RecipeSchema = require('../schemas/RecipeSchema');
 
+const getAll = async () => {
+  const recipes = await RecipeModel.getAll();
+
+  return recipes;
+};
+
 const create = async (recipe, userId) => {
   const { error } = RecipeSchema.RecipeCreateValidate(recipe);
 
@@ -13,4 +19,5 @@ const create = async (recipe, userId) => {
 
 module.exports = {
   create,
+  getAll,
 };
