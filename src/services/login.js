@@ -1,6 +1,5 @@
-/* const Joi = require('joi'); */
 const errorMessages = require('../utils/errorMessages');
-/* const status = require('../utils/httpStatus'); */
+const httpStatus = require('../utils/httpStatus');
 const models = require('../models');
 
 module.exports = async (body) => {
@@ -14,7 +13,8 @@ module.exports = async (body) => {
 
   if (!user) throw errorMessages.INCORRECT_EMAIL_OR_PASSWORD;
 
-  console.log(user);
-
-  return 'ola';
+  return {
+    status: httpStatus.OK_STATUS,
+    user,
+  };
 };

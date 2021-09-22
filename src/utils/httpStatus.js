@@ -1,3 +1,4 @@
+const OK_STATUS = 200;
 const CREATED_STATUS = 201;
 const BAD_REQUEST = 400;
 const CONFLICT = 409;
@@ -8,4 +9,5 @@ module.exports = {
   BAD_REQUEST,
   CONFLICT,
   UNAUTHORIZED,
+  OK_STATUS,
 };
