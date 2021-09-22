@@ -24,3 +24,5 @@ app.get('/recipes', Recipes.getAllRecipes);
 app.get('/recipes/:id', Recipes.getRecipeById);
 
 app.put('/recipes/:id', Validation.checkToken, Validation.validateJWT, Recipes.updateRecipe);
+
+app.delete('/recipes/:id', Validation.checkToken, Recipes.deleteRecipe);

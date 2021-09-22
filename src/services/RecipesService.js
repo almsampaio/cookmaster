@@ -21,9 +21,15 @@ const updateRecipe = async (name, ingredients, preparation, id) => {
   return { status: 200, data: updatedRecipe };
 };
 
+const deleteRecipe = async (id) => {
+  await Recipes.deleteRecipe(id);
+  return { status: 204 };
+};
+
 module.exports = {
   createRecipe,
   getAllRecipes,
   getRecipeById,
   updateRecipe,
+  deleteRecipe,
 };
