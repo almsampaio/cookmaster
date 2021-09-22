@@ -13,10 +13,10 @@ const createUsers = async (newUser, role = 'user') => {
   const { email } = newUser;
 
   const { error } = validationJoi.validate(newUser);
-  if (error) throw REQUEST_INVALID_ENTRIES;
+  if (error) return REQUEST_INVALID_ENTRIES;
 
   const emailExist = await models.usersModel.usersByEmail(email);
-  if (emailExist) throw EMAIL_CONFLICT;
+  if (emailExist) return EMAIL_CONFLICT;
 
   const user = newUser;
   user.role = role;
