@@ -20,7 +20,7 @@ app.get('/ping', (req, res) => {
 app.post('/users', usersControllers.createUsers);
 app.post('/login', usersControllers.loginUsers);
 app.post('/recipes', recipesControllers.createRecipes);
-// app.use('/recipes', recipes);
+app.get('/recipes', recipesControllers.getAllRecipes);
 // app.use('/images', express.static('src/uploads/'));
 
 app.use(middlewares);

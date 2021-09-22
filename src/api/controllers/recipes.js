@@ -11,6 +11,16 @@ const createRecipes = async (req, res, next) => {
   res.status(201).json(CreateRecipes);
 };
 
+const getAllRecipes = async (req, res, next) => {
+  const token = req.headers.authorization;
+  const GetAllRecipes = await recipesServices.getAllRecipes(token);
+  
+  if (GetAllRecipes.error) return next(GetAllRecipes);
+
+  res.status(200).json(GetAllRecipes);
+};
+
 module.exports = {
   createRecipes,
+  getAllRecipes,
 };
