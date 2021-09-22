@@ -42,8 +42,26 @@ const addRecipes = async (req, res) => {
   }
 };
 
+const updateRecipe = async (req, res) => {
+  try {
+    const { name, ingredients, preparation } = req.body;
+    const { id } = req.params;
+    const userId = req.user;
+    const role = req.userRole;
+    const { code, message, recipe } = await recipesServices.updateRecipe({
+      id, name, ingredients, preparation, userId, role,
+    });
+    return res.status(code).json({ message, ...recipe });
+  } catch (err) {
+    res.status(INTERNAL_SERVER_ERROR).json(
+      { message: 'Erro interno', error: err },
+    );
+  }
+};
+
 module.exports = {
   getAllRecipes,
   getRecipeById,
   addRecipes,
+  updateRecipe,
 };

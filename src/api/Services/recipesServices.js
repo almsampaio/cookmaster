@@ -4,7 +4,9 @@ const { recipesValidations } = require('../helpers/recipesValidations');
 const HTTP_STATUS_CREATED = 201;
 const HTTP_STATUS_OK = 200;
 const HTTP_STATUS_NOT_FOUND = 404;
+const HTTP_STATUS_UNAUTHORIZED = 401;
 const ERROR_MESSAGE = 'recipe not found';
+const ERROR_TOKEN = 'jwt malformed';
 
 const getAllRecipes = async () => {
   const recipes = await recipesModel.getAllRecipes();
@@ -47,8 +49,25 @@ const addRecipes = async (name, ingredients, preparation, userId) => {
   });
 };
 
+const updateRecipe = async (recipeToUpdateParameters) => {
+  const { id, userId, role } = recipeToUpdateParameters;
+  const recipeOwner = await recipesModel.checkRecipeOwner(id, userId);
+  if (recipeOwner || role === 'admin') {
+    const recipe = await recipesModel.updateRecipe(recipeToUpdateParameters);
+    return ({
+      code: HTTP_STATUS_OK,
+      recipe,
+    });
+  }
+  return ({
+    code: HTTP_STATUS_UNAUTHORIZED,
+    message: ERROR_TOKEN,
+  });
+};
+
 module.exports = {
   getAllRecipes,
   getRecipeById,
   addRecipes,
+  updateRecipe,
 };
