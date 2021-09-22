@@ -1,6 +1,7 @@
 const recipeModel = require('../models/recipes');
 
 const INVALID = 'Invalid entries. Try again.';
+const NOT_FOUND = 'recipe not found';
 
 const checkRecipe = (name, ingredients, preparation) => {
   if (typeof name !== 'string') return { message: INVALID, error: 400 };
@@ -27,7 +28,16 @@ const allRecipes = async () => {
   return insertedRecipe;
 };
 
+const recipeId = async (id) => {
+  const recipe = await recipeModel.recipeId(id);
+
+  if (!recipe) return { message: NOT_FOUND, error: 404 };
+
+  return recipe;
+};
+
 module.exports = {
   addRecipe,
   allRecipes,
+  recipeId,
 };
