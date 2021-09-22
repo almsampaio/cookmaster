@@ -38,4 +38,3 @@ exports.validateToken = async ({ token }) => {
     throw unauthorizedError('jwt malformed');
   }
 };
-

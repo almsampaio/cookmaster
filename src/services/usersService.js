@@ -4,8 +4,7 @@ const { validate } = require('email-validator');
 const { usersModel } = require('../models');
 const { conflictError, badRequestError } = require('../validations/Errors');
 
-exports.
-create = async ({ name, email, password }) => {
+exports.create = async ({ name, email, password }) => {
   if ([name, email, password].some(isUndefined) || !validate(email)) {
     throw badRequestError('Invalid entries. Try again.');
   }
