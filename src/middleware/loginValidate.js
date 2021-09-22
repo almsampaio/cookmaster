@@ -6,10 +6,10 @@ const validatePostLogin = (req, _res, next) => {
   const { name, password, email } = req.body;
   const { error } = postLoginValidate.validate({ name, password, email });
 
-  if(error) {
+  if (error) {
     return next({
       err: { message: 'Invalid entries. Try again.' },
-      statusCode: STATUS.STATUS_400_bad_request,
+      statusCode: STATUS.STATUS_400_BAD_REQUEST,
     });
   }
 
@@ -19,10 +19,10 @@ const validatePostLogin = (req, _res, next) => {
 const isUniqueEmail = async (req, _res, next) => {
   const { email } = req.body;
   const user = await findByEmail(email);
-  if(user.length > 0) {
+  if (user.length > 0) {
     return next({
       err: { message: 'Email already registered' },
-      statusCode: STATUS.STATUS_409_conflict,
+      statusCode: STATUS.STATUS_409_CONFLICT,
     });
   }
   next();
@@ -30,5 +30,5 @@ const isUniqueEmail = async (req, _res, next) => {
 
 module.exports = {
   validatePostLogin,
-  isUniqueEmail
-}
+  isUniqueEmail,
+};

@@ -9,7 +9,7 @@ const createUser = async (name, email, passWord) => {
 const findByEmail = async (email) => {
   const user = await userModel.findByEmail(email);
   return user;
-}
+};
 
 module.exports = {
   createUser,
