@@ -1,8 +1,8 @@
 const Recipes = require('../Services/recipeServices');
 
 const createRecipe = async (req, res, next) => {
-  const token = req.headers.authorization;
-  const result = await Recipes.create(req.body, token);
+  const { user } = req;
+  const result = await Recipes.create(req.body, user);
 
   if (result.message) return next(result);
   return res.status(201).json(result);
@@ -21,17 +21,17 @@ const getById = async (req, res, next) => {
 };
 
 const update = async (req, res, next) => {
-  const { authorization: auth } = req.headers; 
+  const { user } = req;
   const { id } = req.params;
-  const result = await Recipes.update(req.body, auth, id);
+  const result = await Recipes.update(req.body, user, id);
   if (result.message) return next(result);
-  return res.status(200).json(result);
+  return res.status(200).json(result.value);
 };
 
 const remove = async (req, res, next) => {
-  const { authorization: auth } = req.headers; 
+  const { user } = req;
   const { id } = req.params;
-  const result = await Recipes.remove(auth, id);
+  const result = await Recipes.remove(user, id);
   if (result.message) return next(result);
   return res.status(204).end();
 };

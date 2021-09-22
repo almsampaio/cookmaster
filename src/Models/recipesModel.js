@@ -3,7 +3,7 @@ const connect = require('./connection');
 
 const create = async (payload) => {
   const recipeId = await connect.getConnection().then((db) =>
-    db.collection('recipes').insertOne(payload))
+    db.collection('recipes').insertOne({ ...payload }))
     .then((result) => result.insertedId);
   return recipeId;
 };
@@ -24,7 +24,7 @@ const update = async (recipeObj, recipeId) => {
   return recipesCollection.findOneAndUpdate(
     { _id: ObjectID(recipeId) },
     { $set: { ...recipeObj } },
-    { returnDocument: 'after' },
+    { returnOriginal: false },
   );
 };
 
