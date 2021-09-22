@@ -1,8 +1,20 @@
 const rescue = require('express-rescue');
+const multer = require('multer');
+const path = require('path');
 
 const service = require('../services/recipesService');
 
 const ERROR_MESSAGE = 'Invalid entries. Try again.';
+
+const storage = multer.diskStorage({
+  destination: path.join(__dirname, '..', '/uploads'),
+  filename: (req, _file, callback) => {
+    const { id } = req.params;
+    callback(null, `${id}.jpeg`);
+  },
+});
+
+const upload = multer({ storage });
 
 const create = rescue(async (req, res) => {
   const { name, ingredients, preparation } = req.body;
@@ -59,9 +71,18 @@ const deleteInfo = rescue(async (req, res) => {
 
   await service.deleteInfo(id, role, userId);
 
-  // if (updateProduct.err) return res.status(404).json({ message: updateProduct.err.message });
-
   res.status(204).json();
+});
+
+const updateImage = rescue(async (req, res) => {
+  const { id } = req.params;
+   const { _id, role } = req.user;
+   const { filename } = req.file;
+   const userId = _id;
+
+   const updateProduct = await service.updateImage(id, filename, role, userId);
+
+   res.status(200).json(updateProduct);
 });
 
 module.exports = {
@@ -70,4 +91,6 @@ module.exports = {
   findById,
   update,
   deleteInfo,
+  upload,
+  updateImage,
 };
