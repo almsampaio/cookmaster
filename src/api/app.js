@@ -23,6 +23,7 @@ app.post('/users', Users.create);
 
 // Endpoit para Receitas
 
+app.get('/recipes', Recipes.getAll);
 app.post('/recipes', validateJWT, Recipes.create);
 
 module.exports = app;
