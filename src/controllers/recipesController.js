@@ -17,3 +17,11 @@ exports.readMany = async (_req, res) => {
     .then(({ code, result }) => res.status(code).json(result))
     .catch(({ code, message }) => res.status(code).json({ message }));
 };
+
+exports.readOne = async (req, res) => {
+  const { id } = req.params;
+  recipesService
+    .readOne({ id })
+    .then(({ code, result }) => res.status(code).json(result))
+    .catch(({ code, message }) => res.status(code).json({ message }));
+};

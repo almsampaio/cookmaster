@@ -16,4 +16,6 @@ routes.post('/users', usersController.create);
 routes.post('/login', loginController.login);
 routes.post('/recipes', recipesController.create);
 routes.get('/recipes', recipesController.readMany);
+routes.get('/recipes/:id', recipesController.readOne);
+
 module.exports = routes;

@@ -1,7 +1,8 @@
 const { isUndefined } = require('lodash/fp');
 const jwt = require('jsonwebtoken');
 const { StatusCodes } = require('http-status-codes');
-const { badRequestError, unauthorizedError } = require('../validations/Errors');
+const { badRequestError, unauthorizedError,
+  notFoundError } = require('../validations/Errors');
 const { secret } = require('../validations/auth/secret');
 const { recipesModel } = require('../models');
 
@@ -18,6 +19,15 @@ exports.create = async ({ name, ingredients, preparation, decoded }) => {
 exports.readMany = async () => {
   const recipes = await recipesModel.find({});
   return { code: StatusCodes.OK, result: recipes };
+};
+
+exports.readOne = async ({ id }) => {
+  try {
+    const recipe = await recipesModel.findById(id);
+    return { code: StatusCodes.OK, result: recipe };
+  } catch (_err) {
+    throw notFoundError('recipe not found');
+  }
 };
 
 exports.validateToken = async ({ token }) => {
