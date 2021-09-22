@@ -17,9 +17,16 @@ const create = rescue(async (req, res) => {
 
    const createRecipe = await service.create(name, ingredients, preparation, userId);
 
-   res.status(201).json(createRecipe);
+  return res.status(201).json(createRecipe);
+});
+
+const getAll = rescue(async (_req, res) => {
+  const recipesArray = await service.getAll();
+
+  return res.status(200).json(recipesArray);
 });
 
 module.exports = {
   create,
+  getAll,
 };
