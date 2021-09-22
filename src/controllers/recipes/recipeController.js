@@ -18,7 +18,7 @@ const getAllRecipesController = async (req, res) => {
 const getRecipeByIdController = async (req, res) => {
     const { id } = req.params;
     const recipe = await recipeService.getRecipeByIdService(id);
-    return res.status(recipe.status).json({ message: recipe.message });
+    return res.status(recipe.status).json(recipe.message);
 };
 
 const editRecipeController = async (req, res) => {

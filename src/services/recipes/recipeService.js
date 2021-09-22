@@ -20,7 +20,9 @@ const getAllRecipesService = async () => {
 };
 
 const getRecipeByIdService = async (id) => {
-    if (!ObjectId.isValid(id)) return { status: 404, message: 'recipe not found' };
+    if (!ObjectId.isValid(id)) {
+        return { status: 404, message: { message: 'recipe not found' } };
+    }
     const objId = ObjectId(id);    
     const recipe = await recipeModel.getRecipeByIdModel(objId);
     return { status: 200, message: recipe };
