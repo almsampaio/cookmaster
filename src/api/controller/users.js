@@ -19,7 +19,17 @@ const findUser = rescue(
   },
 );
 
+const addRecipes = rescue(
+  async (req, res) => {
+    const { authorization } = req.headers;
+    const recipe = await serviceUsers.addRecipes(req.body, authorization);
+
+    return res.status(201).json({ recipe });
+  },
+);
+
 module.exports = {
   addUser,
   findUser,
+  addRecipes,
 };

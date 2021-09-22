@@ -2,6 +2,7 @@ const jwt = require('jsonwebtoken');
 const ModelUsers = require('../model/users');
 
 const re = /\S+@\S+\.\S+/;
+const secret = 'Cookmaster';
 
 const util = (status, message) => ({ status, message });
 
@@ -19,6 +20,16 @@ const validateEmailAndPassword = (email, password) => {
   if (!email) return null;
 
   if (!password) return null;
+
+  return true;
+};
+
+const validateRecipe = ({ name, preparation, ingredients }) => {
+  if (!name) return null;
+
+  if (!preparation) return null;
+
+  if (!ingredients) return null;
 
   return true;
 };
@@ -46,14 +57,35 @@ const findUser = async (email, password) => {
 
   if (!user) throw util(401, 'Incorrect username or password');
 
-  const payload = { email, password };
+  const payload = user;
 
-  const token = jwt.sign(payload, 'Cookemaster');
+  const token = jwt.sign(payload, secret);
 
   return token;
+};
+
+const addRecipes = async (recipe, token) => {
+  const recipeValidate = validateRecipe(recipe);
+
+  if (!recipeValidate) throw util(400, 'Invalid entries. Try again.');
+
+  if (!token) throw util(401, 'jwt malformed');
+
+  let id;
+  try {
+    const { _id } = jwt.verify(token, secret);
+    id = _id;
+  } catch (_err) {
+    throw util(401, 'jwt malformed');
+  }
+
+  const newRecipe = await ModelUsers.addRecipes({ userId: id, ...recipe });
+
+  return newRecipe;
 };
 
 module.exports = {
   addUser,
   findUser,
+  addRecipes,
 };

@@ -18,8 +18,15 @@ const findUser = async (email, password) => {
   return value;
 };
 
+const addRecipes = async (recipe) => {
+  const value = await connection()
+    .then((db) => db.collection('recipes').insertOne(recipe));
+  return value.ops[0];
+};
+
 module.exports = {
   addUser,
   findEmail,
   findUser,
+  addRecipes,
 };
