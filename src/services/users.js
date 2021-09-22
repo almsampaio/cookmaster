@@ -9,7 +9,6 @@ const createUser = async (name, email, password) => {
   const validateEmail = await validations.validateUserEmail(email);
   const validateName = validations.validateUserName(name);
   const validatePassword = validations.validateUserPassword(password);
-  console.log(validateEmail);
   if (validateEmail.code) return validateEmail;
   if (validateName.code) return validateName;
   if (validatePassword.code) return validatePassword;
@@ -29,7 +28,6 @@ const createUser = async (name, email, password) => {
 const loginUser = async (email, password) => {
   const validateInputs = await validateLogin.validateLoginInputs(email, password);
   const validateCredentials = await validateLogin.validateLoginCredentials(email, password);
-  console.log(validateCredentials, 'SERVICE');
   if (validateInputs.errorCode) return validateInputs;
   if (validateCredentials.errorCode) return validateCredentials;
 

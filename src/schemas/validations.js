@@ -33,7 +33,7 @@ const validateUserEmail = async (email) => {
   const emailRegex = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+(\.[a-z]+)?$/i;
   if (emailRegex.test(email) === false) {
     return { 
-       code: 400,
+       errorCode: 400,
        errorInfo: { message: 'Invalid entries. Try again.' },
      }; 
    }
