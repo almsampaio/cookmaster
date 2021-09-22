@@ -57,11 +57,11 @@ const deleteInfo = rescue(async (req, res) => {
   const { _id, role } = req.user;
   const userId = _id;
 
-  const updateProduct = await service.deleteInfo(id, role, userId);
+  await service.deleteInfo(id, role, userId);
 
-  if (updateProduct.err) return res.status(404).json({ message: updateProduct.err.message });
+  // if (updateProduct.err) return res.status(404).json({ message: updateProduct.err.message });
 
-  res.status(200).json();
+  res.status(204).json();
 });
 
 module.exports = {
