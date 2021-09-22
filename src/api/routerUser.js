@@ -4,11 +4,13 @@ const { emailValidated } = require('../middlewares/emailValidated');
 const nameValidated = require('../middlewares/nameValidated');
 const passwordValidated = require('../middlewares/passwordValidated');
 
-const router = express.Router();
+const Userrouter = express.Router();
+const Authentication = express.Router();
 
 const userValidated = [nameValidated, emailValidated, passwordValidated];
-
+// const authValidated = [emailValidated, passwordValidated];
 // Requisito 1 - Cadastro de Usuários
-router.post('/', userValidated, UserController.userRegistration);
-
-module.exports = router;
+Userrouter.post('/', userValidated, UserController.userRegistration);
+// Requisito 2 - 
+Authentication.post('/', UserController.login);
+module.exports = { Userrouter, Authentication };

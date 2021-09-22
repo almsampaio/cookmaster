@@ -7,7 +7,8 @@ const app = express();
 
 app.use(bodyParser.json());
 
-app.use('/users', routerUser);
+app.use('/users', routerUser.Userrouter);
+app.use('/login', routerUser.Authentication);
 // Não remover esse end-point, ele é necessário para o avaliador
 app.get('/', (request, response) => {
   response.send();

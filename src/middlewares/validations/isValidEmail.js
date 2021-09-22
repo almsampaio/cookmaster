@@ -1,9 +1,6 @@
 const Joi = require('joi');
+const validEmail = require('./regex');
 
-const validEmail = (email) => {
-  const response = /\S+@\S+\.\S+/;
-  return response.test(email);
-};
 const isValidEmail = (email) => {
   const response = Joi.string().email().required().validate(email);
   const regex = validEmail(email);
@@ -15,4 +12,4 @@ const isValidEmail = (email) => {
   }
 };
 
-module.exports = { isValidEmail };
+module.exports = { isValidEmail, validEmail };
