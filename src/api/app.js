@@ -2,6 +2,7 @@ const app = require('express')();
 const bodyParser = require('body-parser');
 const userRouter = require('../routers/userRouter');
 const loginRouter = require('../routers/loginRouter');
+const recipesRouter = require('../routers/recipeRouter');
 require('dotenv').config();
 
 // const path = require('path');
@@ -10,6 +11,7 @@ app.use(bodyParser.json());
 
 app.use('/users', userRouter);
 app.use('/login', loginRouter);
+app.use('/recipes', recipesRouter);
 
 // Não remover esse end-point, ele é necessário para o avaliador
 app.get('/', (_request, response) => {
