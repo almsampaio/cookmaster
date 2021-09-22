@@ -20,8 +20,12 @@ const getRecipes = async (_req, res, _next) => {
 
 const getRecipeById = async (req, res, next) => {
   const { id } = req.params;
+
+  // Adelino Júnior
+  // https://github.com/AdelinoJnr
+
   if (!ObjectId.isValid(id)) {
-    next(errorNotFound);
+    return next(errorNotFound);
   }
   const recipe = await recipesService.getRecipeById(id);
   if (!recipe) return next(errorNotFound);
@@ -31,7 +35,9 @@ const getRecipeById = async (req, res, next) => {
 const updateRecipe = async (req, res, next) => {
   const { id } = req.params;
   const { name, ingredients, preparation } = req.body;
-  if (!ObjectId.isValid(id)) return next(errorNotFound);
+  if (!ObjectId.isValid(id)) {
+    return next(errorNotFound);
+  }
 
   const updatedRecipe = await recipesService.updateRecipe(id, name, ingredients, preparation);
 

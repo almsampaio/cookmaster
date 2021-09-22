@@ -18,8 +18,6 @@ const storage = multer.diskStorage({
   },
 });
 
-// route.use('/images', express.static(path.join(__dirname, '..', 'uploads')));
-
 const upload = multer({ storage });
 
 const { validateRecipePayload, validateUserRoleToAddImage } = require('../middlewares/recipes');
