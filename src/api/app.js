@@ -27,6 +27,7 @@ app.put('/recipes/:id', validateJWT, recipeControllers.editRecipe);
 app.delete('/recipes/:id', validateJWT, recipeControllers.deleteRecipe);
 app.put('/recipes/:id/image/',
 validateJWT, uploadImg.upload.single('image'), recipeControllers.addImg);
+app.post('/users/admin', validateJWT, userControllers.registerUserAdmin);
 
 app.use('/images', express.static(join(__dirname, '..', 'uploads')));
 

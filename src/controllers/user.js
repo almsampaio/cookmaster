@@ -16,8 +16,30 @@ const registerUser = async (req, res, next) => {
     return res.status(400).json({ message: 'Invalid entries. Try again.' });
   }
 
+  // const role = req.user ? req.user.role : 'user';
+
   const { name, email, password } = req.body;
-  const result = await userModels.registerUser(name, email, password);
+  const result = await userModels.registerUser(name, email, password, 'user');
+  if (result.error) return next(result.error);
+
+  res.status(201).json(result);
+};
+
+const registerUserAdmin = async (req, res, next) => {
+  const { error } = registerJoi.validate(req.body);
+
+  if (error) {
+    return res.status(400).json({ message: 'Invalid entries. Try again.' });
+  }
+
+  const { role } = req.user;
+  if (role !== 'admin') {
+    return res.status(403).json(
+      { message: 'Only admins can register new admins' },
+    );
+  }
+  const { name, email, password } = req.body;
+  const result = await userModels.registerUser(name, email, password, role);
   if (result.error) return next(result.error);
 
   res.status(201).json(result);
@@ -60,4 +82,5 @@ const login = async (req, res, _next) => {
 module.exports = {
   registerUser,
   login,
+  registerUserAdmin,
 };

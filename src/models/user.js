@@ -12,19 +12,19 @@ const checkEmail = async (email) => {
   };
 };
 
-const registerUser = async (name, email, password) => {
+const registerUser = async (name, email, password, role) => {
   const emailExists = await checkEmail(email);
   if (emailExists) return emailExists;
 
   const db = await mongoConnection.getConnection();
   const { insertedId: id } = await db.collection('users')
-    .insertOne({ name, email, password, role: 'user' });
+    .insertOne({ name, email, password, role });
 
   return { user: {
     name,
     email, 
-    role: 'user',
-    id,
+    role,
+    _id: id,
   } };
 };
 
