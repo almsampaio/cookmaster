@@ -17,6 +17,16 @@ const create = async (payload, token) => {
   }
 };
 
+const getAll = async () => Recipes.get('all');
+
+const getById = async (id) => {
+  const recipes = await Recipes.get(id);
+  if (!recipes) return builtError(404, 'recipe not found');
+  return recipes;
+};
+
 module.exports = {
   create,
+  getAll,
+  getById,
 };
