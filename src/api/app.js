@@ -19,4 +19,8 @@ const loginRouter = require('../routers/loginRouter');
 
 app.use('/login', loginRouter);
 
+const recipeRouter = require('../routers/recipeRouter');
+
+app.use('/recipes', recipeRouter);
+
 module.exports = app;
