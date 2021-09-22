@@ -9,6 +9,7 @@ const getAll = async (_req, res) => {
 const create = async (req, res) => {
   const all = { user: req.user, recipe: req.body };
   const result = await recipeService.create(all);
+  if (result.msg) return res.status(result.status).json(result.msg);
   res.status(httpStatus.CREATED).json(result);
 };
 
