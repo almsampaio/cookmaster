@@ -37,8 +37,27 @@ const getRecipeById = async (id) => {
   return { result };
 };
 
+const editRecipeById = async (recipeId, { id, name, ingredients, preparation, role }) => {
+  const { value, error } = validateRecipe.validate({ name, ingredients, preparation });
+
+  if (error) return { error: INVALID_ENTRIES };
+
+  const { result: { userId } } = await getRecipeById(recipeId);
+
+  if (userId !== id && role !== 'admin') {
+    return { error: INVALID_ENTRIES };
+  }
+
+  const result = await recipesModel.editRecipeById(recipeId, value);
+
+  if (!result) return { error: RECIPE_NOT_FOUND };
+
+  return { result };
+};
+
 module.exports = {
   createRecipe,
   getRecipes,
   getRecipeById,
+  editRecipeById,
 };
