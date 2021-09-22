@@ -38,13 +38,12 @@ const loginUser = async (email, password) => {
   return { code: 401, message: 'All fields must be filled' };
   }
 
-  const user = await usersModel.getEmail(email);
+  const user = await usersModel.getByEmail(email);
   if (!user || user.password !== password) {
     return { code: 401, message: 'Incorrect username or password' };
   }
 
   const token = createToken(user);
-  console.log(token);
   return { token };
 };
 

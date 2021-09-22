@@ -24,10 +24,7 @@ const create = rescue(async (req, res) => {
 
 const loginUser = rescue(async (req, res) => {
   const { email, password } = req.body;
-  console.log(email, password);
   const { message, code, token } = await usersService.loginUser(email, password);
-
-  console.log(token, message, code);
 
   if (message) {
     return res.status(code).json({ message });

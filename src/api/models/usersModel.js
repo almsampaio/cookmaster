@@ -7,9 +7,9 @@ const getAll = async () => {
   return users;
 };
 
-const getEmail = async (email) => {
+const getByEmail = async (email) => {
   const db = await connect();
-  const userEmail = db.collection('users').findOne({ email });
+  const userEmail = await db.collection('users').findOne({ email });
 
   return userEmail;
 };
@@ -21,4 +21,4 @@ const create = async (name, email, password, role) => {
   return { name, email, role, _id: user.insertedId };
 };
 
-module.exports = { getAll, getEmail, create };
+module.exports = { getAll, getByEmail, create };

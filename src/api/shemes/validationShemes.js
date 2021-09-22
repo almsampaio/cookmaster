@@ -21,11 +21,18 @@ const emptyFields = (name, email, password) => {
 };
 
 const emailAlreadyRegistered = async (email) => {
-  const fetchEmail = await usersModel.getEmail(email);
+  const fetchEmail = await usersModel.getByEmail(email);
   if (fetchEmail) {
     return error.emailAlreadyRegistered;
   }
   return {};
 };
 
-module.exports = { requiredFields, emptyFields, emailAlreadyRegistered };
+const requiredFialdsRecipes = (name, ingredients, preparation) => {
+  if (!name || !ingredients || !preparation) {
+    return error.invalidEntries;
+  }
+  return {};
+};
+
+module.exports = { requiredFields, emptyFields, emailAlreadyRegistered, requiredFialdsRecipes };
