@@ -10,13 +10,18 @@ const createRecipeController = async (req, res) => {
 };
 
 const getAllRecipesController = async (req, res) => {
-
     const recipes = await createRecipeService.getAllRecipesService();
-
     return res.status(200).json(recipes);
+};
+
+const getRecipeByIdController = async (req, res) => {
+    const { id } = req.params;
+    const recipe = await createRecipeService.getRecipeByIdService(id);
+    return res.status(recipe.status).json({ message: recipe.message });
 };
 
 module.exports = {
     createRecipeController,
     getAllRecipesController,
+    getRecipeByIdController,
 };
