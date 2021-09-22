@@ -14,7 +14,7 @@ async function addRecipe(req, res) {
   res.status(code).json({ recipe });
 }
 
-async function getAll(req, res) {
+async function getAll(_req, res) {
   const recipes = await recipeService.getAll();
   res.status(200).json(recipes);
 }
