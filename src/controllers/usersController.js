@@ -8,8 +8,8 @@ async function createUser(req, res) {
     return res.status(createNewUser.error.status)
       .json({ message: createNewUser.error.message });
   }
-
-  return res.status(201).json(createNewUser.ops[0]);
+  console.log({ user: createNewUser });
+  return res.status(201).json(createNewUser);
 }
 
 module.exports = {
