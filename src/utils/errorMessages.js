@@ -22,7 +22,7 @@ const INCORRECT_EMAIL_OR_PASSWORD = {
 
 const JWT_MALFORMED = {
   status: httpStatus.UNAUTHORIZED,
-  err: 'jwt malformed',
+  err: { message: 'jwt malformed' },
 };
 
 const UNAUTHORIZED_MISSING_TOKEN = {

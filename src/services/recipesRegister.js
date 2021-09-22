@@ -5,9 +5,11 @@ const models = require('../models');
 module.exports = async (req) => {
   const { body } = req;
   const { name, ingredients, preparation } = body;
-  const { user: { id } } = req;
+  const { user: { _id } } = req;
 
-  const newBody = { ...body, userId: id };
+  const newBody = { ...body, userId: _id };
+
+  console.log(newBody);
 
   if (!name || !ingredients || !preparation) {
     throw errorMessages.INVALID_ENTRIES;
