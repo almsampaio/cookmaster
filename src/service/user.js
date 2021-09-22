@@ -37,7 +37,14 @@ const login = async (email, password) => {
   return token;
 };
 
+const getAll = async () => {
+  const result = await userModel.getAll();
+  if (!result) throw errorObjects.notFound;
+  return result;
+};
+
 module.exports = {
   newUser,
   login,
+  getAll,
 };

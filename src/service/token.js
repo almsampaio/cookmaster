@@ -9,8 +9,9 @@ const generateToken = (userId) => {
   return token;
 };
 
-const verifyToken = (req, res, next) => {
+const verifyToken = (req, _res, next) => {
   const authToken = req.headers.authorization;
+  if (!authToken || authToken === '') throw errorObjects.missingAuthToken;
   try { 
     const validToken = jwt.verify(authToken, secret);
     const { userId } = validToken;

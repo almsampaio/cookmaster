@@ -23,9 +23,19 @@ const jwtMalformed = {
   status: 401,
 };
 
+const missingAuthToken = {
+  message: 'missing auth token',
+  status: 401,
+};
+
 const notFound = {
   message: 'recipe not found',
   status: 404,
+};
+
+const editionUnauthorized = {
+  message: 'This user cannot edit this recipe',
+  status: 401,
 };
 
 module.exports = {
@@ -35,4 +45,6 @@ module.exports = {
   incorrectUsernameOrPassword,
   jwtMalformed,
   notFound,
+  editionUnauthorized,
+  missingAuthToken,
 };

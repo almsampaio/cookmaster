@@ -12,20 +12,37 @@ const create = async (name, ingredients, preparation, userId) => {
 const getAll = async () => {
   const result = await connection()
     .then((db) => db.collection('recipes').find({}).toArray());
-  console.log(result);
   return (result);
 };
 
 const getOne = async (recipeId) => {
-  console.log(recipeId);
   if (!ObjectId.isValid(recipeId)) return null;
   const result = await connection()
     .then((db) => db.collection('recipes').findOne({ _id: ObjectId(recipeId) }));
   return (result);
 };
 
+const editOne = async (recipeId, updatedRecipe) => {
+  if (!ObjectId.isValid(recipeId)) return null;
+  const result = await connection()
+    .then((db) => db.collection('recipes').findOneAndUpdate(
+      { _id: ObjectId(recipeId) }, { $set: updatedRecipe }, { returnOriginal: false },
+    ));
+  return (result);
+};
+
+const deleteOne = async (recipeId) => {
+  if (!ObjectId.isValid(recipeId)) return null;
+  const result = await connection()
+    .then((db) => db.collection('recipes').deleteOne({ _id: ObjectId(recipeId) }));
+  console.log(result);
+  return result;
+};
+
 module.exports = {
   create,
   getAll,
   getOne,
+  editOne,
+  deleteOne,
 };

@@ -17,8 +17,25 @@ const getOne = async (req, res) => {
   return res.status(200).json(result);
 };
 
+const editOne = async (req, res) => {
+  const userId = req.user;
+  const updatedRecipe = req.body;
+  const { id } = req.params;
+  const result = await recipeService.editOne(userId, id, updatedRecipe);
+  return res.status(200).json(result);
+};
+
+const deleteOne = async (req, res) => {
+  const { id } = req.params;
+  const userId = req.user;
+  await recipeService.deleteOne(id, userId);
+  return res.status(204).json();
+};
+
 module.exports = {
   create,
   getAll,
   getOne,
+  editOne,
+  deleteOne,
 };
