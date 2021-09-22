@@ -4,10 +4,10 @@ const authorization = require('../auth/verifyToken');
 
 const router = express.Router();
 
+router.get('/:id', recipeController.getRecipeById);
 router.get('/', recipeController.getAllRecipes);
-// router.get('/:id', null);
-router.post('/', authorization.verifyAuthorization, recipeController.insertRecipe);
 // router.put('/:id', null);
+router.post('/', authorization.verifyAuthorization, recipeController.insertRecipe);
 // router.delete('/:id', null);
 
 module.exports = router;

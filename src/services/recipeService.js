@@ -14,7 +14,17 @@ const getAllRecipes = async () => {
   return result;
 };
 
+const getRecipeById = async (id) => {
+  const recipe = await recipesModel.getRecipeById(id);
+
+  if (!recipe) {
+    return { err: { status: 404, message: 'recipe not found' } };
+  }
+  return recipe;
+};
+
 module.exports = {
   createRecipe,
   getAllRecipes,
+  getRecipeById,
 };
