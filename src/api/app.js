@@ -3,7 +3,7 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const userController = require('../controllers/user');
 const recipesController = require('../controllers/recipes');
-const { authToken, authRecipeToken } = require('../middlewares/authToken');
+const { authToken } = require('../middlewares/authToken');
 const errorMiddleware = require('../middlewares/error');
 
 const app = express();
@@ -21,9 +21,12 @@ app.get('/', (request, response) => {
 app.post('/users', userController.addUser);
 
 app.post('/login', userController.login);
+
+app.put('/recipes/:id', authToken, recipesController.updateRecipeId);
 app.get('/recipes/:id', recipesController.recipeId);
 app.post('/recipes', authToken, recipesController.addRecipe);
 app.get('/recipes', recipesController.allRecipes);
+
 app.use('*', (req, res) => {
   res.status(404).json({ message: 'page Not Found' });
 });

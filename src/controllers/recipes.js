@@ -28,8 +28,22 @@ const recipeId = async (req, res) => {
   return res.status(200).json(recipe);
 };
 
+const updateRecipeId = async (req, res) => {
+  const { name, ingredients, preparation } = req.body;
+  const { id } = req.params;
+
+  const recipeToUpdate = { id, name, ingredients, preparation };
+
+  const recipe = await recipeService.updateRecipeId(recipeToUpdate);
+
+  if (recipe.error) return res.status(recipe.error).json({ message: recipe.message });
+
+  return res.status(200).json(recipe);
+};
+
 module.exports = {
   addRecipe,
   allRecipes,
   recipeId,
+  updateRecipeId,
 };

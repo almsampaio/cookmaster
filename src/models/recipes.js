@@ -29,8 +29,23 @@ const recipeId = async (id) => {
   return recipe;
 };
 
+const updateRecipeId = async (obj) => {
+  const { id, name, ingredients, preparation } = obj;
+  if (!ObjectId.isValid(id)) return false;
+
+  const connectionDb = await connection();
+
+const update = await connectionDb.collection('recipes')
+.findOneAndUpdate({ _id: ObjectId(id) }, { $set: { name, ingredients, preparation } });
+
+if (!update) return false;
+
+  return { ...update.value, ...obj };
+};
+
 module.exports = {
   addRecipe,
   allRecipes,
   recipeId,
+  updateRecipeId,
 };
