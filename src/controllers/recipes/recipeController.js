@@ -7,7 +7,7 @@ const createRecipeController = async (req, res) => {
     const recipe = await recipeService
         .createRecipeService(name, ingredients, preparation, authorId);
 
-    return res.status(recipe.status).json({ recipe: recipe.message });
+    return res.status(recipe.status).json(recipe.message);
 };
 
 const getAllRecipesController = async (req, res) => {
