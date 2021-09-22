@@ -4,6 +4,7 @@ const loginController = require('../controllers/loginController');
 const userController = require('../controllers/userController');
 const postRecipieController = require('../controllers/postRecipieController');
 const authMiddleware = require('../middlewares/authMiddleware');
+const getRecipieController = require('../controllers/getRecipeController');
 
 const app = express();
 
@@ -18,5 +19,6 @@ app.get('/', (request, response) => {
 app.post('/users', userController);
 app.post('/login', loginController);
 app.post('/recipes', authMiddleware, postRecipieController);
+app.get('/recipes', getRecipieController);
 
 module.exports = app;
