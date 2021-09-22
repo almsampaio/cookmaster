@@ -52,9 +52,22 @@ const update = rescue(async (req, res) => {
    res.status(200).json(updateProduct);
 });
 
+const deleteInfo = rescue(async (req, res) => {
+  const { id } = req.params;
+  const { _id, role } = req.user;
+  const userId = _id;
+
+  const updateProduct = await service.deleteInfo(id, role, userId);
+
+  if (updateProduct.err) return res.status(404).json({ message: updateProduct.err.message });
+
+  res.status(200).json();
+});
+
 module.exports = {
   create,
   getAll,
   findById,
   update,
+  deleteInfo,
 };

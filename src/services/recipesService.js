@@ -36,9 +36,25 @@ const update = async (id, body, role, userId) => {
   return Recipes.update(id, body, role, userId);
 };
 
+const deleteInfo = async (id, body, role, userId) => {
+  const recipe = await Recipes.findById(id);
+
+  if (!recipe) {
+    return {
+      err: {
+        code: 'invalid_data',
+        message: 'recipe not found',
+      },
+    };
+  }
+
+  return Recipes.deleteInfo(id, role, userId);
+};
+
 module.exports = {
   create,
   getAll,
   findById,
   update,
+  deleteInfo,
 };
