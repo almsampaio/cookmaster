@@ -2,7 +2,7 @@ const recipesModel = require('../models/recipesModel');
 
 const validatingData = (name, ingredients, preparation) => {
   if (!name || !ingredients || !preparation) {
-    return { status: 400, message: { message: 'Invalid entries. Try again' } };
+    return { status: 400, message: { message: 'Invalid entries. Try again.' } };
   }
   return false;
 };
