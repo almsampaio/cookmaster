@@ -55,9 +55,21 @@ async function updateRecipe({ id, name, ingredients, preparation }) {
   };
 }
 
+async function deleteRecipe(id) {
+  if (!ObjectId.isValid(id)) return null;
+
+  const db = await mongoConnection.getConnection();
+  await db.collection('recipes').deleteOne(
+    { _id: ObjectId(id) },
+  );
+
+  return { _id: ObjectId(id) };
+}
+
 module.exports = {
   addRecipe,
   getAll,
   getById,
   updateRecipe,
+  deleteRecipe,
 };
