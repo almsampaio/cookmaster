@@ -13,6 +13,7 @@ app.use(bodyParser.json());
 app.post('/users', rescue(userController.newUser));
 app.post('/login', rescue(userController.login));
 app.post('/recipes', rescue(verifyToken), rescue(recipeController.create));
+app.get('/recipes/:id', rescue(recipeController.getOne));
 app.get('/recipes', rescue(recipeController.getAll));
 // Não remover esse end-point, ele é necessário para o avaliador
 app.get('/', (request, response) => {

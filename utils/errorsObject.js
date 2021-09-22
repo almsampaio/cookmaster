@@ -24,7 +24,7 @@ const jwtMalformed = {
 };
 
 const notFound = {
-  message: 'not found',
+  message: 'recipe not found',
   status: 404,
 };
 

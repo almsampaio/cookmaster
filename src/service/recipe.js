@@ -18,7 +18,15 @@ const create = async (name, ingredients, preparation, userId) => {
 };
 
 const getAll = async () => {
+  console.log('passou no getAll');
   const result = await recipeModel.getAll();
+  if (!result) throw errorObjects.notFound;
+  return result;
+};
+
+const getOne = async (recipeId) => {
+  console.log(recipeId);
+  const result = await recipeModel.getOne(recipeId);
   if (!result) throw errorObjects.notFound;
   return result;
 };
@@ -26,4 +34,5 @@ const getAll = async () => {
 module.exports = {
   create,
   getAll,
+  getOne,
 };
