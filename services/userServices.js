@@ -5,8 +5,8 @@ const getAll = async () => {
   return users;
 };
 
-const create = async (name, email, password) => {
-  const newUser = await userModel.create(name, email, password);
+const create = async (name, email, password, role) => {
+  const newUser = await userModel.create(name, email, password, role);
   return newUser;
 };
 

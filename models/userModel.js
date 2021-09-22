@@ -26,9 +26,9 @@ const getById = async (id) => {
   return user;
 };
 
-const create = async (name, email, password) => {
+const create = async (name, email, password, role) => {
   const newUser = await connection().then((db) => db
-  .collection('users').insertOne({ name, email, password, role: 'user' }))
+  .collection('users').insertOne({ name, email, password, role: role || 'user' }))
   .then((res) => {
     console.log(res, 'create user Model');
     return res.ops[0];
@@ -45,9 +45,23 @@ const findUser = async (username) => {
   return soughtUser;
 };
 
+const findUserByEmail = async (email) => {
+  const soughtUser = await connection().then((db) => db
+  .collection('users').findOne({ email })).then((res) => {
+    console.log(res, 'find User by Email model');
+   return res === null 
+   ? ({ message: 'User not found' }) : (
+    { data: res }
+  ); 
+}).catch((err) => console.log(err));
+
+  return soughtUser;
+};
+
 module.exports = {
   getAll,
   getById,
   create,
   findUser,
+  findUserByEmail,
 };
