@@ -1,5 +1,13 @@
 const RecipeService = require('../services/RecipeService');
 
+const remove = async (req, res) => {
+  const { id } = req.params;
+
+  await RecipeService.remove(id);
+
+  res.status(204).end();
+};
+
 const update = async (req, res) => {
   const { id } = req.params;
   const { name, ingredients, preparation } = req.body;
@@ -53,4 +61,5 @@ module.exports = {
   getAll,
   getById,
   update,
+  remove,
 };
