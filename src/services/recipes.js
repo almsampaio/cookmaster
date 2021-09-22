@@ -10,17 +10,24 @@ const checkRecipe = (name, ingredients, preparation) => {
 };
 
 const addRecipe = async (recipe) => {
-  const { name, ingredients, preparation, authorId } = recipe;
+  const { name, ingredients, preparation, userId } = recipe;
 
   const check = checkRecipe(name, ingredients, preparation);
   if (check) return check;
 
-  const newRecipe = { name, ingredients, preparation, authorId };
+  const newRecipe = { name, ingredients, preparation, userId };
   const insertedRecipe = await recipeModel.addRecipe(newRecipe);
+
+  return insertedRecipe;
+};
+
+const allRecipes = async () => {
+  const insertedRecipe = await recipeModel.allRecipes();
 
   return insertedRecipe;
 };
 
 module.exports = {
   addRecipe,
+  allRecipes,
 };
