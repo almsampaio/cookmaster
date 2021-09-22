@@ -1,6 +1,10 @@
 const RecipeModel = require('../models/RecipeModel');
 const RecipeSchema = require('../schemas/RecipeSchema');
 
+const remove = async (id) => {
+  await RecipeModel.remove(id);
+};
+
 const update = async (id, newDataRecipe) => {
   const updatedRecipe = await RecipeModel.update(id, newDataRecipe);
   if (!updatedRecipe) return { message: 'recipe not found' };
@@ -36,4 +40,5 @@ module.exports = {
   getAll,
   getById,
   update,
+  remove,
 };
