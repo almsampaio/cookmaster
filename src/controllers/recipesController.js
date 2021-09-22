@@ -35,3 +35,13 @@ exports.update = async (req, res) => {
     .then(({ code, result }) => res.status(code).json(result))
     .catch(({ code, message }) => res.status(code).json({ message }));
 };
+
+exports.delete = async (req, res) => {
+  const { id } = req.params;
+  const token = req.headers.authorization;
+  recipesService
+  .validateToken({ token })
+  .then(() => recipesService.delete({ id }))
+  .then(({ code }) => res.status(code).send())
+  .catch(({ code, message }) => res.status(code).json({ message }));
+};

@@ -41,6 +41,11 @@ exports.update = async ({ id, name, ingredients, preparation }) => {
   }
 };
 
+exports.delete = async ({ id }) => {
+  await recipesModel.findByIdAndDelete(id);
+  return { code: StatusCodes.NO_CONTENT };
+};
+
 exports.validateToken = async ({ token }) => {
   if (!token) throw unauthorizedError('missing auth token');
   try {
