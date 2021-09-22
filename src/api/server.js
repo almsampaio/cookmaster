@@ -10,4 +10,6 @@ app.use(bodyParser.json());
 app.post('/users', middlewaresUser.validateEmailAlreadyExists,
 userController.createUser);
 
+app.post('/login', userController.validateUserAndSendToken);
+
 app.listen(PORT, () => console.log(`conectado na porta ${PORT}`));
