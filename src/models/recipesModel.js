@@ -15,6 +15,14 @@ const create = async (name, ingredients, preparation, userId) => {
   };
 };
 
+const getAll = async () => {
+  const recipeCollection = await mongoConnection.getConnection()
+    .then((db) => db.collection('recipes'));
+
+  return recipeCollection.find().toArray();
+};
+
 module.exports = {
   create,
+  getAll,
 };
