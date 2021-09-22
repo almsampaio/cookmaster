@@ -40,8 +40,8 @@ const loginUser = async (email, password) => {
   const errorMessageEmail = await validations.validateEmail(email);
   if (errorMessageEmail) return errorMessageEmail;
 
-  const errorMessageEmailEmpty = await validations.validateEmailEmpty(email);
-  if (errorMessageEmailEmpty) return errorMessageEmailEmpty;
+  const errorMsgEmailEmpty = await validations.validateEmailEmpty(email);
+  if (errorMsgEmailEmpty) return errorMsgEmailEmpty;
 
   await usersModel.loginUser(email, password);
 

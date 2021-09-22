@@ -20,8 +20,8 @@ const validateEmail = async (email) => {
 
 const validateEmailEmpty = async (email) => {
   if (!email) {
-    const errorMessageEmailNull = errorGenerator(errorMsg.blankFields);
-    return { errorMessageEmailNull };
+    const errorMsgEmailEmpty = errorGenerator(errorMsg.blankFields);
+    return { errorMsgEmailEmpty };
   }
 };
 

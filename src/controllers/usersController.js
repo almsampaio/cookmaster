@@ -38,7 +38,7 @@ const loginUser = async (req, res) => {
     errorMessage,
     errorMessage2,
     errorMessageEmail,
-    errorMessageEmailEmpty,
+    errorMsgEmailEmpty,
     token,
    } = await usersServices.loginUser(email, password);
 
@@ -48,7 +48,7 @@ const loginUser = async (req, res) => {
 
   if (errorMessageEmail) return res.status(httpStatus.badRequest).json(errorMessageEmail);
 
-  if (errorMessageEmailEmpty) return res.status(httpStatus.unauthorized).json(errorMessageEmailEmpty);
+  if (errorMsgEmailEmpty) return res.status(httpStatus.unauthorized).json(errorMsgEmailEmpty);
 
   res.status(httpStatus.ok).json({ token });
 };
