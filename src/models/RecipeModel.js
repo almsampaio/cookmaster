@@ -3,6 +3,15 @@ const mongoConnection = require('./connection');
 
 const COLLECTION_NAME = 'recipes';
 
+const remove = async (id) => {
+  if (!ObjectId.isValid(id)) return null;
+
+  const recipeCollection = await mongoConnection.getConnection()
+  .then((db) => db.collection(COLLECTION_NAME));
+
+  recipeCollection.findOneAndDelete({ _id: ObjectId(id) });
+};
+
 const update = async (id, newDataRecipe) => {
   const { name, ingredients, preparation } = newDataRecipe;
 
@@ -71,4 +80,5 @@ module.exports = {
   getAll,
   getById,
   update,
+  remove,
 };
