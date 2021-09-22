@@ -13,8 +13,8 @@ const existsEmail = async (email) => {
 
 const getUserById = async (id) => usersModel.getUserById(id);
 
-const createUser = async (name, email, password) => {
-  const role = 'user';
+const createUser = async (name, email, password, role) => {
+  // const role = 'user';
   const newUser = await usersModel.createUser(name, email, password, role);
   return newUser;
 };
