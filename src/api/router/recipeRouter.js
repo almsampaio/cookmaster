@@ -11,6 +11,8 @@ router.post('/', [
   recipeController.create,
 ]);
 
+router.get('/', recipeController.getAll);
+
 router.use((err, _req, res, _next) => {
   console.log(err);
   if (err.error) {

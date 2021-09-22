@@ -9,4 +9,12 @@ const create = async (recipe) => {
   return { recipe: result.ops[0] };
 };
 
-module.exports = { create };
+const getAll = async () => {
+  const db = await getConnection();
+
+  const sales = await db.collection(RECIPES).find({}).toArray();
+
+  return sales;
+};
+
+module.exports = { create, getAll };

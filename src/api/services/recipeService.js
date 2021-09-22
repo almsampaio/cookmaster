@@ -2,4 +2,6 @@ const recipeModel = require('../models/recipeModel');
 
 const create = async (recipe) => recipeModel.create(recipe);
 
-module.exports = { create };
+const getAll = async () => recipeModel.getAll();
+
+module.exports = { create, getAll };
