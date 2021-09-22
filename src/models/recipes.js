@@ -46,9 +46,8 @@ const updateRecipe = async ({ name, ingredients, preparation, recipeId, userId }
       ],
     },
     { $set: { name, ingredients, preparation } },
-    { returnDocument: 'after' },
+    { returnOriginal: false },
   );
-  console.log(value);
   return value;
 };
 
@@ -59,7 +58,7 @@ const updateRecipeAsAdmin = async ({ name, ingredients, preparation, recipeId })
   const { value } = await db.collection('recipes').findOneAndUpdate(
     { _id: ObjectId(recipeId) },
     { $set: { name, ingredients, preparation } },
-    { returnDocument: 'after' },
+    { returnOriginal: false },
   );
   return value;
 };
