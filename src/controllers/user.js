@@ -30,14 +30,19 @@ const JWT_CONFIG = {
 };
 
 const loginJoi = Joi.object({
-  email: Joi.string().not().empty().email()
-  .required(),
+  email: Joi.string().not().empty().required(),
   password: Joi.string().not().empty().required(),
 });
 
+const loginJoiEmail = Joi.string().not().empty().email()
+.required();
+
 const login = async (req, res, _next) => {
-  const { error } = loginJoi.validate(req.body);
-  if (error) return res.status(401).json({ message: 'All fields must be filled' });
+  const loginErr = loginJoi.validate(req.body);
+  const emailErr = loginJoiEmail.validate(req.body.email);
+
+  if (loginErr.error) return res.status(401).json({ message: 'All fields must be filled' });
+  if (emailErr.error) return res.status(401).json({ message: 'Incorrect username or password' });
 
   const { email, password } = req.body;
   const result = await userModels.login(email, password);
