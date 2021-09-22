@@ -1,4 +1,4 @@
-const { StatusCodes: { CREATED } } = require('http-status-codes');
+const { StatusCodes: { CREATED, OK } } = require('http-status-codes');
 const recipeService = require('../services/recipeService');
 
 const createRecipe = async (req, res) => {
@@ -7,6 +7,12 @@ const createRecipe = async (req, res) => {
   res.status(CREATED).json({ recipe });
 };
 
+const getAllRecipes = async (req, res) => {
+  const recipes = await recipeService.getAllRecipes();
+  res.status(OK).json(recipes);
+};
+
 module.exports = {
   createRecipe,
+  getAllRecipes,
 };

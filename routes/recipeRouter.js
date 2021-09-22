@@ -5,5 +5,6 @@ const { authentication } = require('../middlewares/auth');
 
 const router = Router();
 router.post('/', recipeValidation, authentication, recipeController.createRecipe);
+router.get('/', recipeController.getAllRecipes);
 
 module.exports = router;
