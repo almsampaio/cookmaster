@@ -25,24 +25,24 @@ const insertRecipe = async (name, ingredients, preparation, userId) => {
   return response;
 };
 
-// const findByCredentials = async (email, password) => {
-//   if (password === undefined || email === undefined) { 
-//     return ({ code: 401, message: 'All fields must be filled' }); 
-//   }
+const updateById = async (id, user, { name, ingredients, preparation }) => {
+  const idValid = userSchema.validateId(id);
+  if (!idValid) return ({ code: true });
+  const recipe = await recipeModel.getById(id);
+  const receivedUserId = '_id';
+  console.log(recipe.userId);
+  console.log(user[receivedUserId]);
+  if (recipe.userId.toString() !== user[receivedUserId].toString() && user.role !== 'admin') {
+    return ({ code: true });
+  }
 
-//   const data = await userModel.getByEmail(email);
-//   if (data.length === 0) return ({ code: 401, message: 'Incorrect username or password' });
-
-//   const checkPassword = userSchema.findValueInArrayOfObjects(data, password, 'password');
-//   if (!checkPassword) return ({ code: 401, message: 'Incorrect username or password' });
-
-//   const token = jwt.sign(email, SECRET);
-//   console.log(token);
-//   return { token };
-// };
+const data = await recipeModel.update(id, { name, ingredients, preparation });
+if (data === 1) return findById(id);
+return ({ code: true });
+};
 
 module.exports = {
   insertRecipe,
   findById,
-  // findByCredentials,
+  updateById,
 };

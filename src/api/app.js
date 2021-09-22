@@ -21,5 +21,6 @@ app.post('/login', loginController);
 app.post('/recipes', authMiddleware, postRecipieController);
 app.get('/recipes', getRecipieController.getAll);
 app.get('/recipes/:id', getRecipieController.getById);
+app.put('/recipes/:id', authMiddleware, getRecipieController.updateById);
 
 module.exports = app;

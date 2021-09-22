@@ -35,17 +35,17 @@ const getById = async (id) => {
   return response;
 };
 
-// const update = async (id, { name, quantity }) => {
-//   const productCollection = await mongoConnection.getConnection()
-//   .then((db) => db.collection('products'));
+const update = async (id, { name, ingredients, preparation }) => {
+  const productCollection = await mongoConnection.getConnection()
+  .then((db) => db.collection('recipes'));
 
-//   const response = await productCollection.updateOne(
-//     { _id: new ObjectId(id) },
-//     { $set: { name, quantity } },
-//   );
+  const response = await productCollection.updateOne(
+    { _id: new ObjectId(id) },
+    { $set: { name, ingredients, preparation } },
+  );
 
-//   return response;
-// };
+  return response.result.ok;
+};
 
 // const deleteById = async (id) => {
 //   const productCollection = await mongoConnection.getConnection()
@@ -60,6 +60,6 @@ module.exports = {
   getAll,
   create,
   getById,
-  // update,
+  update,
   // deleteById,
 };

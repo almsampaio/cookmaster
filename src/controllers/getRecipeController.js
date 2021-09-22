@@ -3,6 +3,7 @@ const recipeService = require('../services/recipeService');
 
 const HTTP_OK_STATUS = 200;
 const HTTP_NOT_FOUND_STATUS = 404;
+const HTTP_UNAUTHORIZED_STATUS = 401;
 
 const getAll = async (_req, res) => {
   try {
@@ -35,7 +36,31 @@ const getById = async (req, res) => {
   }
 };
 
+const updateById = async (req, res) => {
+  try {
+    const { name, ingredients, preparation } = req.body;
+    const { id } = req.params;
+    const { user } = req;
+
+    const response = await recipeService.updateById(id, user, { name, ingredients, preparation });
+    console.log(response);
+
+    if (response.code) {
+      return res.status(HTTP_UNAUTHORIZED_STATUS).json({
+          message: 'jwt malformed',
+      });
+  }
+  
+    return res.status(HTTP_OK_STATUS).json(response);
+  } catch (error) {
+    return res.status(HTTP_NOT_FOUND_STATUS).json({ 
+      Message: 'Sorry Our API is not working properly',
+    });
+  }
+};
+
 module.exports = {
   getAll,
   getById,
+  updateById,
 };
