@@ -19,6 +19,8 @@ apiRoutes.post('/login', validateLogin, routes.login);
 apiRoutes.post('/recipes', validateNewRecipe, routes.createRecipe);
 apiRoutes.get('/recipes/:id', routes.getById);
 apiRoutes.get('/recipes', routes.getAll);
+apiRoutes.put('/recipes/:id', routes.update);
+apiRoutes.delete('/recipes/:id', routes.remove);
 
 app.use(apiRoutes);
 app.use(handleErrors);

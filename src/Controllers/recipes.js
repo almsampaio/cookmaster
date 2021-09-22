@@ -20,8 +20,26 @@ const getById = async (req, res, next) => {
   return res.status(200).json(result);
 };
 
+const update = async (req, res, next) => {
+  const { authorization: auth } = req.headers; 
+  const { id } = req.params;
+  const result = await Recipes.update(req.body, auth, id);
+  if (result.message) return next(result);
+  return res.status(200).json(result);
+};
+
+const remove = async (req, res, next) => {
+  const { authorization: auth } = req.headers; 
+  const { id } = req.params;
+  const result = await Recipes.remove(auth, id);
+  if (result.message) return next(result);
+  return res.status(204).end();
+};
+
 module.exports = {
   createRecipe,
   getAll,
   getById,
+  update,
+  remove,
 };
