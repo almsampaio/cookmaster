@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const middlewares = require('./middlewares/error');
 const usersControllers = require('./controllers/users');
+const recipesControllers = require('./controllers/recipes');
 
 const app = express();
 app.use(bodyParser.json());
@@ -18,6 +19,7 @@ app.get('/ping', (req, res) => {
 
 app.post('/users', usersControllers.createUsers);
 app.post('/login', usersControllers.loginUsers);
+app.post('/recipes', recipesControllers.createRecipes);
 // app.use('/recipes', recipes);
 // app.use('/images', express.static('src/uploads/'));
 

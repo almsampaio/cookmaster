@@ -12,13 +12,22 @@ function errorsPostLogin(err, res) {
   }
 }
 
+function errorsPostRecipes(err, res) {
+  if (err.isJoy) {
+    if (err.isJoy) {
+      return res.status(400).json({ message: 'Invalid entries. Try again.' });
+    }
+
+    return res.status(401).json({ message: 'Incorrect username or password' });
+  }
+}
+
 function errorsPost(err, res) {
-  if (err.item === 'createUsers') {
-    return errorsPostUsers(err, res);
-  }
-  if (err.item === 'loginUsers') {
-    return errorsPostLogin(err, res);
-  }
+  if (err.item === 'createUsers') return errorsPostUsers(err, res);
+  
+  if (err.item === 'loginUsers') return errorsPostLogin(err, res);
+  
+  if (err.item === 'createRecipes') return errorsPostRecipes(err, res);
 }
 
 module.exports = (err, _req, res, _next) => {

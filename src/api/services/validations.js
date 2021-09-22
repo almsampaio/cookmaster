@@ -1,8 +1,5 @@
 const Joi = require('joi');
 const usersModels = require('../models/users');
-// const jwt = require('jsonwebtoken');
-
-// const JWT_SECRET  = 'meuSegredo';
 
 const validateBodyCreateUsers = (body) => {
   const { error } = Joi.object({
@@ -42,8 +39,19 @@ const validateBodyLoginUsers = async (body) => {
   return false;
 };
 
+const validateBodyCreateRecipes = (body) => {
+  const { error } = Joi.object({
+    name: Joi.string().required(),
+    ingredients: Joi.string().required(),
+    preparation: Joi.string().required(),
+  }).validate(body);
+  if (error) return { verb: 'post', item: 'createRecipes', error, isJoy: true };
+  return false;
+};
+
 module.exports = {
   validateBodyCreateUsers,
   validateSingleUserEmail,
   validateBodyLoginUsers,
+  validateBodyCreateRecipes,
 };
