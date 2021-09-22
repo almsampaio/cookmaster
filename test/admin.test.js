@@ -44,7 +44,7 @@ describe('6 - Crie uma query em mongo que insira uma pessoa usuária com permiss
   });
 });
 
-describe('12 - Crie um endpoint para cadastro de pessoas administradoras', () => {
+describe.skip('12 - Crie um endpoint para cadastro de pessoas administradoras', () => {
   let connection;
   let db;
 
