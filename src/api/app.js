@@ -18,12 +18,12 @@ app.get('/', (request, response) => {
 
 // Endpoint para Usuários
 
-app.post('/login', Users.login);
 app.post('/users', Users.create);
+app.post('/login', Users.login);
 
-// Endpoit para Receitas
+// Endpoint para Receitas
 
-app.get('/recipes', Recipes.getAll);
 app.post('/recipes', validateJWT, Recipes.create);
+app.get('/recipes', Recipes.getAll);
 
 module.exports = app;
