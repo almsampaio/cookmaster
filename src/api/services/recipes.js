@@ -3,6 +3,10 @@ const CustomError = require('../../lib/CustomError');
 const recipesModel = require('../models/recipes');
 
 module.exports = {
+  async get(id) {
+    return recipesModel.get(id);
+  },
+
   async create(recipe, user) {
     const recipeSchemaError = recipeCreation.validate(recipe).error;
     
