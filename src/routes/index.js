@@ -15,5 +15,5 @@ routes.get('/', (_req, res) => {
 routes.post('/users', usersController.create);
 routes.post('/login', loginController.login);
 routes.post('/recipes', recipesController.create);
-
+routes.get('/recipes', recipesController.readMany);
 module.exports = routes;

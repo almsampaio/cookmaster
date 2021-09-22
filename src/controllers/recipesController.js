@@ -10,3 +10,10 @@ exports.create = async (req, res) => {
     .then(({ code, result }) => res.status(code).json({ recipe: result }))
     .catch(({ code, message }) => res.status(code).json({ message }));
 };
+
+exports.readMany = async (_req, res) => {
+  recipesService
+    .readMany()
+    .then(({ code, result }) => res.status(code).json(result))
+    .catch(({ code, message }) => res.status(code).json({ message }));
+};

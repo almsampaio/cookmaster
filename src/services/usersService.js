@@ -10,7 +10,7 @@ exports.create = async ({ name, email, password }) => {
   }
   const alreadyExists = await usersModel.findOne({ email });
   if (alreadyExists) throw conflictError('Email already registered');
-  const { _doc: { __v, password: _, ...result } } = await usersModel
+  const { _doc: { password: _, ...result } } = await usersModel
     .create({ name, email, password, role: 'user' });
   return { code: StatusCodes.CREATED, result };
 };
