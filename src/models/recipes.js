@@ -39,9 +39,19 @@ const editRecipe = async (id, data) => {
   return result;
 };
 
+const deleteRecipe = async (id) => {
+  const isValid = ObjectId.isValid(id);
+  if (!isValid) return null;
+
+  const db = await mongoConnection.getConnection();
+  await db.collection('recipes').deleteOne({ _id: ObjectId(id) });
+  return true;
+};
+
 module.exports = {
   registerRecipe,
   listRecipes,
   listRecipeById,
   editRecipe,
+  deleteRecipe,
 };

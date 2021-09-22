@@ -15,6 +15,22 @@ const editRecipe = async (id, data, userId, role) => {
   return result;
 };
 
+const deleteRecipe = async (id, userId, role) => {
+  const check = await recipeModels.listRecipeById(id);
+  if (check.userId !== userId && role !== 'admin') {
+    return {
+      error: {
+        code: 'unauthorized',
+        message: 'You dont have permission to do that',
+      },
+    };
+  }
+
+  const result = await recipeModels.deleteRecipe(id);
+  return result;
+};
+
 module.exports = {
   editRecipe,
+  deleteRecipe,
 };

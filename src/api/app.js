@@ -21,6 +21,7 @@ app.post('/recipes', validateJWT, recipeControllers.registerRecipe);
 app.get('/recipes', recipeControllers.listRecipes);
 app.get('/recipes/:id', recipeControllers.listRecipeById);
 app.put('/recipes/:id', validateJWT, recipeControllers.editRecipe);
+app.delete('/recipes/:id', validateJWT, recipeControllers.deleteRecipe);
 
 app.use(errorMiddleware);
 
