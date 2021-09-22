@@ -18,3 +18,5 @@ app.post('/users', [
 app.post('/login', Users.userLogin);
 
 app.post('/recipes', Validation.validateRecipeInfo, Validation.validateJWT, Recipes.createRecipe);
+
+app.get('/recipes', Recipes.getAllRecipes);
