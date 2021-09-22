@@ -1,3 +1,4 @@
+const { ObjectId } = require('bson');
 const getConnection = require('./connection');
 
 const collectionName = 'recipes';
@@ -15,7 +16,17 @@ const getAllProducts = async () => {
   return products;
 };
 
+const getById = async (id) => {
+  if (!ObjectId.isValid(id)) return null;
+
+  const db = await getConnection(); 
+  const recipe = await db.collection(collectionName).findOne({ _id: ObjectId(id) });
+  console.log(recipe);
+  return recipe;
+};
+
   module.exports = {
     register,
     getAllProducts,
+    getById,
   }; 
