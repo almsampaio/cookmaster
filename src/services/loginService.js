@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 const userModel = require('../models/userModel');
 
-const JWTsecret = require('../JWTsecret');
+const JWTsecret = require('../auth/JWTsecret');
 
 async function login({ email, password }) {
     if (!email || !password) {
@@ -12,13 +12,14 @@ async function login({ email, password }) {
     if (!user || user.password !== password) {
       return { code: 401, message: 'Incorrect username or password' };
     }
-
+    
     const JWTconfig = {
       expiresIn: '7d',
       algorithm: 'HS256',
     };
-
-    const JWTpayload = { email, password };
+    
+    const { _id: userId } = user;
+    const JWTpayload = { email, userId };
 
     const token = jwt.sign(JWTpayload, JWTsecret, JWTconfig);
     return { code: 200, token };
