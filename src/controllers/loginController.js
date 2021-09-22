@@ -1,4 +1,5 @@
 const loginService = require('../services/loginService');
+const { validateToken } = require('../services/loginService');
 
 const makeLogin = async (req, res) => {
   const { email, password } = req.body;
@@ -9,4 +10,18 @@ const makeLogin = async (req, res) => {
   return res.status(status).json(response);
 };
 
-module.exports = makeLogin;
+const userAuthentication = (req, res, next) => {
+  const token = req.headers.authorization;
+  if (!token) {
+    return res.status(401).json({ message: 'jwt malformed' });
+  }
+  const dataToken = validateToken(token);
+  console.log('data token', dataToken);
+  if (!dataToken.isValid) {
+   return res.status(401).json({ message: 'jwt malformed' });
+  }
+  req.user = dataToken.user;
+  next();
+};
+
+module.exports = { makeLogin, userAuthentication };

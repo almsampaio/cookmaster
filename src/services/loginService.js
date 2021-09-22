@@ -9,7 +9,20 @@ const jwtConfig = {
   algorithm: 'HS256',
 };
 
-const validateToken = (token) => {};
+const validateToken = (token) => {
+  try {
+    const { data } = jwt.verify(token, secret);
+    return { 
+      user: data,
+      isValid: true,
+     };
+  } catch (error) {
+    return {
+      errorMessage: error.message,
+      isValid: false,
+    };
+  }
+};
 
 const createToken = (user) => {
   const token = jwt.sign({ data: user }, secret, jwtConfig);
@@ -26,9 +39,9 @@ const askLogin = async (email, password) => {
       status: 401,
     };
   }
-  const { name, role } = user;
+  const { name, role, _id } = user;
   return {
-    response: { token: createToken({ name, email, role }) },
+    response: { token: createToken({ name, email, role, userId: _id }) },
     status: 200,
   };
 };

@@ -2,16 +2,18 @@ const express = require('express');
 
 const controllers = require('../controllers/recipesController');
 
+const { userAuthentication } = require('../controllers/loginController');
+
 const router = express.Router();
 
-router.get('/', controllers.getAllProducts);
+router.get('/', controllers.getAll);
 
-router.get('/:id', controllers.getOneProduct);
+router.get('/:id', controllers.findById);
 
-router.put('/:id', controllers.updateProduct);
+router.put('/:id', controllers.update);
 
-router.post('/', controllers.createProduct);
+router.post('/', userAuthentication, controllers.create);
 
-router.delete('/:id', controllers.deleteProduct);
+router.delete('/:id', controllers.deleteRecipe);
 
 module.exports = router;

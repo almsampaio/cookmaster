@@ -1,39 +1,43 @@
 const recipeService = require('../services/recipesService');
 
-const getAllProducts = async (_req, res) => {
+const getAll = async (_req, res) => {
   const result = await recipeService.getAll();
   return res.status(result.status).json(result.response);
 };
 
-const getOneProduct = async (req, res) => {
+const findById = async (req, res) => {
   const { id } = req.params;
   const result = await recipeService.findById(id);
   return res.status(result.status).json(result.response);
 };
 
-const createProduct = async (req, res) => {
-  const { name, quantity } = req.body;
-  const result = await recipeService.create(name, quantity);
-  return res.status(result.status).json(result.response);
+const create = async (req, res) => {
+  const { name, ingredients, preparation } = req.body;
+  if (!name || !ingredients || !preparation) {
+    return res.status(400).json({ message: 'Invalid entries. Try again.' });
+  }
+  const { user } = req;
+  const recipe = await recipeService.create(name, ingredients, preparation, user.userId);
+  return res.status(201).json({ recipe });
 };
 
-const updateProduct = async (req, res) => {
+const update = async (req, res) => {
   const { id } = req.params;
   const { name, quantity } = req.body;
   const result = await recipeService.update(id, name, quantity);
   return res.status(result.status).json(result.response);
 };
 
-const deleteProduct = async (req, res) => {
+const deleteRecipe = async (req, res) => {
   const { id } = req.params;
   const result = await recipeService.deleteById(id);
   return res.status(result.status).json(result.response);
 };
 
 module.exports = {
-  getAllProducts,
-  getOneProduct,
-  createProduct,
-  updateProduct,
-  deleteProduct,
+  getAll,
+  findById,
+  create,
+  update,
+  deleteRecipe,
 };

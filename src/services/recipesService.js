@@ -1,46 +1,6 @@
 const recipesModel = require('../models/recipesModel');
 
-const checkProductInfo = (name, quantity) => {
-  const testResult = { 
-    errorInfo: { err: { code: 'invalid_data', message: '' } },
-    flag: false, 
-  };
-  if (name.length < 5) { 
-    testResult.errorInfo.err.message = '"name" length must be at least 5 characters long';
-  }
-  if (quantity < 1) {
-    testResult.errorInfo.err.message = '"quantity" must be larger than or equal to 1';
-  }
-  if (!Number.isInteger(quantity)) {
-    testResult.errorInfo.err.message = '"quantity" must be a number';
-  }
-  if (testResult.errorInfo.err.message !== '') {
-    testResult.flag = true; 
-  }
-  return testResult;
-};
-
-const checkProductExists = async (name) => {
-  const product = await recipesModel.findByName(name);
-  const testResult = { errorInfo: {}, flag: false };
-  if (product) {
-    testResult.errorInfo = { err: {
-      code: 'invalid_data',
-      message: 'Product already exists',
-    },
-  };
-  testResult.flag = true;
-  }
-  return testResult;
-};
-
-const getAll = async () => {
-  const products = await recipesModel.getAll();
-  return {
-    response: { products },
-    status: 200,
-  };
-};
+const getAll = () => {};
 
 const findById = async (id) => {
   const product = await recipesModel.findById(id);
@@ -73,24 +33,16 @@ const deleteById = async (id) => {
   };
 };
 
-const create = async (name, quantity) => {
-  const infoValidation = checkProductInfo(name, quantity);
-  if (infoValidation.flag) {
-    return { response: infoValidation.errorInfo, status: 422 };
-  }
-  const productExists = await checkProductExists(name);
-  if (productExists.flag) {
-    return { response: productExists.errorInfo, status: 422 };
-  }
-  const productCreated = await recipesModel.create(name, quantity);
-  return { response: productCreated, status: 201 };
+const create = async (name, ingredients, preparation, userId) => {
+  const createdRecipe = await recipesModel.create(name, ingredients, preparation, userId);
+  return createdRecipe;
 };
 
 const update = async (id, name, quantity) => {
-  const infoValidation = checkProductInfo(name, quantity);
-  if (infoValidation.flag) {
-    return { response: infoValidation.errorInfo, status: 422 };
-  }
+  // const infoValidation = checkProductInfo(name, quantity);
+  // if (infoValidation.flag) {
+  //   return { response: infoValidation.errorInfo, status: 422 };
+  // }
   const productExists = await findById(id);
   if (productExists.status === 422) {
     return productExists;
