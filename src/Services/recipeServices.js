@@ -31,10 +31,20 @@ const remove = async (user, recipeId) => {
   return Recipes.remove(recipeId);
 };
 
+const addImage = async (user, id) => {
+  const image = `localhost:3000/src/uploads/${id}.jpeg`;
+  const { role } = user;
+  const { userId } = await getById(id);
+  if (`${id}` !== `${userId}` && role === 'user') return builtError(401, 'jwt malformed');
+
+  return Recipes.update({ image }, id);
+};
+
 module.exports = {
   create,
   getAll,
   getById,
   update,
   remove,
+  addImage,
 };

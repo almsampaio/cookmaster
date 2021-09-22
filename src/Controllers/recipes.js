@@ -36,10 +36,19 @@ const remove = async (req, res, next) => {
   return res.status(204).end();
 };
 
+const addImage = async (req, res, next) => {
+  const { user } = req;
+  const { id } = req.params;
+  const result = await Recipes.addIMage(user, id);
+  if (result.message) return next(result);
+  return res.status(200).json(result.value);
+};
+
 module.exports = {
   createRecipe,
   getAll,
   getById,
   update,
   remove,
+  addImage,
 };

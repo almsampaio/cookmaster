@@ -38,7 +38,7 @@ apiRoutes.get('/recipes/:id', routes.getById);
 apiRoutes.get('/recipes', routes.getAll);
 apiRoutes.put('/recipes/:id', validateJWT, validateNewRecipe, routes.update);
 apiRoutes.delete('/recipes/:id', validateJWT, routes.remove);
-apiRoutes.put('/recipes/:id/image/', validateJWT, upload.single('image'));
+apiRoutes.put('/recipes/:id/image/', validateJWT, upload.single('image'), routes.addImage);
 
 app.use(apiRoutes);
 app.use(handleErrors);
