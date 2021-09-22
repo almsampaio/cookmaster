@@ -4,10 +4,11 @@ const jwt = require('jsonwebtoken');
 const userModel = require('../models/userModels');
 
 function validateEmail(email) {
-    const re = /\S+@\S+\.\S+/;
     if (!email || email === '') {
-       return invalidEntries;
-    }
+        return invalidEntries;
+        }
+    const re = /\S+@\S+\.\S+/;
+
     if (!re.test(String(email).toLowerCase())) {
         return invalidEntries;
    }
@@ -18,9 +19,6 @@ function validatePassword(password) {
     if (!password || password === '') {
         return invalidEntries;
         }
-    if (password.length < 6) {
-        return invalidEntries;
-    }
     return password;
 }
 
@@ -42,8 +40,8 @@ const findByCredentials = async (email, password) => {
     if (!email || !password) {
         return (
      { status: 401, message: 'All fields must be filled' }
-        ); 
-                        }
+       ); 
+                            }
 
     const userSearch = await userModel.findByEmail(email);
 
@@ -58,6 +56,7 @@ const findByCredentials = async (email, password) => {
     const token = jwt.sign(userPayload, SECRET);
         return ({ token });
     };
+
 module.exports = {
     validateEmail,
     validatePassword,
