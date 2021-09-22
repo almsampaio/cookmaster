@@ -1,25 +1,28 @@
-const { ObjectId } = require('mongodb');
+// const { ObjectId } = require('mongodb');
 const mongoConnection = require('./connection');
 
-const getAllUsers = async (email) => {
-  const getAll = await mongoConnection.getConnection()
-  .then((db) => db.collection('users').find().toArray()); 
-};
+// const getAllUsers = async () => {
+//   const getAll = await mongoConnection.getConnection()
+//   .then((db) => db.collection('users').find().toArray()); 
+// };
 
 const getUserByEmail = async (email) => {
   const getByEmail = await mongoConnection.getConnection()
   .then((db) => db.collection('users').find({ email }).toArray()); 
+  return getByEmail;
 };
 
 const postUsers = async ({ name, email, password }) => {
   const usersCollection = await mongoConnection.getConnection()
     .then((db) => db.collection('users'));
 
-  const inserted = await usersCollection.insertOne({ name, email, password })
+  const inserted = await usersCollection.insertOne({ name, email, role: 'user' })
     .then((res) => res.ops[0]);
+
   return { user: inserted };
 };
 
 module.exports = {
   postUsers,
+  getUserByEmail,
 };

@@ -10,17 +10,17 @@ const validateBodyUsers = (body) => {
     password: Joi.string().required(),
     email: Joi.string().email().required(),
   }).validate(body);
-  if (error) return { error, isJoy: true, verb: 'post' };
+  if (error) return { verb: 'post', item: 'users', error, isJoy: true };
   return false;
 };
 
-const validateSingle= async (email) => {
-  
+const validateSingleUserEmail = async (email) => {
+  const getUserByEmail = await usersModels.getUserByEmail(email);
+  if (getUserByEmail.length) return { verb: 'post', item: 'users', error: true };
   return false;
 };
-
-
 
 module.exports = {
   validateBodyUsers,
+  validateSingleUserEmail,
 };

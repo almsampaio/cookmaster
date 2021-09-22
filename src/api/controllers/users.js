@@ -6,7 +6,7 @@ const postUsers = async (req, res, next) => {
   
   if (PostUsers.error) return next(PostUsers);
 
-  res.status(200).json(PostUsers);
+  res.status(201).json(PostUsers);
 };
 
 module.exports = {
