@@ -1,4 +1,4 @@
-const { StatusCodes: { CREATED } } = require('http-status-codes');
+const { StatusCodes: { CREATED, OK } } = require('http-status-codes');
 const userService = require('../services/userService');
 
 const createNewUser = async (req, res) => {
@@ -14,6 +14,12 @@ const createNewUser = async (req, res) => {
       });    
 };
 
+const login = async (req, res) => {
+  const token = await userService.login(req.body);
+  res.status(OK).json(token);
+};
+
 module.exports = {
   createNewUser,
+  login,
 };
