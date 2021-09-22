@@ -3,7 +3,7 @@ const connection = require('./connection');
 const getAll = async () => {
   const recipes = await connection()
    .then((db) => db.collection('recipes').find().toArray());
-   
+
   return recipes;
 };
 
@@ -17,7 +17,7 @@ const findByName = async (name) => {
 };
 
 const create = async (name, ingredients, preparation, userId) => {
-  connection()
+ await connection()
     .then((db) => db.collection('recipes').insertOne({ name, ingredients, preparation, userId }));
 
   const { _id } = await findByName(name);
