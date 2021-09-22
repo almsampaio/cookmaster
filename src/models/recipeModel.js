@@ -1,38 +1,39 @@
-// const { ObjectId } = require('bson');
+const { ObjectId } = require('bson');
 const mongoConnection = require('./connection');
 
 const getAll = async () => {
   const productCollection = await mongoConnection.getConnection()
-  .then((db) => db.collection('users'));
+  .then((db) => db.collection('recipes'));
 
   const response = await productCollection.find().toArray();
 
   return response;
 };
 
-const create = async ({ name, email, password, role }) => {
+const create = async ({ name, ingredients, preparation, userId }) => {
   const productCollection = await mongoConnection.getConnection()
-    .then((db) => db.collection('users'));
+    .then((db) => db.collection('recipes'));
 
   const { insertedId: id } = await productCollection
-    .insertOne({ name, email, password, role });
+    .insertOne({ name, ingredients, preparation, userId: new ObjectId(userId) });
 
   return {
     name,
-    email,
-    role,
+    ingredients,
+    preparation,
+    userId,
     _id: id,
   };
 };
 
-const getByEmail = async (email) => {
-  const productCollection = await mongoConnection.getConnection()
-  .then((db) => db.collection('users'));
+// const getByEmail = async (email) => {
+//   const productCollection = await mongoConnection.getConnection()
+//   .then((db) => db.collection('users'));
 
-  const response = await productCollection.findOne({ email });
+//   const response = await productCollection.find({ email }).toArray();
 
-  return response;
-};
+//   return response;
+// };
 
 // const update = async (id, { name, quantity }) => {
 //   const productCollection = await mongoConnection.getConnection()
@@ -58,7 +59,7 @@ const getByEmail = async (email) => {
 module.exports = {
   getAll,
   create,
-  getByEmail,
+  // getByEmail,
   // update,
   // deleteById,
 };

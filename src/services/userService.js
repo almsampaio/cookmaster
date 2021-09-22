@@ -38,14 +38,15 @@ const findByCredentials = async (email, password) => {
     return ({ code: 401, message: 'All fields must be filled' }); 
   }
 
-  const data = await userModel.getByEmail(email);
-  if (data.length === 0) return ({ code: 401, message: 'Incorrect username or password' });
+  const user = await userModel.getByEmail(email);
+  if (!user || user.password !== password) {
+    return ({ code: 401, message: 'Incorrect username or password' });
+  }
 
-  const checkPassword = userSchema.findValueInArrayOfObjects(data, password, 'password');
-  if (!checkPassword) return ({ code: 401, message: 'Incorrect username or password' });
+  const { password: _, ...userPayload } = user;
 
-  const token = jwt.sign(email, SECRET);
-  console.log(token);
+  const token = jwt.sign(userPayload, SECRET);
+
   return { token };
 };
 
