@@ -2,6 +2,7 @@ const recipeModel = require('../models/recipeModel');
 const recipeService = require('../services/recipeService');
 
 const HTTP_OK_STATUS = 200;
+const HTTP_NO_CONTENT_STATUS = 204;
 const HTTP_NOT_FOUND_STATUS = 404;
 const HTTP_UNAUTHORIZED_STATUS = 401;
 
@@ -43,7 +44,6 @@ const updateById = async (req, res) => {
     const { user } = req;
 
     const response = await recipeService.updateById(id, user, { name, ingredients, preparation });
-    console.log(response);
 
     if (response.code) {
       return res.status(HTTP_UNAUTHORIZED_STATUS).json({
@@ -59,8 +59,30 @@ const updateById = async (req, res) => {
   }
 };
 
+const deleteById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { user } = req;
+
+    const response = await recipeService.deleteById(id, user);
+
+    if (response.code) {
+      return res.status(HTTP_UNAUTHORIZED_STATUS).json({
+          message: 'jwt malformed',
+      });
+  }
+  
+    return res.status(HTTP_NO_CONTENT_STATUS).end();
+  } catch (error) {
+    return res.status(HTTP_NOT_FOUND_STATUS).json({ 
+      Message: 'Sorry Our API is not working properly',
+    });
+  }
+};
+
 module.exports = {
   getAll,
   getById,
   updateById,
+  deleteById,
 };

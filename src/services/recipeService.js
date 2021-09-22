@@ -30,8 +30,6 @@ const updateById = async (id, user, { name, ingredients, preparation }) => {
   if (!idValid) return ({ code: true });
   const recipe = await recipeModel.getById(id);
   const receivedUserId = '_id';
-  console.log(recipe.userId);
-  console.log(user[receivedUserId]);
   if (recipe.userId.toString() !== user[receivedUserId].toString() && user.role !== 'admin') {
     return ({ code: true });
   }
@@ -41,8 +39,22 @@ if (data === 1) return findById(id);
 return ({ code: true });
 };
 
+const deleteById = async (id, user) => {
+  const idValid = userSchema.validateId(id);
+  if (!idValid) return ({ code: true });
+  const recipe = await recipeModel.getById(id);
+  const receivedUserId = '_id';
+  if (recipe.userId.toString() !== user[receivedUserId].toString() && user.role !== 'admin') {
+    return ({ code: true });
+  }
+
+const data = await recipeModel.deleteById(id);
+return (data);
+};
+
 module.exports = {
   insertRecipe,
   findById,
   updateById,
+  deleteById,
 };

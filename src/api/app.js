@@ -22,5 +22,6 @@ app.post('/recipes', authMiddleware, postRecipieController);
 app.get('/recipes', getRecipieController.getAll);
 app.get('/recipes/:id', getRecipieController.getById);
 app.put('/recipes/:id', authMiddleware, getRecipieController.updateById);
+app.delete('/recipes/:id', authMiddleware, getRecipieController.deleteById);
 
 module.exports = app;

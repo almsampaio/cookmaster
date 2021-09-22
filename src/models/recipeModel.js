@@ -47,19 +47,19 @@ const update = async (id, { name, ingredients, preparation }) => {
   return response.result.ok;
 };
 
-// const deleteById = async (id) => {
-//   const productCollection = await mongoConnection.getConnection()
-//   .then((db) => db.collection('products'));
+const deleteById = async (id) => {
+  const productCollection = await mongoConnection.getConnection()
+  .then((db) => db.collection('recipes'));
 
-//   const response = await productCollection.deleteOne({ _id: new ObjectId(id) });
+  const response = await productCollection.deleteOne({ _id: new ObjectId(id) });
 
-//   return response;
-// };
+  return response;
+};
 
 module.exports = {
   getAll,
   create,
   getById,
   update,
-  // deleteById,
+  deleteById,
 };
