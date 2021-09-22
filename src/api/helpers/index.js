@@ -1,0 +1,38 @@
+const HTTP_OK_STATUS = 200;
+const CREATED_STATUS = 201;
+const HTTP_BAD_REQUEST_STATUS = 400;
+const HTTP_UNAUTHORIZED_STATUS = 401;
+const HTTP_FORBIDDEN_STATUS = 403;
+const HTTP_CONFLICT_STATUS = 409;
+
+const ENTRIES_ERROR = 'Invalid entries. Try again.';
+const EMAIL_CONFLICT_ERROR = 'Email already registered';
+const LOGIN_INCORRECT_ERROR = 'Incorrect username or password';
+const ADMIN_ERROR = 'Only admins can register new admins';
+const NOT_YOUR_RECIPE_ERROR = 'You can only modify your own recipes';
+
+const REQUEST_INVALID_ENTRIES = {
+  status: HTTP_BAD_REQUEST_STATUS,
+  err: { message: ENTRIES_ERROR },
+};
+
+const EMAIL_CONFLICT = {
+  status: HTTP_CONFLICT_STATUS,
+  err: { message: EMAIL_CONFLICT_ERROR },
+};
+
+module.exports = {
+  HTTP_OK_STATUS,
+  CREATED_STATUS,
+  HTTP_BAD_REQUEST_STATUS,
+  HTTP_UNAUTHORIZED_STATUS,
+  HTTP_FORBIDDEN_STATUS,
+  HTTP_CONFLICT_STATUS,
+  ENTRIES_ERROR,
+  EMAIL_CONFLICT_ERROR,
+  LOGIN_INCORRECT_ERROR,
+  ADMIN_ERROR,
+  NOT_YOUR_RECIPE_ERROR,
+  REQUEST_INVALID_ENTRIES,
+  EMAIL_CONFLICT,
+};
