@@ -30,8 +30,19 @@ const getById = async (_id) => {
   return recipe;
 };
 
+const update = async (name, ingredients, preparation, _id) => {
+  const recipeCollection = await mongoConnection.getConnection()
+    .then((db) => db.collection('recipes'));
+
+  await recipeCollection
+    .updateOne({ _id: ObjectId(_id) }, { $set: { name, ingredients, preparation } });
+  const recipeUpdated = await getById(_id);
+  return recipeUpdated;
+};
+
 module.exports = {
   create,
   getAll,
   getById,
+  update,
 };

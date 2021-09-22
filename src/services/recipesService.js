@@ -32,8 +32,24 @@ const getById = async (_id) => {
   return { status: 200, message: recipe };
 };
 
+const update = async (recipe, _id, userId, role) => {
+  const { name, ingredients, preparation } = recipe;
+  if (!ObjectId.isValid(_id)) {
+    return { status: 404, message: { message: 'recipe not found' } };
+  }
+  const notValid = validatingData(name, ingredients, preparation);
+  if (notValid) return notValid;
+  const recipeToBeUpdated = await recipesModel.getById(_id);
+  if (role !== 'admin' && userId !== recipeToBeUpdated.userId) {
+    return { status: 401, message: { message: 'missing auth token' } };
+  }
+  const recipeUpdated = await recipesModel.update(name, ingredients, preparation, _id);
+  return { status: 200, message: { message: recipeUpdated } };
+};
+
 module.exports = {
   create,
   getAll,
   getById,
+  update,
 };
