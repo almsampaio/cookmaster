@@ -15,4 +15,8 @@ const userRouter = require('../routers/userRouter');
 
 app.use('/users', userRouter);
 
+const loginRouter = require('../routers/loginRouter');
+
+app.use('/login', loginRouter);
+
 module.exports = app;
