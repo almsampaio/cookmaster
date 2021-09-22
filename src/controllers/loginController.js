@@ -2,11 +2,11 @@ const loginService = require('../services/loginService');
 
 async function login(req, res) {
   const { email, password } = req.body;
-  const loginResult = await loginService.login({ email, password });
-  if (loginResult.message) {
-    return res.status(loginResult.code).json({ message: loginResult.message });
+  const { code, message, token } = await loginService.login({ email, password });
+  if (message) {
+    return res.status(code).json({ message });
   }
-  res.status(loginResult.code).json({ token: loginResult.token });
+  res.status(code).json({ token });
 }
 
 module.exports = {
