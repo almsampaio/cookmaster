@@ -3,10 +3,10 @@ const mongoConnection = require('./connection');
 module.exports = {
   async create(name, ingredients, preparation, user) {
     const db = await mongoConnection();
-    const userCollection = await db.collection('recipes');
+    const recipesCollection = await db.collection('recipes');
     const { _id } = user;
 
-    const newRecipe = await userCollection
+    const newRecipe = await recipesCollection
       .insertOne({ name, ingredients, preparation, userId: _id });
 
     return {
@@ -14,4 +14,12 @@ module.exports = {
     };
   },
   
+  async findAll() {
+    const db = await mongoConnection();
+    const recipesCollection = await db.collection('recipes');
+
+    const recipes = await recipesCollection.find().toArray();
+
+    return recipes;
+  },
 };

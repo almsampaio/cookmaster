@@ -14,4 +14,6 @@ routes.post('/login', loginValidations, userController.login);
 
 routes.post('/recipes', tokenValidation, recipesValidation, recipesController.create);
 
+routes.get('/recipes', recipesController.index);
+
 module.exports = routes;

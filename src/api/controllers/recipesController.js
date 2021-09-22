@@ -9,4 +9,10 @@ module.exports = {
 
     return res.status(201).json({ recipe: newRecipe });
   },
+
+  async index(req, res) {
+    const recipes = await recipesService.findAll();
+
+    return res.status(200).json(recipes);
+  },
 };

@@ -6,4 +6,10 @@ module.exports = {
 
     return newRecipe;
   },
+
+  async findAll() {
+    const recipes = await recipesModel.findAll();
+
+    return recipes;
+  },
 };
