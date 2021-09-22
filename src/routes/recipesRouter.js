@@ -7,5 +7,6 @@ const RecipeController = require('../controllers/RecipeController');
 const authMiddleware = require('../middlewares/authMiddleware');
 
 router.post('/', authMiddleware.authLogin, RecipeController.create);
+router.get('/', RecipeController.getAll);
 
 module.exports = router;
