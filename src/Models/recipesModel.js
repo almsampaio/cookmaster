@@ -17,24 +17,22 @@ const get = async (param) => {
   return recipesCollection.findOne({ _id: ObjectID(param) });
 };
 
-const update = async (recipeObj) => {
-  const { email } = recipeObj;
+const update = async (recipeObj, recipeId) => {
   const recipesCollection = await connect.getConnection()
     .then((db) => db.collection('recipes'));
 
   return recipesCollection.findOneAndUpdate(
-    { email },
+    { _id: ObjectID(recipeId) },
     { $set: { ...recipeObj } },
     { returnDocument: 'after' },
   );
 };
 
-const remove = async (recipeObj) => {
-  const { email } = recipeObj;
+const remove = async (recipeId) => {
   const recipesCollection = await connect.getConnection()
     .then((db) => db.collection('recipes'));
 
-  return recipesCollection.findOneAndDelete({ email });
+  return recipesCollection.findOneAndDelete({ _id: ObjectID(recipeId) });
 };
 
 module.exports = {
