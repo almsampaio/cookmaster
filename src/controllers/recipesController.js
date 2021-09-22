@@ -17,7 +17,6 @@ const create = rescue(async (req, res) => {
 
    const createRecipe = await service.create(name, ingredients, preparation, userId);
 
-   console.log(createRecipe);
    res.status(201).json(createRecipe);
 });
 

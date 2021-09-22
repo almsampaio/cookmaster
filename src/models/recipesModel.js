@@ -15,8 +15,6 @@ const create = async (name, ingredients, preparation, userId) => {
 
   const { _id } = await findByName(name);
 
-  console.log(_id);
-
   return { recipe: {
     _id,
     name,
