@@ -1,5 +1,12 @@
+const Joi = require('joi');
 const { findEmail } = require('../models/user');
 
+const loginJoi = Joi.object({
+  email: Joi.string().email().required(),
+  password: Joi.string().required(),
+});
+
+// Validações feitas a mão para o Campo name, email e senha do createUser
 const validateName = (req, res, next) => {
   const { name } = req.body;
   if (!name || name === '' || typeof name !== 'string') {
@@ -31,9 +38,26 @@ const validatePassword = (req, res, next) => {
   }
   next();
 };
+// Finaliza aqui as validações
+
+const validateLogin = async (req, res, next) => {
+  const { email } = req.body;
+  const { error } = loginJoi.validate(req.body);
+  const findedEmail = await findEmail(email);
+
+  if (error) {
+    return res.status(401).json({ message: 'All fields must be filled' });
+  }
+
+  if (!findedEmail) {
+    return res.status(401).json({ message: 'Incorrect username or password' });
+  }
+  next();
+};
 
 module.exports = {
   validateName,
   validateEmail,
   validatePassword,
+  validateLogin,
 };

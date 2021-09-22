@@ -3,12 +3,14 @@ const bodyParse = require('body-parser');
 
 const {
   createUser,
+  genToken,
 } = require('../controllers/user');
 
 const {
   validateName,
   validateEmail,
   validatePassword,
+  validateLogin,
 } = require('../middlewares/user');
 
 const app = express();
@@ -23,5 +25,6 @@ app.get('/', (request, response) => {
 // Não remover esse end-point, ele é necessário para o avaliador
 
 app.post('/users', validateName, validatePassword, validateEmail, createUser);
+app.post('/login', validateLogin, genToken);
 
 module.exports = app;
