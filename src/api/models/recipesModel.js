@@ -59,4 +59,19 @@ module.exports = {
 
     return true;
   },
+
+  async updateImage(id, image) {
+    const db = await mongoConnection();
+    const recipesCollection = await db.collection('recipes');
+    const imageURL = `localhost:3000/src/uploads/${image}`;
+
+    const recipe = await recipesCollection.findOne({ _id: ObjectId(id) });
+
+    if (recipe) {
+      await recipesCollection
+      .updateOne({ _id: ObjectId(id) }, { $set: { image: imageURL } });
+    }
+
+    return { ...recipe, image: imageURL };
+  },
 };

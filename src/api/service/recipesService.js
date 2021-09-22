@@ -30,4 +30,10 @@ module.exports = {
 
     return deletedUserResponse;
   },
+
+  async updateImage(id, image) {
+    const editedRecipe = await recipesModel.updateImage(id, image);
+
+    return editedRecipe;
+  },
 };

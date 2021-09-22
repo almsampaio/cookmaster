@@ -42,4 +42,13 @@ module.exports = {
       return res.status(204).send();
     }
   },
+
+  async updateImage(req, res) {
+    const { id } = req.params;
+    const { filename } = req.file;
+
+    const updatedImage = await recipesService.updateImage(id, filename);
+
+    return res.status(200).json(updatedImage);
+  },
 };

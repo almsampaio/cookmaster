@@ -1,4 +1,21 @@
 const express = require('express');
+const path = require('path');
+const multer = require('multer');
+
+const multerConfig = {
+  storage: multer.diskStorage({
+    destination: path.resolve(__dirname, 'uploads'),
+    filename(request, file, callback) {
+      const { id } = request.params;
+
+      const fileName = `${id}.jpeg`;
+
+      callback(null, fileName);
+    },
+  }),
+};
+
+const upload = multer(multerConfig);
 
 const userController = require('./controllers/userController');
 const recipesController = require('./controllers/recipesController');
@@ -22,5 +39,8 @@ routes.get('/recipes/:id', recipeExistsValidation, recipesController.show);
 routes.put('/recipes/:id', tokenValidation, recipesController.update);
 
 routes.delete('/recipes/:id', tokenValidation, recipesController.delete);
+
+routes.put('/recipes/:id/image', 
+  upload.single('image'), tokenValidation, recipesController.updateImage);
 
 module.exports = routes;
