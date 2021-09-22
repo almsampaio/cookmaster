@@ -1,10 +1,7 @@
 const recipeService = require('../services/recipeService');
 
 const create = async (req, res) => {
-  // VERIFICAR PLANTÃO A RESPEITO DO USERID = REQ E NÃO REQ.USER (VERIFICAR AUTHMID).
   const { userId } = req;
-  // console.log(userId);
-
   const recipeData = req.body;
 
   const { status, message, recipe } = await recipeService.create(recipeData, userId);
