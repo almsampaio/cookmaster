@@ -17,8 +17,4 @@ const createUser = async (req, res, next) => {
   return res.status(successResponses.created).json(createdUser);
 };
 
-// const createAdmin = async (req, res, next) => {
-//   const { name, email, password } = req.body;
-// };
-
 module.exports = { createUser };
