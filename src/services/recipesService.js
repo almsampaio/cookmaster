@@ -23,8 +23,14 @@ const create = async (obj) => {
   return { recipe: result };
 };
 
+const remove = async (id) => {
+  const result = await recipeModel.remove(id);
+  if (!result) return { status: httpStatus.NOT_FOUND, msg: errorMsg.recipeNotFound };
+};
+
 module.exports = {
   getAll,
   getById,
   create,
+  remove,
 };

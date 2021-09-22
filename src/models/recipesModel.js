@@ -20,8 +20,16 @@ const create = async (recipe) => {
   return ops[0];  
 };
 
+const remove = async (id) => {
+  const db = await connection();
+  if (!ObjectID.isValid(id)) return false;
+  await db.collection('recipes').deleteOne({ _id: id });
+  return true;
+};
+
 module.exports = {
   getAll,
   getById,
   create,
+  remove,
 };

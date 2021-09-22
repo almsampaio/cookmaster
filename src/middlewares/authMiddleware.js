@@ -7,7 +7,7 @@ const SECRET = 'MinhaGrandeFraseDeSegurança';
 
 const authToken = async (req, res, next) => {
   const token = req.headers.authorization;
-  if (!token) return res.status(httpStatus.UNAUTHORIZED).json(errorMsg.badJwt);
+  if (!token) return res.status(httpStatus.UNAUTHORIZED).json(errorMsg.noToken);
   try {
     const payload = jwt.verify(token, SECRET);
     const [result] = await userModel.findByEmail(payload.email);

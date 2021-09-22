@@ -20,8 +20,16 @@ const create = async (req, res) => {
   res.status(httpStatus.CREATED).json(result);
 };
 
+const remove = async (req, res) => {
+  const { id } = req.params;
+  const result = await recipeService.remove(id);
+  if (result) return res.status(result.status).json(result.msg);
+  res.status(httpStatus.NO_CONTENT).end();
+};
+
 module.exports = {
   getAll,
   getById,
   create,
+  remove,
 };

@@ -22,6 +22,10 @@ const recipeNotFound = {
   message: 'recipe not found',
 };
 
+const noToken = {
+  message: 'missing auth token',
+};
+
 module.exports = {
   invalidEntries,
   conflict,
@@ -29,4 +33,5 @@ module.exports = {
   invalidData,
   badJwt,
   recipeNotFound,
+  noToken,
 };
