@@ -1,5 +1,19 @@
 const RecipeService = require('../services/RecipeService');
 
+const update = async (req, res) => {
+  const { id } = req.params;
+  const { name, ingredients, preparation } = req.body;
+  const { user: { role: roleUSer, _id: idUser } } = req;
+  
+  const updatedRecipe = await RecipeService.update(id, { name, ingredients, preparation });
+  
+  if (String(updatedRecipe.userId) !== String(idUser) && roleUSer !== 'admin') {
+    return res.status(401).json({ message: 'unauthorized user' });
+  }
+
+  res.status(200).json(updatedRecipe);
+};
+
 const getById = async (req, res) => {
   const { id } = req.params;
 
@@ -38,4 +52,5 @@ module.exports = {
   create,
   getAll,
   getById,
+  update,
 };
