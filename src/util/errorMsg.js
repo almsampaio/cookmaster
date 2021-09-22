@@ -18,10 +18,15 @@ const badJwt = {
   message: 'jwt malformed',
 };
 
+const recipeNotFound = {
+  message: 'recipe not found',
+};
+
 module.exports = {
   invalidEntries,
   conflict,
   missingFields,
   invalidData,
   badJwt,
+  recipeNotFound,
 };

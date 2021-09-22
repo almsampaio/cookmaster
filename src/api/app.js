@@ -13,6 +13,8 @@ app.post('/users', userController.create);
 
 app.post('/login', userController.findUser);
 
+app.get('/recipes/:id', recipeController.getById);
+
 app.get('/recipes', recipeController.getAll);
 
 app.post('/recipes', middlewares.authToken, recipeController.create);

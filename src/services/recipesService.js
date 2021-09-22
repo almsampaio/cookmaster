@@ -7,6 +7,12 @@ const getAll = async () => {
   return result;
 };
 
+const getById = async (id) => {
+  const result = await recipeModel.getById(id);
+  if (!result) return { status: httpStatus.NOT_FOUND, msg: errorMsg.recipeNotFound };
+  return result;
+};
+
 const create = async (obj) => {
   const { recipe: { name, ingredients, preparation }, user: { _id } } = obj;
   if (!name || !ingredients || !preparation) {
@@ -19,5 +25,6 @@ const create = async (obj) => {
 
 module.exports = {
   getAll,
+  getById,
   create,
 };
