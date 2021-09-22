@@ -34,7 +34,7 @@ async function createUser(name, email, password) {
 
 async function verifyLogin(email, password) {
   const existingEmail = await usersModel.findUserByEmail(email);
-  if (!existingEmail || !existingEmail.password) {
+  if (!existingEmail || existingEmail.password !== password) {
     const error = {
       message: 'Incorrect username or password',
       status: 401,
