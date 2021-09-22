@@ -14,10 +14,22 @@ const create = async (req, res) => {
   return res.status(201).json(result);
 };
 
-const getAll = async (req, res) => {
+const getById = async (req, res) => {
+  const { id } = req.params;
+
+  const result = await recipeService.getById(id);
+
+  const { error } = result;
+
+  if (error) return res.status(error.code).json({ message: error.message });
+
+  return res.status(200).json(result);
+};
+
+const getAll = async (_req, res) => {
   const result = await recipeService.getAll();
 
   return res.status(200).json(result);
 };
 
-module.exports = { create, getAll };
+module.exports = { create, getAll, getById };

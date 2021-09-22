@@ -11,10 +11,11 @@ router.post('/', [
   recipeController.create,
 ]);
 
+router.get('/:id', recipeController.getById);
+
 router.get('/', recipeController.getAll);
 
 router.use((err, _req, res, _next) => {
-  console.log(err);
   if (err.error) {
     return res.status(400).json({ message: 'Invalid entries. Try again.' });
   }
