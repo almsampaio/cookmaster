@@ -10,7 +10,7 @@ const INVALID_TOKEN = {
     message: 'jwt malformed',
 };
 
-const validateAuthetication = async (req, res, next) => {
+const validateAuthetication = async (req, res, next) => {    
     const { authorization } = req.headers;
     const { id } = req.params;
     const stringId = '_id';
@@ -20,7 +20,7 @@ const validateAuthetication = async (req, res, next) => {
     const recipe = await getById('recipes', id);    
     const isAdmin = await validateAdmin(payload.data[stringId]);    
     const isUser = payload.data[stringId] === recipe.userId;
-    if (!isAdmin && !isUser) return res.status(401).json(INVALID_TOKEN);
+    if (!isAdmin && !isUser) return res.status(401).json(INVALID_TOKEN);    
     next();
 };
 

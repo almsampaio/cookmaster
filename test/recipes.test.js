@@ -821,7 +821,7 @@ describe('8 - Crie um endpoint para a exclusão de uma receita', () => {
 
   it('Será validado que não é possível excluir receita sem estar autenticado', async () => {
     let resultRecipes;
-
+    
     await frisby
       .post(`${url}/login/`, {
         email: 'erickjacquin@gmail.com',

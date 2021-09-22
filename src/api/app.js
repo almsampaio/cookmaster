@@ -13,6 +13,7 @@ const {
   getAllRecipes,
   getRecipeById,
   updateRecipe,
+  deleteRecipe,
 } = require('../controlers');
 
 const app = express();
@@ -36,5 +37,7 @@ app.get('/recipes/', getAllRecipes);
 app.get('/recipes/:id', getRecipeById);
 
 app.put('/recipes/:id', validateAuthetication, updateRecipe);
+
+app.delete('/recipes/:id', validateAuthetication, deleteRecipe);
 
 module.exports = app;
