@@ -1,4 +1,5 @@
 const Joi = require('joi');
+const { ObjectId } = require('mongodb');
 const { verify } = require('jsonwebtoken');
 
 const SECRET = 'senhahipermegaultrasecreta';
@@ -32,7 +33,16 @@ const validateToken = (req, res, next) => {
   next();
 };
 
+const validateId = (req, res, next) => {
+  const { id } = req.params;
+  if (!ObjectId.isValid(id)) {
+    return res.status(404).json({ message: 'recipe not found' });
+  }
+  next();
+};
+
 module.exports = {
   validateRecipe, 
   validateToken,
+  validateId,
 };

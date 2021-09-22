@@ -10,7 +10,13 @@ const getAllRecipes = async () => {
   return getAll;
 };
 
+const getRecipeById = async (id) => {
+  const findedId = await recipesModel.getRecipeById(id);
+  return findedId;
+};
+
 module.exports = {
   createRecipe,
   getAllRecipes,
+  getRecipeById,
 };

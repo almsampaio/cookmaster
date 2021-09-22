@@ -9,6 +9,7 @@ const {
 const {
   createRecipe,
   getAllRecipes,
+  getRecipeById,
 } = require('../controllers/recipes');
 
 const {
@@ -21,6 +22,7 @@ const {
 const {
   validateRecipe,
   validateToken,
+  validateId,
 } = require('../middlewares/recipes');
 
 const app = express();
@@ -39,5 +41,6 @@ app.post('/login', validateLogin, genToken);
 
 app.post('/recipes', validateRecipe, validateToken, createRecipe);
 app.get('/recipes', getAllRecipes);
+app.get('/recipes/:id', validateId, getRecipeById);
 
 module.exports = app;
