@@ -32,4 +32,14 @@ module.exports = {
 
     return res.status(200).json({ ...editedRecipe, userId: _id });
   },
+
+  async delete(req, res) {
+    const { id } = req.params;
+
+    const deletedResponse = await recipesService.delete(id);
+
+    if (deletedResponse) {
+      return res.status(204).send();
+    }
+  },
 };

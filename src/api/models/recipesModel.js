@@ -50,4 +50,13 @@ module.exports = {
 
     return { _id: id, name, ingredients, preparation };
   },
+
+  async delete(id) {
+    const db = await mongoConnection();
+    const recipesCollection = await db.collection('recipes');
+
+    await recipesCollection.deleteOne({ _id: ObjectId(id) });
+
+    return true;
+  },
 };

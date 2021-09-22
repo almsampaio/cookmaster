@@ -21,4 +21,6 @@ routes.get('/recipes/:id', recipeExistsValidation, recipesController.show);
 
 routes.put('/recipes/:id', tokenValidation, recipesController.update);
 
+routes.delete('/recipes/:id', tokenValidation, recipesController.delete);
+
 module.exports = routes;

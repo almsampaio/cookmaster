@@ -24,4 +24,10 @@ module.exports = {
 
     return editedRecipe;
   },
+
+  async delete(id) {
+    const deletedUserResponse = await recipesModel.delete(id);
+
+    return deletedUserResponse;
+  },
 };
