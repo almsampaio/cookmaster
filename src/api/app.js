@@ -4,7 +4,7 @@ require('dotenv').config();
 const app = require('express')();
 const routes = require('../routes');
 
-const EVALUATOR_URL = 'mongodb://mongodb:27017/CookMaster';
+const EVALUATOR_URL = 'mongodb://mongodb:27017/Cookmaster';
 const SERVER_URL = process.env.MONGO_DB_URL || EVALUATOR_URL; 
 
 app.use(bodyParser.json());
