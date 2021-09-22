@@ -44,8 +44,32 @@ const findById = async (id) => {
   return recipe;
 };
 
+const update = async (id, body, role, userId) => {
+  if (!ObjectId.isValid(id)) return null;
+  const { name, ingredients, preparation } = body;
+
+  let recipe = await connection()
+    .then((db).collection('recipes').findOne(new ObjectId(id)));
+
+  if (!recipe) return null;
+
+  if (recipe.userId === userId || role === 'admin') {
+    await connection()
+    .then((db) => db.collection('recipes')
+    .updateOne(recipe, { $set: { name, ingredients, preparation } }));
+
+  recipe = await connection()
+    .then((db).collection('recipes').findOne(new ObjectId(id)));
+
+  return recipe;
+  }
+
+  return null;  
+};
+
 module.exports = {
   create,
   getAll,
   findById,
+  update,
 };
