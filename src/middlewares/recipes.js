@@ -6,10 +6,10 @@ const authToken = (req, res, next) => {
   const { authorization: token } = req.headers;
   if (!token) return res.status(401).json({ message: 'missing auth token' });
   try {
-    const { data } = verify(token, SECRET);
-    req.user = data;
+    const { _id } = verify(token, SECRET);
+    req.user = _id;
   } catch (e) {
-    res.status(401).json({ message: 'jwt malformed' });
+    return res.status(401).json({ message: 'jwt malformed' });
   }
   next();
 };

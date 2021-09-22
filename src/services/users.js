@@ -39,7 +39,7 @@ const tokenGen = async (data) => {
   const getUserEmail = await Users.getUserByEmail(data.email);
   if (!getUserEmail) return { status: 401, err: { message: 'Incorrect username or password' } };
 
-  const token = sign({ data: getUserEmail }, SECRET, jwtConfig);
+  const token = sign(getUserEmail, SECRET, jwtConfig);
   return { status: 200, token };
 };
 
