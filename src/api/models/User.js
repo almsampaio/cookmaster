@@ -14,11 +14,17 @@ exports.create = async ({ name, email, password }) => {
       _id: user.insertedId,
       name,
       email,
-      password,
       role,
     };
   } catch (err) {
     console.log(err);
     return null;
   }
+};
+
+exports.getUserByEmail = async (email) => {
+  const db = await connection();
+  const user = await db.collection(COLLECTION).findOne({ email });
+
+  return user;
 };
