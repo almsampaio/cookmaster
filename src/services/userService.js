@@ -3,7 +3,7 @@ const userSchema = require('../schemas/userSchema');
 
 async function emailIsUnique(email) {
   const userByEmail = await userModel.getUserByEmail(email);
-  if (!userByEmail.length) return true;
+  if (!userByEmail) return true;
   return false;
 }
 
