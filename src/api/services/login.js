@@ -3,9 +3,8 @@ const CustomError = require('../../lib/CustomError');
 const usersModel = require('../models/users');
 const { userLogin } = require('../schemas/user');
 
-const SECRET = '0183rncnm0w02';
-
 module.exports = {
+  SECRET: '0183rncnm0w02',
   async login(body) {
     const userSchemaError = userLogin.validate(body).error;
     
@@ -19,6 +18,6 @@ module.exports = {
     const { _id: id, email, role } = foundUser;
     const payload = { id, email, role };
 
-    return jwt.sign(payload, SECRET);
+    return jwt.sign(payload, this.SECRET);
   },
 };
