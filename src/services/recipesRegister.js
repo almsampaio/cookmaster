@@ -16,7 +16,7 @@ module.exports = async (req) => {
   const createdRecipe = await models.createRecipe(newBody);
 
   return {
-    status: httpStatus.OK_STATUS,
+    status: httpStatus.CREATED_STATUS,
     recipe: createdRecipe,
   };
 };
