@@ -8,5 +8,6 @@ const authMiddleware = require('../middlewares/authMiddleware');
 
 router.post('/', authMiddleware.authLogin, RecipeController.create);
 router.get('/', RecipeController.getAll);
+router.get('/:id', RecipeController.getById);
 
 module.exports = router;
