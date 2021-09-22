@@ -1,4 +1,5 @@
 const express = require('express');
+const path = require('path');
 const bodyParser = require('body-parser');
 const routes = require('./routes/routes');
 const error = require('./middlewares/error');
@@ -6,6 +7,7 @@ const error = require('./middlewares/error');
 const app = express();
 require('dotenv').config();
 
+app.use('/images', express.static(path.join(__dirname, '..', '/uploads')));
 app.use(bodyParser.json());
 // const createUser = require('./controllers/usersController');
 

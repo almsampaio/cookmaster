@@ -51,6 +51,13 @@ const insertImage = rescue(async (req, res) => {
   // este trecho do código fiz baseado no PR da Marília
 });
 
+const getImage = rescue(async (req, res) => {
+  const { id } = req.params;
+  const { image } = await service.getRecipesById(id);
+  res.status(200).render(image);
+  // este trecho do código fiz baseado no PR da Marília
+});
+
 module.exports = {
   createRecipes,
   getAllRecipes,
@@ -58,4 +65,5 @@ module.exports = {
   updateRecipesById,
   deleteRecipesById,
   insertImage,
+  getImage,
 };
