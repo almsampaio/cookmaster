@@ -33,7 +33,7 @@ const findUser = async (user) => {
   if (!result || result.email !== user.email || result.password !== user.password) {
     return { status: httpStatus.UNAUTHORIZED, msg: errorMsg.invalidData };
   }
-  const userToken = await getToken(user);
+  const userToken = await getToken(result);
   return { token: userToken }; 
 };
 

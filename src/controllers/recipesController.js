@@ -7,7 +7,8 @@ const getAll = async (_req, res) => {
 };
 
 const create = async (req, res) => {
-  const result = await recipeService.create(req);
+  const all = { user: req.user, recipe: req.body };
+  const result = await recipeService.create(all);
   res.status(httpStatus.CREATED).json(result);
 };
 

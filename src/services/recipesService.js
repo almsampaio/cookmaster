@@ -5,9 +5,11 @@ const getAll = async () => {
   return result;
 };
 
-const create = async (recipe) => {
+const create = async (obj) => {
+  const { recipe: { name, ingredients, preparation }, user: { _id } } = obj;
+  const recipe = { name, ingredients, preparation, userId: _id };
   const result = await recipeModel.create(recipe);
-  return result;
+  return { recipe: result };
 };
 
 module.exports = {

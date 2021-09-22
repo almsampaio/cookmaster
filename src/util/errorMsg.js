@@ -14,9 +14,14 @@ const invalidData = {
   message: 'Incorrect username or password',
 };
 
+const badJwt = {
+  message: 'jwt malformed',
+};
+
 module.exports = {
   invalidEntries,
   conflict,
   missingFields,
   invalidData,
+  badJwt,
 };
