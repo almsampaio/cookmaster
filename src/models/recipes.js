@@ -28,14 +28,27 @@ const getAllRecipes = async () => {
 
 const getRecipeById = async (id) => {
   if (!ObjectId.isValid(id)) return false;
-  
+
   const db = await getConnection();
   const recipe = await db.collection('recipes').findOne({ _id: ObjectId(id) });
   return recipe;
+};
+
+const updateRecipe = async ({ name, ingredients, preparation, id }) => {
+  if (!ObjectId.isValid(id)) return false;
+
+  const db = await getConnection();
+  const { value } = await db.collection('products').findOneAndUpdate(
+    { _id: ObjectId(id) },
+    { $set: { name, ingredients, preparation } },
+    { returnDocument: 'after' },
+  );
+  return value;
 };
 
 module.exports = {
   createRecipe,
   getAllRecipes,
   getRecipeById,
+  updateRecipe,
 };
