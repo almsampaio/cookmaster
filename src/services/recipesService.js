@@ -30,7 +30,19 @@ exports.readOne = async ({ id }) => {
   }
 };
 
+exports.update = async ({ id, name, ingredients, preparation }) => {
+  try {
+    await recipesModel
+    .findByIdAndUpdate(id, { name, ingredients, preparation });
+    const result = await recipesModel.findById(id);
+    return { code: StatusCodes.OK, result };
+  } catch (_err) {
+    throw notFoundError('recipe not found');
+  }
+};
+
 exports.validateToken = async ({ token }) => {
+  if (!token) throw unauthorizedError('missing auth token');
   try {
     const decoded = jwt.verify(token, secret);
     return decoded;

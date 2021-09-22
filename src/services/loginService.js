@@ -7,6 +7,7 @@ const { unauthorizedError } = require('../validations/Errors');
 const { secret } = require('../validations/auth/secret');
 
 const jwtConfig = {
+  expiresIn: '3d',
   algorithm: 'HS256',
 };
 
