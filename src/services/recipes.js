@@ -19,7 +19,10 @@ const getRecipeById = async (id) => {
 };
 
 const updateRecipe = async (payload) => {
-  const { role } = payload;
+  const { role, recipeId } = payload;
+  const recipe = await getRecipeById(recipeId);
+  if (recipe.error) return recipe;
+
   if (role === 'admin') {
     const updatedRecipe = await model.updateRecipeAsAdmin(payload);
     return updatedRecipe;
