@@ -34,24 +34,7 @@ const getRecipeById = async (id) => {
   return recipe;
 };
 
-const updateRecipe = async ({ name, ingredients, preparation, recipeId, userId }) => {
-  if (!ObjectId.isValid(recipeId)) return false;
-
-  const db = await getConnection();
-  const { value } = await db.collection('recipes').findOneAndUpdate(
-    {
-      $and: [
-        { _id: ObjectId(recipeId) },
-        { userId: { $eq: userId } },
-      ],
-    },
-    { $set: { name, ingredients, preparation } },
-    { returnOriginal: false },
-  );
-  return value;
-};
-
-const updateRecipeAsAdmin = async ({ name, ingredients, preparation, recipeId }) => {
+const updateRecipe = async ({ name, ingredients, preparation, recipeId }) => {
   if (!ObjectId.isValid(recipeId)) return false;
 
   const db = await getConnection();
@@ -88,7 +71,6 @@ module.exports = {
   getAllRecipes,
   getRecipeById,
   updateRecipe,
-  updateRecipeAsAdmin,
   deleteRecipe,
   addImage,
 };

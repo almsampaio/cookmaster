@@ -19,16 +19,15 @@ const getRecipeById = async (id) => {
 };
 
 const updateRecipe = async (payload) => {
-  const { role, recipeId } = payload;
+  const { role, recipeId, userId } = payload;
   const recipe = await getRecipeById(recipeId);
   if (recipe.error) return recipe;
 
-  if (role === 'admin') {
-    const updatedRecipe = await model.updateRecipeAsAdmin(payload);
+  if (`${userId}` === `${recipe.userId}` || role === 'admin') {
+    const updatedRecipe = await model.updateRecipe(payload);
     return updatedRecipe;
   }
-  const updatedRecipe = await model.updateRecipe(payload);
-  return updatedRecipe;
+  return { error: { code: 401, message: 'You have no permission' } };
 };
 
 const deleteRecipe = async (id) => {
