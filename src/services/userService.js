@@ -1,7 +1,23 @@
+const jwt = require('jsonwebtoken');
 const userModel = require('../models/userModel');
 
 const ERROR_INVALID_ENTRIES = { error: { status: 400, message: 'Invalid entries. Try again.' } };
 const ERROR_EMAIL_EXISTS = { error: { status: 409, message: 'Email already registered' } };
+const ERROR_LOGIN = { error: { status: 401, message: 'All fields must be filled' } };
+const ERROR_CREDENTIALS = { error: { status: 401, message: 'Incorrect username or password' } };
+const SECRET = 'meusupersegredo';
+
+const userLogin = async (email, password) => {
+  if (!email || !password) {
+    return ERROR_LOGIN;
+  }
+  const userSearch = await userModel.findUserByEmail(email);
+  if (!userSearch || userSearch.password !== password) {
+    return ERROR_CREDENTIALS;
+  }
+  const token = jwt.sign(userSearch, SECRET);
+  return { token };
+};
 
 const entriesValidation = (name, email, password) => {
   const emailRegex = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
@@ -21,4 +37,5 @@ const createUser = async (name, email, password) => {
 
 module.exports = {
   createUser,
+  userLogin,
 };
