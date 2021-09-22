@@ -4,7 +4,7 @@ const router = Router();
 
 const {
   addUsers,
-} = require('../Controllers/usersControllers');
+} = require('../Controllers/usersController');
 
 router.post('/', addUsers);
 
