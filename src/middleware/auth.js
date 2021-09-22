@@ -1,5 +1,4 @@
 const jwt = require('jsonwebtoken');
-const model = require('../models/usersModel');
 
 const secret = 'meusegredo';
 
@@ -13,9 +12,7 @@ const validateJWT = async (req, res, next) => {
   try {
     const decoded = jwt.verify(token, secret);
 
-    const user = await model.findEmail(decoded.email);
-
-    req.user = user;
+    req.user = decoded;
 
     next();
   } catch (err) {
