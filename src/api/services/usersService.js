@@ -4,10 +4,9 @@ const { REQUEST_INVALID_ENTRIES, EMAIL_CONFLICT, CREATED_STATUS } = require('../
 
 // REQUISITO 1
 const validationJoi = Joi.object().keys({
-  name: Joi.string().not().empty().required(),
-  email: Joi.string().not().empty().required()
-  .email(),
-  password: Joi.string().not().empty().required(),
+  name: Joi.string().required(),
+  email: Joi.string().email().required(),
+  password: Joi.string().required(),
 });
 
 const createUsers = async (newUser, role = 'user') => {
