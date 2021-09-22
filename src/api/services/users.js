@@ -14,7 +14,7 @@ const createUsers = async ({ name, email, password }) => {
 };
 
 const loginUsers = async ({ email, password }) => {
-  const validateInsertedBodyError = validations
+  const validateInsertedBodyError = await validations
     .validateBodyLoginUsers({ email, password });
   if (validateInsertedBodyError) return validateInsertedBodyError;
 

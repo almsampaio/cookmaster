@@ -20,26 +20,26 @@ const validateSingleUserEmail = async (email) => {
   return false;
 };
 
-const validateBodyLoginUsers = (body) => {
+const validateBodyLoginUsers = async (body) => {
   let error;
    error = Joi.object({
     password: Joi.string().required(),
     email: Joi.string().required(),
   }).validate(body);
   if (error.error) return { verb: 'post', item: 'loginUsers', error, isJoy: true, filled: false };
-  console.log('preencheu');
-
   error = Joi.object({
     email: Joi.string().email(),
     password: Joi.string(),
   }).validate(body);
 
-  // const existsThisUser = usersModels
+  const existsThisUser = await usersModels.getUserByEmail(body.email);
 
-
-  if (error) return { verb: 'post', item: 'loginUsers', error, isJoy: true, filled: true };
-
-
+  if (error.error || !existsThisUser.length) {
+    console.log('entrou');
+ return { 
+    verb: 'post', item: 'loginUsers', error, isJoy: true, filled: true, 
+  }; 
+}
   return false;
 };
 
