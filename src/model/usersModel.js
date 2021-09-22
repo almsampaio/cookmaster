@@ -8,7 +8,8 @@ const createUser = async (name, email, password) => connection()
     password,
     role: "user",
   }))
-  .then((result) => result.ops[0]);
+  .then((result) => result.ops[0])
+  .catch((e) => console.log(e));
 
 module.exports = {
   createUser,
