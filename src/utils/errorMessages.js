@@ -20,9 +20,15 @@ const INCORRECT_EMAIL_OR_PASSWORD = {
   err: { message: 'Incorrect username or password' },
 };
 
+const JWT_MALFORMED = {
+  status: httpStatus.UNAUTHORIZED,
+  err: 'jwt malformed',
+};
+
 module.exports = {
   INVALID_ENTRIES,
   EMAIL_ALREADY_EXISTS,
   ALL_FIELDS_MUST_BE_FILLED,
   INCORRECT_EMAIL_OR_PASSWORD,
+  JWT_MALFORMED,
 };
