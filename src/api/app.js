@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const userController = require('../controllers/user');
 const recipesController = require('../controllers/recipes');
 const { authToken } = require('../middlewares/authToken');
+const errorMiddleware = require('../middlewares/error');
 
 const app = express();
 
@@ -22,5 +23,7 @@ app.post('/users', userController.addUser);
 app.post('/login', userController.login);
 
 app.post('/recipes', authToken, recipesController.addRecipe);
+
+app.use(errorMiddleware);
 
 module.exports = app;

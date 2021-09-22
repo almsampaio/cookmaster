@@ -1,7 +1,7 @@
 const recipeModel = require('../models/recipes');
 // const { getToken } = require('./token');
 
-const INVALID = 'Invalid CustomElementRegistry. Try Again';
+const INVALID = 'Invalid entries. Try again.';
 
 const checkRecipe = (name, ingredients, preparation) => {
   if (typeof name !== 'string') return { message: INVALID, error: 400 };

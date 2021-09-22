@@ -28,10 +28,10 @@ const addRecipe = async (recipe) => {
   const newRecipe = await connectionDb.collection('users')
   .insertOne(recipe);
 
-  console.log(newRecipe);
+  console.log(newRecipe.ops[0]);
   // const output = format(newRecipe.ops[0]);
 
-  return newRecipe;
+  return newRecipe.ops[0];
 };
 
 module.exports = {
