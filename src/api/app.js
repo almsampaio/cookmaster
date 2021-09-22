@@ -17,6 +17,8 @@ const apiRoutes = express.Router();
 apiRoutes.post('/users', validateNewUser, routes.createUser);
 apiRoutes.post('/login', validateLogin, routes.login);
 apiRoutes.post('/recipes', validateNewRecipe, routes.createRecipe);
+apiRoutes.get('/recipes/:id', routes.getById);
+apiRoutes.get('/recipes', routes.getAll);
 
 app.use(apiRoutes);
 app.use(handleErrors);
