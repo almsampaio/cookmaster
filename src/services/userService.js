@@ -15,7 +15,9 @@ const userLogin = async (email, password) => {
   if (!userSearch || userSearch.password !== password) {
     return ERROR_CREDENTIALS;
   }
-  const token = jwt.sign(userSearch, SECRET);
+
+  const { password: _, ...userPayload } = userSearch;
+  const token = jwt.sign(userPayload, SECRET);
   return { token };
 };
 

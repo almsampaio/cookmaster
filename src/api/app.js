@@ -11,7 +11,10 @@ app.get('/', (request, response) => {
 });
 // Não remover esse end-point, ele é necessário para o avaliador
 
+// Users
 app.post('/users', userController.createUser);
 app.post('/login', userController.userLogin);
+
+// Recipes
 
 module.exports = app;
