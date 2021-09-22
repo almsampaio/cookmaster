@@ -45,3 +45,13 @@ exports.delete = async (req, res) => {
   .then(({ code }) => res.status(code).send())
   .catch(({ code, message }) => res.status(code).json({ message }));
 };
+
+exports.updateImage = async (req, res) => {
+  const { file: { filename }, params: { id } } = req;
+  const token = req.headers.authorization;
+  recipesService
+  .validateToken({ token })
+  .then(() => recipesService.updateImage({ id, filename }))
+  .then(({ code, result }) => res.status(code).json(result))
+  .catch(({ code, message }) => res.status(code).json({ message }));
+};

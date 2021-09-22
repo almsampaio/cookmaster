@@ -8,8 +8,8 @@ const Router = () => {
     const middleware = initial(controllers);
 
     routes.post(`${route}`, [...middleware, controller.create]);
-    routes.get(`${route}`, [...middleware, controller.getAll]);
-    routes.get(`${route}/:id`, [...middleware, controller.get]);
+    routes.get(`${route}`, [...middleware, controller.readMany]);
+    routes.get(`${route}/:id`, [...middleware, controller.readOne]);
     routes.put(`${route}/:id`, [...middleware, controller.update]);
     routes.delete(`${route}/:id`, [...middleware, controller.delete]);
   };

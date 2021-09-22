@@ -46,6 +46,17 @@ exports.delete = async ({ id }) => {
   return { code: StatusCodes.NO_CONTENT };
 };
 
+exports.updateImage = async ({ id, filename }) => {
+  try {
+    await recipesModel
+    .findByIdAndUpdate(id, { image: `localhost:3000/src/uploads/${filename}` });
+    const result = await recipesModel.findById(id);
+    return { code: StatusCodes.OK, result };
+  } catch (_err) {
+    throw notFoundError('recipe not found');
+  }
+};
+
 exports.validateToken = async ({ token }) => {
   if (!token) throw unauthorizedError('missing auth token');
   try {
