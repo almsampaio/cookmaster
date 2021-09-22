@@ -25,6 +25,9 @@ app.route('/recipes')
   .post(authenticate, recipesController.createRecipe)
   .get(recipesController.getRecipes);
 
+app.route('/recipes/:id')
+  .get(recipesController.getRecipeById);
+
 app.use(errors);
 
 module.exports = app;

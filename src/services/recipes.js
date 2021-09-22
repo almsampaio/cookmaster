@@ -3,6 +3,7 @@ const Joi = require('joi');
 const recipesModel = require('../models/recipes');
 
 const INVALID_ENTRIES = { message: 'Invalid entries. Try again.', status: 400 };
+const RECIPE_NOT_FOUND = { message: 'recipe not found', status: 404 };
 
 const validateRecipe = Joi.object({
   name: Joi.string().min(5).required(),
@@ -28,7 +29,16 @@ const getRecipes = async () => {
   return result;
 };
 
+const getRecipeById = async (id) => {
+  const result = await recipesModel.getRecipeById(id);
+
+  if (!result) return { error: RECIPE_NOT_FOUND };
+
+  return { result };
+};
+
 module.exports = {
   createRecipe,
   getRecipes,
+  getRecipeById,
 };
