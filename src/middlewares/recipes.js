@@ -8,9 +8,9 @@ const validateRecipe = (req, res, next) => {
   next();
 };
 
-const validateIfUserIsAuth = (req, _res, next) => {
+const validateIfUserIsAuth = (req, res, next) => {
   const token = req.headers.authorization;
-  if (token) return auth;
+  if (token) return auth(req, res, next);
   next();
 };
 
