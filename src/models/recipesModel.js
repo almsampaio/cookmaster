@@ -68,9 +68,25 @@ const update = async (id, body, role, userId) => {
   return null;  
 };
 
+const deleteInfo = async (id, role, userId) => {
+  if (!ObjectId.isValid(id)) return null;
+  const recipe = await findById(id);
+
+  if (!recipe) return null;
+
+  if (recipe.userId === userId || role === 'admin') {
+    await connection()
+    .then((db) => db.collection('recipes')
+    .deleteOne({ _id: ObjectId(id) }));
+
+  return null;
+  }
+};
+
 module.exports = {
   create,
   getAll,
   findById,
   update,
+  deleteInfo,
 };
