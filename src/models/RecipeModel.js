@@ -13,7 +13,7 @@ const create = async (recipe, userId) => {
   );
 
   return {
-    recipes: {
+    recipe: {
       _id,
       name,
       ingredients,
