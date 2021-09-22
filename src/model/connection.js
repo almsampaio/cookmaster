@@ -1,11 +1,12 @@
 const { MongoClient } = require('mongodb');
+require('dotenv').config();
 
 const OPTIONS = {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 };
 
-const MONGO_URL = 'mongodb://localhost:27017/Cookmaster' || 'mongodb://mongodb:27017/Cookmaster';
+const MONGO_URL = process.env.DB_URL || 'mongodb://mongodb:27017/Cookmaster';
 const DB_LOCAL_NAME = 'Cookmaster';
 
 const connection = () => MongoClient
