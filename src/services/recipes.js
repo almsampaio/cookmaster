@@ -31,9 +31,17 @@ const updateRecipe = async (payload) => {
   return updatedRecipe;
 };
 
+const deleteRecipe = async (id) => {
+  const recipe = await getRecipeById(id);
+  if (recipe.error) return recipe;
+
+  await model.deleteRecipe(id);
+};
+
 module.exports = {
   createRecipe,
   getAllRecipes,
   getRecipeById,
   updateRecipe,
+  deleteRecipe,
 };
