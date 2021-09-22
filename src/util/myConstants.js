@@ -3,6 +3,7 @@ const STATUS_201_CREATED = 201;
 const STATUS_422_UNPROCESSABLE = 422;
 const STATUS_404_NOT_FOUND = 404;
 const STATUS_400_bad_request = 400;
+const STATUS_409_conflict = 409;
 
 module.exports = {
   STATUS_200_OK,
@@ -10,4 +11,5 @@ module.exports = {
   STATUS_422_UNPROCESSABLE,
   STATUS_404_NOT_FOUND,
   STATUS_400_bad_request,
+  STATUS_409_conflict,
 };
