@@ -13,7 +13,17 @@ async function findUserByEmail(email) {
   return result;
 }
 
+const findUserByName = async (name) => {
+  const db = await getConnection();
+  const user = await db.collection('users').findOne({ name });
+
+  if (!user) return null;
+
+  return user;
+};
+
 module.exports = {
   createUser,
   findUserByEmail,
+  findUserByName,
 };

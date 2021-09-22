@@ -1,0 +1,24 @@
+const getConnection = require('./connection');
+
+const findByName = async (name) => {
+  const db = await getConnection();
+  const recipe = await db.collection('recipes').findOne({ name });
+
+  if (!recipe) return null;
+
+  return recipe;
+};
+
+const createRecipe = async (name, ingredients, preparation, userId) => {
+ await getConnection()
+    .then((db) => db.collection('recipes')
+    .insertOne({ name, ingredients, preparation, userId }));
+
+  const { _id } = await findByName(name);
+  const data = { _id, name, ingredients, preparation, userId };
+  return { recipe: data };
+};
+
+module.exports = {
+  createRecipe,
+}; 

@@ -14,11 +14,10 @@ async function createUser(req, res) {
 async function loginUser(req, res) {
   const { email, password } = req.body;
   const user = await usersService.loginUser(email, password);
-  console.log(user);
   if (user.error) {
     return res.status(user.error.status).json({ message: user.error.message });
   }
-  return res.status(200).json(user.token);
+  return res.status(200).json({ token: user.token });
 }
 
 module.exports = {
