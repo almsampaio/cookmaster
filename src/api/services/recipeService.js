@@ -1,4 +1,5 @@
 const recipeModel = require('../models/recipeModel');
+const userModel = require('../models/userModel');
 
 const exceptions = {
     recipeNotFound: {
@@ -19,4 +20,20 @@ const getById = async (id) => {
 
 const getAll = async () => recipeModel.getAll();
 
-module.exports = { create, getAll, getById };
+const update = async (recipeId, recipe, userId) => {
+  const getRecipe = await recipeModel.getById(recipeId);
+
+  if (getRecipe.error) return { error: exceptions.recipeNotFound };
+
+  const getUser = await userModel.findById(userId);
+
+  if (getRecipe.userId !== userId && getUser.role !== 'admin') {
+    return { error: exceptions.recipeNotFound };
+  } 
+
+  const result = await recipeModel.update(recipeId, recipe);
+
+  return result;
+};
+
+module.exports = { create, getAll, getById, update };

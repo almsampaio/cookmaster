@@ -31,4 +31,21 @@ const getById = async (id) => {
   return recipe;
 };
 
-module.exports = { create, getAll, getById };
+const update = async (id, recipe) => {
+  if (!isValidID(id)) return null;
+
+  const filter = { _id: ObjectId(id) };
+
+  const document = { $set: { ...recipe } };
+
+  const options = { returnOriginal: false };
+
+  const db = await getConnection();
+
+  const result = await db.collection(RECIPES)
+    .findOneAndUpdate(filter, document, options);
+
+  return result.value;  
+};
+
+module.exports = { create, getAll, getById, update };

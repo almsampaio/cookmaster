@@ -32,4 +32,18 @@ const getAll = async (_req, res) => {
   return res.status(200).json(result);
 };
 
-module.exports = { create, getAll, getById };
+const update = async (req, res) => {
+  const { id } = req.params;
+  const recipe = req.body;
+  const { userId } = req;
+
+  const result = await recipeService.update(id, recipe, userId);
+
+  const { error } = result;
+
+  if (error) return res.status(error.code).json({ message: error.message });
+
+  return res.status(200).json(result);
+};
+
+module.exports = { create, getAll, getById, update };
