@@ -25,10 +25,16 @@ const JWT_MALFORMED = {
   err: 'jwt malformed',
 };
 
+const UNAUTHORIZED_MISSING_TOKEN = {
+  status: httpStatus.UNAUTHORIZED,
+  err: { message: 'missing auth token' },
+};
+
 module.exports = {
   INVALID_ENTRIES,
   EMAIL_ALREADY_EXISTS,
   ALL_FIELDS_MUST_BE_FILLED,
   INCORRECT_EMAIL_OR_PASSWORD,
   JWT_MALFORMED,
+  UNAUTHORIZED_MISSING_TOKEN,
 };
