@@ -16,9 +16,9 @@ app.use(express.static(path.join(__dirname, '..', 'uploads')));
 
 const storage = multer.diskStorage({
   destination: (_req, _file, callback) => {
-    callback(null, 'uploads');
+    callback(null, path.join(__dirname, '..', 'uploads'));
   },
-  filename: (req, file, callback) => {
+  filename: (req, _file, callback) => {
     const { id } = req.params;
     callback(null, `${id}.jpeg`);
   },

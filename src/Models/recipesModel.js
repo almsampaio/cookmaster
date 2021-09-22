@@ -17,14 +17,14 @@ const get = async (param) => {
   return recipesCollection.findOne({ _id: ObjectID(param) });
 };
 
-const update = async (recipeObj, recipeId) => {
+const update = async (payload, recipeId) => {
   const recipesCollection = await connect.getConnection()
     .then((db) => db.collection('recipes'));
 
   return recipesCollection.findOneAndUpdate(
     { _id: ObjectID(recipeId) },
-    { $set: { ...recipeObj } },
-    { returnOriginal: false },
+    { $set: { ...payload } },
+    { returnOriginal: false, upsert: true },
   );
 };
 

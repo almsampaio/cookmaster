@@ -33,9 +33,9 @@ const remove = async (user, recipeId) => {
 
 const addImage = async (user, id) => {
   const image = `localhost:3000/src/uploads/${id}.jpeg`;
-  const { role } = user;
+  const { role, _id: userID } = user;
   const { userId } = await getById(id);
-  if (`${id}` !== `${userId}` && role === 'user') return builtError(401, 'jwt malformed');
+  if (`${userID}` !== `${userId}` && role === 'user') return builtError(401, 'jwt malformed');
 
   return Recipes.update({ image }, id);
 };
