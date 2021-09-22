@@ -13,13 +13,12 @@ function errorsPostLogin(err, res) {
 }
 
 function errorsPostRecipes(err, res) {
-  if (err.isJoy) {
+  console.log('entrou no post recipes');
     if (err.isJoy) {
       return res.status(400).json({ message: 'Invalid entries. Try again.' });
     }
 
     return res.status(401).json({ message: 'jwt malformed' });
-  }
 }
 
 function errorsPost(err, res) {
@@ -35,5 +34,5 @@ module.exports = (err, _req, res, _next) => {
     return errorsPost(err, res);
   }
 
-  return res.status(500).json({ message: `Internal server error: ${err.message}` });
+  return res.status(500).json({ message: 'Internal server error' });
 };

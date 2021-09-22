@@ -54,10 +54,10 @@ const validateBodyCreateRecipes = (body) => {
 
 const validateTokenToCreateRecipes = async (token) => {
   try {
-    await jwt.verify(token, JWT_SECRET);
-    return false;
+    const payload = await jwt.verify(token, JWT_SECRET);
+    return { error: false, payload };
   } catch (_err) {
-    return { error: true, isValidatingToken: true };
+    return { verb: 'post', item: 'createRecipes', error: true, isValidatingToken: true };
   }
 };
 

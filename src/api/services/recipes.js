@@ -1,4 +1,4 @@
-// const recipesModels = require('../models/recipes');
+const recipesModels = require('../models/recipes');
 const validations = require('./validations');
 
 const createRecipes = async ({ name, ingredients, preparation }, token) => {
@@ -6,9 +6,11 @@ const createRecipes = async ({ name, ingredients, preparation }, token) => {
     .validateBodyCreateRecipes({ name, ingredients, preparation });
   if (validateInsertedBodyError) return validateInsertedBodyError;
    
-  const validateToken = validations
+  const validateToken = await validations
     .validateTokenToCreateRecipes(token);
-  if (validateToken) return validateToken;
+  if (validateToken.error) return validateToken;
+
+  return recipesModels.createRecipes({ name, ingredients, preparation }, validateToken.payload);
 };
 
 module.exports = {
