@@ -40,6 +40,12 @@ const recipeError = {
     status: 404 },
 };
 
+const adminError = {
+  error: { 
+    message: 'Only admins can register new admins',
+    status: 403 },
+};
+
 module.exports = {
   createError,
   emailError,
@@ -48,4 +54,5 @@ module.exports = {
   jwtError,
   withoutTokenError,
   recipeError,
+  adminError,
 };

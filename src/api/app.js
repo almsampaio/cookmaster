@@ -26,6 +26,7 @@ const upload = multer({ storage });
 
 app.post('/users', usersController.createUser);
 app.post('/login', usersController.loginUser);
+app.post('/users/admin', authBasic, usersController.addAdmin);
 
 app.post('/recipes', authBasic, recipesController.createRecipe);
 app.get('/recipes', recipesController.getAllRecipes);
