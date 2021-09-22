@@ -5,9 +5,19 @@ function errorsPostUsers(err, res) {
   return res.status(409).json({ message: 'Email already registered' });
 }
 
+function errorsPostLogin(err, res) {
+  if (err.isJoy) {
+    if (err.filled === false) return res.status(401).json({ message: 'All fields must be filled' });
+    return res.status(401).json({ message: 'Incorrect username or password' });
+  }
+}
+
 function errorsPost(err, res) {
-  if (err.item === 'users') {
+  if (err.item === 'createUsers') {
     return errorsPostUsers(err, res);
+  }
+  if (err.item === 'loginUsers') {
+    return errorsPostLogin(err, res);
   }
 }
 

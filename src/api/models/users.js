@@ -12,7 +12,7 @@ const getUserByEmail = async (email) => {
   return getByEmail;
 };
 
-const postUsers = async ({ name, email, password }) => {
+const createUsers = async ({ name, email }) => {
   const usersCollection = await mongoConnection.getConnection()
     .then((db) => db.collection('users'));
 
@@ -23,6 +23,6 @@ const postUsers = async ({ name, email, password }) => {
 };
 
 module.exports = {
-  postUsers,
+  createUsers,
   getUserByEmail,
 };

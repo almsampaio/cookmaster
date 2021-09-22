@@ -16,8 +16,8 @@ app.get('/ping', (req, res) => {
   res.status(200).json({ message: 'pong' });
 });
 
-app.post('/users', usersControllers.postUsers);
-// app.use('/login', login);
+app.post('/users', usersControllers.createUsers);
+app.post('/login', usersControllers.loginUsers);
 // app.use('/recipes', recipes);
 // app.use('/images', express.static('src/uploads/'));
 

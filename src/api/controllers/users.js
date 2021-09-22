@@ -1,14 +1,24 @@
 const usersServices = require('../services/users');
 
-const postUsers = async (req, res, next) => {
+const createUsers = async (req, res, next) => {
   const { name, email, password } = req.body;
-  const PostUsers = await usersServices.postUsers({ name, email, password });
+  const CreateUsers = await usersServices.createUsers({ name, email, password });
   
-  if (PostUsers.error) return next(PostUsers);
+  if (CreateUsers.error) return next(CreateUsers);
 
-  res.status(201).json(PostUsers);
+  res.status(201).json(CreateUsers);
+};
+
+const loginUsers = async (req, res, next) => {
+  const { email, password } = req.body;
+  const LoginUsers = await usersServices.loginUsers({ email, password });
+  
+  if (LoginUsers.error) return next(LoginUsers);
+
+  res.status(201).json(LoginUsers);
 };
 
 module.exports = {
-  postUsers,
+  createUsers,
+  loginUsers,
 };
