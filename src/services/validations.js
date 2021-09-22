@@ -11,6 +11,20 @@ const validateUserCreation = async (name, email, password) => {
   }
 };
 
+const validateEmail = async (email) => {
+  if (!regexEmail.test(email)) {
+    const errorMessageEmail = errorGenerator(errorMsg.incorrectUserOrPass);
+    return { errorMessageEmail };
+  }
+};
+
+const validateEmailEmpty = async (email) => {
+  if (!email) {
+    const errorMessageEmailNull = errorGenerator(errorMsg.blankFields);
+    return { errorMessageEmailNull };
+  }
+};
+
 const validateUserEmail = async (email) => {
   const getEmail = await usersModel.getByEmail(email); 
 
@@ -20,7 +34,26 @@ const validateUserEmail = async (email) => {
   }
 };
 
+const validateToken1 = async (email, password) => {
+  if (!email || !password) {
+    const errorMessage = errorGenerator(errorMsg.blankFields);
+    return { errorMessage };
+  }
+};
+
+const validateToken2 = async (email, password) => {
+  const getEmail = await usersModel.getByEmail(email);
+  if (!getEmail || (password !== getEmail.password)) {
+    const errorMessage2 = errorGenerator(errorMsg.incorrectUserOrPass);
+    return { errorMessage2 };
+  }
+};
+
 module.exports = {
   validateUserCreation,
+  validateEmail,
+  validateEmailEmpty,
   validateUserEmail,
+  validateToken1,
+  validateToken2,
 };

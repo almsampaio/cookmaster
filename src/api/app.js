@@ -8,7 +8,11 @@ app.use(bodyParser.json());
 
 app.get('/users/all', usersController.getAllUsers);
 
+app.get('/users/email', usersController.getByEmail);
+
 app.post('/users', usersController.createUser);
+
+app.post('/login', usersController.loginUser);
 
 // Não remover esse end-point, ele é necessário para o avaliador
 app.get('/', (request, response) => {

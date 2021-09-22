@@ -6,6 +6,12 @@ const getAllUsers = async (_req, res) => {
   res.status(httpStatus.ok).json({ users: result });
 };
 
+const getByEmail = async (req, res) => {
+  const emails = await usersServices.getByEmail(req.body.email);
+
+  res.status(httpStatus.ok).json({ email: emails });
+};
+
 const createUser = async (req, res) => {
   const { name, email, password, role } = req.body;
 
@@ -26,7 +32,30 @@ const createUser = async (req, res) => {
   res.status(httpStatus.created).json(createdUser);
 };
 
+const loginUser = async (req, res) => {
+  const { email, password } = req.body;
+  const {
+    errorMessage,
+    errorMessage2,
+    errorMessageEmail,
+    errorMessageEmailEmpty,
+    token,
+   } = await usersServices.loginUser(email, password);
+
+  if (errorMessage) return res.status(httpStatus.unauthorized).json(errorMessage);
+
+  if (errorMessage2) return res.status(httpStatus.unauthorized).json(errorMessage2);
+
+  if (errorMessageEmail) return res.status(httpStatus.badRequest).json(errorMessageEmail);
+
+  if (errorMessageEmailEmpty) return res.status(httpStatus.unauthorized).json(errorMessageEmailEmpty);
+
+  res.status(httpStatus.ok).json({ token });
+};
+
 module.exports = {
   getAllUsers,
+  getByEmail,
   createUser,
+  loginUser,
 };

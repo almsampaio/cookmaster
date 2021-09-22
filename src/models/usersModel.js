@@ -22,8 +22,17 @@ const createUser = async (name, email, password) => {
   return { user: { name, email, role, id: result.insertedId } };
 };
 
+const loginUser = async (email, password) => {
+  const connection = await mongoConnection();
+
+  const loggedin = await connection.collection('users').findOne({ email, password });
+
+  return loggedin;
+};
+
 module.exports = {
   getAllUsers,
   getByEmail,
   createUser,
+  loginUser,
 };
