@@ -1,5 +1,6 @@
+const { ObjectId } = require('mongodb');
 const {
-  StatusCodes: { BAD_REQUEST },
+  StatusCodes: { BAD_REQUEST, NOT_FOUND },
 } = require('http-status-codes');
 const Schema = require('../validations/schemas');
 
@@ -9,4 +10,15 @@ const recipeValidation = async (req, _res, next) => {
   next();
 };
 
-module.exports = recipeValidation;
+const checkIfProductIdExists = async (req, _res, next) => {
+  const { id } = req.params;
+  if (!ObjectId.isValid(id) || !id) {
+    return next({ message: 'recipe not found', statusCode: NOT_FOUND }); 
+  }
+  next();
+};
+
+module.exports = {
+  recipeValidation,
+  checkIfProductIdExists,
+};
