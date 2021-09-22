@@ -4,6 +4,7 @@ const {
   validateUser,
   validateLoginFields,
   validateRecipe,
+  validateAuthetication,
 } = require('../midlewares');
 const {
   insertUserController,
@@ -11,6 +12,7 @@ const {
   insertRecipe,
   getAllRecipes,
   getRecipeById,
+  updateRecipe,
 } = require('../controlers');
 
 const app = express();
@@ -32,5 +34,7 @@ app.post('/recipes', validateRecipe, insertRecipe);
 app.get('/recipes/', getAllRecipes);
 
 app.get('/recipes/:id', getRecipeById);
+
+app.put('/recipes/:id', validateAuthetication, updateRecipe);
 
 module.exports = app;

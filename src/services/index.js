@@ -6,6 +6,8 @@ const validateEmail = require('./validateEmail');
 const takeToken = require('./takeToken');
 const getAll = require('./getAll');
 const getById = require('./getById');
+const updateById = require('./updateById');
+const validateAdmin = require('./validateAdmin');
 
 module.exports = {
     validateEmail,
@@ -16,4 +18,6 @@ module.exports = {
     takeToken,
     getAll,
     getById,
+    updateById,
+    validateAdmin,
 };
