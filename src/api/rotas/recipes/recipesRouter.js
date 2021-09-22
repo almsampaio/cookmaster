@@ -9,6 +9,7 @@ const {
 
 const {
   createController,
+  readAllController,
 } = require('../../controllers/recipes/recipesController');
 
 const router = Router();
@@ -20,6 +21,11 @@ router.post(
   validatePreparation,
   validateToken,
   createController,
+);
+
+router.get(
+  '/',
+  readAllController,
 );
 
 module.exports = router;
