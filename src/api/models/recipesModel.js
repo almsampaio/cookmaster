@@ -36,4 +36,18 @@ module.exports = {
 
     return recipe;
   },
+
+  async edit(id, name, ingredients, preparation) {
+    const db = await mongoConnection();
+    const recipesCollection = await db.collection('recipes');
+
+    if (!ObjectId.isValid(id)) {
+      return null;
+    }
+
+    await recipesCollection
+      .updateOne({ _id: ObjectId(id) }, { $set: { name, ingredients, preparation } });
+
+    return { _id: id, name, ingredients, preparation };
+  },
 };

@@ -19,4 +19,6 @@ routes.get('/recipes', recipesController.index);
 
 routes.get('/recipes/:id', recipeExistsValidation, recipesController.show);
 
+routes.put('/recipes/:id', tokenValidation, recipesController.update);
+
 module.exports = routes;

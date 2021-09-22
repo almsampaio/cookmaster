@@ -18,4 +18,10 @@ module.exports = {
 
     return recipe;
   },
+
+  async update(id, name, ingredients, preparation) {
+    const editedRecipe = await recipesModel.edit(id, name, ingredients, preparation);
+
+    return editedRecipe;
+  },
 };

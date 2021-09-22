@@ -23,4 +23,13 @@ module.exports = {
 
     return res.status(200).json(recipe);
   },
+
+  async update(req, res) {
+    const { id } = req.params;
+    const { name, ingredients, preparation } = req.body;
+    const { _id } = req.user;
+    const editedRecipe = await recipesService.update(id, name, ingredients, preparation);
+
+    return res.status(200).json({ ...editedRecipe, userId: _id });
+  },
 };
