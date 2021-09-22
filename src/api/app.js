@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const userRouter = require('../../routes/userRouter');
 const loginRouter = require('../../routes/loginRouter');
+const recipeRouter = require('../../routes/recipeRouter');
 const error = require('../../middlewares/error');
 
 const app = express();
@@ -15,5 +16,6 @@ app.get('/', (request, response) => {
 
 app.use('/users', userRouter, error);
 app.use('/login', loginRouter, error);
+app.use('/recipes', recipeRouter, error);
 
 module.exports = app;
