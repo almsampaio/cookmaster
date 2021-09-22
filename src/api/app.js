@@ -22,6 +22,7 @@ app.post('/users', userController.addUser);
 
 app.post('/login', userController.login);
 
+app.delete('/recipes/:id', authToken, recipesController.deleteRecipeId);
 app.put('/recipes/:id', authToken, recipesController.updateRecipeId);
 app.get('/recipes/:id', recipesController.recipeId);
 app.post('/recipes', authToken, recipesController.addRecipe);

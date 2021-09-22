@@ -44,9 +44,17 @@ const updateRecipeId = async (obj) => {
   return recipe;
 };
 
+const deleteRecipeId = async (id) => {
+  const recipe = await recipeModel.deleteRecipeId(id);
+
+  if (!recipe) return { message: NOT_FOUND, error: 401 };
+  return recipe;
+};
+
 module.exports = {
   addRecipe,
   allRecipes,
   recipeId,
   updateRecipeId,
+  deleteRecipeId,
 };
