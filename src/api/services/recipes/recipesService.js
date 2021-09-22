@@ -3,6 +3,7 @@ const {
   readAllModel,
   readByIdModel,
   updateModel,
+  deleteModel,
 } = require('../../models/recipes/recipesModel');
 
 const createServices = async (name, ingredients, preparation, userId) => {
@@ -41,9 +42,25 @@ const updateServices = async (idRecipes, userId, role, updatedData) => {
   return { data };
 };
 
+const deleteServices = async (id, userId, role) => {
+  const foundData = await readByIdModel(id);
+
+  if (!foundData) {
+    return { isEmpty: true };
+  }
+
+  if (role === 'admin' || userId === foundData.userId) {
+    await deleteModel(id);
+    return { deleted: true };
+  }
+
+  return { message: 'this recipe is not yours', notEqual: true };
+};
+
 module.exports = {
   createServices,
   readAllServices,
   readByIdServices,
   updateServices,
+  deleteServices,
 };

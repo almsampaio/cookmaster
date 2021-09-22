@@ -13,6 +13,7 @@ const {
   readAllController,
   readByIdController,
   updateController,
+  deleteController,
 } = require('../../controllers/recipes/recipesController');
 
 const router = Router();
@@ -41,5 +42,7 @@ router.put(
   validateUserOrAdminToken,
   updateController,
 );
+
+router.delete('/:id', validateUserOrAdminToken, deleteController);
 
 module.exports = router;

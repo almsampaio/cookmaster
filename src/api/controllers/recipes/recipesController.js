@@ -1,8 +1,9 @@
 const {
   HTTP_NOT_FOUND,
+  HTTP_UNAUTHORIZED,
   HTTP_CREATED,
   HTTP_OK_STATUS,
-  HTTP_UNAUTHORIZED,
+  HTTP_NO_CONTENT,
 } = require('../../schemas/status');
 
 const {
@@ -10,6 +11,7 @@ const {
   readAllServices,
   readByIdServices,
   updateServices,
+  deleteServices,
 } = require('../../services/recipes/recipesService');
 
 const createController = async (req, res) => {
@@ -55,9 +57,29 @@ const updateController = async (req, res) => {
   return res.status(HTTP_OK_STATUS).json(data);
 };
 
+const deleteController = async (req, res) => {
+  const { id } = req.params;
+  const { _id: userId, role } = req.userRecipes;
+  // console.log(userId);
+  const { isEmpty, deleted, notEqual, message } = await deleteServices(id, userId, role);
+
+  if (isEmpty) {
+    return res.status(HTTP_NOT_FOUND).json({ message: 'recipe not found' });
+  }
+
+  if (deleted) {
+    return res.status(HTTP_NO_CONTENT).json();
+  }
+
+  if (notEqual) {
+    return res.status(HTTP_UNAUTHORIZED).json({ message });
+  }
+};
+
 module.exports = {
   createController,
   readAllController,
   readByIdController,
   updateController,
+  deleteController,
 };
