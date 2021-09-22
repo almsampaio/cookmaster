@@ -8,6 +8,8 @@ const {
   createRecipes,
   getAllRecipes,
   getRecipesById,
+  updateRecipesById,
+  deleteRecipesById,
 } = require('./controllers/recipesController');
 
 const routes = Router();
@@ -16,6 +18,8 @@ routes.post('/users', validateUser, createUser); // requisito 1
 routes.post('/login', login); // requisito 2
 routes.post('/recipes', validateRecipes, validateJWT, createRecipes); // requisito 3
 routes.get('/recipes', getAllRecipes); // requisito 4
-routes.get('/recipes/:id', getRecipesById); // requisito 4
+routes.get('/recipes/:id', getRecipesById); // requisito 5
+routes.put('/recipes/:id', validateJWT, updateRecipesById); // requisito 7
+routes.delete('/recipes/:id', validateJWT, deleteRecipesById); // requisito 7
 
 module.exports = routes;

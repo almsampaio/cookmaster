@@ -11,7 +11,7 @@ module.exports = async (req, res, next) => {
   const token = req.headers.authorization;
   
   if (!token) {
-    return res.status(UNAUTHORIZED).json({ error: 'jwt malformed' });
+    return res.status(UNAUTHORIZED).json({ message: 'missing auth token' });
   }
   try {
     const decoded = jwt.verify(token, SECRET);
@@ -19,7 +19,7 @@ module.exports = async (req, res, next) => {
     const user = await model.findOnebyEmail(decoded.data.email);
     if (!user) {
       return res.status(UNAUTHORIZED)
-        .json({ message: 'Erro ao procurar usuário do token.' });
+        .json({ message: 'jwt malformed' });
     }
     req.user = user;
     next();

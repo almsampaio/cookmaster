@@ -1,5 +1,5 @@
 const rescue = require('express-rescue');
-const { StatusCodes: { CREATED, OK, NOT_FOUND } } = require('http-status-codes');
+const { StatusCodes: { CREATED, OK, NOT_FOUND, NO_CONTENT } } = require('http-status-codes');
 const service = require('../services/recipesService');
 
 const createRecipes = rescue(async (req, res) => {
@@ -25,8 +25,27 @@ const getRecipesById = rescue(async (req, res) => {
   res.status(OK).json(recipes);
 });
 
+const updateRecipesById = rescue(async (req, res) => {
+  const { id } = req.params;
+  const { name, ingredients, preparation } = req.body;
+  const recipes = await service.updateRecipesById(id, name, ingredients, preparation);
+  if (recipes === null) {
+    return res.status(NOT_FOUND).json({ message: 'recipe not found' });
+  }
+  res.status(OK).json(recipes);
+});
+
+const deleteRecipesById = rescue(async (req, res) => {
+  const { id } = req.params;
+  const recipes = await service.deleteRecipesById(id);
+
+  res.status(NO_CONTENT).json(recipes);
+});
+
 module.exports = {
   createRecipes,
   getAllRecipes,
   getRecipesById,
+  updateRecipesById,
+  deleteRecipesById,
 };

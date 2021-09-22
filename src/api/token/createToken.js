@@ -9,6 +9,6 @@ module.exports = (user) => {
     algorithm: 'HS256',
   };
   
-  const token = jwt.sign({ data: user }, SECRET, jwtConfig);
-  return token;
+    const token = jwt.sign({ data: user }, SECRET, jwtConfig);
+    return token;
 };
