@@ -21,10 +21,20 @@ const getById = async (req, res) => {
   res.status(status).json(recipe);
 };
 
+const update = async (req, res) => {
+  const { id } = req.params;
+  const { name, ingredients, preparation } = req.body;
+
+  const { status, message, recipe } = await recipeService.update(id, name, ingredients, preparation);
+  if (!recipe) return res.status(status).json({ message });
+  res.status(status).json(recipe);
+};
+
 module.exports = {
   create,
   getAll,
   getById,
+  update,
 };
 
 // Validação do userId(req3) foi utilizado como referência pull request do colega Thalys Carrara: (https://github.com/tryber/sd-010-a-cookmaster/pull/52/commits/d73d9526edce2eef159aff84377b63b5a8c9495b)
