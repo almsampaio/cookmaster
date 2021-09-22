@@ -30,6 +30,8 @@ const findUser = async (username) => {
   const user = await connection()
     .then((db) => db.collection('users').findOne({ username }));
 
+  if (!user) return null;
+  
   return user;
 };
 

@@ -13,16 +13,18 @@ const create = async (name, ingredients, preparation, userId) => {
   connection()
     .then((db) => db.collection('recipes').insertOne({ name, ingredients, preparation, userId }));
 
-    const { _id } = await findByName(name);
+  const { _id } = await findByName(name);
 
-    return { name: {
-      name,
-      ingredients,
-      preparation,
-      userId,
-      _id,
-      },
-    };
+  console.log(_id);
+
+  return { recipe: {
+    _id,
+    name,
+    ingredients,
+    preparation, 
+    userId,
+    },
+  };
 };
 
 module.exports = {

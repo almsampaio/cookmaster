@@ -2,8 +2,9 @@ const express = require('express');
 const bodyParser = require('body-parser');
 
 const Users = require('../controllers/usersController');
+const Recipes = require('../controllers/recipesController');
 // const login = require('../controllers/login');
-// const validateJWT = require('./auth/validateJWT');
+const validateJWT = require('./auth/validateJWT');
 
 const app = express();
 
@@ -19,5 +20,9 @@ app.get('/', (request, response) => {
 
 app.post('/login', Users.login);
 app.post('/users', Users.create);
+
+// Endpoit para Receitas
+
+app.post('/recipes', validateJWT, Recipes.create);
 
 module.exports = app;
