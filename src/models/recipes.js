@@ -48,10 +48,21 @@ const deleteRecipe = async (id) => {
   return true;
 };
 
+const addImg = async (id, image) => {
+  const db = await mongoConnection.getConnection();
+  await db.collection('recipes').updateOne(
+    { _id: ObjectId(id) }, { $set: { image } },
+  );
+
+  const result = await listRecipeById(id);
+  return result;
+};
+
 module.exports = {
   registerRecipe,
   listRecipes,
   listRecipeById,
   editRecipe,
   deleteRecipe,
+  addImg,
 };

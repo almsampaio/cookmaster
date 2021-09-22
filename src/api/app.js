@@ -1,9 +1,12 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const { join } = require('path');
+
 const errorMiddleware = require('../middlewares/error');
 const userControllers = require('../controllers/user');
 const recipeControllers = require('../controllers/recipes');
 const validateJWT = require('./auth/validateJWT');
+const uploadImg = require('../middlewares/uploadImg');
 
 const app = express();
 app.use(bodyParser.json());
@@ -22,6 +25,10 @@ app.get('/recipes', recipeControllers.listRecipes);
 app.get('/recipes/:id', recipeControllers.listRecipeById);
 app.put('/recipes/:id', validateJWT, recipeControllers.editRecipe);
 app.delete('/recipes/:id', validateJWT, recipeControllers.deleteRecipe);
+app.put('/recipes/:id/image/',
+validateJWT, uploadImg.upload.single('image'), recipeControllers.addImg);
+
+app.use('/images', express.static(join(__dirname, '..', 'uploads')));
 
 app.use(errorMiddleware);
 
