@@ -26,7 +26,18 @@ const getAll = rescue(async (_req, res) => {
   res.status(200).json(recipesArray);
 });
 
+const findById = rescue(async (req, res) => {
+  const { id } = req.params;
+
+  const recipe = await service.findById(id);
+
+  if (recipe.err) return res.status(404).json({ message: recipe.err.message });
+
+  res.status(200).json(recipe);
+});
+
 module.exports = {
   create,
   getAll,
+  findById,
 };
