@@ -41,6 +41,7 @@ apiRoutes.delete('/recipes/:id', validateJWT, routes.remove);
 apiRoutes.put('/recipes/:id/image/', validateJWT, upload.single('image'), routes.addImage);
 
 app.use(apiRoutes);
+app.use('/images', express.static('src/uploads/'));
 app.use(handleErrors);
 
 module.exports = app;
