@@ -8,7 +8,7 @@ async function getUserByEmail(email) {
     {},
   ).toArray();
 
-  return userByEmail;
+  return userByEmail[0];
 }
 
 async function addUser({ name, email, password, role }) {
@@ -16,7 +16,7 @@ async function addUser({ name, email, password, role }) {
   const { insertedId: id } = await db.collection('users').insertOne(
     { name, email, password, role },
   );
-    console.log(id);
+
   return {
     name, 
     email,
