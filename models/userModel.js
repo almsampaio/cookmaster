@@ -1,4 +1,5 @@
 const { ObjectID } = require('bson');
+const connect = require('mongodb');
 const connection = require('./connection');
 
 const getAll = async () => {
@@ -36,8 +37,17 @@ const create = async (name, email, password) => {
   return newUser;
 };
 
+const findUser = async (username) => {
+  const soughtUser = await connection().then((db) => db
+  .collection('users').findOne({ username })).then((res) => res)
+  .catch((err) => console.log(err));
+
+  return soughtUser;
+};
+
 module.exports = {
   getAll,
   getById,
   create,
+  findUser,
 };
