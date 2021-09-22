@@ -1,6 +1,14 @@
 const RecipeModel = require('../models/RecipeModel');
 const RecipeSchema = require('../schemas/RecipeSchema');
 
+const getById = async (id) => {
+  const recipe = await RecipeModel.getById(id);
+
+  if (!recipe) return { code: 404, message: 'recipe not found' };
+
+  return recipe;
+};
+
 const getAll = async () => {
   const recipes = await RecipeModel.getAll();
 
@@ -20,4 +28,5 @@ const create = async (recipe, userId) => {
 module.exports = {
   create,
   getAll,
+  getById,
 };
