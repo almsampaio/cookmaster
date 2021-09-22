@@ -25,14 +25,14 @@ const create = async ({ name, email, password, role }) => {
   };
 };
 
-// const getById = async (id) => {
-//   const productCollection = await mongoConnection.getConnection()
-//   .then((db) => db.collection('products'));
+const getByEmail = async (email) => {
+  const productCollection = await mongoConnection.getConnection()
+  .then((db) => db.collection('users'));
 
-//   const response = await productCollection.find({ _id: new ObjectId(id) }).toArray();
+  const response = await productCollection.find({ email }).toArray();
 
-//   return response;
-// };
+  return response;
+};
 
 // const update = async (id, { name, quantity }) => {
 //   const productCollection = await mongoConnection.getConnection()
@@ -58,7 +58,7 @@ const create = async ({ name, email, password, role }) => {
 module.exports = {
   getAll,
   create,
-  // getById,
+  getByEmail,
   // update,
   // deleteById,
 };
