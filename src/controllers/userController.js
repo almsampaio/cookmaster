@@ -2,12 +2,12 @@ const userService = require('../services/userService');
 
 async function addUser(req, res) {
   const { name, email, password } = req.body;
-  const addedUser = await userService.addUser({ name, email, password });
+  const { code, message, user } = await userService.addUser({ name, email, password });
 
-  if (addedUser.message) {
-    return res.status(addedUser.code).json({ message: addedUser.message });
+  if (message) {
+    return res.status(code).json({ message });
   }
-  res.status(addedUser.code).json({ user: addedUser.user });
+  res.status(code).json({ user });
 }
 
 module.exports = {
