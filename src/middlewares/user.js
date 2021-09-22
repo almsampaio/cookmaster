@@ -1,5 +1,5 @@
 const Joi = require('joi');
-const { findEmail } = require('../models/user');
+const { findEmail, findPassword } = require('../models/user');
 
 const loginJoi = Joi.object({
   email: Joi.string().email().required(),
@@ -41,9 +41,10 @@ const validatePassword = (req, res, next) => {
 // Finaliza aqui as validações
 
 const validateLogin = async (req, res, next) => {
-  const { email } = req.body;
+  const { email, password } = req.body;
   const { error } = loginJoi.validate(req.body);
   const findedEmail = await findEmail(email);
+  const findedPassword = await findPassword(password);
 
   if (error) {
     return res.status(401).json({ message: 'All fields must be filled' });
@@ -52,6 +53,11 @@ const validateLogin = async (req, res, next) => {
   if (!findedEmail) {
     return res.status(401).json({ message: 'Incorrect username or password' });
   }
+
+  if (!findedPassword) {
+    return res.status(401).json({ message: 'Incorrect username or password' });
+  }
+
   next();
 };
 

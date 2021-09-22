@@ -13,8 +13,9 @@ const createUser = async (name, password, email) => {
   return User;
 };
 
-const genToken = (email) => {
-  const token = sign({ data: email }, SECRET, jwtConfig);
+const genToken = async (email) => {
+  const { _id } = await userModel.findEmail(email);
+  const token = sign({ email, _id }, SECRET, jwtConfig);
   return token;
 };
 

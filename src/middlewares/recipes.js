@@ -23,11 +23,11 @@ const validateToken = (req, res, next) => {
     return res.status(401).json({ message: 'Invalid token' });
   }
   try {
-    const { data } = verify(token, SECRET);
+    const { _id } = verify(token, SECRET);
 
-    req.user = data;
+    req.user = _id;
   } catch (e) {
-    res.status(401).json({ message: 'jwt malformed' });
+    return res.status(401).json({ message: 'jwt malformed' });
   }
   next();
 };

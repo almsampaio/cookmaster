@@ -8,6 +8,7 @@ const {
 
 const {
   createRecipe,
+  getAllRecipes,
 } = require('../controllers/recipes');
 
 const {
@@ -37,5 +38,6 @@ app.post('/users', validateName, validatePassword, validateEmail, createUser);
 app.post('/login', validateLogin, genToken);
 
 app.post('/recipes', validateRecipe, validateToken, createRecipe);
+app.get('/recipes', getAllRecipes);
 
 module.exports = app;

@@ -5,6 +5,12 @@ const createRecipe = async (name, ingredients, preparation, userId) => {
   return recipe;
 };
 
+const getAllRecipes = async () => {
+  const getAll = await recipesModel.getAllRecipes();
+  return getAll;
+};
+
 module.exports = {
   createRecipe,
+  getAllRecipes,
 };
