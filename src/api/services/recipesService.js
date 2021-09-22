@@ -16,7 +16,13 @@ function register(name, ingredients, preparation) {
     return createdRecipes;
 }
 
+const getAll = async () => {
+    const products = await recipesModel.getAllProducts();
+    return products;
+  };
+
 module.exports = {
     validateData,
     register,
+    getAll,
     }; 
