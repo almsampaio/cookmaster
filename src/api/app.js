@@ -21,10 +21,9 @@ app.route('/users')
 app.route('/login')
   .post(loginController.login);
 
-app.use(authenticate);
-
 app.route('/recipes')
-  .post(recipesController.createRecipe);
+  .post(authenticate, recipesController.createRecipe)
+  .get(recipesController.getRecipes);
 
 app.use(errors);
 

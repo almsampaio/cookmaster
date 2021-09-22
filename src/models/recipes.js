@@ -8,6 +8,17 @@ const createRecipe = async (recipeData) => {
   return ops[0];
 };
 
+const getRecipes = async () => {
+  const db = await connection();
+
+  const result = await db.collection('recipes').find({}).toArray();
+
+  console.log(result);
+
+  return result;
+};
+
 module.exports = {
   createRecipe,
+  getRecipes,
 };
