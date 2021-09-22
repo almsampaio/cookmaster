@@ -5,7 +5,9 @@ const auth = require('../middlewares/auth');
 
 const recipesRouter = express.Router();
 
+recipesRouter.get('/', controllers.getRecipes);
+recipesRouter.get('/:id', rescue(controllers.getRecipeById));
+
 recipesRouter.post('/', auth, rescue(controllers.recipesRegister));
-recipesRouter.get('/', rescue(controllers.getRecipes));
 
 module.exports = recipesRouter;

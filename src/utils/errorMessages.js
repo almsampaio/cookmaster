@@ -30,6 +30,11 @@ const UNAUTHORIZED_MISSING_TOKEN = {
   err: { message: 'missing auth token' },
 };
 
+const RECIPE_NOT_FOUND = {
+  status: httpStatus.NOT_FOUND,
+  err: { message: 'recipe not found' },
+};
+
 module.exports = {
   INVALID_ENTRIES,
   EMAIL_ALREADY_EXISTS,
@@ -37,4 +42,5 @@ module.exports = {
   INCORRECT_EMAIL_OR_PASSWORD,
   JWT_MALFORMED,
   UNAUTHORIZED_MISSING_TOKEN,
+  RECIPE_NOT_FOUND,
 };
