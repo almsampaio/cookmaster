@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const controller = require('../controllers/users');
+const controllerUser = require('../controllers/users');
+const controllerLogin = require('../controllers/login');
 const valid = require('./validations/users');
 const validUser = require('./validations/login');
 
@@ -15,9 +16,9 @@ app.get('/', (request, response) => {
 // Não remover esse end-point, ele é necessário para o avaliador
 
 app.post('/users', [
-  valid.validateName, valid.validEmail, valid.validPassword, controller.createUser,
+  valid.validateName, valid.validEmail, valid.validPassword, controllerUser.createUser,
 ]);
 
-app.post('/login', [validUser.validEmail, validUser.validPassword, controller.login]);
+app.post('/login', [validUser.validEmail, validUser.validPassword, controllerLogin.login]);
 
 module.exports = app;

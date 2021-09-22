@@ -9,11 +9,5 @@ const createUser = async (name, email, password) => {
     }   
     return model.createUser(name, email, password);
 };
-const login = async (email, password) => {
-  const existingUser = await model.login(email, password);
-  if (!existingUser) {
-    return ({ message: 'Incorrect username or password' });
-  }
-  return existingUser;
-};
-module.exports = { createUser, login };
+
+module.exports = { createUser };
