@@ -132,7 +132,7 @@ describe('1 - Crie um endpoint para o cadastro de usuários', () => {
       });
   });
 
-  it.skip('Será validado que é possível ao cadastrar usuário, o valor do campo "role" tenha o valor "user"', async () => {
+  it('Será validado que é possível ao cadastrar usuário, o valor do campo "role" tenha o valor "user"', async () => {
     await frisby
       .post(`${url}/users/`,
         {
