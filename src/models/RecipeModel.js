@@ -2,6 +2,15 @@ const mongoConnection = require('./connection');
 
 const COLLECTION_NAME = 'recipes';
 
+const getAll = async () => {
+  const recipeCollection = await mongoConnection.getConnection()
+  .then((db) => db.collection(COLLECTION_NAME));
+
+  const recipes = await recipeCollection.find().toArray();
+
+  return recipes;
+};
+
 const create = async (recipe, userId) => {
   const { name, ingredients, preparation } = recipe;
 
@@ -25,4 +34,5 @@ const create = async (recipe, userId) => {
 
 module.exports = {
   create,
+  getAll,
 };
