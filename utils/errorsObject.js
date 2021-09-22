@@ -18,9 +18,21 @@ const incorrectUsernameOrPassword = {
   status: 401,
 };
 
+const jwtMalformed = {
+  message: 'jwt malformed',
+  status: 401,
+};
+
+const notFound = {
+  message: 'not found',
+  status: 404,
+};
+
 module.exports = {
   invalidEntries,
   emailAlreadyRegistered,
   AllFieldsMustBeFilled,
   incorrectUsernameOrPassword,
+  jwtMalformed,
+  notFound,
 };

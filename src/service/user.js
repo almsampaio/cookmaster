@@ -1,7 +1,7 @@
 const Joi = require('joi');
 const userModel = require('../model/user');
 const errorObjects = require('../../utils/errorsObject');
-const jwt = require('../../utils/jwt');
+const jwt = require('./token');
 
 const validadeNewUser = (name, email, password) => {
   const { error } = Joi.object({
@@ -32,7 +32,8 @@ const login = async (email, password) => {
   validateLogin(email, password);
   const checkingLogin = await userModel.checkingLogin(email, password);
   if (!checkingLogin) throw errorObjects.incorrectUsernameOrPassword;
-  const token = jwt.generateToken(email);
+  const { _id } = checkingLogin;
+  const token = jwt.generateToken(_id);
   return token;
 };
 

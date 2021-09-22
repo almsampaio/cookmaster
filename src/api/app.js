@@ -3,6 +3,8 @@ const bodyParser = require('body-parser');
 
 const rescue = require('express-rescue');
 const userController = require('../controllers/user');
+const recipeController = require('../controllers/recipe');
+const { verifyToken } = require('../service/token');
 
 const app = express();
 
@@ -10,6 +12,8 @@ app.use(bodyParser.json());
 
 app.post('/users', rescue(userController.newUser));
 app.post('/login', rescue(userController.login));
+app.post('/recipes', rescue(verifyToken), rescue(recipeController.create));
+app.get('/recipes', rescue(recipeController.getAll));
 // Não remover esse end-point, ele é necessário para o avaliador
 app.get('/', (request, response) => {
   response.send();
@@ -17,6 +21,7 @@ app.get('/', (request, response) => {
 // Não remover esse end-point, ele é necessário para o avaliador
 
 app.use((err, _req, res, _next) => {
+  console.log(err);
   if (err.message) return res.status(err.status).json({ message: err.message });
   return res.status(500).json(err.message);
 });
