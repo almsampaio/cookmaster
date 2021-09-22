@@ -44,7 +44,7 @@ const update = async (recipe, _id, userId, role) => {
     return { status: 401, message: { message: 'missing auth token' } };
   }
   const recipeUpdated = await recipesModel.update(name, ingredients, preparation, _id);
-  return { status: 200, message: { message: recipeUpdated } };
+  return { status: 200, message: recipeUpdated };
 };
 
 module.exports = {
