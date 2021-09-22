@@ -21,8 +21,24 @@ const findById = async (id) => {
   return recipe;
 };
 
+const update = async (id, body, role, userId) => {
+  const recipe = await Recipes.findById(id);
+
+  if (!recipe) {
+    return {
+      err: {
+        code: 'invalid_data',
+        message: 'recipe not found',
+      },
+    };
+  }
+
+  return Recipes.update(id, body, role, userId);
+};
+
 module.exports = {
   create,
   getAll,
   findById,
+  update,
 };

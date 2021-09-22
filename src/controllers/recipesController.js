@@ -36,8 +36,25 @@ const findById = rescue(async (req, res) => {
   res.status(200).json(recipe);
 });
 
+const update = rescue(async (req, res) => {
+   const { id } = req.params;
+   const { _id, role } = req.user;
+   const userId = _id;
+
+   if (!req.body.name || !req.body.ingredients || !req.body.preparation) {
+    return res.status(400).json({ message: ERROR_MESSAGE });
+   }
+
+   const updateProduct = await service.update(id, req.body, role, userId);
+
+   if (updateProduct.err) return res.status(404).json({ message: updateProduct.err.message });
+
+   res.status(200).json(updateProduct);
+});
+
 module.exports = {
   create,
   getAll,
   findById,
+  update,
 };
