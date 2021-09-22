@@ -46,8 +46,8 @@ const deleteRecipeId = async (req, res) => {
 
   const deleteRec = await recipeService.deleteRecipeId(id);
 
-  // if (deleteRec.error) return res.status(deleteRec.error).json({ message: deleteRec.message });
-  return res.status(204);
+  if (deleteRec.error) return res.status(deleteRec.error).json({ message: deleteRec.message });
+  return res.status(204).json();
 };
 
 module.exports = {

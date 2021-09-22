@@ -46,14 +46,12 @@ if (!update) return false;
 const deleteRecipeId = async (id) => {
   if (!ObjectId.isValid(id)) return false;
 
-  const connectionDb = await connection();
+const connectionDb = await connection();
 
-const deleteOne = await connectionDb.collection('recipes')
+const deleteRecipe = await connectionDb.collection('recipes')
 .findOneAndDelete({ _id: ObjectId(id) });
 
-// if (!deleteOne) return false;
-console.log(deleteOne);
-return deleteOne;
+return deleteRecipe.value;
 };
 
 module.exports = {
