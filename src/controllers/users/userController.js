@@ -8,4 +8,13 @@ const createUserController = async (req, res) => {
     return res.status(user.status).json(user.message);
 };
 
-module.exports = { createUserController };
+const loginController = async (req, res) => {
+    const { email, password } = req.body;
+    const login = await userService.loginService(email, password);
+    return res.status(login.status).json(login.message);
+};
+
+module.exports = { 
+    createUserController, 
+    loginController,
+};
