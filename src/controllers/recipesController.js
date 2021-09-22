@@ -7,6 +7,12 @@ const recipesSubmit = async (req, res, _next) => {
   return res.status(status).json(result);
 };
 
+const getRecipes = async (req, res, _next) => {
+  const { status, result } = await recipesServices.getRecipesServices();
+  return res.status(status).json(result);
+};
+
 module.exports = {
   recipesSubmit,
+  getRecipes,
 };
