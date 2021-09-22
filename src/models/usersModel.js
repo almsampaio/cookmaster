@@ -18,7 +18,14 @@ const login = async (email, password) => {
   return ({ email, password });
 };
 
+const verifyEmail = async (email) => {
+  const db = await connect();
+  const userData = await db.collection('users').findOne({ email });
+  return userData;
+};
+
 module.exports = {
   create,
   login,
+  verifyEmail,
 };

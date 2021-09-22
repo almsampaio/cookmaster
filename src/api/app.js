@@ -1,6 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const { createUser, login } = require('./routes');
+const { createUser, login, createRecipe, authMiddleware } = require('./routes');
 
 const app = express();
 app.use(bodyParser.json());
@@ -13,5 +13,6 @@ app.get('/', (request, response) => {
 
 app.post('/users', createUser);
 app.post('/login', login);
+app.post('/recipes', authMiddleware, createRecipe);
 
 module.exports = app;

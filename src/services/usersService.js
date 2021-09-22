@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 const usersModel = require('../models/usersModel');
 
-const SECRET = 'istonaodeveriaestaraqui';
+const SECRET = 'C3t$x7k4!YocfE$e';
 
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const errInvalidEntries = { status: 400, message: 'Invalid entries. Try again.' };
