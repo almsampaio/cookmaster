@@ -19,6 +19,7 @@ app.get('/', (request, response) => {
 app.post('/users', userController);
 app.post('/login', loginController);
 app.post('/recipes', authMiddleware, postRecipieController);
-app.get('/recipes', getRecipieController);
+app.get('/recipes', getRecipieController.getAll);
+app.get('/recipes/:id', getRecipieController.getById);
 
 module.exports = app;

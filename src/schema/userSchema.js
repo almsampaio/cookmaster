@@ -1,11 +1,11 @@
-// const { ObjectId } = require('bson');
+const { ObjectId } = require('bson');
 
 const errors = {
   invalidEntries: 'Invalid entries. Try again.',
   // nameLenghtLessTahnFive: '"name" length must be at least 5 characters long',
   // quantityNotNumber: '"quantity" must be a number',
   // quantityLessThanOne: '"quantity" must be larger than or equal to 1',
-  // WrongIdFormat: 'Wrong id format',
+  WrongIdFormat: 'Wrong id format',
 };
 const code = 400;
 
@@ -37,16 +37,16 @@ const findValueInArrayOfObjects = (array, value, key) => {
   return false;
 };
 
-// const validateId = (id) => {
-//   const idExists = ObjectId.isValid(id);
-//   if (!idExists) return { code, message: errors.WrongIdFormat };
-//   return true;
-// };
+const validateId = (id) => {
+  const idExists = ObjectId.isValid(id);
+  if (!idExists) return { code, message: errors.WrongIdFormat };
+  return true;
+};
 
 module.exports = {
   validateName,
   validatePassword,
   // validateQuantity,
   findValueInArrayOfObjects,
-  // validateId,
+  validateId,
 };

@@ -26,14 +26,14 @@ const create = async ({ name, ingredients, preparation, userId }) => {
   };
 };
 
-// const getByEmail = async (email) => {
-//   const productCollection = await mongoConnection.getConnection()
-//   .then((db) => db.collection('users'));
+const getById = async (id) => {
+  const productCollection = await mongoConnection.getConnection()
+  .then((db) => db.collection('recipes'));
 
-//   const response = await productCollection.find({ email }).toArray();
+  const response = await productCollection.findOne({ _id: new ObjectId(id) });
 
-//   return response;
-// };
+  return response;
+};
 
 // const update = async (id, { name, quantity }) => {
 //   const productCollection = await mongoConnection.getConnection()
@@ -59,7 +59,7 @@ const create = async ({ name, ingredients, preparation, userId }) => {
 module.exports = {
   getAll,
   create,
-  // getByEmail,
+  getById,
   // update,
   // deleteById,
 };

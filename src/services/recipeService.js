@@ -1,15 +1,15 @@
 const recipeModel = require('../models/recipeModel');
 const userSchema = require('../schema/userSchema');
 
-// const findById = async (id) => {
-//  const idExists = productSchema.validateId(id);
-//   if (idExists === true) {
-//     const response = await productModel.getById(id);
-//     if (response.length === 0) return ({ code: 'invalid_data', message: 'Wrong id format' });
-//     return response[0];
-//   }
-//   return (idExists);
-// };
+const findById = async (id) => {
+ const idExists = userSchema.validateId(id);
+  if (idExists === true) {
+    const response = await recipeModel.getById(id);
+    if (!response) return ({ code: 404, message: 'recipe not found' });
+    return response;
+  }
+  return (idExists);
+};
 
 const insertRecipe = async (name, ingredients, preparation, userId) => {
     if (name === undefined || ingredients === undefined || preparation === undefined) { 
@@ -43,5 +43,6 @@ const insertRecipe = async (name, ingredients, preparation, userId) => {
 
 module.exports = {
   insertRecipe,
+  findById,
   // findByCredentials,
 };
