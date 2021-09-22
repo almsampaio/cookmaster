@@ -13,4 +13,16 @@ const getToken = (payload) => {
   return token;
 };
 
-module.exports = { getToken };
+const verifyToken = (token) => {
+  try {
+    const decode = jwt.verify(token, SECRET);
+
+    return decode;
+  } catch (error) {
+    const err = { isError: true, code: 401, message: 'jwt malformed' };
+
+    return err;
+  }
+};
+
+module.exports = { getToken, verifyToken };

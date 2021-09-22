@@ -1,14 +1,14 @@
 const connection = require('./connection');
 
 const getAll = async () => {
-  const productsCollection = await connection()
+  const usersCollection = await connection()
     .then((db) => db.collection('users'));
 
-  const products = await productsCollection
+  const users = await usersCollection
     .find()
     .toArray();
 
-  return products;
+  return users;
 };
 
 const format = (obj) => {

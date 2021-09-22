@@ -2,6 +2,8 @@ const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
 const userController = require('../controllers/user');
+const recipesController = require('../controllers/recipes');
+const { authToken } = require('../middlewares/authToken');
 
 const app = express();
 
@@ -15,8 +17,10 @@ app.get('/', (request, response) => {
 });
 // Não remover esse end-point, ele é necessário para o avaliador
 
-app.post('/users', userController.addProduct);
+app.post('/users', userController.addUser);
 
 app.post('/login', userController.login);
+
+app.post('/recipes', authToken, recipesController.addRecipe);
 
 module.exports = app;

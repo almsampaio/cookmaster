@@ -8,7 +8,7 @@ const login = async (req, res) => {
   return res.status(userLogin.error).json(userLogin);
 };
 
-const addProduct = async (req, res) => {
+const addUser = async (req, res) => {
   const { email, password, name, role } = req.body;
   const user = { email, password, name, role };
   const newUser = await userService.addUser(user);
@@ -18,6 +18,6 @@ const addProduct = async (req, res) => {
 };
 
 module.exports = {
-  addProduct,
+  addUser,
   login,
 };
