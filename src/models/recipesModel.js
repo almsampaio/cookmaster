@@ -48,8 +48,8 @@ const update = async (id, body, role, userId) => {
   if (!ObjectId.isValid(id)) return null;
   const { name, ingredients, preparation } = body;
 
-  let recipe = await connection()
-    .then((db).collection('recipes').findOne(new ObjectId(id)));
+  const recipe = await connection()
+    .then((db) => db.collection('recipes').findOne(new ObjectId(id)));
 
   if (!recipe) return null;
 
@@ -58,12 +58,13 @@ const update = async (id, body, role, userId) => {
     .then((db) => db.collection('recipes')
     .updateOne(recipe, { $set: { name, ingredients, preparation } }));
 
-  recipe = await connection()
-    .then((db).collection('recipes').findOne(new ObjectId(id)));
+  const newRecipe = await connection()
+    .then((db) => db.collection('recipes').findOne(new ObjectId(id)));
 
-  return recipe;
+  return newRecipe;
   }
 
+  console.log('Chegou aqui');
   return null;  
 };
 
