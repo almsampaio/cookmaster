@@ -31,6 +31,8 @@ app.get('/', (request, response) => {
 });
 // Não remover esse end-point, ele é necessário para o avaliador
 
+app.use('/images/', express.static('src/uploads'));
+
 app.post('/users/', validateUser, insertUserController);
 
 app.post('/login/', validateLoginFields, loginController);
