@@ -16,6 +16,12 @@ const create = rescue(async (req, res) => {
   res.status(201).json(recipe);
 });
 
+const getAll = rescue(async (req, res) => {
+  const recipes = await RecipesServices.getAll();
+  res.status(200).json(recipes);
+});
+
 module.exports = {
   create,
+  getAll,
 };
