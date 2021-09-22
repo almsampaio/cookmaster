@@ -33,8 +33,25 @@ const readByIdModel = async (id) => {
   return result;
 };
 
+const updateModel = async ({ id, name, ingredients, preparation }) => {
+  const db = await connection();
+  const result = await db.collection('recipes')
+    .updateOne(
+      { _id: ObjectId(id) },
+      {
+        $set: {
+          name,
+          ingredients,
+          preparation,
+        },
+      },
+    );
+  return result;
+};
+
 module.exports = {
   createModel,
   readAllModel,
   readByIdModel,
+  updateModel,
 };

@@ -62,9 +62,27 @@ const validateToken = (req, res, next) => {
 }
 };
 
+const validateUserOrAdminToken = (req, res, next) => {
+  const { authorization } = req.headers;
+  const token = authorization;
+
+  if (!token) {
+    return res.status(HTTP_UNAUTHORIZED).json({ message: 'missing auth token' });
+  }
+
+  try {
+    const payload = jwt.verify(token, Secret);
+    req.userRecipes = payload;
+    next();
+  } catch (error) {
+    return res.status(HTTP_UNAUTHORIZED).json({ message: error.message });
+  }
+};
+
 module.exports = {
   validateName,
   validateIngredients,
   validatePreparation,
   validateToken,
+  validateUserOrAdminToken,
 };

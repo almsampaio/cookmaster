@@ -5,12 +5,14 @@ const {
   validateIngredients,
   validatePreparation,
   validateToken,
+  validateUserOrAdminToken,
 } = require('../../middlewares/validations/recipes/validates');
 
 const {
   createController,
   readAllController,
   readByIdController,
+  updateController,
 } = require('../../controllers/recipes/recipesController');
 
 const router = Router();
@@ -32,6 +34,12 @@ router.get(
 router.get(
   '/:id',
   readByIdController,
+);
+
+router.put(
+  '/:id',
+  validateUserOrAdminToken,
+  updateController,
 );
 
 module.exports = router;
