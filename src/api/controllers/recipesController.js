@@ -42,10 +42,20 @@ const deleteRecipesById = rescue(async (req, res) => {
   res.status(NO_CONTENT).json(recipes);
 });
 
+const insertImage = rescue(async (req, res) => {
+  const { id } = req.params;
+  console.log(req.file);
+  const { path } = req.file;
+  const recipe = await service.getRecipesById(id);
+  res.status(200).json({ ...recipe, image: `localhost:3000/${path}` });
+  // este trecho do código fiz baseado no PR da Marília
+});
+
 module.exports = {
   createRecipes,
   getAllRecipes,
   getRecipesById,
   updateRecipesById,
   deleteRecipesById,
+  insertImage,
 };
