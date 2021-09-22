@@ -25,7 +25,7 @@ const validateLogin = (req, _res, next) => {
   const { email, password } = req.body;
   const valideEmail = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]/i;
   if (!email || !password) return next(builtError(401, 'All fields must be filled'));
-  if (!valideEmail.test(email) || password.length < 8) {
+  if (!valideEmail.test(email) || password.length < 1) {
     return next(builtError(401, 'Incorrect username or password'));
   }
   next();
