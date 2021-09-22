@@ -7,11 +7,20 @@ const {
 } = require('../controllers/user');
 
 const {
+  createRecipe,
+} = require('../controllers/recipes');
+
+const {
   validateName,
   validateEmail,
   validatePassword,
   validateLogin,
 } = require('../middlewares/user');
+
+const {
+  validateRecipe,
+  validateToken,
+} = require('../middlewares/recipes');
 
 const app = express();
 
@@ -26,5 +35,7 @@ app.get('/', (request, response) => {
 
 app.post('/users', validateName, validatePassword, validateEmail, createUser);
 app.post('/login', validateLogin, genToken);
+
+app.post('/recipes', validateRecipe, validateToken, createRecipe);
 
 module.exports = app;
