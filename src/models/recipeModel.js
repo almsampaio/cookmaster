@@ -19,7 +19,7 @@ async function addRecipe({ name, ingredients, preparation, userId }) {
   };
 }
 
-async function getAllRecipes() {
+async function getAll() {
   const db = await mongoConnection.getConnection();
   const recipes = await db.collection('recipes').find().toArray();
   return recipes;
@@ -27,5 +27,5 @@ async function getAllRecipes() {
 
 module.exports = {
   addRecipe,
-  getAllRecipes,
+  getAll,
 };

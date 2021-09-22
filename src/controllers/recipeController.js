@@ -14,12 +14,12 @@ async function addRecipe(req, res) {
   res.status(code).json({ recipe });
 }
 
-async function getAllRecipes(req, res) {
-  const recipes = await recipeService.getAllRecipes();
+async function getAll(req, res) {
+  const recipes = await recipeService.getAll();
   res.status(200).json(recipes);
 }
 
 module.exports = {
   addRecipe,
-  getAllRecipes,
+  getAll,
 };
