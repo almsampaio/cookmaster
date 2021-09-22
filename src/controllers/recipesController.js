@@ -1,8 +1,8 @@
 const recipeService = require('../services/recipesService');
 
 const getAll = async (_req, res) => {
-  const result = await recipeService.getAll();
-  return res.status(result.status).json(result.response);
+  const recipes = await recipeService.getAll();
+  return res.status(200).json(recipes);
 };
 
 const findById = async (req, res) => {
