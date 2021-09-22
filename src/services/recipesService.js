@@ -1,9 +1,7 @@
 const { isUndefined } = require('lodash');
-const jwt = require('jsonwebtoken');
 const { StatusCodes } = require('http-status-codes');
-const { badRequestError, unauthorizedError,
+const { badRequestError,
   notFoundError } = require('../validations/Errors');
-const { secret } = require('../validations/auth/secret');
 const { recipesModel } = require('../models');
 
 exports.create = async ({ name, ingredients, preparation, decoded }) => {
@@ -54,15 +52,5 @@ exports.updateImage = async ({ id, filename }) => {
     return { code: StatusCodes.OK, result };
   } catch (_err) {
     throw notFoundError('recipe not found');
-  }
-};
-
-exports.validateToken = async ({ token }) => {
-  if (!token) throw unauthorizedError('missing auth token');
-  try {
-    const decoded = jwt.verify(token, secret);
-    return decoded;
-  } catch (_err) {
-    throw unauthorizedError('jwt malformed');
   }
 };
