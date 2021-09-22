@@ -30,4 +30,7 @@ recipeMiddlewares.validateRecipe,
 recipeMiddlewares.authValidation,
 recipeController.create);
 
+app.get('/recipes', 
+recipeController.getAll);
+
 module.exports = app;
