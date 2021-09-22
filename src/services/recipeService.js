@@ -52,9 +52,24 @@ const data = await recipeModel.deleteById(id);
 return (data);
 };
 
+const insertImage = async (id, user) => {
+  console.log({ user, id });
+//   const idValid = userSchema.validateId(id);
+//   if (!idValid) return ({ code: true });
+//   const recipe = await recipeModel.getById(id);
+//   const receivedUserId = '_id';
+//   if (recipe.userId.toString() !== user[receivedUserId].toString() && user.role !== 'admin') {
+//     return ({ code: true });
+//   }
+
+// const data = await recipeModel.deleteById(id);
+// return (data);
+};
+
 module.exports = {
   insertRecipe,
   findById,
   updateById,
   deleteById,
+  insertImage,
 };

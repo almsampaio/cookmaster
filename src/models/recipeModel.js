@@ -56,10 +56,23 @@ const deleteById = async (id) => {
   return response;
 };
 
+const addPath = async (id, image) => {
+  const productCollection = await mongoConnection.getConnection()
+  .then((db) => db.collection('recipes'));
+
+  const response = await productCollection.updateOne(
+    { _id: new ObjectId(id) },
+    { $set: { image } },
+  );
+
+  return response.result.ok;
+};
+
 module.exports = {
   getAll,
   create,
   getById,
   update,
   deleteById,
+  addPath,
 };
