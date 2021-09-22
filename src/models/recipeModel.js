@@ -19,6 +19,13 @@ async function addRecipe({ name, ingredients, preparation, userId }) {
   };
 }
 
+async function getAllRecipes() {
+  const db = await mongoConnection.getConnection();
+  const recipes = await db.collection('recipes').find().toArray();
+  return recipes;
+}
+
 module.exports = {
   addRecipe,
+  getAllRecipes,
 };
