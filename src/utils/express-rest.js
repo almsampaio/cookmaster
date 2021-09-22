@@ -1,5 +1,5 @@
 const express = require('express');
-const { last, initial } = require('lodash-fp');
+const { last, initial } = require('lodash');
 
 const Router = () => {
   const routes = express.Router();

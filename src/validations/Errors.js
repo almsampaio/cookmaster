@@ -1,4 +1,4 @@
-const lo = require('lodash-fp');
+const lo = require('lodash');
 const { StatusCodes } = require('http-status-codes');
 
 const obj = {};

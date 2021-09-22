@@ -1,5 +1,5 @@
 const { StatusCodes } = require('http-status-codes');
-const { isUndefined, isNull } = require('lodash/fp');
+const { isUndefined, isNull } = require('lodash');
 const { validate } = require('email-validator');
 const jwt = require('jsonwebtoken');
 const { usersModel } = require('../models');

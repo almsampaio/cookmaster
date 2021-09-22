@@ -1,4 +1,4 @@
-const { isUndefined } = require('lodash/fp');
+const { isUndefined } = require('lodash');
 const jwt = require('jsonwebtoken');
 const { StatusCodes } = require('http-status-codes');
 const { badRequestError, unauthorizedError,
@@ -38,3 +38,4 @@ exports.validateToken = async ({ token }) => {
     throw unauthorizedError('jwt malformed');
   }
 };
+
