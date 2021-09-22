@@ -1,7 +1,11 @@
 const connection = require('./connection');
 
-const getAll = async () => connection()
+const getAll = async () => {
+  const recipes = await connection()
    .then((db) => db.collection('recipes').find().toArray());
+   
+  return recipes;
+};
 
 const findByName = async (name) => {
   const recipe = await connection()
