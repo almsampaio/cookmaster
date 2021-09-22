@@ -14,6 +14,19 @@ const getAllRecipes = async (_req, res) => {
   }
 };
 
+const getRecipeById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { code, message, recipe } = await recipesServices.getRecipeById(id);
+
+    return res.status(code).json({ message, ...recipe });
+  } catch (err) {
+    res.status(INTERNAL_SERVER_ERROR).json(
+      { message: 'Erro interno', error: err },
+    );
+  }
+};
+
 const addRecipes = async (req, res) => {
   try {
     const { name, ingredients, preparation } = req.body;
@@ -31,5 +44,6 @@ const addRecipes = async (req, res) => {
 
 module.exports = {
   getAllRecipes,
+  getRecipeById,
   addRecipes,
 };
