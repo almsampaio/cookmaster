@@ -29,9 +29,15 @@ const update = async (id, name, ingredients, preparation) => {
   return { status: 200, recipe };
 };
 
+const exclude = async (id) => {
+  await recipeModel.exclude(id);
+  return { status: 204 };
+};
+
 module.exports = {
   create,
   getAll,
   getById,
   update,
+  exclude,
 };

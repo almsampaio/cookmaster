@@ -33,11 +33,18 @@ const update = async (req, res) => {
   res.status(status).json(recipe);
 };
 
+const exclude = async (req, res) => {
+  const { id } = req.params;
+  const { status } = await recipeService.exclude(id);
+  res.status(status).json();
+};
+
 module.exports = {
   create,
   getAll,
   getById,
   update,
+  exclude,
 };
 
 // Validação do userId(req3) foi utilizado como referência pull request do colega Thalys Carrara: (https://github.com/tryber/sd-010-a-cookmaster/pull/52/commits/d73d9526edce2eef159aff84377b63b5a8c9495b)

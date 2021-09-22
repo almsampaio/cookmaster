@@ -19,5 +19,6 @@ app.post('/recipes', recipeMiddleware.validateJWT, recipeController.create);
 app.get('/recipes', recipeController.getAll);
 app.get('/recipes/:id', recipeController.getById);
 app.put('/recipes/:id', recipeMiddleware.validateJWT, recipeController.update);
+app.delete('/recipes/:id', recipeMiddleware.validateJWT, recipeController.exclude);
 
 module.exports = app;
