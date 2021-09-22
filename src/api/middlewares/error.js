@@ -18,7 +18,7 @@ function errorsPostRecipes(err, res) {
       return res.status(400).json({ message: 'Invalid entries. Try again.' });
     }
 
-    return res.status(401).json({ message: 'Incorrect username or password' });
+    return res.status(401).json({ message: 'jwt malformed' });
   }
 }
 

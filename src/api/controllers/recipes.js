@@ -2,7 +2,9 @@ const recipesServices = require('../services/recipes');
 
 const createRecipes = async (req, res, next) => {
   const { name, ingredients, preparation } = req.body;
-  const CreateRecipes = await recipesServices.createRecipes({ name, ingredients, preparation });
+  const token = req.headers.authorization;
+  const CreateRecipes = await recipesServices
+    .createRecipes({ name, ingredients, preparation }, token);
   
   if (CreateRecipes.error) return next(CreateRecipes);
 
