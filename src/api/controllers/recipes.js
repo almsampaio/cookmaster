@@ -3,8 +3,8 @@ const recipesService = require('../services/recipes');
 module.exports = {
   async get(req, res) {
     try {
-      const recipes = await recipesService.get(req.params.id);
-      return res.status(200).json(recipes);
+      const recipesOrRecipe = await recipesService.get(req.params.id);
+      return res.status(200).json(recipesOrRecipe);
     } catch (error) {
       return res.status(error.code).json({ message: error.message });
     }
