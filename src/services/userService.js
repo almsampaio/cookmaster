@@ -1,4 +1,11 @@
+const jwt = require('jsonwebtoken');
 const model = require('../models/userModel');
+
+const jwtConfig = {
+  expiresIn: '15m',
+  algorithm: 'HS256',
+};
+const secret = 'supersegredosecreto';
 
 const checkInfo = (name, password, email) => {
   const regex = /\S+@\S+\.\S+/;
@@ -30,6 +37,23 @@ const createUser = async ({ name, password, email, role }) => {
   return newUser;
 };
 
+const login = async ({ email, password }) => {
+  if (!email || !password) {
+    return ({ err: true, status: 401, message: 'All fields must be filled' });
+  }
+
+  const loginCheck = await model.checkLogin(email, password);
+  
+  if (!loginCheck) {
+    return ({ err: true, status: 401, message: 'Incorrect username or password' });
+  }
+
+  const token = jwt.sign(loginCheck, secret, jwtConfig);
+
+  return token;
+};
+
 module.exports = {
   createUser,
+  login,
 };
