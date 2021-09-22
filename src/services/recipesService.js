@@ -38,10 +38,13 @@ const update = async (id, body, role, userId) => {
 
 const deleteInfo = async (id, role, userId) => Recipes.deleteInfo(id, role, userId);
 
+const updateImage = async (id, image, role, userId) => Recipes.updateImage(id, image, role, userId);
+
 module.exports = {
   create,
   getAll,
   findById,
   update,
   deleteInfo,
+  updateImage,
 };
