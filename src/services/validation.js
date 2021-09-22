@@ -14,8 +14,8 @@ const validateEntries = (userName, userEmail, password) => {
 
 const verifyEmail = async (email) => {
   const allUsers = await UserModel.getAll();
-  const existingEmail = allUsers.filter((user) => user.email === email);
-  if (existingEmail.length > 0) {
+  const existingEmail = allUsers.find((user) => user.email === email);
+  if (existingEmail) {
     return {
       code: 409,
       message: 'Email already registered',
