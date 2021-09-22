@@ -19,4 +19,6 @@ app.post('/login', userController.userLogin);
 
 // Recipes
 app.post('/recipes', authMiddleware, recipesController.createRecipe);
+app.get('/recipes', recipesController.getAllRecipes);
+
 module.exports = app;
