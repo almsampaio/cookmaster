@@ -1,5 +1,9 @@
+const jwt = require('jsonwebtoken');
 const validations = require('../schemas/validations');
+const validateLogin = require('../schemas/loginValidations');
 const usersModel = require('../models/users');
+
+const SECRET = 'tryber';
 
 const createUser = async (name, email, password) => {
   const validateEmail = await validations.validateUserEmail(email);
@@ -22,6 +26,28 @@ const createUser = async (name, email, password) => {
   };
 };
 
+const loginUser = async (email, password) => {
+  const validateInputs = await validateLogin.validateLoginInputs(email, password);
+  const validateCredentials = await validateLogin.validateLoginCredentials(email, password);
+  console.log(validateCredentials, 'SERVICE');
+  if (validateInputs.errorCode) return validateInputs;
+  if (validateCredentials.errorCode) return validateCredentials;
+
+  const searchUser = await usersModel.getUserByEmail(email);
+  const credentials = {
+    _id: searchUser.insertedId,
+    email: searchUser.email,
+    role: searchUser.role,
+  }; 
+  const token = jwt.sign(credentials, SECRET);
+
+  return {
+    code: 200,
+    tokenInfo: { token },
+  };
+};
+
 module.exports = {
   createUser,
+  loginUser,
 };

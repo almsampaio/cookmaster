@@ -9,6 +9,15 @@ const createUser = async (req, res) => {
   return res.status(201).json(newUser);
 };
 
+const loginUser = async (req, res) => {
+  const { email, password } = req.body;
+
+  const login = await userService.loginUser(email, password);
+  if (login.errorCode) return res.status(login.errorCode).json(login.errorInfo);
+  return res.status(login.code).json(login.tokenInfo);
+};
+
 module.exports = {
   createUser,
+  loginUser,
 };
