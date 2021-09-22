@@ -19,7 +19,17 @@ async function getAll(req, res) {
   res.status(200).json(recipes);
 }
 
+async function getById(req, res) {
+  const { id } = req.params;
+  const { code, message, recipeById } = await recipeService.getById(id);
+
+  if (message) return res.status(code).json({ message });
+
+  res.status(code).json(recipeById);
+}
+
 module.exports = {
   addRecipe,
   getAll,
+  getById,
 };
