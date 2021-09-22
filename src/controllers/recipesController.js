@@ -17,13 +17,13 @@ const create = rescue(async (req, res) => {
 
    const createRecipe = await service.create(name, ingredients, preparation, userId);
 
-  return res.status(201).json(createRecipe);
+  res.status(201).json(createRecipe);
 });
 
 const getAll = rescue(async (_req, res) => {
   const recipesArray = await service.getAll();
 
-  return res.status(200).json(recipesArray);
+  res.status(200).json(recipesArray);
 });
 
 module.exports = {
