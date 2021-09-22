@@ -9,10 +9,10 @@ const createRecipe = async (userId, name, ingredients, preparation) => {
     preparation,
   });
 
-  const recipes = result.ops[0];
-  console.log(recipes);
+  const recipe = result.ops[0];
+  console.log(recipe);
   return {
-    recipes,
+    recipe,
   };
 };
 
