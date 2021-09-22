@@ -20,6 +20,15 @@ const create = async (recipe) => {
   return ops[0];  
 };
 
+const update = async (recipeId, recipe) => {
+  const { name, ingredients, preparation, userId } = recipe;
+  const db = await connection();
+  await db.collection('recipes').updateOne({ _id: ObjectID(recipeId) },
+    { $set: { name, ingredients, preparation, userId } });
+  const result = await getById(recipeId);
+  return result;
+};
+
 const remove = async (id) => {
   const db = await connection();
   if (!ObjectID.isValid(id)) return false;
@@ -31,5 +40,6 @@ module.exports = {
   getAll,
   getById,
   create,
+  update,
   remove,
 };

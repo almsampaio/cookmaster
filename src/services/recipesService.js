@@ -23,6 +23,13 @@ const create = async (obj) => {
   return { recipe: result };
 };
 
+const update = async (user, recipe, recipeId) => {
+  const { _id } = user;
+  const { id: recipeID } = recipeId;
+  const result = await recipeModel.update(recipeID, { ...recipe, userId: _id });
+  return result;
+};
+
 const remove = async (id) => {
   const result = await recipeModel.remove(id);
   if (!result) return { status: httpStatus.NOT_FOUND, msg: errorMsg.recipeNotFound };
@@ -32,5 +39,6 @@ module.exports = {
   getAll,
   getById,
   create,
+  update,
   remove,
 };

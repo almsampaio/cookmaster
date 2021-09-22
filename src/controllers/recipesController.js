@@ -20,6 +20,11 @@ const create = async (req, res) => {
   res.status(httpStatus.CREATED).json(result);
 };
 
+const update = async (req, res) => {
+  const result = await recipeService.update(req.user, req.body, req.params);
+  res.status(httpStatus.OK).json(result);
+};
+
 const remove = async (req, res) => {
   const { id } = req.params;
   const result = await recipeService.remove(id);
@@ -31,5 +36,6 @@ module.exports = {
   getAll,
   getById,
   create,
+  update,
   remove,
 };

@@ -15,6 +15,8 @@ app.post('/login', userController.findUser);
 
 app.get('/recipes/:id', recipeController.getById);
 
+app.put('/recipes/:id', middlewares.authToken, recipeController.update);
+
 app.delete('/recipes/:id', middlewares.authToken, recipeController.remove);
 
 app.get('/recipes', recipeController.getAll);
