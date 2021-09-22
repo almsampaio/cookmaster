@@ -25,11 +25,7 @@ const getById = async (id) => {
 };
 
 const update = async (id, name, ingredients, preparation) => {
-  // const validations = recipeSchema.validateUpdate(id, name, ingredients, preparation);
-  // if (validations.message) return validations;
-
   const recipe = await recipeModel.update(id, name, ingredients, preparation);
-  console.log(recipe);
   return { status: 200, recipe };
 };
 

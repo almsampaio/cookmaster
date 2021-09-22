@@ -25,7 +25,10 @@ const update = async (req, res) => {
   const { id } = req.params;
   const { name, ingredients, preparation } = req.body;
 
-  const { status, message, recipe } = await recipeService.update(id, name, ingredients, preparation);
+  const {
+    status, message, recipe,
+  } = await recipeService.update(id, name, ingredients, preparation);
+
   if (!recipe) return res.status(status).json({ message });
   res.status(status).json(recipe);
 };
