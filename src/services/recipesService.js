@@ -1,7 +1,7 @@
 const recipesModel = require('../models/recipesModel');
 
 const ERROR_INVALID_ENTRIES = { error: { status: 400, message: 'Invalid entries. Try again.' } };
-
+const ERROR_RECIPE_ID = { error: { status: 404, message: 'recipe not found' } };
 // const entriesValidation = (name, ingredients, preparation) => {
 //   if (!name || !ingredients || !preparation) return true;
 //   return false;
@@ -12,7 +12,7 @@ const createRecipe = async (name, ingredients, preparation, userID) => {
     return ERROR_INVALID_ENTRIES; 
   } 
   const recipe = await recipesModel.createRecipe(name, ingredients, preparation, userID);
-  console.log(recipe);
+  // console.log(recipe);
   return recipe;
 };
 
@@ -21,7 +21,17 @@ const getAllRecipes = async () => {
   return allRecipes;
 };
 
+const getRecipeByID = async (id) => {
+  const recipeById = await recipesModel.getRecipeByID(id);
+  if (!recipeById) {
+    return ERROR_RECIPE_ID;
+  }
+    console.log(recipeById);
+    return recipeById;  
+};
+
 module.exports = {
   createRecipe,
   getAllRecipes,
+  getRecipeByID,
 };
