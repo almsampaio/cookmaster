@@ -16,6 +16,12 @@ app.use('/users', userRouter);
 
 app.use('/login', loginRouter);
 
+// ---------------------------------------------------- Recipes ---------------------------------------------------- //
+
+const recipeRouter = require('./router/recipeRouter');
+
+app.use('/recipes', recipeRouter);
+
 // Não remover esse end-point, ele é necessário para o avaliador
 app.get('/', (request, response) => {
   response.send();

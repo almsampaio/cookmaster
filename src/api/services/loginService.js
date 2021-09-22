@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 const userModel = require('../models/userModel');
 
-const SECRET = 'minhasenhamuitobraba123';
+const SECRET = require('../secret');
 
 const error = {
   error: {
@@ -27,7 +27,7 @@ const signIn = async ({ email, password }) => {
 
   const token = jwt.sign(payload, SECRET, options);
 
-  return token;
+  return { token };
 };
 
 module.exports = { signIn };

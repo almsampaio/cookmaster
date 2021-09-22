@@ -2,7 +2,7 @@ const express = require('express');
 
 const router = express.Router();
 
-const { validateLoginForm } = require('../middlewares/validateLoginForm');
+const { validateLoginForm } = require('../middlewares');
 const loginController = require('../controllers/loginController');
 
 router.post('/', [
