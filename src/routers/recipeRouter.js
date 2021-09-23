@@ -15,4 +15,11 @@ router.put('/:id', validateJWT, recipeController.updateRecipe);
 
 router.delete('/:id', validateJWT, recipeController.deleteRecipe);
 
+router.put(
+  '/:id/image',
+  validateJWT,
+  recipeController.upload.single('image'),
+  recipeController.uploadImage,
+);
+
 module.exports = router;
