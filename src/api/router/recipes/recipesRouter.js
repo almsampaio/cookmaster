@@ -9,10 +9,15 @@ const {
 } = require('../../middlewares/validations/recipes/validates');
 
 const {
+  upload,
+} = require('../../middlewares/validations/recipes/uploadMulter');
+
+const {
   createController,
   readAllController,
   readByIdController,
   updateController,
+  updateImageController,
   deleteController,
 } = require('../../controllers/recipes/recipesController');
 
@@ -41,6 +46,13 @@ router.put(
   '/:id',
   validateUserOrAdminToken,
   updateController,
+);
+
+router.put(
+  '/:id/image/',
+  validateUserOrAdminToken,
+  upload.single('image'),
+  updateImageController,
 );
 
 router.delete('/:id', validateUserOrAdminToken, deleteController);

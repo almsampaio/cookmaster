@@ -49,6 +49,19 @@ const updateModel = async ({ id, name, ingredients, preparation }) => {
   return result;
 };
 
+const updateImageModel = async (id, image) => {
+  const db = await connection();
+  await db.collection('recipes')
+    .updateOne(
+      { _id: ObjectId(id) },
+      {
+        $set: {
+          image,
+        },
+      },
+    );
+};
+
 const deleteModel = async (id) => {
   const db = await connection();
   await db.collection('recipes').deleteOne({ _id: ObjectId(id) });
@@ -59,5 +72,6 @@ module.exports = {
   readAllModel,
   readByIdModel,
   updateModel,
+  updateImageModel,
   deleteModel,
 };

@@ -1,3 +1,5 @@
+// const path = require('path');
+
 const {
   HTTP_NOT_FOUND,
   HTTP_UNAUTHORIZED,
@@ -11,6 +13,7 @@ const {
   readAllServices,
   readByIdServices,
   updateServices,
+  updateImageServices,
   deleteServices,
 } = require('../../services/recipes/recipesService');
 
@@ -57,10 +60,31 @@ const updateController = async (req, res) => {
   return res.status(HTTP_OK_STATUS).json(data);
 };
 
+const updateImageController = async (req, res) => {
+  const { id } = req.params;
+  const { _id: userId, role } = req.userRecipes;
+  const { path } = req.file;
+  const image = `localhost:3000/${path}`;
+
+  const { isEmpty, data, message, notEqual } = await updateImageServices(id, image, userId, role);
+
+  if (isEmpty) {
+    return res.status(HTTP_UNAUTHORIZED).json({ message: 'recipe not found' });
+  }
+
+  if (data) {
+    return res.status(HTTP_OK_STATUS).json(data);
+  }
+
+  if (notEqual) {
+    return res.status(HTTP_UNAUTHORIZED).json({ message });
+  }
+};
+
 const deleteController = async (req, res) => {
   const { id } = req.params;
   const { _id: userId, role } = req.userRecipes;
-  // console.log(userId);
+
   const { isEmpty, deleted, notEqual, message } = await deleteServices(id, userId, role);
 
   if (isEmpty) {
@@ -81,5 +105,6 @@ module.exports = {
   readAllController,
   readByIdController,
   updateController,
+  updateImageController,
   deleteController,
 };

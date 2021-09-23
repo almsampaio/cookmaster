@@ -3,6 +3,7 @@ const {
   readAllModel,
   readByIdModel,
   updateModel,
+  updateImageModel,
   deleteModel,
 } = require('../../models/recipes/recipesModel');
 
@@ -42,6 +43,22 @@ const updateServices = async (idRecipes, userId, role, updatedData) => {
   return { data };
 };
 
+const updateImageServices = async (idRecipes, image, userId, role) => {
+  const foundData = await readByIdModel(idRecipes);
+
+  if (!foundData) {
+    return { isEmpty: true };
+  }
+
+  if (role === 'admin' || userId === foundData.userId) {
+    await updateImageModel(idRecipes, image);
+    const data = await readByIdModel(idRecipes);
+    return { data };
+  }
+
+  return { message: 'this recipe is not yours', notEqual: true };
+};
+
 const deleteServices = async (id, userId, role) => {
   const foundData = await readByIdModel(id);
 
@@ -62,5 +79,6 @@ module.exports = {
   readAllServices,
   readByIdServices,
   updateServices,
+  updateImageServices,
   deleteServices,
 };

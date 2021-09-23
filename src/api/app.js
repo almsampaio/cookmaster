@@ -1,8 +1,8 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const usersRouter = require('./rotas/users/usersRouter');
-const loginRouter = require('./rotas/users/loginRouter');
-const recipesRouter = require('./rotas/recipes/recipesRouter');
+const usersRouter = require('./router/users/usersRouter');
+const loginRouter = require('./router/users/loginRouter');
+const recipesRouter = require('./router/recipes/recipesRouter');
 
 const app = express();
 app.use(bodyParser.json());
