@@ -85,16 +85,6 @@ const updateImage = rescue(async (req, res) => {
    res.status(200).json(updateProduct);
 });
 
-// const getImage = rescue(async (req, res) => {
-//   const { id } = req.params;
-//   console.log('Vem ID', id);
-//   const image = await service.getImage(id);
-
-//   console.log('Cheguei na imagem', image);
-
-//   res.status(200).sendFile(image);
-// });
-
 module.exports = {
   create,
   getAll,
@@ -103,5 +93,4 @@ module.exports = {
   deleteInfo,
   upload,
   updateImage,
-  // getImage,
 };

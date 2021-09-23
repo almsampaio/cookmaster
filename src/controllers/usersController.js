@@ -48,7 +48,6 @@ const createAdmin = rescue(async (req, res) => {
    if (error) return res.status(400).json({ message: ERROR_MESSAGE });
 
    const { role } = req.user;
-  //  console.log('Usuario', req.user);
 
    if (role === 'user') { 
      return res.status(403).json({ message: 'Only admins can register new admins' });

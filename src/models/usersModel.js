@@ -26,15 +26,6 @@ const create = async (name, email, password) => {
   };
 };
 
-const findUser = async (username) => {
-  const user = await connection()
-    .then((db) => db.collection('users').findOne({ username }));
-
-  if (!user) return null;
-  
-  return user;
-};
-
 const createAdmin = async (name, email, password) => {
   const role = 'admin';
 
@@ -55,6 +46,5 @@ const createAdmin = async (name, email, password) => {
 module.exports = {
   create,
   findByEmail,
-  findUser,
   createAdmin,
 };

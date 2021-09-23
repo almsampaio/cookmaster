@@ -13,9 +13,7 @@ module.exports = async (req, res, next) => {
   try {
     const decoded = jwt.verify(token, secret);
 
-    const user = await model.findUser(decoded.data.username);
-
-    console.log('Usuario logado', user);
+    const user = await model.findByEmail(decoded.data.email);
 
     if (!user) {
       return res

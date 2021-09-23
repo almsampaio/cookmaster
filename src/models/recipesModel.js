@@ -53,7 +53,7 @@ const update = async (id, body, role, userId) => {
 
   if (!recipe) return null;
 
-  if (recipe.userId === userId || role === 'admin') {
+  if (userId !== recipe.userId || role !== 'admin') {
     await connection()
     .then((db) => db.collection('recipes')
     .updateOne(recipe, { $set: { name, ingredients, preparation } }));
@@ -61,11 +61,10 @@ const update = async (id, body, role, userId) => {
   const newRecipe = await connection()
     .then((db) => db.collection('recipes').findOne(new ObjectId(id)));
 
-  return newRecipe;
+    return newRecipe;
   }
 
-  console.log('Chegou aqui');
-  return null;  
+  return { err: { code: 'not_found', message: 'recipe not found' } };  
 };
 
 const deleteInfo = async (id, role, userId) => {
@@ -91,7 +90,7 @@ const updateImage = async (id, image, role, userId) => {
 
   if (!recipe) return null;
 
-  if (recipe.userId === userId || role === 'admin') {
+  if (recipe.userId !== userId || role !== 'admin') {
     await connection()
     .then((db) => db.collection('recipes')
     .updateOne(recipe, { $set: { image } }));
@@ -101,17 +100,9 @@ const updateImage = async (id, image, role, userId) => {
 
   return newRecipe;
   }
+
+  return { err: { code: 'not_found', message: 'recipe not found' } };
 };
-
-// const getImage = async (id) => {
-//   const recipeId = await findById(id.replace('.jpeg', ''));
-
-//   if (!recipeId) return null;
-
-//   console.log('Recipe', recipeId.image);
-
-//   return recipeId.image;
-// };
 
 module.exports = {
   create,
@@ -120,5 +111,4 @@ module.exports = {
   update,
   deleteInfo,
   updateImage,
-  // getImage,
 };

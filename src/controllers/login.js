@@ -22,10 +22,6 @@ module.exports = async (req, res) => {
     return res.status(401).json({ message: ERROR_MESSAGE });
   }
 
-  // if (!email || !password) {
-  //   return res.status(401).json({ message: 'All fields must be filled' });
-  // }
-
   const user = await User.findByEmail(email);
 
   if (!user || user.password !== password) {
