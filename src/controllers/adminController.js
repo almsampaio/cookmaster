@@ -4,7 +4,7 @@ const HTTP_CREATED_STATUS = 201;
 
 module.exports = async (req, res) => {
   const { name, email, password } = req.body;
-  const role = 'user';
+  const role = 'admin';
 
   const response = await userService.insertUser(name, email, password, role);
 

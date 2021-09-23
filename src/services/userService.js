@@ -5,7 +5,7 @@ const userSchema = require('../schema/userSchema');
 
 const SECRET = 'Trybe';
 
-const insertUser = async (name, email, password) => {
+const insertUser = async (name, email, password, role) => {
   const isNameValid = userSchema.validateName(name);
   const isEmailValid = emailValidator.validate(email);
   const isPasswordValid = userSchema.validatePassword(password);
@@ -18,7 +18,7 @@ const insertUser = async (name, email, password) => {
   const alreadyExists = userSchema.findValueInArrayOfObjects(data, email, 'email');
 
   if (alreadyExists) return ({ code: 409, message: 'Email already registered' });
-  const role = 'user';
+  
   const response = await userModel.create({ name, email, password, role });
   return response;
 };

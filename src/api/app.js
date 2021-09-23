@@ -9,6 +9,8 @@ const authMiddleware = require('../middlewares/authMiddleware');
 const valUserMid = require('../middlewares/validateUserMiddleware');
 const recipeController = require('../controllers/recipeController');
 const imageCont = require('../controllers/imageController');
+const adminController = require('../controllers/adminController');
+const validateAdmin = require('../middlewares/validateAdmin');
 
 const app = express();
 
@@ -33,6 +35,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
+app.post('/users/admin', authMiddleware, validateAdmin, adminController);
 app.post('/users', userController);
 app.post('/login', loginController);
 app.post('/recipes', authMiddleware, postRecipieController);
