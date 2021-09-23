@@ -7,25 +7,30 @@ const userModel = require('../models/userModel');
 
 const httpStatus = require('../utils/httpStatus');
 
+const validationTokenError = { message: 'jwt malformed' };
+const noTokenError = { message: 'missing auth token' };
+
 const validateAuth = async (req, res, next) => {
   const token = req.headers.authorization;
   if (!token) {
-    return res.status(401).json({ error: 'Token não encontrado' });
+    return res.status(httpStatus.UNAUTHORIZED).json(noTokenError);
   }
 
   try {
-    const decoded = jwt.verify(token, SECRET_PASSWORD);
-    console.log(decoded);
-    const user = await userModel.findUser(decoded.data.user);
+    const decoded = await jwt.verify(token, SECRET_PASSWORD);
+    // console.log(decoded, 'decoded de validateAuth'); 
 
-    if (!user) {
-      return res.status(401).json({ message: 'Erro ao procurar usuário do token' });
+    const checkUser = await userModel.getUser(decoded.data.email);
+
+    if (!checkUser || checkUser === undefined) {
+      return res.status(httpStatus.UNAUTHORIZED).json(validationTokenError);
     }
-  
-    req.user = user;
+
+    req.user = decoded.data;
+    console.log(decoded.data, 'usuario validação token');
     next();
-  } catch (_err) {
-    return res.status(401).json({ message: 'Erro: seu token é inválido' });
+  } catch (err) {
+    return res.status(httpStatus.UNAUTHORIZED).json({ message: err.message });
   }
 };
 

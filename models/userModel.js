@@ -71,9 +71,7 @@ const findUserByEmail = async (email) => {
   const soughtUser = await connection().then((db) => db
   .collection('users').findOne({ email })).then((res) => {
     const { password: _, ...user } = res;
-   return res === null 
-   ? ({ message: 'User not found' }) : (
-    { data: user }); 
+   return user; 
 }).catch((err) => console.log(err));
 
   return soughtUser;

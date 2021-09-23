@@ -1,8 +1,8 @@
 const express = require('express');
-
-const router = express.Router();
 const validations = require('../middlewares/validations');
 const userController = require('../controllers/userController');
+
+const router = express.Router();
 
 router.post('/',
   validations.validateName,
