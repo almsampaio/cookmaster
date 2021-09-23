@@ -11,6 +11,7 @@ const {
   getAllRecipes,
   getRecipeById,
   editRecipe,
+  deleteRecipe,
 } = require('../controllers/recipes');
 
 const {
@@ -44,5 +45,6 @@ app.post('/recipes', validateRecipe, validateToken, createRecipe);
 app.get('/recipes', getAllRecipes);
 app.get('/recipes/:id', validateId, getRecipeById);
 app.put('/recipes/:id', validateToken, editRecipe);
+app.delete('/recipes/:id', validateToken, deleteRecipe);
 
 module.exports = app;
