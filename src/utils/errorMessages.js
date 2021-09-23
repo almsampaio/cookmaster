@@ -10,6 +10,11 @@ const EMAIL_ALREADY_EXISTS = {
   err: { message: 'Email already registered' },
 };
 
+const MISSING_AUTH_TOKEN = {
+  status: httpStatus.UNAUTHORIZED,
+  err: { message: 'missing auth token' },
+};
+
 const ALL_FIELDS_MUST_BE_FILLED = {
   status: httpStatus.UNAUTHORIZED,
   err: { message: 'All fields must be filled' },
@@ -25,11 +30,6 @@ const JWT_MALFORMED = {
   err: { message: 'jwt malformed' },
 };
 
-const UNAUTHORIZED_MISSING_TOKEN = {
-  status: httpStatus.UNAUTHORIZED,
-  err: { message: 'missing auth token' },
-};
-
 const RECIPE_NOT_FOUND = {
   status: httpStatus.NOT_FOUND,
   err: { message: 'recipe not found' },
@@ -41,6 +41,6 @@ module.exports = {
   ALL_FIELDS_MUST_BE_FILLED,
   INCORRECT_EMAIL_OR_PASSWORD,
   JWT_MALFORMED,
-  UNAUTHORIZED_MISSING_TOKEN,
   RECIPE_NOT_FOUND,
+  MISSING_AUTH_TOKEN,
 };

@@ -10,4 +10,6 @@ recipesRouter.get('/:id', rescue(controllers.getRecipeById));
 
 recipesRouter.post('/', auth, rescue(controllers.recipesRegister));
 
+recipesRouter.put('/:id', auth, rescue(controllers.editRecipes));
+
 module.exports = recipesRouter;
