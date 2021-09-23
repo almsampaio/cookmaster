@@ -7,10 +7,8 @@ const secret = 'naoconteparaninguem';
 module.exports = rescue(async (req, res, next) => {
     const token = req.headers.authorization;
  //   console.log(token);
-    
-    if (!token) {
-        return 'vazio';
-    }
+
+    if (!token) return res.status(401).json({ message: 'missing auth token' });
 
     try {
     const decoded = jwt.verify(token, secret);

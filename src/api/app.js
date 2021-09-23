@@ -20,6 +20,8 @@ app.post('/users', usersController.create);
 app.post('/login', loginController.logIn);
 app.post('/recipes', validateWebToken, recipeController.create);
 
+app.put('/recipes/:id', validateWebToken, recipeController.update);
+
 // Não remover esse end-point, ele é necessário para o avaliador
 
 module.exports = app;
