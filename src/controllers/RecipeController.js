@@ -22,12 +22,27 @@ const update = async (req, res) => {
   res.status(200).json(updatedRecipe);
 };
 
+const updateImg = async (req, res) => {
+  const { id } = req.params;
+  const { filename } = req.file;
+
+  const { user: { role: roleUSer, _id: idUser } } = req;
+
+  const path = `localhost:3000/src/uploads/${filename}`;
+  
+  const updatedRecipe = await RecipeService.updateImg(id, path);
+  
+  if (String(updatedRecipe.userId) !== String(idUser) && roleUSer !== 'admin') {
+    return res.status(401).json({ message: 'unauthorized user' });
+  }
+
+  res.status(200).json(updatedRecipe);
+};
+
 const getById = async (req, res) => {
   const { id } = req.params;
 
   const recipe = await RecipeService.getById(id);
-
-  console.log(recipe);
 
   if (recipe.message) return res.status(recipe.code).json({ message: recipe.message });
 
@@ -62,4 +77,5 @@ module.exports = {
   getById,
   update,
   remove,
+  updateImg,
 };
