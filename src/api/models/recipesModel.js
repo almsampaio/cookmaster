@@ -29,9 +29,15 @@ const updateById = async (id, name, ingredients, preparation) => {
     return recipe.value;
 };
 
+const deleteById = async (id) => {
+    const db = await connection.mongoDB();
+    await db.collection('recipes').deleteOne({ _id: ObjectId(id) });
+};
+
 module.exports = {
     createRecipe,
     getAll,
     getById,
     updateById,
+    deleteById,
 };

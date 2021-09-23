@@ -24,4 +24,6 @@ app.get('/recipes/:id', recipesControllers.getById);
 
 app.put('/recipes/:id', recipesControllers.updateById);
 
+app.delete('/recipes/:id', recipesControllers.deleteById);
+
 app.listen(PORT, () => console.log(`conectado na porta ${PORT}`));

@@ -29,12 +29,23 @@ const updateById = async (req, res) => {
   const { authorization } = req.headers;
   const { id } = req.params;
   const { name, ingredients, preparation } = req.body;
-  const recipe = await recipesModel.updateById(id, name, ingredients, preparation);
   const userAuthorization = auth.validateToken(authorization);
   if (userAuthorization.status) {
     return res.status(userAuthorization.status).json(userAuthorization.obj);
   }
+  const recipe = await recipesModel.updateById(id, name, ingredients, preparation);
   res.status(200).json(recipe);
+};
+
+const deleteById = async (req, res) => {
+  const { authorization } = req.headers;
+  const { id } = req.params;
+  const userAuthorization = auth.validateToken(authorization);
+  if (userAuthorization.status) {
+    return res.status(userAuthorization.status).json(userAuthorization.obj);
+  }
+   await recipesModel.deleteById(id);
+   res.status(204).end();
 };
 
 module.exports = {
@@ -42,4 +53,5 @@ module.exports = {
     getAll,
     getById,
     updateById,
+    deleteById,
 };
