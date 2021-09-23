@@ -4,6 +4,7 @@ const {
   getAllRecipes,
   getRecipeById,
   updateRecipe,
+  updateRecipeImage,
   removeRecipe } = require('../controllers/recipesController');
 
 const authMiddleware = require('../middlewares/authMiddleware');
@@ -16,5 +17,6 @@ module.exports = {
   getAllRecipes,
   getRecipeById,
   updateRecipe,
+  updateRecipeImage,
   removeRecipe,
 };

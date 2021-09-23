@@ -33,6 +33,15 @@ const updateRecipe = async (req, res) => {
   res.status(status).json(recipe);
 };
 
+const updateRecipeImage = async (req, res) => {
+  const { id } = req.params;
+  const { path: image } = req.file;
+  const imagePath = `localhost:3000/${image}`;
+  const { _id: userId } = req.user;
+  const { status, recipe } = await recipesService.updateRecipeImage({ id, imagePath, userId });
+  res.status(status).json(recipe);
+};
+
 const removeRecipe = async (req, res) => {
   const { status, findRecipe } = await recipesService.removeRecipe(req.params.id);
   if (!findRecipe) {
@@ -46,5 +55,6 @@ module.exports = {
   getAllRecipes,
   getRecipeById,
   updateRecipe,
+  updateRecipeImage,
   removeRecipe,
 };
