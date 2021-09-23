@@ -33,4 +33,7 @@ recipeController.create);
 app.get('/recipes', 
 recipeController.getAll);
 
+app.get('/recipes/:id', 
+recipeController.getById);
+
 module.exports = app;
