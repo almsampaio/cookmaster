@@ -33,4 +33,12 @@ const create = rescue(async (req, res) => {
   res.status(HTTP_CREATED_STATUS).json({ recipe });
 });
 
-module.exports = { create, getAll, getById };
+const update = rescue(async (req, res) => {
+  const { id } = req.params;
+  const { name, ingredients, preparation } = req.body;
+  const updateRecipe = await recipesSercice.update(id, name, ingredients, preparation);
+
+  res.status(HTTP_OK_STATUS).json(updateRecipe);
+});
+
+module.exports = { create, getAll, getById, update };

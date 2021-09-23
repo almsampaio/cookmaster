@@ -22,4 +22,13 @@ const create = async (name, ingredients, preparation, userId) => {
   return { recipe };
 };
 
-module.exports = { create, getAll, getById };
+const update = async (id, name, ingredients, preparation) => {
+  const { userId } = await recipesModel.getById(id);
+  const recipe = { userId, name, ingredients, preparation };
+  
+  const updateRecipe = await recipesModel.update(id, recipe);
+
+  return updateRecipe;
+};
+
+module.exports = { create, getAll, getById, update };
