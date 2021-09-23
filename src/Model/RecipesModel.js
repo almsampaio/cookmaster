@@ -40,4 +40,7 @@ const edition = (data, UserId, id) => {
 
 const deleted = (id, _id) => connection()
   .then((db) => db.collection('recipes').deleteOne({ _id: ObjectId(id), userId: _id }));
-module.exports = { registration, getAllRecipes, getById, edition, deleted };
+
+const addition = (image) => console.log(image);
+
+module.exports = { registration, getAllRecipes, getById, edition, deleted, addition };

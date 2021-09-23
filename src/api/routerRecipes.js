@@ -15,5 +15,7 @@ Recipesrouter.get('/:id', RecipesController.listRecipeById);
 Recipesrouter.put('/:id', RecipesController.editRecipe);
 // Requisito 8 - Exclui uma receita
 Recipesrouter.delete('/:id', RecipesController.deleteRecipe);
+// Requisito 9 - Adiciona uma imagem a receita
+Recipesrouter.put('/:id/image', RecipesController.additionOfImage);
 
 module.exports = { Recipesrouter };

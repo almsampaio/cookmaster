@@ -49,4 +49,23 @@ const deleteRecipe = async (req, res) => {
   }
 };
 
-module.exports = { recipeRegistration, listAllReceipes, listRecipeById, editRecipe, deleteRecipe };
+const additionOfImage = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const image = req.body;
+    const token = req.headers.authorization;
+    const response = await RecipesService.additionOfImage(id, token, image);
+    return res.status(200).json(response.value);
+  } catch (err) {
+    res.status(401).json({ message: err.message });
+  }
+};
+
+module.exports = {
+  recipeRegistration,
+  listAllReceipes,
+  listRecipeById,
+  editRecipe,
+  deleteRecipe,
+  additionOfImage,
+};
