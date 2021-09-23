@@ -19,6 +19,8 @@ app.post('/users', userController.createUser);
 
 app.post('/login', userController.login);
 
-app.post('/recipes', validateToken, recipesController.newRecipe);
+app.route('/recipes')
+  .post(validateToken, recipesController.newRecipe)
+  .get(recipesController.getRecipes);
 
 module.exports = app;

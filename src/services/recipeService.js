@@ -10,6 +10,9 @@ const newRecipe = async ({ name, ingredients, preparation }) => {
   return recipe;
 };
 
+const getRecipes = async () => model.getRecipes();
+
 module.exports = {
   newRecipe,
+  getRecipes,
 };
