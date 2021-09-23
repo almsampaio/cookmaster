@@ -20,5 +20,6 @@ app.post('/login', Users.tokenGen);
 app.post('/recipes', Middlewares.authToken, Recipe.create);
 app.get('/recipes', Recipe.getAllRecipes);
 app.get('/recipes/:id', Recipe.getRecipeById);
+app.put('/recipes/:id', Middlewares.authToken, Recipe.update);
 
 module.exports = app;
