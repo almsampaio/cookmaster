@@ -18,8 +18,9 @@ async function login({ email, password }) {
       algorithm: 'HS256',
     };
     
-    const { _id: userId } = user;
-    const JWTpayload = { email, userId };
+    const { _id: userId, role } = user;
+    
+    const JWTpayload = { email, userId, role };
 
     const token = jwt.sign(JWTpayload, JWTsecret, JWTconfig);
     return { code: 200, token };
