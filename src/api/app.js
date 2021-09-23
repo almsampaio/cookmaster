@@ -20,4 +20,6 @@ app.post('/login', usersControllers.loginUser);
 
 app.post('/recipes', recipesControllers.createRecipes);
 
+app.get('/recipes', recipesControllers.getRecipes);
+
 module.exports = app;

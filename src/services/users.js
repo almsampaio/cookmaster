@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const validations = require('../schemas/validations');
+const validations = require('../schemas/userValidations');
 const validateLogin = require('../schemas/loginValidations');
 const usersModel = require('../models/users');
 
@@ -7,6 +7,7 @@ const SECRET = 'tryber';
 
 const createUser = async (name, email, password) => {
   const validateEmail = await validations.validateUserEmail(email);
+  console.log(validateEmail);
   const validateName = validations.validateUserName(name);
   const validatePassword = validations.validateUserPassword(password);
   if (validateEmail.code) return validateEmail;

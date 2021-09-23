@@ -13,7 +13,6 @@ const validateToken = async (token) => {
   try {
     const jwtVerify = jwt.verify(token, SECRET);
     const user = await usersAuth.getUserByEmail(jwtVerify.email);
-    console.log(user);
     if (!user) { 
       return jwtError;
     }

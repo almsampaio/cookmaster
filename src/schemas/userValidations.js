@@ -22,22 +22,25 @@ const checkEmailAlreadyExists = async (email) => {
 };
 
 const validateUserEmail = async (email) => {
-  const alreadyExists = await checkEmailAlreadyExists(email);
-  if (alreadyExists.errorInfo) return alreadyExists;
   if (!email) {
- return { 
-    code: 400,
-    errorInfo: { message: 'Invalid entries. Try again.' },
-  }; 
-} 
-  const emailRegex = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+(\.[a-z]+)?$/i;
+    return { 
+      code: 400,
+      errorInfo: { message: 'Invalid entries. Try again.' },
+    }; 
+  } 
+  const emailRegex = /\S+@\S+\.\S+/;
   if (emailRegex.test(email) === false) {
+    console.log('entrou no if');
     return { 
        errorCode: 400,
        errorInfo: { message: 'Invalid entries. Try again.' },
      }; 
    }
-   return {};
+
+  const alreadyExists = await checkEmailAlreadyExists(email);
+  if (alreadyExists.errorInfo) return alreadyExists;
+  
+  return {};
 };
 
 const validateUserPassword = (password) => {

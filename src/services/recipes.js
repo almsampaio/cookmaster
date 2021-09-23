@@ -22,6 +22,12 @@ const createRecipes = async (nome, ingredientes, preparacao, token) => {
   };
 };
 
+const getRecipes = async () => {
+  const recipes = await modelRecipes.getRecipes();
+  return recipes;
+};
+
 module.exports = {
   createRecipes,
+  getRecipes,
 };
