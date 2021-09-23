@@ -49,6 +49,10 @@ const uploadImage = async (req, res) => {
   return res.status(200).json({ ...recipeById, image: `localhost:3000/${path}` });
 };
 
+const sendImage = async (req, res) => {
+  res.status(200).sendFile('file', { path: req.file.path });
+};
+
 module.exports = {
   createRecipe,
   getAllRecipes,
@@ -56,4 +60,5 @@ module.exports = {
   updateRecipe,
   deleteRecipe,
   uploadImage,
+  sendImage,
 };

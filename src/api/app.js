@@ -39,5 +39,5 @@ app.put('/recipes/:id', authMiddleware, recipesController.updateRecipe);
 app.delete('/recipes/:id', authMiddleware, recipesController.deleteRecipe);
 app.put('/recipes/:id/image', authMiddleware, 
   upload.single('image'), recipesController.uploadImage);
-
+app.get('/images/:id.jpeg', recipesController.sendImage);
 module.exports = app;
