@@ -63,10 +63,21 @@ const deleteRecipeById = async (id) => {
   return { result };
 };
 
+const insertImage = async (id, filename) => {
+  const imageLink = `localhost:3000/src/uploads/${filename}`;
+
+  const result = await recipesModel.insertImage(id, imageLink);
+
+  if (!result) return { error: RECIPE_NOT_FOUND };
+
+  return { result };
+};
+
 module.exports = {
   createRecipe,
   getRecipes,
   getRecipeById,
   editRecipeById,
   deleteRecipeById,
+  insertImage,
 };
