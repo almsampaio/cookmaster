@@ -24,9 +24,15 @@ const updateRecipe = async (recipeDetails) => {
   return ({ status: 200, recipe });
 };
 
+const removeRecipe = async (id) => {
+  const { findRecipe } = await recipesModel.removeRecipe(id);
+  return ({ status: 204, findRecipe });
+};
+
 module.exports = {
   create,
   getAllRecipes,
   getRecipeById,
   updateRecipe,
+  removeRecipe,
 };

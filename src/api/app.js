@@ -7,7 +7,8 @@ const {
   getAllRecipes,
   getRecipeById,
   authMiddleware, 
-  updateRecipe } = require('./routes');
+  updateRecipe, 
+  removeRecipe } = require('./routes');
 
 const app = express();
 app.use(bodyParser.json());
@@ -26,5 +27,7 @@ app.post('/login', login);
 app.post('/recipes', authMiddleware, createRecipe);
 
 app.put('/recipes/:id', authMiddleware, updateRecipe);
+
+app.delete('/recipes/:id', authMiddleware, removeRecipe);
 
 module.exports = app;
