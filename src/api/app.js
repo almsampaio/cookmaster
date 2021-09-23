@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const multer = require('multer');
 const routes = require('./routes');
+
 const { handleErrors } = require('../Middlewares/erros');
 const { validateNewUser, validateLogin, validateNewRecipe } = require('../Middlewares/usersMid');
 const validateJWT = require('./auth/validateJWT');
