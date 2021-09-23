@@ -1,4 +1,3 @@
-const { cat } = require('shelljs');
 const RecipesService = require('../Service/RecipesService');
 
 const recipeRegistration = async (req, res) => {
@@ -27,4 +26,15 @@ const listRecipeById = async (req, res) => {
   }
 };
 
-module.exports = { recipeRegistration, listAllReceipes, listRecipeById };
+const editRecipe = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const data = req.body;
+    const token = req.headers.authorization;
+    const response = await RecipesService.editRecipe(id, token, data);
+    return res.status(200).json(response.value);
+  } catch (err) {
+    res.status(401).json({ message: err.message });
+  }
+};
+module.exports = { recipeRegistration, listAllReceipes, listRecipeById, editRecipe };

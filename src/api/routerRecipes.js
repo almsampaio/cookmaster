@@ -11,4 +11,6 @@ Recipesrouter.post('/', recipeValidated, validateJWT.authJWT, RecipesController.
 Recipesrouter.get('/', RecipesController.listAllReceipes);
 // Requisito 5 - Lista uma receita pelo Id
 Recipesrouter.get('/:id', RecipesController.listRecipeById);
+// Requisito 7 - Edição de uma receita 
+Recipesrouter.put('/:id', RecipesController.editRecipe);
 module.exports = { Recipesrouter };

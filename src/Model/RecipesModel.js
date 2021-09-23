@@ -2,7 +2,12 @@ const { ObjectId } = require('bson');
 const connection = require('./connection');
 
 const registration = (id, data) => {
-  const newRecipe = { ...data, userId: id };
+  const newRecipe = {
+    name: data.name,
+    ingredients: data.ingredients,
+    preparation: data.preparation,
+    userId: id,
+  };
   return connection().then((db) => db.collection('recipes').insertOne(newRecipe))
     .then((recipe) => ({
       recipe: {
@@ -19,5 +24,17 @@ const getAllRecipes = () => connection()
 const getById = (id) => connection()
   .then((db) => db.collection('recipes').findOne({ _id: ObjectId(id) }))
   .then((recipe) => recipe);
-  
-module.exports = { registration, getAllRecipes, getById };
+
+const edition = (data, UserId, id) => {
+  const newRecipe = {
+    name: data.name,
+    ingredients: data.ingredients,
+    preparation: data.preparation,
+    userId: UserId,
+  };
+  return connection()
+    .then((db) => db.collection('recipes')
+      .findOneAndUpdate({ _id: ObjectId(id) }, { $set: newRecipe }, { returnOriginal: false }))
+    .then((recipe) => recipe);
+};
+module.exports = { registration, getAllRecipes, getById, edition };

@@ -33,4 +33,18 @@ const listRecipeById = async (id) => {
   return RecipesModel.getById(id);
 };
 
-module.exports = { recipeRegistration, listAllReceipes, listRecipeById };
+const isValidToken = (token) => {
+  if (!token) {
+    throw new Error('missing auth token');
+  }
+};
+
+const editRecipe = async (id, token, data) => {
+  isValidId(id);
+  isValidToken(token);
+  const { data: { _id } } = jwt.verify(token, secret);
+  const upRecipe = await RecipesModel.edition(data, _id, id);
+  return upRecipe;
+};
+
+module.exports = { recipeRegistration, listAllReceipes, listRecipeById, editRecipe };
