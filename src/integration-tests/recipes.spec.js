@@ -30,11 +30,11 @@ const userSetup = async () => {
   const { body: { token } } = await chai.request(server)
     .post('/login')
     .send({ email: 'userName@email.com', password: '12345678' });
-  const { body: recipeBody } = await chai.request(server)
+  const recipe = await chai.request(server)
     .post('/recipes')
     .set('Authentication', token)
     .send(VALID_RECIPE);
-  return recipeBody;
+  return recipe;
 };
 
 describe('POST /recipes', () => {
@@ -47,5 +47,20 @@ describe('POST /recipes', () => {
     MongoClient.connect.restore();
   });
 
-  describe('Quando é passado uma receita válida', () => { });
+  describe('Todos os dados são válidos', async () => {
+    let response = {};
+    response = await userSetup();
+
+    it('Deve ter status 201', () => {
+      expect(response).to.have.status(201);
+    });
+    it('Deve retornar um objeto com as informações da nova receita', () => {
+      expect(response).to.be.a('object');
+      expect(response.body).to.have.property('recipe');
+      expect(response.body.recipe).to.have.property('name');
+      expect(response.body.recipe).to.have.property('_id');
+      expect(response.body.recipe).to.have.property('userId');
+      expect(response.body.recipe.name).to.be.equal('Frango');
+    });
+  });
 });
