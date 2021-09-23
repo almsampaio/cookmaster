@@ -23,7 +23,7 @@ app.get('/', (request, response) => {
 
 const storage = multer.diskStorage({
   destination: (_req, _file, cb) => {
-    cb(null, '../uploads');
+    cb(null, path.join(__dirname, '..', 'uploads'));
   },
   filename: (req, _file, cb) => {
     const { id } = req.params;
@@ -37,10 +37,10 @@ app.post('/users', userController);
 app.post('/login', loginController);
 app.post('/recipes', authMiddleware, postRecipieController);
 app.get('/recipes', getRecipieController.getAll);
-app.put('/recipes/:id/image', authMiddleware, valUsMid, upload.single('image'), imageCont.addImage);
+app.put('/recipes/:id/image', valUsMid, authMiddleware, upload.single('image'), imageCont.addImage);
 app.get('/images/:filename', imageCont.getByName);
 app.get('/recipes/:id', getRecipieController.getById);
-app.put('/recipes/:id', authMiddleware, getRecipieController.updateById);
-app.delete('/recipes/:id', authMiddleware, getRecipieController.deleteById);
+app.put('/recipes/:id', valUsMid, authMiddleware, getRecipieController.updateById);
+app.delete('/recipes/:id', valUsMid, authMiddleware, getRecipieController.deleteById);
 
 module.exports = app;
