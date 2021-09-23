@@ -18,6 +18,20 @@ const create = async (user) => {
   return userCreated;
 };
 
+const createAdmin = async (user) => {
+  const { error } = userSchema.userCreateValidate(user);
+
+  if (error) return { message: 'Invalid entries. Try again.', code: 400 };
+
+  const { message } = await userSchema.emailIsUnique(user.email);
+
+  if (message) return { message, code: 409 };
+
+  const userCreated = await UserModel.createAdmin(user);
+
+  return userCreated;
+};
+
 const validationCredentials = (email, password) => {
   if (!email || !password) {
     return (
@@ -51,6 +65,7 @@ const findByCredentials = async (email, password) => {
 };
 
 module.exports = {
+  createAdmin,
   create,
   findByCredentials,
 };
