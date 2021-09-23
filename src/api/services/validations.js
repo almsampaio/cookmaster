@@ -42,23 +42,52 @@ const validateBodyLoginUsers = async (body) => {
   return false;
 };
 
-const validateBodyCreateRecipes = (body) => {
+const validateBodyRecipes = (body) => {
   const { error } = Joi.object({
     name: Joi.string().required(),
     ingredients: Joi.string().required(),
     preparation: Joi.string().required(),
   }).validate(body);
+  if (error) return error;
+  return false;
+};
+
+const validateBodyCreateRecipes = (body) => {
+  const error = validateBodyRecipes(body);
   if (error) return { verb: 'post', item: 'createRecipes', error, isJoy: true };
   return false;
 };
 
-const validateTokenToCreateRecipes = async (token) => {
+const validateBodyUpdateRecipes = (body) => {
+  const error = validateBodyRecipes(body);
+  if (error) return { verb: 'put', item: 'uptadeRecipes', error, isJoy: true };
+  return false;
+};
+
+const validateToken = (token, verb, item) => {
+  if (!token) return { verb, item, error: true, isAuthenticToken: false };
   try {
-    const payload = await jwt.verify(token, JWT_SECRET);
+    const payload = jwt.verify(token, JWT_SECRET);
     return { error: false, payload };
   } catch (_err) {
-    return { verb: 'post', item: 'createRecipes', error: true, isValidatingToken: true };
+    return { verb, item, error: true, isAuthenticToken: true };
   }
+};
+
+const validateTokenToCreateRecipes = async (token) => validateToken(token, 'post', 'createRecipes');
+
+const validateTokenToUpdateRecipes = async (token) => {
+  const ValidationauthenticatToken = validateToken(token, 'put', 'uptadeRecipes');
+  if (ValidationauthenticatToken.error) return ValidationauthenticatToken;
+
+  const { email } = ValidationauthenticatToken.payload;
+
+  const getUserByEmail = await usersModels.getUserByEmail(email);
+ 
+  if (!getUserByEmail.length) {
+    return { verb: 'put', item: 'uptadeRecipes', error: true, isAuthenticToken: true };
+  }
+  return false;
 };
 
 const validateRecipeExists = async (id, recipe) => {
@@ -71,6 +100,8 @@ module.exports = {
   validateSingleUserEmail,
   validateBodyLoginUsers,
   validateBodyCreateRecipes,
+  validateBodyUpdateRecipes,
   validateTokenToCreateRecipes,
+  validateTokenToUpdateRecipes,
   validateRecipeExists,
 };

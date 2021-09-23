@@ -31,8 +31,13 @@ const getRecipesById = async (id) => {
   return getById[0];
 };
 
+const uptadeRecipesById = async (_id) => {
+
+};
+
 module.exports = {
   createRecipes,
   getAllRecipes,
   getRecipesById,
+  uptadeRecipesById,
 };

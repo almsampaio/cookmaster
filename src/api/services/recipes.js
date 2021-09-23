@@ -25,8 +25,19 @@ const getRecipesById = async (id) => {
   return recipeById;
 };
 
+const uptadeRecipesById = async ({ name, ingredients, preparation }, id, token) => {
+  const validateInsertedBodyError = await validations
+    .validateBodyUpdateRecipes({ name, ingredients, preparation });
+  if (validateInsertedBodyError) return validateInsertedBodyError;
+
+  const validateToken = await validations
+    .validateTokenToUpdateRecipes(token);
+  if (validateToken.error) return validateToken;
+};
+
 module.exports = {
   createRecipes,
   getAllRecipes,
   getRecipesById,
+  uptadeRecipesById,
 };

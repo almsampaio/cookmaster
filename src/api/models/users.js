@@ -9,6 +9,7 @@ const mongoConnection = require('./connection');
 const getUserByEmail = async (email) => {
   const getByEmail = await mongoConnection.getConnection()
   .then((db) => db.collection('users').find({ email }).toArray()); 
+
   return getByEmail;
 };
 

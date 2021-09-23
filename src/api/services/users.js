@@ -27,7 +27,7 @@ const loginUsers = async ({ email, password }) => {
   // if (validateSingleUserEmailError) return validateSingleUserEmailError;
   const userLogaded = await usersModels.createUsers({ email, password });
   const { user } = userLogaded;
-  const token = jwt.sign(user, JWT_SECRET);
+  const token = jwt.sign(user, JWT_SECRET, { expiresIn: '1h' });
 
   return token;
 };

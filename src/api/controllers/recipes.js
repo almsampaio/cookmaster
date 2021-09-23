@@ -28,8 +28,21 @@ const getRecipesById = async (req, res, next) => {
   res.status(200).json(GetRecipesById);
 };
 
+const uptadeRecipesById = async (req, res, next) => {
+  const { name, ingredients, preparation } = req.body;
+  const { id } = req.params;
+  const token = req.headers.authorization;
+  const UptadeRecipesById = await recipesServices
+  .uptadeRecipesById({ name, ingredients, preparation }, id, token);
+  
+  if (UptadeRecipesById) return next(UptadeRecipesById);
+
+  res.status(200).json(UptadeRecipesById);
+};
+
 module.exports = {
   createRecipes,
   getAllRecipes,
   getRecipesById,
+  uptadeRecipesById,
 };

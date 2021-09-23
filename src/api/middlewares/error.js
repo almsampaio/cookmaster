@@ -13,7 +13,6 @@ function errorsPostLogin(err, res) {
 }
 
 function errorsPostRecipes(err, res) {
-  console.log('entrou no post recipes');
     if (err.isJoy) {
       return res.status(400).json({ message: 'Invalid entries. Try again.' });
     }
@@ -37,10 +36,28 @@ function errorsGet(err, res) {
   if (err.item === 'getRecipesById') return errorsGetRecipes(err, res);
 }
 
+function errorsPutRecipes(err, res) {
+    if (err.isJoy) {
+      return res.status(400).json({ message: 'Invalid entries. Try again.' });
+    }
+
+    if (!err.isAuthenticToken) {
+      console.log(err.isAuthenticToken);
+      return res.status(401).json({ message: 'missing auth token' });
+    }
+    return res.status(401).json({ message: 'jwt malformed' });
+}
+
+function errorsPut(err, res) {
+  if (err.item === 'uptadeRecipes') return errorsPutRecipes(err, res);
+}
+
 module.exports = (err, _req, res, _next) => {
   if (err.verb === 'post') return errorsPost(err, res);
   
   if (err.verb === 'get') return errorsGet(err, res);
+
+  if (err.verb === 'put') return errorsPut(err, res);
 
   return res.status(500).json({ message: 'Internal server error' });
 };
