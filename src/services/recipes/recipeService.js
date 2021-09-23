@@ -49,9 +49,10 @@ const editRecipeService = async (params) => {
 };
 
 const deleteRecipeService = async (id, userId, role) => {
-    if (!ObjectId.isValid(id)) {
-        return '400';
-    }
+
+    const objId = ObjectId(id);
+
+    if (!ObjectId.isValid(id)) return '401';
 
     const getRecipe = await getRecipeByIdService(id);
 
@@ -59,7 +60,7 @@ const deleteRecipeService = async (id, userId, role) => {
         return false;
     }
     
-    await recipeModel.deleteRecipeModel(id);
+    await recipeModel.deleteRecipeModel(objId);
     return true;
 };
 

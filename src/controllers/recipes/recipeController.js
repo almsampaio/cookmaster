@@ -37,10 +37,16 @@ const deleteRecipeController = async (req, res) => {
     const { userId, role } = req.user;
     
     const recipe = await recipeService.deleteRecipeService(id, userId, role);
-    if (recipe === '400') return res.status(401).json({ message: 'invalid token' });
+    if (recipe === '401') return res.status(401).json({ message: 'invalid token' });
     if (recipe === false) return res.status(401).json({ message: 'missing auth token' });
     if (recipe) return res.status(204).end();
 };
+
+const uploadRecipeImageController = async (req, res) => {
+    const { id } = req.params;
+    return res.status(200).json({ message: 'upload successful'})
+};
+
 
 module.exports = {
     createRecipeController,
@@ -48,4 +54,5 @@ module.exports = {
     getRecipeByIdController,
     editRecipeController,
     deleteRecipeController,
+    uploadRecipeImageController,
 };
