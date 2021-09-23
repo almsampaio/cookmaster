@@ -2,6 +2,7 @@ const services = require('../services');
 
 module.exports = async (req, res) => {
   const { id } = req.params;
-  const { status, recipe } = await services.addRecipeImage(id);
-  res.status(status).json(recipe);
+  const { user } = req;
+  const { status, updatedRecipe } = await services.addRecipeImage(id, user);
+  res.status(status).json(updatedRecipe);
 };
