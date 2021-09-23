@@ -1,8 +1,8 @@
 const connection = require('./connection');
 
-const create = async (name, email, password) => {
+const create = async (name, email, password, role) => {
   const db = await connection();
-  const newUser = await db.collection('users').insertOne({ name, email, password });
+  const newUser = await db.collection('users').insertOne({ name, email, password, role });
   return newUser;
 };
 
