@@ -69,23 +69,6 @@ const output = {
 return output;
 };
 
-const getImageId = async (id) => {
-  if (!ObjectId.isValid(id)) return false;
-
-const connectionDb = await connection();
-
-const imageRecipe = await connectionDb.collection('recipes')
-.findOne({ _id: ObjectId(id) });
-// const output = {
-//   ...imageRecipe.value,
-//   image: imageUrl,
-// };
-
-console.log(imageRecipe.image);
-
-return imageRecipe.image;
-};
-
 module.exports = {
   addRecipe,
   allRecipes,
@@ -93,5 +76,4 @@ module.exports = {
   updateRecipeId,
   deleteRecipeId,
   addImageRecipe,
-  getImageId,
 };

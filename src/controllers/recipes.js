@@ -59,13 +59,6 @@ const addImageRecipe = async (req, res) => {
   res.status(200).json(updatedRecipe);
 };
 
-const getImageId = async (req, res) => {
-  const { id } = req.params;
-
-  const image = await recipeService.getImageId(id);
-  res.status(200).json(image);
-};
-
 module.exports = {
   addRecipe,
   allRecipes,
@@ -73,5 +66,4 @@ module.exports = {
   updateRecipeId,
   deleteRecipeId,
   addImageRecipe,
-  getImageId,
 };

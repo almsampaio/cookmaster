@@ -21,8 +21,7 @@ const storage = multer.diskStorage({
   },
 });
 
-const upload = multer(storage);
-app.use(express.static('../uplodas'));
+const upload = multer({ storage });
 
 // Não remover esse end-point, ele é necessário para o avaliador
 app.get('/', (request, response) => {
@@ -33,10 +32,6 @@ app.get('/', (request, response) => {
 app.post('/users', userController.addUser);
 
 app.post('/login', userController.login);
-
-app.use('/images', express.static(path.join(__dirname, '..', 'uploads')));
-
-app.get('/images/:id.jpeg', recipesController.getImageId);
 
 app.put('/recipes/:id/image/',
 authToken,
@@ -49,9 +44,7 @@ app.get('/recipes/:id', recipesController.recipeId);
 app.post('/recipes', authToken, recipesController.addRecipe);
 app.get('/recipes', recipesController.allRecipes);
 
-app.use('*', (req, res) => {
-  res.status(404).json({ message: 'page Not Found' });
-});
+app.use('/images', express.static(path.join(__dirname, '..', 'uploads')));
 
 app.use(errorMiddleware);
 
