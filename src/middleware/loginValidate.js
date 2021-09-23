@@ -28,9 +28,40 @@ const isUniqueEmail = async (req, _res, next) => {
   next();
 };
 
+const existLogin = (req, _res, next) => {
+  const { email, password } = req.body;
+  if (!email || !password) {
+    return next({
+      err: { message: 'All fields must be filled' },
+      statusCode: STATUS.STATUS_401_UNAUTHORIZED,
+    });
+  }
+  next();
+};
 
+const correctUser = async (req, _res, next) => {
+  const { email, password } = req.body;
+  const user = await findByEmail(email);
+  if (!user[0]) {
+    return next({
+      err: { message: 'Incorrect username or password' },
+      statusCode: STATUS.STATUS_401_UNAUTHORIZED,
+    });
+  }
+  const correctEmail = user[0].email === email;
+  const correctPassword = user[0].password === password;
+  if (!correctEmail || !correctPassword) {
+    return next({
+      err: { message: 'Incorrect username or password' },
+      statusCode: STATUS.STATUS_401_UNAUTHORIZED,
+    });
+  }
+  next();
+};
 
 module.exports = {
   validatePostLogin,
   isUniqueEmail,
+  existLogin,
+  correctUser,
 };
