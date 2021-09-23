@@ -7,7 +7,6 @@ const getAll = async (_req, res) => {
   return res.status(httpStatus.HTTP_OK_STATUS).json({ users: allProducts });
 };
 
-// rota de login
 const getById = async (req, res) => {
   const { id } = req.params;
   const user = await userServices.getById(id);

@@ -30,7 +30,10 @@ const create = async (name, email, password, role) => {
   .collection('users').insertOne({ name, email, password, role: role || 'user' }))
   .then((res) => {
     console.log(res, 'create user Model');
-    return res.ops[0];
+    const { password: _, ...user } = res.ops[0];
+    return {
+      ...user,
+    };
   }).catch((err) => console.log(err));
 
   return newUser;
@@ -44,14 +47,33 @@ const findUser = async (username) => {
   return soughtUser;
 };
 
+const getUser = async (email) => {
+  const soughtUser = await connection().then((db) => db
+  .collection('users').findOne({ email })).then((res) => (
+    res === null 
+   ? ({ message: 'User not found' }) : (
+    { data: res }))).catch((err) => console.log(err));
+
+  return soughtUser;
+};
+
+const getUserByPassword = async (password) => {
+  const soughtUser = await connection().then((db) => db
+  .collection('users').findOne({ password })).then((response) => (
+    response === null 
+   ? ({ message: 'User not found' }) : (
+    { data: response }))).catch((err) => console.log(err));
+
+  return soughtUser;
+};
+
 const findUserByEmail = async (email) => {
   const soughtUser = await connection().then((db) => db
   .collection('users').findOne({ email })).then((res) => {
-    console.log(res, 'find User by Email model');
+    const { password: _, ...user } = res;
    return res === null 
    ? ({ message: 'User not found' }) : (
-    { data: res }
-  ); 
+    { data: user }); 
 }).catch((err) => console.log(err));
 
   return soughtUser;
@@ -63,4 +85,6 @@ module.exports = {
   create,
   findUser,
   findUserByEmail,
+  getUser,
+  getUserByPassword,
 };

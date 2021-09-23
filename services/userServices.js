@@ -15,8 +15,15 @@ const getById = async (id) => {
   return user;
 };
 
+const findUserByEmail = async (email) => {
+  const user = await userModel.findUserByEmail(email);
+  // console.log(user.name, 'teste services userServices');
+  return user;
+};
+
 module.exports = {
   getAll,
   create,
   getById,
+  findUserByEmail,
 };

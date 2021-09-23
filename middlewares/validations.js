@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
+require('dotenv').config();
 
-const secretToken = 'mySuperMegaSecretToken';
+const SECRET_PASSWORD = process.env.SECRET_TOKEN || 'mySuperMegaSecretToken';
 
 const userModel = require('../models/userModel');
 
@@ -13,9 +14,9 @@ const validateAuth = async (req, res, next) => {
   }
 
   try {
-    const decoded = jwt.verify(token, secretToken);
+    const decoded = jwt.verify(token, SECRET_PASSWORD);
     console.log(decoded);
-    const user = await userModel.findUser(decoded.data.username);
+    const user = await userModel.findUser(decoded.data.user);
 
     if (!user) {
       return res.status(401).json({ message: 'Erro ao procurar usuário do token' });
@@ -70,7 +71,7 @@ const validatePassword = (req, res, next) => {
 
 const validateEmailIsUnique = async (req, res, next) => {
   const { email } = req.body;
-  const user = await userModel.findUserByEmail(email);
+  const user = await userModel.getUser(email);
 
   if (user.message) {
     next();
