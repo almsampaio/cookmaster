@@ -42,11 +42,9 @@ const deleteRecipeController = async (req, res) => {
     if (recipe) return res.status(204).end();
 };
 
-const uploadRecipeImageController = async (req, res) => {
-    const { id } = req.params;
-    return res.status(200).json({ message: 'upload successful'})
-};
+// const uploadRecipeImageController = async (req, res) => {
 
+// };
 
 module.exports = {
     createRecipeController,
@@ -54,5 +52,5 @@ module.exports = {
     getRecipeByIdController,
     editRecipeController,
     deleteRecipeController,
-    uploadRecipeImageController,
+    // uploadRecipeImageController,
 };

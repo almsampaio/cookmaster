@@ -49,7 +49,6 @@ const editRecipeService = async (params) => {
 };
 
 const deleteRecipeService = async (id, userId, role) => {
-
     const objId = ObjectId(id);
 
     if (!ObjectId.isValid(id)) return '401';
