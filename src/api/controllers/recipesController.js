@@ -25,8 +25,6 @@ const getById = async (req, res) => {
 
 const update = async (req, res) => {
   const { id } = req.params;
-  const { user } = req;
-  console.log(user);
   const { name, ingredients, preparation } = req.body;
 
   const recipe = await recipesService.update(name, ingredients, preparation, id);
@@ -34,10 +32,22 @@ const update = async (req, res) => {
   res.status(200).json(newRecipe);
 };
 
+const remove = async (req, res) => {
+  const recipe = await recipesService.getById(req.params.id);
+  if (!recipe) {
+ return res.status(422)
+  .json({ message: 'invalid id' }); 
+  }
+  await recipesService.remove(req.params.id);
+
+  res.status(204).json(recipe);
+}; 
+
   module.exports = {
     register,
     getAll,
     getById,
     update,
+    remove,
   
 }; 

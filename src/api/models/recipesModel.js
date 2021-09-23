@@ -23,16 +23,22 @@ const getById = async (id) => {
   const recipe = await db.collection(collectionName).findOne({ _id: ObjectId(id) });
   return recipe;
 };
-const update = async (name, ingredients, preparation) => {
+const update = async (name, ingredients, preparation, id) => {
   const db = await getConnection();
   await db.collection(collectionName)
-      .updateOne({ name }, { $set: { name, ingredients, preparation } });
-  return { name, ingredients, preparation };
+      .updateOne({ _id: id }, { $set: { name, ingredients, preparation } });
+  return { name, ingredients, preparation, id };
 };
+const remove = async (id) => {
+  if (!ObjectId.isValid(id)) return null;
 
+  const db = await getConnection();
+  await db.collection(collectionName).deleteOne({ _id: ObjectId(id) });
+};
   module.exports = {
     register,
     getAllProducts,
     getById,
     update,
+    remove,
   }; 

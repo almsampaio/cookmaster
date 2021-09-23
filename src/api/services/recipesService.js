@@ -29,6 +29,9 @@ const update = async (name, ingredients, preparation, id) => {
     const recipe = await recipesModel.update(name, ingredients, preparation, id);
     return recipe;
   };
+const remove = async (id) => {
+    await recipesModel.remove(id);
+  };
 
 module.exports = {
     validateData,
@@ -36,4 +39,5 @@ module.exports = {
     getAll,
     getById,
     update,
+    remove,
     }; 

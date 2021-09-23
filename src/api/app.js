@@ -20,5 +20,6 @@ app.post('/recipes', authToken, recipesController.register);
 app.get('/recipes', recipesController.getAll);
 app.get('/recipes/:id', recipesController.getById);
 app.put('/recipes/:id', adminToken, recipesController.update);
+app.delete('/recipes/:id', adminToken, recipesController.remove);
 
 module.exports = app;
