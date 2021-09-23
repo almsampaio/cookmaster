@@ -1,9 +1,14 @@
 const { userRegisterService } = require('./usersService');
 
-async function userRegisterController(_req, res) {
-  const teste = await userRegisterService();
-  if (teste === true) return res.status(200).json({ message: true });
-  return res.status(200).json({ message: false });
+async function userRegisterController(req, res) {
+  const { name, email, password } = req.body;
+  const userToRegister = { name, email, password };
+  const tryRegister = await userRegisterService(userToRegister);
+  if (tryRegister.statusCode) {
+    const { statusCode, message } = tryRegister;
+    return res.status(statusCode).json({ message });
+  }
+  return res.status(201).json(tryRegister);
 }
 
 module.exports = {
