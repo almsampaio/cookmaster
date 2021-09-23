@@ -1,3 +1,5 @@
+const express = require('express');
+const path = require('path');
 const app = require('./app');
 
 const Users = require('../controllers/UsersController');
@@ -34,3 +36,5 @@ app.put('/recipes/:id/image', [
   upload.single('image'),
   Recipes.uploadImage,
   ]);
+
+app.use('/images', express.static(path.join(__dirname, '..', '/uploads')));
