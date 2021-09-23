@@ -22,4 +22,6 @@ app.post('/recipes', recipesControllers.createRecipes);
 
 app.get('/recipes', recipesControllers.getRecipes);
 
+app.get('/recipes/:id', recipesControllers.getRecipesById);
+
 module.exports = app;
