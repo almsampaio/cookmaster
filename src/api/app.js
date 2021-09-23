@@ -4,7 +4,7 @@ const bodyParser = require('body-parser').json();
 const usersController = require('../controllers/usersController');
 const loginController = require('../controllers/loginController');
 const recipesController = require('../controllers/recipesController');
-const { validateToken } = require('../middleware/validation');
+const { validateToken, validateUser } = require('../middleware/validation');
 
 const app = express();
 app.use(bodyParser);
@@ -20,5 +20,7 @@ app.post('/login', loginController.userLogin);
 app.post('/recipes', validateToken, recipesController.recipesSubmit);
 app.get('/recipes', recipesController.getRecipes);
 app.get('/recipes/:id', recipesController.getById);
+app.put('/recipes/:id', validateToken, validateUser,
+  recipesController.editRecipe);
 
 module.exports = app;

@@ -45,8 +45,14 @@ const getByIdRecipeServices = async (id) => {
   return { status: OK_STATUS, result };
 };
 
+const editRecipeServices = async (id, newRecipe) => {
+  const result = await recipesModel.editRecipeModels(id, newRecipe);
+  return { status: OK_STATUS, result };
+};
+
 module.exports = {
   register,
   getRecipesServices,
   getByIdRecipeServices,
+  editRecipeServices,
 };
