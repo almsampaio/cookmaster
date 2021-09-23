@@ -9,5 +9,6 @@ const Recipesrouter = express.Router();
 Recipesrouter.post('/', recipeValidated, validateJWT.authJWT, RecipesController.recipeRegistration);
 // Requisito 4 - Lista todas as Receitas
 Recipesrouter.get('/', RecipesController.listAllReceipes);
-
+// Requisito 5 - Lista uma receita pelo Id
+Recipesrouter.get('/:id', RecipesController.listRecipeById);
 module.exports = { Recipesrouter };

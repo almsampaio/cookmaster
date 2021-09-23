@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken');
+const { ObjectId } = require('bson');
 const UsersModel = require('../Model/UsersModel');
 const RecipesModel = require('../Model/RecipesModel');
 
@@ -13,4 +14,23 @@ const recipeRegistration = async (data, token) => {
 
 const listAllReceipes = () => RecipesModel.getAllRecipes();
 
-module.exports = { recipeRegistration, listAllReceipes };
+const isValidId = (id) => {
+  if (!ObjectId.isValid(id)) {
+    throw new Error('recipe not found');
+  }
+};
+
+const findById = async (id) => {
+  const recipe = await RecipesModel.getById(id);
+  if (!recipe) {
+    throw new Error('recipe not found');
+  }
+};
+
+const listRecipeById = async (id) => {
+  isValidId(id);
+  await findById(id);
+  return RecipesModel.getById(id);
+};
+
+module.exports = { recipeRegistration, listAllReceipes, listRecipeById };
