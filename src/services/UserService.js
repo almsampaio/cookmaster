@@ -45,7 +45,7 @@ const userLogin = async (email, password) => {
 
   const jwtConfig = { expiresIn: '7d', algorithm: 'HS256' };
   const { password: _, ...userWithoutPassword } = user;
-  const token = jwt.sign({ data: userWithoutPassword }, secret, jwtConfig);
+  const token = jwt.sign(userWithoutPassword, secret, jwtConfig);
 
   return token;
 };

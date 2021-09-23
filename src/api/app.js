@@ -19,6 +19,8 @@ app.post('/login', UserController.userLogin);
 app.post('/recipes', tokenValidation, RecipeController.create);
 app.get('/recipes', RecipeController.getAll);
 app.get('/recipes/:id', RecipeController.getById);
+app.put('/recipes/:id', tokenValidation, RecipeController.update);
+app.delete('/recipes/:id', tokenValidation, RecipeController.deleteRecipe);
 
 app.use(errorMiddleware);
 module.exports = app;
