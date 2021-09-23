@@ -3,8 +3,6 @@ const connection = require('./connection');
 
 const existsEmail = async (email) => {
   const db = await connection();
-  // console.log(db);
-  // console.log(await db.collection('users').find({}).toArray());
   const isRegistered = await db.collection('users').findOne({ email });
   return isRegistered;
 };
