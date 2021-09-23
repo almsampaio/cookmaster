@@ -56,6 +56,10 @@ class GenericDAOMongoDB {
     return (await this.collection).deleteOne({ _id: ObjectId(_id) });
   }
 
+  async deleteOneByQuery(query) {
+    return (await this.collection).deleteOne(query);
+  }
+
   async deleteByQuery(query) {
     return (await this.collection).deleteMany(query);
   }
@@ -80,6 +84,10 @@ class GenericDAOMongoDB {
     return (await this.collection).findOneAndDelete({ id });
   }
 
+  async findAndDeleteByQuery(query) {
+    return (await this.collection).findOneAndDelete(query);
+  }
+
   async findAndDeleteByObjectId(_id) {
     return (await this.collection).findOneAndDelete({ _id: ObjectId(_id) });
   }
@@ -94,7 +102,7 @@ class GenericDAOMongoDB {
   }
 
   async findAndUpdateByQuery(query, update, options = { returnOriginal: false }) {
-    return (await this.collection).findOneAndUpdate(query, update, options);
+    return (await this.collection).findOneAndUpdate(query, { $set: { ...update } }, options);
   }
 
   async findAndUpdateByObjectIdNoSet(_id, expr, options = { returnOriginal: false }) {
