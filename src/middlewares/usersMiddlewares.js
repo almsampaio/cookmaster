@@ -13,18 +13,16 @@ const { findByEmail } = require('../models/usersModel');
 const ERROR_INVALID_ENTRIES = { message: 'Invalid entries. Try again.' };
 const ERROR_CONFLICT = { message: 'Email already registered' };
 
-const checksEmptyFields = async (req, res, next) => { // verifica campos vazios.
+const checksEmptyFields = (req, res, next) => { // verifica campos vazios.
   console.log('Checando se há campos vazios no req.body.\n');
   const { name, email, password } = req.body;
   if (!name || !email || !password) {
     return res.status(STATUS_BAD_REQUEST).json(ERROR_INVALID_ENTRIES);
   }
-  console.log('checksEmptyFiels....');
   next();
 };
 
-const checksValidEmail = async (req, res, next) => { // verifica validade do e-mail via regex.
-  console.log('Checando se o email é válido.\n');
+const checksValidEmail = (req, res, next) => { // verifica validade do e-mail via regex.
   const { email } = req.body;
   // se chegou neste middleware, existe algo digitado em email, portanto não verificamos (!email).
   const emailPattern = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
