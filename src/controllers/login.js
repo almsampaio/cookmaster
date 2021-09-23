@@ -1,9 +1,6 @@
 const express = require('express');
 const rescue = require('express-rescue');
 const bodyparser = require('body-parser');
-// const jwt = require('jsonwebtoken');
-
-// const secret = 'secret';
 
 const app = express();
 app.use(bodyparser.json());
