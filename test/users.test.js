@@ -4,11 +4,11 @@ const { MongoClient } = require('mongodb');
 const mongoDbUrl = 'mongodb://localhost:27017/Cookmaster';
 const url = 'http://localhost:3000';
 
-describe('1 - Crie um endpoint para o cadastro de usuários', () => {
+describe('1 - Crie um endpoint para o cadastro de usuários', function () {
   let connection;
   let db;
 
-  beforeAll(async () => {
+  beforeAll(async function () {
     connection = await MongoClient.connect(mongoDbUrl, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
@@ -16,19 +16,20 @@ describe('1 - Crie um endpoint para o cadastro de usuários', () => {
     db = connection.db('Cookmaster');
   });
 
-  beforeEach(async () => {
+  beforeEach(async function () {
     await db.collection('users').deleteMany({});
     await db.collection('recipes').deleteMany({});
     const users = {
-      name: 'admin', email: 'root@email.com', password: 'admin', role: 'admin' };
+      name: 'admin', email: 'root@email.com', password: 'admin', role: 'admin'
+    };
     await db.collection('users').insertOne(users);
   });
 
-  afterAll(async () => {
+  afterAll(async function () {
     await connection.close();
   });
 
-  it('Será validado que o campo "name" é obrigatório', async () => {
+  it('Será validado que o campo "name" é obrigatório', async function () {
     await frisby
       .post(`${url}/users/`,
         {
@@ -43,7 +44,7 @@ describe('1 - Crie um endpoint para o cadastro de usuários', () => {
       });
   });
 
-  it('Será validado que o campo "email" é obrigatório', async () => {
+  it('Será validado que o campo "email" é obrigatório', async function () {
     await frisby
       .post(`${url}/users/`,
         {
@@ -58,7 +59,7 @@ describe('1 - Crie um endpoint para o cadastro de usuários', () => {
       });
   });
 
-  it('Será validado que não é possível cadastrar usuário com o campo email inválido', async () => {
+  it('Será validado que não é possível cadastrar usuário com o campo email inválido', async function () {
     await frisby
       .post(`${url}/users/`,
         {
@@ -74,7 +75,7 @@ describe('1 - Crie um endpoint para o cadastro de usuários', () => {
       });
   });
 
-  it('Será validado que o campo "senha" é obrigatório', async () => {
+  it('Será validado que o campo "senha" é obrigatório', async function () {
     await frisby
       .post(`${url}/users/`,
         {
@@ -89,7 +90,7 @@ describe('1 - Crie um endpoint para o cadastro de usuários', () => {
       });
   });
 
-  it('Será validado que o campo "email" é único', async () => {
+  it('Será validado que o campo "email" é único', async function () {
     await frisby
       .post(`${url}/users/`,
         {
@@ -114,7 +115,7 @@ describe('1 - Crie um endpoint para o cadastro de usuários', () => {
       });
   });
 
-  it('Será validado que é possível cadastrar usuário com sucesso', async () => {
+  it('Será validado que é possível cadastrar usuário com sucesso', async function () {
     await frisby
       .post(`${url}/users/`,
         {
@@ -132,7 +133,7 @@ describe('1 - Crie um endpoint para o cadastro de usuários', () => {
       });
   });
 
-  it('Será validado que é possível ao cadastrar usuário, o valor do campo "role" tenha o valor "user"', async () => {
+  it('Será validado que é possível ao cadastrar usuário, o valor do campo "role" tenha o valor "user"', async function () {
     await frisby
       .post(`${url}/users/`,
         {
@@ -152,11 +153,11 @@ describe('1 - Crie um endpoint para o cadastro de usuários', () => {
   });
 });
 
-describe('2 - Crie um endpoint para o login de usuários', () => {
+describe('2 - Crie um endpoint para o login de usuários', function () {
   let connection;
   let db;
 
-  beforeAll(async () => {
+  beforeAll(async function () {
     connection = await MongoClient.connect(mongoDbUrl, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
@@ -164,19 +165,20 @@ describe('2 - Crie um endpoint para o login de usuários', () => {
     db = connection.db('Cookmaster');
   });
 
-  beforeEach(async () => {
+  beforeEach(async function () {
     await db.collection('users').deleteMany({});
     await db.collection('recipes').deleteMany({});
     const users = {
-      name: 'admin', email: 'root@email.com', password: 'admin', role: 'admin' };
+      name: 'admin', email: 'root@email.com', password: 'admin', role: 'admin'
+    };
     await db.collection('users').insertOne(users);
   });
 
-  afterAll(async () => {
+  afterAll(async function () {
     await connection.close();
   });
 
-  it('Será validado que o campo "email" é obrigatório', async () => {
+  it('Será validado que o campo "email" é obrigatório', async function () {
     await frisby
       .post(`${url}/login/`,
         {
@@ -190,7 +192,7 @@ describe('2 - Crie um endpoint para o login de usuários', () => {
       });
   });
 
-  it('Será validado que o campo "password" é obrigatório', async () => {
+  it('Será validado que o campo "password" é obrigatório', async function () {
     await frisby
       .post(`${url}/login/`,
         {
@@ -204,7 +206,7 @@ describe('2 - Crie um endpoint para o login de usuários', () => {
       });
   });
 
-  it('Será validado que não é possível fazer login com um email inválido', async () => {
+  it('Será validado que não é possível fazer login com um email inválido', async function () {
     await frisby
       .post(`${url}/login`,
         {
@@ -219,7 +221,7 @@ describe('2 - Crie um endpoint para o login de usuários', () => {
       });
   });
 
-  it('Será validado que não é possível fazer login com uma senha inválida', async () => {
+  it('Será validado que não é possível fazer login com uma senha inválida', async function () {
     await frisby
       .post(`${url}/login`,
         {
@@ -234,7 +236,7 @@ describe('2 - Crie um endpoint para o login de usuários', () => {
       });
   });
 
-  it('Será validado que é possível fazer login com sucesso', async () => {
+  it('Será validado que é possível fazer login com sucesso', async function () {
     await frisby
       .post(`${url}/users/`,
         {
