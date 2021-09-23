@@ -18,4 +18,6 @@ app.post('/login', userController.validateUserAndSendToken);
  middlewaresRecipes.validateRecipe,
  recipesControllers.createRecipe);
 
+app.get('/recipes', recipesControllers.getAll);
+
 app.listen(PORT, () => console.log(`conectado na porta ${PORT}`));
