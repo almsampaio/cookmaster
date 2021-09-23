@@ -13,27 +13,30 @@ const VALID_NEW_USER = {
   email: 'userName@email.com',
   password: '12345678',
 };
-
 const VALID_RECIPE = {
   name: 'Frango',
   ingredients: 'Frango uai',
   preparation: 'Muito versátil',
 };
-
 const INVALID_NEW_USER = {
   name: 'userName',
   password: '12345678',
 };
+const INVALID_RECIPE = {
+  ingredients: 'Frango uai',
+  preparation: 'Muito versátil',
+};
 
-const userSetup = async () => {
-  await chai.request(server).post('/users').send(VALID_NEW_USER);
+
+const userSetup = async (user, recipeObj) => {
+  await chai.request(server).post('/users').send(user);
   const { body: { token } } = await chai.request(server)
     .post('/login')
     .send({ email: 'userName@email.com', password: '12345678' });
   const recipe = await chai.request(server)
     .post('/recipes')
-    .set('Authentication', token)
-    .send(VALID_RECIPE);
+    .set('authorization', token)
+    .send(recipeObj);
   return recipe;
 };
 
@@ -49,11 +52,15 @@ describe('POST /recipes', () => {
 
   describe('Todos os dados são válidos', async () => {
     let response = {};
-    response = await userSetup();
+
+    before(async () => {
+      response = await userSetup(VALID_NEW_USER, VALID_RECIPE);
+    });
 
     it('Deve ter status 201', () => {
       expect(response).to.have.status(201);
     });
+
     it('Deve retornar um objeto com as informações da nova receita', () => {
       expect(response).to.be.a('object');
       expect(response.body).to.have.property('recipe');
@@ -61,6 +68,21 @@ describe('POST /recipes', () => {
       expect(response.body.recipe).to.have.property('_id');
       expect(response.body.recipe).to.have.property('userId');
       expect(response.body.recipe.name).to.be.equal('Frango');
+    });
+  });
+
+  describe('Quando a receita não é valida', async () => {
+    let response = {};
+    before(async () => {
+      response = await userSetup(INVALID_NEW_USER, INVALID_RECIPE);
+    });
+    it('Retorna o status 400', () => {
+      expect(response).to.have.status(400);
+    });
+    it('Retorna a mensagem informando o erro', () => {
+      expect(response).to.be.a('object');
+      expect(response.body).to.have.property('message');
+      expect(response.body.message).to.be.equal('Invalid entries. Try again.');
     });
   });
 });
