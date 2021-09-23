@@ -59,7 +59,7 @@ const deleteOne = async (_id, userId, role) => {
     return { status: 401, message: { message: 'missing auth token' } };
   }
   await recipesModel.deleteOne(_id);
-  return { status: 204 };
+  return { status: 204, message: '' };
 };
 
 module.exports = {

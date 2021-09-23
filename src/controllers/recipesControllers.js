@@ -31,7 +31,7 @@ const deleteOne = async (req, res) => {
   if (deleteRecipe.status !== 204) {
     return res.status(deleteRecipe.status).json(deleteRecipe.message);
   }
-  return res.status(deleteRecipe.status);
+  return res.status(deleteRecipe.status).json(deleteRecipe.message);
 };
 
 module.exports = {
