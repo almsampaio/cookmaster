@@ -13,4 +13,5 @@ const userValidated = [nameValidated, emailValidated, passwordValidated];
 Userrouter.post('/', userValidated, UserController.userRegistration);
 // Requisito 2 - 
 Authentication.post('/', UserController.login);
+
 module.exports = { Userrouter, Authentication };

@@ -1,4 +1,7 @@
+const jwt = require('jsonwebtoken');
 const UserModel = require('../Model/UsersModel');
+
+const secret = 'projectcookmaster';
 
 const emailIsOnly = async (email) => {
   const response = await UserModel.searchByEmail(email);
@@ -17,7 +20,6 @@ const isRequiredEmailPassword = (data) => {
 const userValid = async (data) => {
   const { email, password } = data;
   const user = await UserModel.searchByEmail(email);
-  console.log('Usuário', user);
   if (!user || user.password !== password) {
     throw new Error('Incorrect username or password');
   }
@@ -33,7 +35,12 @@ const login = async (data) => {
   isRequiredEmailPassword(data);
   await userValid(data);
   const user = await UserModel.searchByEmail(data.email);
-  return user;
+  const jwtConfig = {
+    expiresIn: '1d',
+    algorithm: 'HS256',
+  };
+  const token = jwt.sign({ data: user }, secret, jwtConfig);
+  return token;
 };
 
 module.exports = {
