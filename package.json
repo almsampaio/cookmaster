@@ -38,6 +38,8 @@
     "shelljs": "0.8.4"
   },
   "devDependencies": {
+    "@types/mongodb": "^3.5.33",
+    "@types/node": "^16.9.6",
     "chai": "4.3.4",
     "chai-http": "4.3.0",
     "eslint-config-trybe-backend": "^1.0.4",
