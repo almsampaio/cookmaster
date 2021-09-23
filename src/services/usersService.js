@@ -1,5 +1,5 @@
 const usersModel = require('../models/usersModel');
-const validations = require('./validations');
+const validations = require('./validations/usersValidation');
 
 async function register(user) {
   validations.isNameValid(user.name);

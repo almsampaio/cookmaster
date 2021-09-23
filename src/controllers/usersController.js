@@ -1,12 +1,5 @@
 const usersService = require('../services/usersService');
-
-function errorDefault(err) {
-  return {
-    status: err.status || 500,
-    code: err.code || 'server_error',
-    message: err.message,
-  };
-}
+const errorDefault = require('../utils/errorDefault');
 
 async function register(req, res, next) {
   try {
