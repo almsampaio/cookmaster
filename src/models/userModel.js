@@ -1,4 +1,3 @@
-// const { ObjectId } = require('bson');
 const mongoConnection = require('./connection');
 
 const getAll = async () => {
@@ -34,31 +33,8 @@ const getByEmail = async (email) => {
   return response;
 };
 
-// const update = async (id, { name, quantity }) => {
-//   const productCollection = await mongoConnection.getConnection()
-//   .then((db) => db.collection('products'));
-
-//   const response = await productCollection.updateOne(
-//     { _id: new ObjectId(id) },
-//     { $set: { name, quantity } },
-//   );
-
-//   return response;
-// };
-
-// const deleteById = async (id) => {
-//   const productCollection = await mongoConnection.getConnection()
-//   .then((db) => db.collection('products'));
-
-//   const response = await productCollection.deleteOne({ _id: new ObjectId(id) });
-
-//   return response;
-// };
-
 module.exports = {
   getAll,
   create,
   getByEmail,
-  // update,
-  // deleteById,
 };

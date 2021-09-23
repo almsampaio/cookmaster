@@ -1,4 +1,3 @@
-const recipeModel = require('../models/recipeModel');
 const recipeService = require('../services/recipeService');
 
 const HTTP_OK_STATUS = 200;
@@ -8,7 +7,7 @@ const HTTP_UNAUTHORIZED_STATUS = 401;
 
 const getAll = async (_req, res) => {
   try {
-    const response = await recipeModel.getAll();
+    const response = await recipeService.getAll();
 
     return res.status(HTTP_OK_STATUS).json(response);
   } catch (error) {
@@ -27,8 +26,7 @@ const getById = async (req, res) => {
       return res.status(HTTP_NOT_FOUND_STATUS).json({
           message: 'recipe not found',
       });
-  }
-  
+    }
     return res.status(HTTP_OK_STATUS).json(response);
   } catch (error) {
     return res.status(HTTP_NOT_FOUND_STATUS).json({ 
@@ -41,16 +39,14 @@ const updateById = async (req, res) => {
   try {
     const { name, ingredients, preparation } = req.body;
     const { id } = req.params;
-    const { user } = req;
 
-    const response = await recipeService.updateById(id, user, { name, ingredients, preparation });
+    const response = await recipeService.updateById(id, { name, ingredients, preparation });
 
     if (response.code) {
       return res.status(HTTP_UNAUTHORIZED_STATUS).json({
           message: 'jwt malformed',
       });
-  }
-  
+    }
     return res.status(HTTP_OK_STATUS).json(response);
   } catch (error) {
     return res.status(HTTP_NOT_FOUND_STATUS).json({ 
@@ -62,9 +58,8 @@ const updateById = async (req, res) => {
 const deleteById = async (req, res) => {
   try {
     const { id } = req.params;
-    const { user } = req;
 
-    const response = await recipeService.deleteById(id, user);
+    const response = await recipeService.deleteById(id);
 
     if (response.code) {
       return res.status(HTTP_UNAUTHORIZED_STATUS).json({

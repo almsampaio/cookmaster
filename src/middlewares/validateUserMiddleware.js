@@ -1,7 +1,19 @@
-module.exports = async (req, res, next) => {
-  const token = req.headers.authorization;
+const recipeModel = require('../models/recipeModel');
 
-  if (token === undefined) return res.status(401).json({ message: 'missing auth token' });
-
+module.exports = async (req, res, next) => { 
+try {
+  const { user } = req;
+  const { id } = req.params;
+  
+  const recipe = await recipeModel.getById(id);
+  const receivedUserId = '_id';
+  if (recipe.userId.toString() !== user[receivedUserId].toString() && user.role !== 'admin') {
+    return res.code(401).json({ message: 'user not alllowed for this operation' });
+  }
+  
   next();
+} catch (error) {
+  console.log(error);
+  return res.status(401).json({ message: 'Sorry the API isnt working properly' });
+  }
 };

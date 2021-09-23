@@ -6,7 +6,7 @@ const loginController = require('../controllers/loginController');
 const userController = require('../controllers/userController');
 const postRecipieController = require('../controllers/postRecipieController');
 const authMiddleware = require('../middlewares/authMiddleware');
-const valUsMid = require('../middlewares/validateUserMiddleware');
+const valUserMid = require('../middlewares/validateUserMiddleware');
 const getRecipieController = require('../controllers/getRecipeController');
 const imageCont = require('../controllers/imageController');
 
@@ -37,10 +37,10 @@ app.post('/users', userController);
 app.post('/login', loginController);
 app.post('/recipes', authMiddleware, postRecipieController);
 app.get('/recipes', getRecipieController.getAll);
-app.put('/recipes/:id/image', valUsMid, authMiddleware, upload.single('image'), imageCont.addImage);
+app.put('/recipes/:id/image', authMiddleware, upload.single('image'), imageCont.addImage);
 app.get('/images/:filename', imageCont.getByName);
 app.get('/recipes/:id', getRecipieController.getById);
-app.put('/recipes/:id', valUsMid, authMiddleware, getRecipieController.updateById);
-app.delete('/recipes/:id', valUsMid, authMiddleware, getRecipieController.deleteById);
+app.put('/recipes/:id', authMiddleware, valUserMid, getRecipieController.updateById);
+app.delete('/recipes/:id', authMiddleware, valUserMid, getRecipieController.deleteById);
 
 module.exports = app;

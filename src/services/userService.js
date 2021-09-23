@@ -5,16 +5,6 @@ const userSchema = require('../schema/userSchema');
 
 const SECRET = 'Trybe';
 
-// const findById = async (id) => {
-//  const idExists = productSchema.validateId(id);
-//   if (idExists === true) {
-//     const response = await productModel.getById(id);
-//     if (response.length === 0) return ({ code: 'invalid_data', message: 'Wrong id format' });
-//     return response[0];
-//   }
-//   return (idExists);
-// };
-
 const insertUser = async (name, email, password) => {
   const isNameValid = userSchema.validateName(name);
   const isEmailValid = emailValidator.validate(email);

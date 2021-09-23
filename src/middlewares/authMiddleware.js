@@ -7,7 +7,7 @@ module.exports = async (req, res, next) => {
   try {
     const token = req.headers.authorization;
 
-    // if (token === undefined) return res.status(401).json({ message: 'missing auth token' });
+    if (token === undefined) return res.status(401).json({ message: 'missing auth token' });
   
     const payload = jwt.verify(token, SECRET);
   
@@ -19,6 +19,6 @@ module.exports = async (req, res, next) => {
   
     next();
   } catch (_e) {
-    res.status(401).json({ message: 'jwt malformed' });
+    return res.status(401).json({ message: 'jwt malformed' });
   }
 };
