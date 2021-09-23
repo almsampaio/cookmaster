@@ -21,10 +21,10 @@ module.exports = [
   },
 
   rescue(async (req, res) => {
-    const { name, email } = req.body;
+    const { name, email, password } = req.body;
 
     try {
-      const result = await usersModel.addUser(name, email);
+      const result = await usersModel.addUser(name, email, password);
       res.status(201).json({
         user: result,
       });

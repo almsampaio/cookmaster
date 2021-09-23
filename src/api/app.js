@@ -5,6 +5,7 @@ const app = express();
 
 const {
   usersRoutes,
+  loginRoutes,
 } = require('../routes');
 
 // Não remover esse end-point, ele é necessário para o avaliador
@@ -15,5 +16,7 @@ app.get('/', (request, response) => {
 app.use(bodyParser.json());
 
 app.use('/users', usersRoutes);
+
+app.use('/login', loginRoutes);
 
 module.exports = app;
