@@ -18,6 +18,8 @@ app.post('/users', [
   Users.createUser,
   ]);
 
+app.post('/users/admin', Validation.validateJWT, Users.createAdmin);
+
 app.post('/login', Users.userLogin);
 
 app.post('/recipes', Validation.validateRecipeInfo, Validation.validateJWT, Recipes.createRecipe);

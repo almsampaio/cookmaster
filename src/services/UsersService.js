@@ -10,6 +10,12 @@ const createUser = async (name, email, password) => {
   return { status: 201, data: { user: newUser } };
 };
 
+const createAdmin = async (name, email, password, user) => {
+  const newAdmin = await Users.createAdmin(name, email, password);
+  if (user.role !== 'admin') return { status: 403, message: 'Only admins can register new admins' };
+  return { status: 201, data: { user: newAdmin } };
+};
+
 const userLogin = async (email, password) => {
   if (!email || !password) return { status: 401, message: 'All fields must be filled' };
   const myUser = await Users.findUserByEmail(email);
@@ -28,5 +34,6 @@ const userLogin = async (email, password) => {
 
 module.exports = {
   createUser,
+  createAdmin,
   userLogin,
 };

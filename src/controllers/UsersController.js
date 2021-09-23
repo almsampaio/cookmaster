@@ -7,6 +7,14 @@ const createUser = async (req, res) => {
   res.status(status).json(data);
 };
 
+const createAdmin = async (req, res) => {
+  const { name, email, password } = req.body;
+  const { user } = req;
+  const { message, status, data } = await Users.createAdmin(name, email, password, user);
+  if (message) return res.status(status).json({ message });
+  res.status(status).json(data);
+};
+
 const userLogin = async (req, res) => {
   const { email, password } = req.body;
   const { status, message, token } = await Users.userLogin(email, password);
@@ -16,5 +24,6 @@ const userLogin = async (req, res) => {
 
 module.exports = {
   createUser,
+  createAdmin,
   userLogin,
 };
