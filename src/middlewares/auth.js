@@ -14,7 +14,7 @@ if (!token) next(errorMessages.MISSING_AUTH_TOKEN);
     const payload = jwt.verify(token, JWT_SECRET);
     const user = await models.getByEmail(payload.email);
 
-    if (!user) next(errorMessages.JWT_MALFORMED);
+    if (!user && user.role !== 'admin') next(errorMessages.JWT_MALFORMED);
 
     req.user = payload;
     next();
