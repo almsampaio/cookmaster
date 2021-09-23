@@ -3,15 +3,15 @@ const userService = require('../services/user-service');
 const createUser = async (req, res) => {
   const { name, email, password } = req.body;
 
-  const userData = await userService.createUser(name, email, password);
+  try {
+    const userData = await userService.createUser(name, email, password);
+    console.log(userData);
+    if (userData.message) return res.status(userData.status).json({ message: userData.message });
 
-  return res.status(201).json({ user: userData });
+    res.status(201).json({ user: userData });
+  } catch (error) {
+    console.error(error);
+  }
 };
 
-const findEmail = async (_req, res) => {
-  const searchEmail = await userService.findEmail();
-
-  return res.status(200).json({ email: searchEmail });
-};
-
-module.exports = { createUser, findEmail };
+module.exports = { createUser };
