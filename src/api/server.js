@@ -22,4 +22,6 @@ app.get('/recipes', recipesControllers.getAll);
 
 app.get('/recipes/:id', recipesControllers.getById);
 
+app.put('/recipes/:id', recipesControllers.updateById);
+
 app.listen(PORT, () => console.log(`conectado na porta ${PORT}`));
