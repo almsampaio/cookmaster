@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const userController = require('./controllers/userController');
 const loginController = require('./controllers/loginController');
 const authToken = require('./middlewares/authMiddleware');
+const adminToken = require('./middlewares/authMiddlewareAdmin');
 const recipesController = require('./controllers/recipesController');
 
 const app = express();
@@ -18,5 +19,6 @@ app.post('/login', loginController.login);
 app.post('/recipes', authToken, recipesController.register);
 app.get('/recipes', recipesController.getAll);
 app.get('/recipes/:id', recipesController.getById);
+app.put('/recipes/:id', adminToken, recipesController.update);
 
 module.exports = app;

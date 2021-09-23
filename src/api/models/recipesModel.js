@@ -21,12 +21,18 @@ const getById = async (id) => {
 
   const db = await getConnection(); 
   const recipe = await db.collection(collectionName).findOne({ _id: ObjectId(id) });
-  console.log(recipe);
   return recipe;
+};
+const update = async (name, ingredients, preparation) => {
+  const db = await getConnection();
+  await db.collection(collectionName)
+      .updateOne({ name }, { $set: { name, ingredients, preparation } });
+  return { name, ingredients, preparation };
 };
 
   module.exports = {
     register,
     getAllProducts,
     getById,
+    update,
   }; 

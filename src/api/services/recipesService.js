@@ -10,7 +10,6 @@ function register(name, ingredients, preparation) {
     const vname = validateData(name);
     const vingredients = validateData(ingredients);
     const vpreparation = validateData(preparation);
-    console.log(vname, vingredients, vpreparation);
     if (vname || vingredients || vpreparation) return invalidEntries;
     const createdRecipes = recipesModel.register(name, ingredients, preparation);
     return createdRecipes;
@@ -26,9 +25,15 @@ const getById = async (id) => {
     return song;
 };
 
+const update = async (name, ingredients, preparation, id) => {
+    const recipe = await recipesModel.update(name, ingredients, preparation, id);
+    return recipe;
+  };
+
 module.exports = {
     validateData,
     register,
     getAll,
     getById,
+    update,
     }; 
