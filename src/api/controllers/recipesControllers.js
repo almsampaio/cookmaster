@@ -11,14 +11,22 @@ const createRecipe = async (req, res) => {
     }
     const recipe = await recipesModel.createRecipe(name, ingredients, preparation, id);
     res.status(201).json({ recipe });
-};
+};  
 
-const getAll = async (req, res) => {
+const getAll = async (_req, res) => {
   const recipes = await recipesModel.getAll();
   res.status(200).json(recipes);
+};
+
+const getById = async (req, res) => {
+  const { id } = req.params;
+  const recipe = await recipesModel.getById(id);
+  if (!recipe) return res.status(404).json({ message: 'recipe not found' });
+  res.status(200).json(recipe);
 };
 
 module.exports = {
     createRecipe,
     getAll,
+    getById,
 };

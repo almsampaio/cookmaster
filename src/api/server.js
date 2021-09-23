@@ -20,4 +20,6 @@ app.post('/login', userController.validateUserAndSendToken);
 
 app.get('/recipes', recipesControllers.getAll);
 
+app.get('/recipes/:id', recipesControllers.getById);
+
 app.listen(PORT, () => console.log(`conectado na porta ${PORT}`));
