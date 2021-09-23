@@ -4,6 +4,7 @@ const BAD_REQUEST = 400;
 const CONFLICT = 409;
 const UNAUTHORIZED = 401;
 const NOT_FOUND = 404;
+const NO_CONTENT = 204;
 
 module.exports = {
   CREATED_STATUS,
@@ -12,4 +13,5 @@ module.exports = {
   UNAUTHORIZED,
   OK_STATUS,
   NOT_FOUND,
+  NO_CONTENT,
 };
