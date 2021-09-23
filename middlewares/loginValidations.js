@@ -3,6 +3,7 @@ const userModel = require('../models/userModel');
 
 const validationError = { message: 'All fields must be filled' };
 const invalidEmailOrPassword = { message: 'Incorrect username or password' };
+const adminError = { message: 'Only admins can register new admins' };
 
 const validateEmail = async (req, res, next) => {
   const { email, password } = req.body;
@@ -30,8 +31,17 @@ const validatePassword = async (req, res, next) => {
   if (checkPassword.message) {
     return res.status(httpStatus.UNAUTHORIZED).json(validationError);
   }
-  if (password.length < 6) {
+  if (password.length < 5) {
     return res.status(httpStatus.UNAUTHORIZED).json(validationError);
+  }
+
+  next();
+};
+
+const validateAdmin = async (req, res, next) => {
+  const { role } = req.user;
+  if (role !== 'admin') {
+    return res.status(httpStatus.FORBIDDEN).json(adminError);
   }
 
   next();
@@ -40,4 +50,5 @@ const validatePassword = async (req, res, next) => {
 module.exports = {
   validateEmail,
   validatePassword,
+  validateAdmin,
 };

@@ -67,7 +67,7 @@ const validatePassword = (req, res, next) => {
   if (!password) {
     return res.status(httpStatus.BAD_REQUEST).json(validationError);
   }
-  if (password.length < 6) {
+  if (password.length < 5) {
     return res.status(httpStatus.BAD_REQUEST).json(validationError);
   }
 

@@ -5,9 +5,14 @@ const getAll = async () => {
   return users;
 };
 
-const create = async (name, email, password, role) => {
-  const newUser = await userModel.create(name, email, password, role);
+const create = async (name, email, password) => {
+  const newUser = await userModel.create(name, email, password);
   return newUser;
+};
+
+const createAdmin = async (name, email, password) => {
+  const newAdmin = await userModel.createAdmin(name, email, password);
+  return newAdmin;
 };
 
 const getById = async (id) => {
@@ -24,6 +29,7 @@ const findUserByEmail = async (email) => {
 module.exports = {
   getAll,
   create,
+  createAdmin,
   getById,
   findUserByEmail,
 };
