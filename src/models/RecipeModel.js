@@ -34,6 +34,22 @@ const update = async (id, newDataRecipe) => {
   return updatedRecipe.value;
 };
 
+const updateImg = async (id, imgPath) => {
+  if (!ObjectId.isValid(id)) return null;
+
+  const recipeCollection = await mongoConnection.getConnection()
+  .then((db) => db.collection(COLLECTION_NAME));
+
+  const updatedRecipe = await recipeCollection
+    .findOneAndUpdate(
+      { _id: ObjectId(id) },
+      { $set: { image: imgPath } },
+      { returnOriginal: false },
+    );
+
+  return updatedRecipe.value;
+};
+
 const getById = async (id) => {
   if (!ObjectId.isValid(id)) return null;
 
@@ -81,4 +97,5 @@ module.exports = {
   getById,
   update,
   remove,
+  updateImg,
 };
