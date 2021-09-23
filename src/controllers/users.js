@@ -4,7 +4,7 @@ const createUser = async (req, res) => {
   const { name, email, password } = req.body;
 
   const newUser = await userService.createUser(name, email, password);
-  if (newUser.code) return res.status(newUser.code).json(newUser.errorInfo);
+  if (newUser.errorCode) return res.status(newUser.errorCode).json(newUser.errorInfo);
 
   return res.status(201).json(newUser);
 };

@@ -8,11 +8,12 @@ const SECRET = 'tryber';
 const createUser = async (name, email, password) => {
   const validateEmail = await validations.validateUserEmail(email);
   console.log(validateEmail);
+  if (validateEmail.errorCode) return validateEmail;
   const validateName = validations.validateUserName(name);
   const validatePassword = validations.validateUserPassword(password);
-  if (validateEmail.code) return validateEmail;
-  if (validateName.code) return validateName;
-  if (validatePassword.code) return validatePassword;
+ 
+  if (validateName.errorCode) return validateName;
+  if (validatePassword.errorCode) return validatePassword;
 
   const role = 'user';
   const user = await usersModel.createUser(name, email, password, role);

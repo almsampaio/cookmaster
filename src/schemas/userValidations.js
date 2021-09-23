@@ -3,7 +3,7 @@ const { getUserByEmail } = require('../models/users');
 const validateUserName = (name) => {
   if (!name) {
     return { 
-      code: 400,
+      errorCode: 400,
       errorInfo: { message: 'Invalid entries. Try again.' },
     }; 
   }
@@ -14,7 +14,7 @@ const checkEmailAlreadyExists = async (email) => {
   const alredyExists = await getUserByEmail(email);
   if (alredyExists) {
     return {
-        code: 409,
+        errorCode: 409,
         errorInfo: { message: 'Email already registered' },
       }; 
   }
@@ -24,13 +24,13 @@ const checkEmailAlreadyExists = async (email) => {
 const validateUserEmail = async (email) => {
   if (!email) {
     return { 
-      code: 400,
+      errorCode: 400,
       errorInfo: { message: 'Invalid entries. Try again.' },
     }; 
   } 
-  const emailRegex = /\S+@\S+\.\S+/;
-  if (emailRegex.test(email) === false) {
-    console.log('entrou no if');
+  const emailRegex = /[^@]+@[^.]+\..+/g;
+  if (!emailRegex.test(email)) {
+    // console.log('entrou no if');
     return { 
        errorCode: 400,
        errorInfo: { message: 'Invalid entries. Try again.' },
@@ -46,7 +46,7 @@ const validateUserEmail = async (email) => {
 const validateUserPassword = (password) => {
   if (!password) {
     return { 
-       code: 400,
+       errorCode: 400,
        errorInfo: { message: 'Invalid entries. Try again.' },
      }; 
    }
