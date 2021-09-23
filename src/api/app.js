@@ -1,4 +1,5 @@
 const express = require('express');
+const path = require('path');
 
 const app = express();
 
@@ -22,5 +23,7 @@ app.use('/login', loginRouter);
 const recipeRouter = require('../routers/recipeRouter');
 
 app.use('/recipes', recipeRouter);
+
+app.use('/images', express.static(path.join(__dirname, '..', 'uploads')));
 
 module.exports = app;
