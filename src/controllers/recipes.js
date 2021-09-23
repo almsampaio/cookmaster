@@ -1,7 +1,9 @@
 const recipesService = require('../services/recipes');
 
 const createRecipe = async (req, res, next) => {
-  const { name, ingredients, preparation, id: userId } = req.body;
+  const { name, ingredients, preparation } = req.body;
+
+  const { id: userId } = req.auth;
 
   const { error, result } = await recipesService.createRecipe(
     name,
@@ -43,8 +45,9 @@ const editRecipeById = async (req, res, next) => {
   try {
     const { id } = req.params;
     const recipeData = req.body;
+    const userInfo = req.auth;
 
-    const { result, error } = await recipesService.editRecipeById(id, recipeData);
+    const { result, error } = await recipesService.editRecipeById(id, recipeData, userInfo);
 
     if (error) next(error);
 
@@ -71,7 +74,7 @@ const deleteRecipeById = async (req, res, next) => {
 const insertImage = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const userData = req.body;
+    const userData = req.auth;
     const { filename } = req.file;
 
     const { result, error } = await recipesService.insertImage(id, filename, userData);

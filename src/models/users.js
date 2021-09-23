@@ -20,7 +20,19 @@ const getEmail = async (email) => {
   return result;
 };
 
+const registerAdmin = async (userData) => {
+  const db = await connection();
+
+  const { ops } = await db.collection('users').insertOne({
+    userData,
+    role: 'admin',
+  });
+
+  return ops[0];
+};
+
 module.exports = {
   registerUser,
   getEmail,
+  registerAdmin,
 };

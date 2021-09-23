@@ -37,8 +37,8 @@ const getRecipeById = async (id) => {
   return { result };
 };
 
-const editRecipeById = async (recipeId, { id, name, ingredients, preparation, role }) => {
-  const { value, error } = validateRecipe.validate({ name, ingredients, preparation });
+const editRecipeById = async (recipeId, recipeData, { role, id }) => {
+  const { value, error } = validateRecipe.validate(recipeData);
 
   if (error) return { error: INVALID_ENTRIES };
 
@@ -67,8 +67,6 @@ const insertImage = async (id, filename, userData) => {
   const imageLink = `localhost:3000/src/uploads/${filename}`;
 
   const { result: { userId } } = await getRecipeById(id);
-
-  // console.log(userData);
 
   if (userId !== userData.id && userData.role !== 'admin') {
     return { error: INVALID_ENTRIES };

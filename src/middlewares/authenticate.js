@@ -8,7 +8,7 @@ module.exports = (req, _res, next) => {
   
     const { data } = jwt.verify(authorization, 'senhasecreta');
     
-    req.body = { ...req.body, ...data };
+    req.auth = { ...data };
 
     next();
   } catch (error) {

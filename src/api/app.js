@@ -17,6 +17,9 @@ app.get('/', (request, response) => {
   response.send();
 });
 
+app.route('/users/admin')
+  .post(authenticate, usersController.registerAdmin);
+
 app.route('/users')
   .post(usersController.registerUser);
 
