@@ -4,7 +4,8 @@ const bodyParser = require('body-parser');
 const rescue = require('express-rescue');
 const userController = require('../controllers/user');
 const recipeController = require('../controllers/recipe');
-const { verifyToken } = require('../service/token');
+const uploads = require('../middleware/uploads');
+const { verifyToken } = require('../middleware/token');
 
 const app = express();
 
@@ -16,6 +17,8 @@ app.get('/user', rescue(userController.getAll));
 app.post('/recipes', rescue(verifyToken), rescue(recipeController.create));
 app.get('/recipes/:id', rescue(recipeController.getOne));
 app.get('/recipes', rescue(recipeController.getAll));
+app.put('/recipes/:id/image', rescue(verifyToken), rescue(uploads.single('image')),
+ rescue(recipeController.uploadImage));
 app.put('/recipes/:id', rescue(verifyToken), rescue(recipeController.editOne));
 app.delete('/recipes/:id', rescue(verifyToken), rescue(recipeController.deleteOne));
 // Não remover esse end-point, ele é necessário para o avaliador

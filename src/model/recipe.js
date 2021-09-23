@@ -35,8 +35,17 @@ const deleteOne = async (recipeId) => {
   if (!ObjectId.isValid(recipeId)) return null;
   const result = await connection()
     .then((db) => db.collection('recipes').deleteOne({ _id: ObjectId(recipeId) }));
-  console.log(result);
   return result;
+};
+
+const uploadImage = async (recipeId, fileName) => {
+  if (!ObjectId.isValid(recipeId)) return null;
+  const result = await connection()
+    .then((db) => db.collection('recipes').findOneAndUpdate(
+      { _id: ObjectId(recipeId) }, { $set: { image: fileName } },
+      { returnOriginal: false },
+    ));
+  return result.value;
 };
 
 module.exports = {
@@ -45,4 +54,5 @@ module.exports = {
   getOne,
   editOne,
   deleteOne,
+  uploadImage,
 };

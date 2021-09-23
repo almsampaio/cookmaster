@@ -52,6 +52,11 @@ const deleteOne = async (recipeId, userId) => {
   if (!result) throw errorObjects.notFound;
 };
 
+const uploadImage = async (recipeId, fileName) => {
+  const result = await recipeModel.uploadImage(recipeId, fileName);
+  return result;
+};
+
 module.exports = {
   create,
   getAll,
@@ -59,4 +64,5 @@ module.exports = {
   editOne,
   checkUserAuth,
   deleteOne,
+  uploadImage,
 };

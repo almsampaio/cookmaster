@@ -1,3 +1,4 @@
+const { join } = require('path');
 const recipeService = require('../service/recipe');
 
 const create = async (req, res) => {
@@ -32,10 +33,19 @@ const deleteOne = async (req, res) => {
   return res.status(204).json();
 };
 
+const uploadImage = async (req, res) => {
+  const imageContent = req.file;
+  const urlImage = join('localhost:3000', 'src', 'uploads', imageContent.filename);
+  const { id } = req.params;
+  const result = await recipeService.uploadImage(id, urlImage);
+  return res.status(200).json(result);
+};
+
 module.exports = {
   create,
   getAll,
   getOne,
   editOne,
   deleteOne,
+  uploadImage,
 };

@@ -1,7 +1,7 @@
 const Joi = require('joi');
 const userModel = require('../model/user');
 const errorObjects = require('../../utils/errorsObject');
-const jwt = require('./token');
+const jwt = require('../middleware/token');
 
 const validadeNewUser = (name, email, password) => {
   const { error } = Joi.object({
