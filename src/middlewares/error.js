@@ -1,4 +1,4 @@
-// me baseei nos exercicios do dia 28.1 do course onde vi essa forma de tratamento de erro
+// eu me baseei nos exercicios do dia 28.1 do course onde vi essa forma de tratamento de erro
 
 module.exports = (err, _req, res, _next) => {
   if (err.isJoi) {
