@@ -11,7 +11,7 @@ app.use(bodyParser.json());
 app.use('/uploads', express.static(path.join(__dirname, '..', '/uploads')));
 
 const storage = multer.diskStorage({
-  destination: (_req, _file, callback) => {
+  destination: (req, file, callback) => {
     callback(null, 'uploads');
   },
   filename: (req, file, callback) => {
@@ -37,5 +37,7 @@ app.get('/recipes', recipesController.getAllRecipes);
 app.get('/recipes/:id', recipesController.getRecipeByID);
 app.put('/recipes/:id', authMiddleware, recipesController.updateRecipe);
 app.delete('/recipes/:id', authMiddleware, recipesController.deleteRecipe);
+app.put('/recipes/:id/image', authMiddleware, 
+  upload.single('image'), recipesController.uploadImage);
 
 module.exports = app;
