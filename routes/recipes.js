@@ -12,4 +12,6 @@ router.post('/',
   validations.validateAuth,
   recipesController.create);
 
+router.get('/', recipesController.getAll);
+
 module.exports = router;

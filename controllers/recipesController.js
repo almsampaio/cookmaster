@@ -11,6 +11,13 @@ const create = rescue(async (req, res) => {
   return res.status(httpStatus.HTTP_CREATE_STATUS).json({ recipe });
 });
 
+const getAll = async (_req, res) => {
+  const allRecipes = await recipesServices.getAll();
+  // console.log(allRecipes, 'recipes controller');
+  return res.status(httpStatus.HTTP_OK_STATUS).json(allRecipes);
+};
+
 module.exports = {
   create,
+  getAll,
 };

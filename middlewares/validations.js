@@ -8,7 +8,7 @@ const userModel = require('../models/userModel');
 const httpStatus = require('../utils/httpStatus');
 
 const validationTokenError = { message: 'jwt malformed' };
-const noTokenError = { message: 'missing auth token' };
+const noTokenError = { message: 'missing token' };
 
 const validateAuth = async (req, res, next) => {
   const token = req.headers.authorization;
@@ -27,7 +27,7 @@ const validateAuth = async (req, res, next) => {
     }
 
     req.user = decoded.data;
-    console.log(decoded.data, 'usuario validação token');
+    // console.log(decoded.data, 'usuario validação token');
     next();
   } catch (err) {
     return res.status(httpStatus.UNAUTHORIZED).json({ message: err.message });
