@@ -41,10 +41,22 @@ const deleteRecipe = async (req, res) => {
   return res.status(204).json(recipe);
 };
 
+const insertImage = async (req, res) => {
+  const { file: { filename }, params: { id } } = req;
+  const insertedImage = await service.insertImage(filename, id);
+
+  if (!insertImage) {
+    return res.status(401).json({ message: 'something went wrong' });
+  }
+
+  return res.status(200).json(insertedImage);
+};
+
 module.exports = {
   newRecipe,
   getRecipes,
   getRecipe,
   editRecipe,
   deleteRecipe,
+  insertImage,
 };

@@ -37,8 +37,22 @@ const editRecipe = async (id, body) => {
   return recipe;
 };
 
-const deleteRecipe = async (id) => connection()
+const deleteRecipe = async (id) => 
+  connection()
   .then((db) => db.collection(coll).deleteOne({ _id: ObjectId(id) }));
+
+const insertImage = async (filename, id) => {
+  await connection()
+  .then((db) => db.collection(coll)
+    .findOneAndUpdate(
+      { _id: new ObjectId(id) },
+      { $set: { image: `localhost:3000/src/uploads/${filename}` } },
+  ));
+
+  const recipe = await getRecipe(id);
+
+  return recipe;
+};
 
 module.exports = {
   newRecipe,
@@ -46,4 +60,5 @@ module.exports = {
   getRecipe,
   editRecipe,
   deleteRecipe,
+  insertImage,
 };

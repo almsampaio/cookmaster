@@ -22,10 +22,16 @@ const deleteRecipe = async (id, body) => {
   }
 };
 
+const insertImage = async (filename, id) => {
+  console.log(filename);
+  return recipeModel.insertImage(filename, id);
+};
+
 module.exports = {
   newRecipe,
   getRecipes,
   getRecipe,
   editRecipe,
   deleteRecipe,
+  insertImage,
 };
