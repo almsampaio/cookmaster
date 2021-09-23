@@ -47,9 +47,23 @@ const update = async (recipe, _id, userId, role) => {
   return { status: 200, message: recipeUpdated };
 };
 
+const deleteOne = async (_id, userId, role) => {
+  if (!ObjectId.isValid(_id)) {
+    return { status: 404, message: { message: 'recipe not found' } };
+  }
+  const recipeToBeDeleted = await recipesModel.getById(_id);
+  if (recipeToBeDeleted === null) return { status: 404, message: { message: 'recipe not found' } };
+  if (role !== 'admin' && userId !== recipeToBeDeleted.userId) {
+    return { status: 401, message: { message: 'missing auth token' } };
+  }
+  await recipesModel.deleteOne(_id);
+  return { status: 204 };
+};
+
 module.exports = {
   create,
   getAll,
   getById,
   update,
+  deleteOne,
 };

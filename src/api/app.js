@@ -19,6 +19,7 @@ app.post('/recipes', validateJWT, recipesControllers.create);
 app.get('/recipes', recipesControllers.getAll);
 app.get('/recipes/:_id', recipesControllers.getById);
 app.put('/recipes/:_id', validateJWT, recipesControllers.update);
+app.delete('/recipes/:_id', validateJWT, recipesControllers.deleteOne);
 // Não remover esse end-point, ele é necessário para o avaliador
 
 module.exports = app;

@@ -27,6 +27,7 @@ const getById = async (_id) => {
   const recipeCollection = await mongoConnection.getConnection()
     .then((db) => db.collection('recipes'));
   const recipe = await recipeCollection.findOne({ _id: ObjectId(_id) });
+  console.log(recipe);
   return recipe;
 };
 
@@ -40,9 +41,17 @@ const update = async (name, ingredients, preparation, _id) => {
   return recipeUpdated;
 };
 
+const deleteOne = async (_id) => {
+  const recipeCollection = await mongoConnection.getConnection()
+    .then((db) => db.collection('recipes'));
+  console.log(_id);
+  await recipeCollection.deleteOne({ _id: ObjectId(_id) });
+};
+
 module.exports = {
   create,
   getAll,
   getById,
   update,
+  deleteOne,
 };
