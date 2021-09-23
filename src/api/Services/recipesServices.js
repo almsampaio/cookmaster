@@ -3,10 +3,12 @@ const { recipesValidations } = require('../helpers/recipesValidations');
 
 const HTTP_STATUS_CREATED = 201;
 const HTTP_STATUS_OK = 200;
+const HTTP_STATUS_NO_CONTENT = 204;
 const HTTP_STATUS_NOT_FOUND = 404;
 const HTTP_STATUS_UNAUTHORIZED = 401;
 const ERROR_MESSAGE = 'recipe not found';
 const ERROR_TOKEN = 'jwt malformed';
+const ERROR_MISSING_TOKEN = 'missing auth token';
 
 const getAllRecipes = async () => {
   const recipes = await recipesModel.getAllRecipes();
@@ -65,9 +67,24 @@ const updateRecipe = async (recipeToUpdateParameters) => {
   });
 };
 
+const deleteRecipe = async (id, userId, role) => {
+  const recipeOwner = await recipesModel.checkRecipeOwner(id, userId);
+  if (recipeOwner || role === 'admin') {
+    await recipesModel.deleteRecipe(id);
+    return ({
+      code: HTTP_STATUS_NO_CONTENT,
+    });
+  }
+  return ({
+    code: HTTP_STATUS_UNAUTHORIZED,
+    message: ERROR_MISSING_TOKEN,
+  });
+};
+
 module.exports = {
   getAllRecipes,
   getRecipeById,
   addRecipes,
   updateRecipe,
+  deleteRecipe,
 };

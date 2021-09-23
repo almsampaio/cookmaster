@@ -43,6 +43,17 @@ const updateRecipe = async (recipeToUpdateParameters) => {
   return recipeToUpdate.value;
 };
 
+const deleteRecipe = async (id) => {
+  if (!ObjectId.isValid(id)) {
+    return null;
+  }
+  const db = await connection();
+  await db.collection('recipes').findOneAndDelete(
+    { _id: ObjectId(id) },
+    
+  );
+};
+
 const checkRecipeOwner = async (id, userId) => {
   if (!ObjectId.isValid(id)) {
     return null;
@@ -58,6 +69,7 @@ module.exports = {
   getRecipeById,
   addURecipes,
   updateRecipe,
+  deleteRecipe,
   checkRecipeOwner,
 
 };
