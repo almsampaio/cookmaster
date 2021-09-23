@@ -14,6 +14,7 @@ app.use('/recipes', recipesRouter);
 app.use('/images', express.static(path.join(__dirname, '..', 'uploads')));
 
 app.use((error, _req, res, _next) => {
+  console.log(error.err);
   res.status(error.status).json(error.err);
 });
 

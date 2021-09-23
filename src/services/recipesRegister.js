@@ -9,8 +9,6 @@ module.exports = async (req) => {
 
   const newBody = { ...body, userId: _id };
 
-  console.log(newBody);
-
   if (!name || !ingredients || !preparation) {
     throw errorMessages.INVALID_ENTRIES;
   }
