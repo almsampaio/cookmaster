@@ -1,4 +1,3 @@
-const express = require('express');
 const { Router } = require('express');
 const path = require('path');
 const multer = require('multer');
@@ -6,8 +5,6 @@ const multer = require('multer');
 const router = Router();
 
 const validateJWT = require('../auth/validateJWT');
-
-router.use(express.static(path.join(__dirname, '..', '..', 'uploads')));
 
 const storage = multer.diskStorage({
   destination: (_req, _file, callback) => {
@@ -32,6 +29,7 @@ const {
 router.get('/', getAllRecipes);
 router.get('/:id', getRecipeById);
 router.post('/', validateJWT, addRecipes);
+
 router.put('/:id/image/', upload.single('image'), validateJWT, updateRecipeImage);
 router.put('/:id', validateJWT, updateRecipe);
 router.delete('/:id', validateJWT, deleteRecipe);
