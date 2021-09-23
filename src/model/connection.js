@@ -6,7 +6,7 @@ const OPTIONS = {
 };
 
 // Para rodar na maquina local
-const MONGO_DB_URL = 'mongodb://localhost:27017/Cookmaster';
+// const MONGO_DB_URL = 'mongodb://localhost:27017/Cookmaster';
 // Para o Avaliador Rodar
 // const MONGO_DB_URL = 'mongodb://mongodb:27017/Cookmaster';
 
