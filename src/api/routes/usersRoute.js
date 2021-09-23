@@ -11,5 +11,6 @@ router.post('/users', create);
 router.post('/login', loginUser);
 router.post('/recipes', validateJWT, recipesController.create);
 router.get('/recipes', recipesController.getAll);
+router.get('/recipes/:id', recipesController.getById);
 
 module.exports = router;

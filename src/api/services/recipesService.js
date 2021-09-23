@@ -6,6 +6,14 @@ const getAll = async () => {
   return recipes;
 };
 
+const getById = async (id) => {
+  const recipe = await recipesModel.getById(id);
+
+  if (!recipe) return { code: 404, message: 'recipe not found' };
+  
+  return { recipe };
+};
+
 const create = async (name, ingredients, preparation, userId) => {
   const recipe = await recipesModel.create(name, ingredients, preparation, userId);
   const { message, code } = requiredFialdsRecipes(name, ingredients, preparation);
@@ -14,4 +22,4 @@ const create = async (name, ingredients, preparation, userId) => {
   return { recipe };
 };
 
-module.exports = { create, getAll };
+module.exports = { create, getAll, getById };

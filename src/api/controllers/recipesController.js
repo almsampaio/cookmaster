@@ -10,6 +10,17 @@ const getAll = rescue(async (_req, res) => {
   res.status(HTTP_OK_STATUS).json(recipes);
 });
 
+const getById = rescue(async (req, res) => {
+  const { id } = req.params;
+  const { recipe, message, code } = await recipesSercice.getById(id);
+
+  console.log(recipe, message);
+
+  if (message) return res.status(code).json({ message });
+
+  res.status(HTTP_OK_STATUS).json(recipe);
+}); 
+
 const create = rescue(async (req, res) => {
   const { _id } = req.user;
   const { name, ingredients, preparation } = req.body;
@@ -17,9 +28,9 @@ const create = rescue(async (req, res) => {
   const { recipe, message, code } = await recipesSercice
   .create(name, ingredients, preparation, _id);
   
-  if (message) res.status(code).json({ message });
+  if (message) return res.status(code).json({ message });
 
   res.status(HTTP_CREATED_STATUS).json({ recipe });
 });
 
-module.exports = { create, getAll };
+module.exports = { create, getAll, getById };
