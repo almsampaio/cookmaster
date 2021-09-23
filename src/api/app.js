@@ -49,4 +49,6 @@ app
   .put('/recipes/:id/image',
     validateToken, upload.single('image'), recipesController.insertImage);
 
+app.use('/images', express.static(path.join(__dirname, '..', 'uploads')));
+
 module.exports = app;
