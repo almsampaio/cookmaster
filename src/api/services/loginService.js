@@ -28,4 +28,6 @@ const login = async (register) => {
 
 module.exports = {
   login,
+  secret,
+  jwtConfig,
 };
