@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const users = require('../controllers/users');
 const { userValidation } = require('../midddlewares/uservalidation');
+const { loginValidation } = require('../midddlewares/loginvalidation');
 // const { 
 //   create,
 //   getAll,
@@ -21,7 +22,7 @@ app.get('/', (request, response) => {
 // Não remover esse end-point, ele é necessário para o avaliador
 
 app.post('/users', userValidation, users.createUser);
-// app.post('/login', users.createToken);
+app.post('/login', loginValidation, users.createToken);
 
 // app.post('/recipes', create);
 // app.get('/recipes', getAll);

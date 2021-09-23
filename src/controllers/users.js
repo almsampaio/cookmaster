@@ -10,15 +10,15 @@ const createUser = async (req, res) => {
   res.status(status).json({ user: data });
 };
 
-// const createToken = async (req, res) => {
-//   const { email, password } = req.body;
-//   const { status, token, err } = await users.createToken(email, password);
-//   if (err) return res.status(status).json(err);
+const createToken = async (req, res) => {
+  const { email, password } = req.body;
+  const { status, token, message } = await users.createToken(email, password);
+  if (message) return res.status(status).json({ message });
 
-//   res.status(status).json({ token });
-// };
+  res.status(status).json({ token });
+};
 
 module.exports = {
   createUser,
-  // createToken,
+  createToken,
 };
