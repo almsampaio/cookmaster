@@ -34,7 +34,6 @@ const getRecipeById = async (req, res) => {
 };
 
 const editRecipe = async (req, res) => {
-  console.log('chegou');
   const { id } = req.params;
   const { name, ingredients, preparation } = req.body;
   const recipe = await recipesService.getRecipeById(id);
@@ -46,9 +45,21 @@ const editRecipe = async (req, res) => {
   res.status(200).json(editedRecipe);
 };
 
+const deleteRecipe = async (req, res) => {
+  const { id } = req.params;
+  const recipe = await recipesService.getRecipeById(id);
+  if (recipe.error) {
+    return res.status(recipe.error.status).json({ message: recipe.error.message });
+  }
+  await recipesService.deleteRecipe(id);
+
+  res.status(204).json();
+};
+
 module.exports = {
   createRecipe,
   getAllRecipes,
   getRecipeById,
   editRecipe,
+  deleteRecipe,
 }; 
