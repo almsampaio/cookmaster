@@ -85,4 +85,84 @@ describe('POST /recipes', () => {
       expect(response.body.message).to.be.equal('Invalid entries. Try again.');
     });
   });
+
+  describe('Usuário não logado', async () => {
+    let response = {};
+    before(async () => {
+      response = await chai.request(server)
+        .post('/recipes')
+        .send(VALID_RECIPE);
+    });
+
+    it('Retorna o status 401', () => {
+      expect(response).to.have.status(401);
+    });
+    it('Retorna a mensagem informando o erro', () => {
+      expect(response).to.be.a('object');
+      expect(response.body).to.have.property('message');
+      expect(response.body.message).to.be.equal('missing auth token');
+    });
+  });
+});
+
+describe('GET /recipes', () => {
+  before(async () => {
+    const VirtualDB = await getConnection();
+    sinon.stub(MongoClient, 'connect').resolves(VirtualDB);
+  });
+
+  after(() => {
+    MongoClient.connect.restore();
+  });
+
+  it('Retorna um array com todas as receitas', async () => {
+    const response = await chai.request(server).get('/recipes');
+    expect(response).to.have.status(200);
+    expect(response.body).to.be.a('array');
+    expect(response.body[0]).to.be.a('object');
+    expect(response.body[0]).to.have.property('_id');
+  });
+});
+
+describe('GET /recipes/:id', () => {
+  before(async () => {
+    const VirtualDB = await getConnection();
+    sinon.stub(MongoClient, 'connect').resolves(VirtualDB);
+  });
+
+  after(() => {
+    MongoClient.connect.restore();
+  });
+
+  describe('Todas as informações são validas', async () => {
+    let response = {};
+    before(async () => {
+      const { body: { recipe: { _id: id } } } = await userSetup(VALID_NEW_USER, VALID_RECIPE);
+      response = await chai.request(server).get(`/recipes/${id}`);
+    });
+
+    it('Tem status 200', () => {
+      expect(response).to.have.status(200);
+    });
+    it('Retorna um objeto com as informações da receita', () => {
+      expect(response).to.be.a('object');
+      expect(response.body).to.have.property('name');
+      expect(response.body.name).to.be.equal('Frango');
+    });
+  });
+  describe('Id da receita não existe', async () => {
+    let response = {};
+    before( async () => {
+      response = await chai.request(server).get('/recipes/1234567890123456678901234');
+    });
+
+    it('Tem status 404', () => {
+      expect(response).to.have.status(404);
+    });
+    it('Retorna a mensagem informando que nada foi encontrado', () => {
+      expect(response).to.be.a('object');
+      expect(response.body).to.have.property('message');
+      expect(response.body.message).to.be.equal('recipe not found');
+    });
+  });
 });
