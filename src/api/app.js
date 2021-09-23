@@ -18,7 +18,7 @@ app.get('/', (request, response) => {
 });
 // Não remover esse end-point, ele é necessário para o avaliador
 
-app.use('/users/', router.usersRouter);
+app.use('/users', router.usersRouter);
 app.use('/login', router.loginRouter);
 app.use('/recipes', router.recipesRouter);
 
