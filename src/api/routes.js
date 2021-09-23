@@ -1,5 +1,9 @@
 const { createUser, login } = require('../controllers/usersController');
-const { createRecipe, getAllRecipes, getRecipeById } = require('../controllers/recipesController');
+const {
+  createRecipe,
+  getAllRecipes,
+  getRecipeById,
+  updateRecipe } = require('../controllers/recipesController');
 
 const authMiddleware = require('../middlewares/authMiddleware');
 
@@ -10,4 +14,5 @@ module.exports = {
   createRecipe,
   getAllRecipes,
   getRecipeById,
+  updateRecipe,
 };

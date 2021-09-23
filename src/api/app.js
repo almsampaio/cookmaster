@@ -4,9 +4,10 @@ const {
   createUser,
   login,
   createRecipe,
-  authMiddleware,
   getAllRecipes,
-  getRecipeById } = require('./routes');
+  getRecipeById,
+  authMiddleware, 
+  updateRecipe } = require('./routes');
 
 const app = express();
 app.use(bodyParser.json());
@@ -23,5 +24,7 @@ app.get('/recipes/:id', getRecipeById);
 app.post('/users', createUser);
 app.post('/login', login);
 app.post('/recipes', authMiddleware, createRecipe);
+
+app.put('/recipes/:id', authMiddleware, updateRecipe);
 
 module.exports = app;
