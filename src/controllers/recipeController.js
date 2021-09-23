@@ -1,3 +1,5 @@
+const multer = require('multer');
+
 const recipeService = require('../services/recipeService');
 
 async function addRecipe(req, res) {
@@ -40,7 +42,25 @@ async function deleteRecipe(req, res) {
   const { id } = req.params;
   await recipeService.deleteRecipe(id);
   res.status(204).json();
-} 
+}
+
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, 'src/uploads');
+  },
+  filename: (req, file, cb) => {
+    const filename = `${req.params.id}.jpeg`;
+    cb(null, filename);
+  },
+});
+
+const upload = multer({ storage });
+
+async function uploadImage(req, res) {
+  const { code, recipeWithImage } = await recipeService.addimageUrl(req.params.id);
+  
+  res.status(code).json(recipeWithImage);
+}
 
 module.exports = {
   addRecipe,
@@ -48,4 +68,6 @@ module.exports = {
   getById,
   updateRecipe,
   deleteRecipe,
+  upload,
+  uploadImage,
 };
