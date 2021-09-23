@@ -41,9 +41,21 @@ const update = async (req, res) => {
   return res.status(httpStatus.UNAUTHORIZED).json({ message: 'unauthorized' });
 };
 
+const exclude = async (req, res) => {
+  const { id } = req.params;
+  const { _id: userId, role } = req.user;
+  const oldRecipe = await recipesModel.getById(id);
+  if (userId === oldRecipe.userId || role === 'admin') {
+    await recipesServices.exclude(id);
+    return res.status(httpStatus.NO_CONTENT).send();
+  }
+  return res.status(httpStatus.UNAUTHORIZED).json({ message: 'unauthorized' });
+};
+
 module.exports = {
   create,
   getAll,
   getById,
   update,
+  exclude,
 };

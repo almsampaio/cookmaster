@@ -20,4 +20,8 @@ router.put('/:id',
   validations.validateAuth,
   recipesController.update);
 
+router.delete('/:id',
+  validations.validateAuth,
+  recipesController.exclude);
+
 module.exports = router;
