@@ -54,15 +54,36 @@ const deleteRecipe = await connectionDb.collection('recipes')
 return deleteRecipe.value;
 };
 
-const addImageRecipe = async (id) => {
+const addImageRecipe = async (recId, imageUrl) => {
+  if (!ObjectId.isValid(recId)) return false;
+
+const connectionDb = await connection();
+
+const imageRecipe = await connectionDb.collection('recipes')
+.findOneAndUpdate({ _id: ObjectId(recId) }, { $set: { image: imageUrl } });
+const output = {
+  ...imageRecipe.value,
+  image: imageUrl,
+};
+
+return output;
+};
+
+const getImageId = async (id) => {
   if (!ObjectId.isValid(id)) return false;
 
 const connectionDb = await connection();
 
 const imageRecipe = await connectionDb.collection('recipes')
 .findOne({ _id: ObjectId(id) });
+// const output = {
+//   ...imageRecipe.value,
+//   image: imageUrl,
+// };
 
-return imageRecipe;
+console.log(imageRecipe.image);
+
+return imageRecipe.image;
 };
 
 module.exports = {
@@ -72,4 +93,5 @@ module.exports = {
   updateRecipeId,
   deleteRecipeId,
   addImageRecipe,
+  getImageId,
 };

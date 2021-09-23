@@ -11,18 +11,18 @@ const app = express();
 
 app.use(bodyParser.json());
 
-app.use('/images', express.static(path.join(__dirname, '..', 'uploads')));
-
 const storage = multer.diskStorage({
   destination: (req, file, callback) => {
-    callback(null, '../uploads');
+    callback(null, './src/uploads');
   },
   filename: (req, file, callback) => {
-    callback(null, file.originalname);
+    const { id } = req.params;
+    callback(null, `${id}.jpeg`);
   },
 });
 
 const upload = multer(storage);
+app.use(express.static('../uplodas'));
 
 // Não remover esse end-point, ele é necessário para o avaliador
 app.get('/', (request, response) => {
@@ -34,8 +34,13 @@ app.post('/users', userController.addUser);
 
 app.post('/login', userController.login);
 
-app.post('/recipes/:id/image/',
-authToken, upload.single('arquivo'),
+app.use('/images', express.static(path.join(__dirname, '..', 'uploads')));
+
+app.get('/images/:id.jpeg', recipesController.getImageId);
+
+app.put('/recipes/:id/image/',
+authToken,
+upload.single('image'),
 recipesController.addImageRecipe);
 
 app.delete('/recipes/:id', authToken, recipesController.deleteRecipeId);

@@ -51,13 +51,19 @@ const deleteRecipeId = async (req, res) => {
 };
 
 const addImageRecipe = async (req, res) => {
-  const { body } = req;
-  const { pipe } = req;
-  console.log('body--  ', body, pipe);
   const { id } = req.params;
-  const addImage = await recipeService.addImageRecipe(id);
 
-  return res.status(200).json({ addImage });
+  const imageUrl = `localhost:3000/src/uploads/${id}.jpeg`;
+
+  const updatedRecipe = await recipeService.addImageRecipe(id, imageUrl);
+  res.status(200).json(updatedRecipe);
+};
+
+const getImageId = async (req, res) => {
+  const { id } = req.params;
+
+  const image = await recipeService.getImageId(id);
+  res.status(200).json(image);
 };
 
 module.exports = {
@@ -67,4 +73,5 @@ module.exports = {
   updateRecipeId,
   deleteRecipeId,
   addImageRecipe,
+  getImageId,
 };
