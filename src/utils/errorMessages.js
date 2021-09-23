@@ -35,6 +35,11 @@ const RECIPE_NOT_FOUND = {
   err: { message: 'recipe not found' },
 };
 
+const ONLY_ADMINS = {
+  status: httpStatus.FORBIDDEN,
+  err: { message: 'Only admins can register new admins' },
+};
+
 module.exports = {
   INVALID_ENTRIES,
   EMAIL_ALREADY_EXISTS,
@@ -43,4 +48,5 @@ module.exports = {
   JWT_MALFORMED,
   RECIPE_NOT_FOUND,
   MISSING_AUTH_TOKEN,
+  ONLY_ADMINS,
 };

@@ -6,6 +6,7 @@ const getRecipeById = require('./getRecipeById');
 const editRecipes = require('./editRecipes');
 const deleteRecipe = require('./deleteRecipe');
 const addRecipeImage = require('./addRecipeImage');
+const createAdmin = require('./createAdmin');
 
 module.exports = {
   createUser,
@@ -16,4 +17,5 @@ module.exports = {
   editRecipes,
   deleteRecipe,
   addRecipeImage,
+  createAdmin,
  };
