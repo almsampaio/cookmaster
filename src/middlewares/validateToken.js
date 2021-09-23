@@ -4,7 +4,7 @@ const SECRET = 'aipapai';
 
 module.exports = (req, res, next) => {
   const token = req.headers.authorization;
-  if (!token) return res.status(404).json({ message: 'authorization required.' });
+  if (!token) return res.status(401).json({ message: 'missing auth token' });
   
   try {
     const payload = jwt.verify(token, SECRET);
