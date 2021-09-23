@@ -1,5 +1,5 @@
 const {
-  StatusCodes: { CREATED, OK },
+  StatusCodes: { CREATED, OK, NO_CONTENT },
 } = require('http-status-codes');
 const recipeService = require('../services/recipeService');
 
@@ -38,9 +38,20 @@ try {
 }
 };
 
+const deleteRecipe = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    await recipeService.deleteRecipe(id);
+    res.status(NO_CONTENT).json();
+  } catch (e) {
+    next(e);
+  }
+};
+
 module.exports = {
   createRecipe,
   getAllRecipes,
   getRecipeById,
   updateRecipe,
+  deleteRecipe,
 };
