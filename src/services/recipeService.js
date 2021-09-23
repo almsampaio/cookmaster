@@ -16,9 +16,16 @@ const getRecipe = async (id) => recipeModel.getRecipe(id);
 
 const editRecipe = async (id, body) => recipeModel.editRecipe(id, body);
 
+const deleteRecipe = async (id, body) => {
+  if (body.role === 'admin') {
+    return recipeModel.editRecipe(id);
+  }
+};
+
 module.exports = {
   newRecipe,
   getRecipes,
   getRecipe,
   editRecipe,
+  deleteRecipe,
 };

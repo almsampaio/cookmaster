@@ -25,6 +25,7 @@ app.route('/recipes')
 
 app.route('/recipes/:id')
   .get(recipesController.getRecipe)
-  .put(validateToken, recipesController.editRecipe);
+  .put(validateToken, recipesController.editRecipe)
+  .delete(validateToken, recipesController.deleteRecipe);
 
 module.exports = app;
