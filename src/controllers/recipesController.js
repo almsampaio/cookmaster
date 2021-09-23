@@ -20,6 +20,18 @@ async function register(req, res, next) {
   }
 }
 
+async function getAll(req, res, next) {
+  try {
+    const recipes = await recipesService.getAll();
+
+    res.status(200).json(recipes);
+  } catch (err) {
+    const error = errorDefault(err);
+    next(error);
+  }
+}
+
 module.exports = {
   register,
+  getAll,
 };
