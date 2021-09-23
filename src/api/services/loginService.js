@@ -22,7 +22,7 @@ const login = async (register) => {
   const userExist = await models.usersModel.usersByEmail(register.email);
   if (!userExist) return UNAUTHORIZED_INVALID_DATA;
 
-  const token = sign({ register: userExist }, secret, jwtConfig);
+  const token = sign({ data: userExist }, secret, jwtConfig);
   return { status: HTTP_OK_STATUS, token };
 };
 

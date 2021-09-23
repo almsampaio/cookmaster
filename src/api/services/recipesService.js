@@ -5,12 +5,14 @@ const { tokenValidation } = require('./tokenValidation');
 const { CREATED_STATUS, REQUEST_INVALID_ENTRIES } = require('../helpers');
 
 const createRecipe = async (newRecipe, authorization) => {
-  const token = await tokenValidation(authorization);
-  
   const { error } = recipeValidation.validate(newRecipe);
   if (error) return REQUEST_INVALID_ENTRIES;
 
-  const { _id: userId } = token;
+    const { status, err, data } = await tokenValidation(authorization);
+    console.log(err, data);
+  if (err) return { status, err };
+
+  const { _id: userId } = data;
   const recipe = newRecipe;
   recipe.userId = userId;
 

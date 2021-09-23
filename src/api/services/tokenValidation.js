@@ -7,14 +7,13 @@ const tokenValidation = async (token) => {
   if (!token) return ERROR_MISSING_TOKEN;
   
   try {
-    // console.log(token, secret);
     const decoded = jwt.verify(token, secret);
     console.log(decoded);
     const { email } = decoded.data;
     const user = await models.usersModel.usersByEmail(email);
 
     if (!user) return JWT_MALFORMED;
-    return decoded.data;
+    return { data: decoded.data };
   } catch (error) { 
     return JWT_MALFORMED;
   }
