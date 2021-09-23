@@ -51,12 +51,13 @@ const deleteRecipeId = async (req, res) => {
 };
 
 const addImageRecipe = async (req, res) => {
+  const { body } = req;
+  const { pipe } = req;
+  console.log('body--  ', body, pipe);
   const { id } = req.params;
+  const addImage = await recipeService.addImageRecipe(id);
 
-  const deleteRec = await recipeService.deleteRecipeId(id);
-
-  if (deleteRec.error) return res.status(deleteRec.error).json({ message: deleteRec.message });
-  return res.status(204).json();
+  return res.status(200).json({ addImage });
 };
 
 module.exports = {

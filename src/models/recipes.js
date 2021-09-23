@@ -54,10 +54,22 @@ const deleteRecipe = await connectionDb.collection('recipes')
 return deleteRecipe.value;
 };
 
+const addImageRecipe = async (id) => {
+  if (!ObjectId.isValid(id)) return false;
+
+const connectionDb = await connection();
+
+const imageRecipe = await connectionDb.collection('recipes')
+.findOne({ _id: ObjectId(id) });
+
+return imageRecipe;
+};
+
 module.exports = {
   addRecipe,
   allRecipes,
   recipeId,
   updateRecipeId,
   deleteRecipeId,
+  addImageRecipe,
 };
