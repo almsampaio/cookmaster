@@ -22,7 +22,6 @@ const getAll = async () => {
 const getLoginByEmail = async (email) => {
     const db = await connection();
     const loginUser = await db.collection('users').findOne({ email });
-//    console.log(loginUser);
     return loginUser;
 };
 

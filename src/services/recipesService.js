@@ -29,7 +29,18 @@ const getAll = async () => {
     }));
 };
 
+const getById = async (id) => {
+    const validateRecipe = await recipeSchema.validateRecipeId(id);
+
+    if (validateRecipe) return validateRecipe;
+
+    const recipes = await recipeModel.getById(id);
+    
+    return recipes;
+};
+
 module.exports = {
     create,
     getAll,
+    getById,
 };

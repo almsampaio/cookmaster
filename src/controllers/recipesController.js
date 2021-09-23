@@ -20,7 +20,20 @@ const getAll = (rescue(async (_req, res) => {
     res.status(200).json(recipes);
 }));
 
+const getById = (rescue(async (req, res) => {
+    const { id } = req.params;
+
+    const recipes = await recipeService.getById(id);
+    
+    if (recipes.message) return res.status(404).json(recipes);
+    
+ //   console.log(recipes);
+
+    return res.status(200).json(recipes);
+}));
+
 module.exports = {
     create,
     getAll,
+    getById,
 };
