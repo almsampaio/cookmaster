@@ -7,7 +7,8 @@ const getToken = (email, password) => {
       expiresIn: '7d',
       algorithm: 'HS256',
     };
-    const token = jwt.sign({ data: dataToken }, secret, jwtConfig);
+    const tokenGenerated = jwt.sign({ data: dataToken }, secret, jwtConfig);
+    const token = { token: tokenGenerated };
     return token;
   };
   module.exports = { getToken };

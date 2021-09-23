@@ -2,8 +2,11 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const controllerUser = require('../controllers/users');
 const controllerLogin = require('../controllers/login');
+const controllerRecipes = require('../controllers/recipes');
 const valid = require('./validations/users');
 const validUser = require('./validations/login');
+const validRecipes = require('./validations/recipes');
+const validjwt = require('./auth/validateJWT');
 
 const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -20,5 +23,15 @@ app.post('/users', [
 ]);
 
 app.post('/login', [validUser.validEmail, validUser.validPassword, controllerLogin.login]);
+
+app.post('/recipes', [
+  validRecipes.validateName, 
+  validRecipes.validatePreparation, 
+  validRecipes.validateIngredients, 
+  validjwt.validateJWT,
+  controllerRecipes.createRecipes,
+]);
+
+app.get('/recipes', controllerRecipes.findRecipes);
 
 module.exports = app;
