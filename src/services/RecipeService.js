@@ -11,6 +11,12 @@ const update = async (id, newDataRecipe) => {
   return updatedRecipe;
 };
 
+const updateImg = async (id, imgPath) => {
+  const updatedRecipe = await RecipeModel.updateImg(id, imgPath);
+  if (!updatedRecipe) return { message: 'recipe not found' };
+  return updatedRecipe;
+};
+
 const getById = async (id) => {
   const recipe = await RecipeModel.getById(id);
 
@@ -41,4 +47,5 @@ module.exports = {
   getById,
   update,
   remove,
+  updateImg,
 };
