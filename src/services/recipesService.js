@@ -31,8 +31,17 @@ async function getById(id) {
   return recipe;
 }
 
+async function update(id, recipe, token) {
+  validations.isTokenValid(token);
+
+  const updatedRecipe = await recipesModel.update(id, recipe);
+
+  return updatedRecipe;
+}
+
 module.exports = {
   register,
   getAll,
   getById,
+  update,
 };

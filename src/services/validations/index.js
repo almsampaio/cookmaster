@@ -19,16 +19,18 @@ function isIdValid(id, customMessage) {
 }
 
 function isTokenValid(token) {
-  const errorMessage = 'jwt malformed';
+  const invalidMessage = 'jwt malformed';
+  const missingMessage = 'missing auth token';
+
   const isTokenTrue = new Validation(!!token);
-  isTokenTrue.verify('unauthorized', errorMessage);  
+  isTokenTrue.verify('unauthorized', missingMessage);  
 
   try {
     const decode = jwt.verify(token, SECRET);
     return decode;
   } catch (_err) {
     const throwTokenError = new Validation(false);
-    throwTokenError.verify('unauthorized', errorMessage);
+    throwTokenError.verify('unauthorized', invalidMessage);
   }
 }
 
