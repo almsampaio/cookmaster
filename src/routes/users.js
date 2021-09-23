@@ -1,10 +1,11 @@
 const express = require('express');
 const rescue = require('express-rescue');
-const controller = require('../controllers');
+const userControllers = require('../controllers');
 const middlewares = require('../utils');
 
 const router = express.Router();
 
-router.post('/users', middlewares.registerProducts, rescue(controller.create));
+router.post('/users', middlewares.registerUser, rescue(userControllers.create));
+router.post('/login', middlewares.loginUser, rescue(userControllers.login));
 
 module.exports = router;

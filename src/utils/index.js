@@ -1,9 +1,17 @@
 const { middlewaresUsers } = require('../middlewares');
 
-const registerProducts = [
-  middlewaresUsers.checkEmailUser,
-  middlewaresUsers.checkNameUser,
-  middlewaresUsers.checkPasswordUser,
+const registerUser = [
+  middlewaresUsers.checkEmailCreate,
+  middlewaresUsers.checkNameCreate,
+  middlewaresUsers.checkPasswordCreate,
 ];
 
-module.exports = { registerProducts };
+const loginUser = [
+  middlewaresUsers.checkEmailLogin,
+  middlewaresUsers.checkPasswordLogin,
+];
+
+module.exports = {
+  registerUser,
+  loginUser,
+};

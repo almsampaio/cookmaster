@@ -16,4 +16,11 @@ const find = async (email) => {
   return searchEmail;
 };
 
-module.exports = { create, find };
+const login = async (email) => {
+  const searchUser = await connection()
+    .then((db) => db.collection('users')
+      .findOne({ email }));
+  return searchUser;
+};
+
+module.exports = { create, find, login };

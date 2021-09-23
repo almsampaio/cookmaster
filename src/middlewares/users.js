@@ -1,33 +1,85 @@
 const schema = require('../schema');
-const { services } = require('../services');
+const { userServices } = require('../services');
 
-const checkNameUser = (req, res, next) => {
+const checkNameCreate = (req, res, next) => {
   const { name } = req.body;
   if (!name) {
-    return res.status(schema.status.badRequest).json({ message: schema.message.invalidEntries });
+    return res
+    .status(schema.status.badRequest)
+    .json({ message: schema.message.invalidEntries });
   }
   next();
 };
 
-const checkEmailUser = async (req, res, next) => {
+const checkEmailCreate = async (req, res, next) => {
   const { email } = req.body;
-  const findUser = await services.find(email);
+
   const emailFormat = /^[\w.]+@[a-z]+\.\w{2,3}$/g.test(email);
   if (!email || !emailFormat) {
-    return res.status(schema.status.badRequest).json({ message: schema.message.invalidEntries });
+    return res
+    .status(schema.status.badRequest)
+    .json({ message: schema.message.invalidEntries });
   }
-  if (findUser) {
-    return res.status(schema.status.conflict).json({ message: schema.message.emailRegistred });
+
+  const user = await userServices.find(email); 
+  if (user) {
+    return res
+    .status(schema.status.conflict)
+    .json({ message: schema.message.emailRegistred });
   }
   next();
 };
 
-const checkPasswordUser = (req, res, next) => {
+const checkPasswordCreate = (req, res, next) => {
   const { password } = req.body;
   if (!password) {
-    return res.status(schema.status.badRequest).json({ message: schema.message.invalidEntries });
+    return res
+    .status(schema.status.badRequest)
+    .json({ message: schema.message.invalidEntries });
   }
   next();
 };
 
-module.exports = { checkNameUser, checkEmailUser, checkPasswordUser };
+const checkEmailLogin = async (req, res, next) => {
+  const { password, email } = req.body;
+  
+  if (!email || !password) {
+    return res
+    .status(schema.status.unauthorized)
+    .json({ message: schema.message.unfilledFields });
+  }
+  
+  const emailUser = await userServices.find(email);
+  
+  if (!emailUser || email !== emailUser.email) {
+    return res
+    .status(schema.status.unauthorized)
+    .json({ message: schema.message.wrongEmailPassword });
+  }
+  next();
+};
+
+const checkPasswordLogin = async (req, res, next) => {
+  const { password, email } = req.body;
+  if (!email || !password) {
+    return res
+    .status(schema.status.unauthorized)
+    .json({ message: schema.message.unfilledFields });
+  }
+
+  const passwordUser = await userServices.find(email);
+  if (!passwordUser || passwordUser.password !== password) {
+    return res
+    .status(schema.status.unauthorized)
+    .json({ message: schema.message.wrongEmailPassword });
+  }
+  next();
+};
+
+module.exports = {
+  checkNameCreate,
+  checkEmailCreate,
+  checkPasswordCreate,
+  checkEmailLogin,
+  checkPasswordLogin,
+};
