@@ -14,6 +14,14 @@ const VALID_NEW_USER = {
   password: '12345678',
 };
 
+const INVALID_NEW_USER = {
+  name: 'userName',
+  password: '12345678',
+};
+
+const ADD_USER = async (userObj) => chai.request(server).post('/users').send(userObj);
+const LOGIN = async (payload) => chai.request(server).post('/login').send(payload);
+
 describe('POST /users', () => {
   before( async () => {
     const VirtualDB = await getConnection();
