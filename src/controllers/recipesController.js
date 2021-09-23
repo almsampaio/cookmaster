@@ -58,9 +58,24 @@ async function update(req, res, next) {
   }
 }
 
+async function deleteRecipe(req, res, next) {
+  try {
+    const { id } = req.params;
+    const token = req.headers.authorization;
+
+    await recipesService.deleteRecipe(id, token);
+    
+    res.status(204).send();
+  } catch (err) {
+    const error = errorDefault(err);
+    next(error);
+  }
+}
+
 module.exports = {
   register,
   getAll,
   getById,
   update,
+  deleteRecipe,
 };
