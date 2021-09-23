@@ -32,9 +32,15 @@ const updateRecipe = async (recipe) => {
   return updatedRecipe;
 };
 
+const exclude = async (id) => {
+  const db = await connection();
+  await db.collection('recipes').deleteOne({ _id: ObjectId(id) });
+};
+
 module.exports = {
   create,
   getAll,
   getById,
   updateRecipe,
+  exclude,
 };

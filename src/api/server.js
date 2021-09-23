@@ -15,6 +15,7 @@ app.post('/recipes', validateToken, Recipes.create);
 app.get('/recipes', Recipes.getAll);
 app.get('/recipes/:id', Recipes.getById);
 app.put('/recipes/:id', validateToken, Recipes.updateRecipe);
+app.delete('/recipes/:id', validateToken, Recipes.exclude);
 // app.get('/users', User.getByEmail);
 
 const PORT = 3000;
