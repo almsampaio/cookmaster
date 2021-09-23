@@ -50,7 +50,8 @@ const uploadImage = async (req, res) => {
 };
 
 const sendImage = async (req, res) => {
-  res.status(200).sendFile('file', { path: req.file.path });
+  res.status(200).render('file', { path: req.file.path });
+  // src = http://expressjs.com/en/api.html#res.render 
 };
 
 module.exports = {
