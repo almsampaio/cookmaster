@@ -1,4 +1,4 @@
-const { createUser, login } = require('../Controllers/users');
+const { createUser, login, admin } = require('../Controllers/users');
 const {
   createRecipe,
   getAll,
@@ -17,4 +17,5 @@ module.exports = {
   update,
   remove,
   addImage,
+  admin,
 };

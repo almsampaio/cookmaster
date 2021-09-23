@@ -16,7 +16,17 @@ const login = async (req, res, next) => {
   res.status(200).json({ token });
 };
 
+const admin = async (req, res, next) => {
+  const { role } = req.user;
+  const { name, password, email } = req.body;
+
+  const result = await userService.admin({ name, password, email, role: 'admin' }, role);
+  if (result.message) return next(result);
+  res.status(201).json(result);
+};
+
 module.exports = {
   createUser,
   login,
+  admin,
 };

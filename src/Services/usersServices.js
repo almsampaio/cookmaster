@@ -32,8 +32,14 @@ const login = async (email, password) => {
   return generateToken(user);
 };
 
+const admin = async (payload, role) => {
+  if (role !== 'admin') return builtError(403, 'Only admins can register new admins');
+  return registerUser(payload);
+};
+
 module.exports = {
   registerUser,
   builtError,
   login,
+  admin,
 };
