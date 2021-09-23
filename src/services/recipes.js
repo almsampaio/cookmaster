@@ -42,10 +42,20 @@ const updateRecipe = async (recipe) => {
 
 const exclude = async (id) => RecipesModels.exclude(id);
 
+const addImage = async (id, path) => {
+  await RecipesModels.addImage(id, path);
+  const getRecipe = await getById(id);
+  return {
+    code: 200,
+    recipe: getRecipe,
+  };
+};
+
 module.exports = {
   create,
   getAll,
   getById,
   updateRecipe,
   exclude,
+  addImage,
 };

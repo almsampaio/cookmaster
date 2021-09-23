@@ -1,5 +1,4 @@
 const rescue = require('express-rescue');
-
 const RecipesServices = require('../services/recipes');
 
 const create = rescue(async (req, res) => {
@@ -44,10 +43,19 @@ const exclude = rescue(async (req, res) => {
   res.status(204).send();
 });
 
+const uploadImage = rescue(async (req, res) => {
+  const { id } = req.params;
+  const { path } = req.file;
+
+  const recipeImg = await RecipesServices.addImage(id, path);
+  res.status(recipeImg.code).json(recipeImg.recipe);
+});
+
 module.exports = {
   create,
   getAll,
   getById,
   updateRecipe,
   exclude,
+  uploadImage,
 };
