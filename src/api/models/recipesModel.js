@@ -10,6 +10,15 @@ const createRecipes = async (recipe) => {
   return user.ops[0];
 };
 
+// REQUISITO 4
+
+const getAllRecipes = async () => {
+  const db = await connection();
+  const recipes = await db.collection(COLLECTION_NAME).find({}).toArray();
+  return recipes;
+};
+
 module.exports = {
   createRecipes,
+  getAllRecipes,
 };
