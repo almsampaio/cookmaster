@@ -12,7 +12,7 @@ const authLogin = async (req, res, next) => {
 
     const { email } = jwt.verify(token, SECRET);
 
-    const user = await UserModel.findByEmail(email);
+    const user = await UserModel.findByEmail(email) || {};
 
     req.user = user;
 
