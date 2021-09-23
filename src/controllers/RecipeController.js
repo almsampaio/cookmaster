@@ -15,7 +15,15 @@ const getAll = rescue(async (req, res) => {
   return res.status(200).json(recipes);
 });
 
+const getById = rescue(async (req, res) => {
+  const { id } = req.params;
+  const recipe = await RecipeService.getById(id);
+
+  return res.status(200).json(recipe);
+});
+
 module.exports = {
   create,
   getAll,
+  getById,
 };

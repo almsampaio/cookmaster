@@ -13,10 +13,12 @@ app.get('/', (request, response) => {
   response.send();
 });
 // Não remover esse end-point, ele é necessário para o avaliador
+
 app.post('/users', UserController.create);
 app.post('/login', UserController.userLogin);
 app.post('/recipes', tokenValidation, RecipeController.create);
 app.get('/recipes', RecipeController.getAll);
+app.get('/recipes/:id', RecipeController.getById);
 
 app.use(errorMiddleware);
 module.exports = app;
