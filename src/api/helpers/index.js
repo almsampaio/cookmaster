@@ -10,6 +10,7 @@ const EMAIL_CONFLICT_ERROR = 'Email already registered';
 const LOGIN_INCORRECT_ERROR = 'Incorrect username or password';
 const ADMIN_ERROR = 'Only admins can register new admins';
 const NOT_YOUR_RECIPE_ERROR = 'You can only modify your own recipes';
+const MUST_FILLED = 'All fields must be filled';
 
 const REQUEST_INVALID_ENTRIES = {
   status: HTTP_BAD_REQUEST_STATUS,
@@ -19,6 +20,16 @@ const REQUEST_INVALID_ENTRIES = {
 const EMAIL_CONFLICT = {
   status: HTTP_CONFLICT_STATUS,
   err: { message: EMAIL_CONFLICT_ERROR },
+};
+
+const UNAUTHORIZED_EMPTY_FIELDS = {
+  status: HTTP_UNAUTHORIZED_STATUS,
+  err: { message: MUST_FILLED },
+};
+
+const UNAUTHORIZED_INVALID_DATA = {
+  status: HTTP_UNAUTHORIZED_STATUS,
+  err: { message: LOGIN_INCORRECT_ERROR },
 };
 
 module.exports = {
@@ -35,4 +46,6 @@ module.exports = {
   NOT_YOUR_RECIPE_ERROR,
   REQUEST_INVALID_ENTRIES,
   EMAIL_CONFLICT,
+  UNAUTHORIZED_EMPTY_FIELDS,
+  UNAUTHORIZED_INVALID_DATA,
 };
