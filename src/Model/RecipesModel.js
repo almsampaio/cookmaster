@@ -1,11 +1,7 @@
 const connection = require('./connection');
 
 const registration = (id, data) => {
-  console.log('ID', id);
-  const newRecipe = {
-    ...data,
-    userId: id,
-  };
+  const newRecipe = { ...data, userId: id };
   return connection().then((db) => db.collection('recipes').insertOne(newRecipe))
     .then((recipe) => ({
       recipe: {
@@ -15,4 +11,8 @@ const registration = (id, data) => {
     }));
 };
 
-module.exports = { registration };
+const getAllRecipes = () => connection()
+  .then((db) => db.collection('recipes').find().toArray())
+  .then((recipes) => recipes);
+
+module.exports = { registration, getAllRecipes };

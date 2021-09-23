@@ -11,4 +11,6 @@ const recipeRegistration = async (data, token) => {
   return newRecipe;
 };
 
-module.exports = { recipeRegistration };
+const listAllReceipes = () => RecipesModel.getAllRecipes();
+
+module.exports = { recipeRegistration, listAllReceipes };

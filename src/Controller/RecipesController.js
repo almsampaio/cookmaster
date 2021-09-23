@@ -6,9 +6,14 @@ const recipeRegistration = async (req, res) => {
     const token = req.headers.authorization;
     const response = await RecipesService.recipeRegistration(data, token);
     res.status(201).json(response);
-   } catch (err) {
+  } catch (err) {
     console.log(err.message);
   }
 };
 
-module.exports = { recipeRegistration };
+const listAllReceipes = async (_req, res) => {
+  const response = await RecipesService.listAllReceipes();
+  res.status(200).json(response);
+};
+
+module.exports = { recipeRegistration, listAllReceipes };
