@@ -20,14 +20,23 @@ async function getAll() {
 async function getById(id) {
   const db = await connection();
   const recipe = await db.collection(collectionName).findOne(new ObjectId(id));
-  console.log(recipe);
-  console.log(id);
 
   return recipe;
+}
+
+async function update(id, recipe) {
+  const db = await connection();
+  await db.collection(collectionName).updateOne({ _id: ObjectId(id) }, {
+    $set: { ...recipe },
+  });
+  const updatedRecipe = await getById(id);
+  
+  return updatedRecipe;
 }
 
 module.exports = {
   register,
   getAll,
   getById,
+  update,
 };
