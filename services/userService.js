@@ -15,11 +15,8 @@ const createNewUser = async (user) => {
 
 const login = async (data) => {
   const user = await userModel.findOnebyEmail(data.email);
-  // console.log('user', user);
   const { password: _, ...userWithoutPassword } = user;
-  // console.log('userwithoutpassword', userWithoutPassword);
   const token = sign({ userWithoutPassword }, SECRET, jwtConfig);
-  // console.log(token);
   return { token };
 };
 

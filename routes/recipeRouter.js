@@ -1,6 +1,7 @@
 const { Router } = require('express');
 const recipeController = require('../controllers/recipeController');
 const { recipeValidation, checkIfProductIdExists } = require('../middlewares/recipe');
+const upload = require('../middlewares/upload');
 const { authentication } = require('../middlewares/auth');
 
 const router = Router();
@@ -9,5 +10,6 @@ router.get('/', recipeController.getAllRecipes);
 router.get('/:id', checkIfProductIdExists, recipeController.getRecipeById);
 router.put('/:id', checkIfProductIdExists, authentication, recipeController.updateRecipe);
 router.delete('/:id', checkIfProductIdExists, authentication, recipeController.deleteRecipe);
+router.put('/:id/image', authentication, upload.single('image'), recipeController.setImageRecipe);
 
 module.exports = router;

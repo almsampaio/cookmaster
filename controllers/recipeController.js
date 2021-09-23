@@ -48,10 +48,21 @@ const deleteRecipe = async (req, res, next) => {
   }
 };
 
+const setImageRecipe = async (req, res, next) => {
+  try {
+    const { params: { id }, file: { filename } } = req;       
+    const result = await recipeService.setImage(id, filename);
+    res.status(OK).json(result);
+  } catch (e) {
+    next(e);
+  }
+};
+
 module.exports = {
   createRecipe,
   getAllRecipes,
   getRecipeById,
   updateRecipe,
   deleteRecipe,
+  setImageRecipe,
 };
