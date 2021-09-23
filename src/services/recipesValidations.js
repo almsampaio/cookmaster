@@ -8,6 +8,12 @@ const validateRecipeCreation = (name, ingredients, preparation) => {
   }
 };
 
+const validateRecipeId = () => {
+  const errorMessage = errorGenerator(errorMsg.recipeNotFound);
+  return errorMessage;
+};
+
 module.exports = {
   validateRecipeCreation,
+  validateRecipeId,
 };

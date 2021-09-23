@@ -18,6 +18,8 @@ app.post('/login', usersController.loginUser);
 
 app.get('/recipes', recipesController.getAllRecipes);
 
+app.get('/recipes/:id', recipesController.getRecipeById);
+
 app.post('/recipes', validateJWT.validateJWT, recipesController.createRecipe);
 
 // Não remover esse end-point, ele é necessário para o avaliador

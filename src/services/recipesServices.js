@@ -6,6 +6,16 @@ const getAllRecipes = async () => {
   return recipes;
 };
 
+const getRecipeById = async (id) => {
+  const recipe = await recipesModel.getRecipeById(id);
+
+  if (!recipe) {
+    const errorMessage = validationsR.validateRecipeId();
+    return { errorMessage };
+  }
+  return { recipe };
+};
+
 const createRecipe = async (recipe, userId) => {
   const { name, ingredients, preparation } = recipe;
 
@@ -18,5 +28,6 @@ const createRecipe = async (recipe, userId) => {
 
 module.exports = {
   getAllRecipes,
+  getRecipeById,
   createRecipe,
 };
