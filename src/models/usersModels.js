@@ -19,7 +19,15 @@ const getAll = async () => {
   return users;
 };
 
+const findByEmail = async (email) => {
+  const conect = await connectDB();
+  const userId = await conect.collection('users').findOne({ email });
+
+  return userId;
+};
+
 module.exports = {
   created,
   getAll,
+  findByEmail,
 };

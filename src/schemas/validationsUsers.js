@@ -9,7 +9,7 @@ const nameObrigat = (name) => {
   if (
     !name
     || typeof name !== 'string'
-    || name === ''
+    // || name === ''
     || name.length < 3
   ) return { message: err.campoObrigatorio };
   return false;
@@ -17,6 +17,7 @@ const nameObrigat = (name) => {
 
 const emailObrigat = (email) => {
   const regexEmail = /[^@]+@[^.]+\..+/g;
+  // const regexEmail = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
   if (!email || email === '' || !regexEmail.test(email)
     || typeof email !== 'string') return { message: err.campoObrigatorio };
 };
@@ -24,8 +25,8 @@ const emailObrigat = (email) => {
 const passwordObrigat = (password) => {
   if (
     !password 
-    || password === '' 
-    || password.length < 8
+    // || password === '' 
+    || password.length < 5
     || typeof password !== 'string'
     ) return { message: err.campoObrigatorio };
 };
