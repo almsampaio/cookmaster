@@ -38,3 +38,5 @@ app.put('/recipes/:id/image', [
   ]);
 
 app.use('/images', express.static(path.join(__dirname, '..', '/uploads')));
+
+module.exports = app;
