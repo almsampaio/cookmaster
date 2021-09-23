@@ -16,6 +16,12 @@ async function register(recipe, token) {
   };
 }
 
+async function getAll() {
+  const recipes = await recipesModel.getAll();
+  return recipes;
+}
+
 module.exports = {
   register,
+  getAll,
 };
