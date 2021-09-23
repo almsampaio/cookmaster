@@ -21,8 +21,13 @@ const getById = async (req, res, _next) => {
 const editRecipe = async (req, res, _next) => {
   const { id } = req.params;
   const newRecipe = req.body;
-  const { status, result } = await recipesServices
-    .editRecipeServices(id, newRecipe);
+  const { status, result } = await recipesServices.editRecipeServices(id, newRecipe);
+  return res.status(status).json(result);
+};
+
+const delRecipe = async (req, res, _next) => {
+  const { id } = req.params;
+  const { status, result } = await recipesServices.deleteRecipeServices(id);
   return res.status(status).json(result);
 };
 
@@ -31,4 +36,5 @@ module.exports = {
   getRecipes,
   getById,
   editRecipe,
+  delRecipe,
 };

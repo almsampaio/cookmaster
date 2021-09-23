@@ -5,6 +5,7 @@ const NOT_FOUND_STATUS = 404;
 const BAD_REQUEST_STATUS = 400;
 const CREATED_STATUS = 201;
 const OK_STATUS = 200;
+const NO_CONTENT_STATUS = 204;
 
 const msg400 = 'Invalid entries. Try again.';
 const ERROR_404 = 'recipe not found';
@@ -50,9 +51,15 @@ const editRecipeServices = async (id, newRecipe) => {
   return { status: OK_STATUS, result };
 };
 
+const deleteRecipeServices = async (id) => {
+  const result = await recipesModel.delRecipeModels(id);
+  return { status: NO_CONTENT_STATUS, result };
+};
+
 module.exports = {
   register,
   getRecipesServices,
   getByIdRecipeServices,
   editRecipeServices,
+  deleteRecipeServices,
 };
