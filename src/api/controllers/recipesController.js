@@ -48,4 +48,12 @@ const exclude = rescue(async (req, res) => {
   return res.status(204).json({});
 });
 
-module.exports = { create, getAll, getById, update, exclude };
+const addImage = rescue(async (req, res) => {
+  const { id } = req.params;
+  const { path } = req.file;
+  const { recipe } = await recipesSercice.getById(id);
+
+  res.status(HTTP_OK_STATUS).json({ ...recipe, image: `localhost:3000/${path}` });
+});
+
+module.exports = { create, getAll, getById, update, exclude, addImage };
