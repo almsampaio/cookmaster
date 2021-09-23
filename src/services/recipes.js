@@ -63,8 +63,16 @@ const deleteRecipeById = async (id) => {
   return { result };
 };
 
-const insertImage = async (id, filename) => {
+const insertImage = async (id, filename, userData) => {
   const imageLink = `localhost:3000/src/uploads/${filename}`;
+
+  const { result: { userId } } = await getRecipeById(id);
+
+  // console.log(userData);
+
+  if (userId !== userData.id && userData.role !== 'admin') {
+    return { error: INVALID_ENTRIES };
+  }
 
   const result = await recipesModel.insertImage(id, imageLink);
 

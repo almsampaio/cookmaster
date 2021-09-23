@@ -41,7 +41,7 @@ const upload = multer({ storage });
 app.use('/images', express.static(path.join(__dirname, '..', '/uploads')));
 
 app.route('/recipes/:id/image')
-  .put(authenticate, upload.single('image'), recipesController.insertImage);
+  .put(upload.single('image'), authenticate, recipesController.insertImage);
 
 app.route('/recipes/:id')
   .get(recipesController.getRecipeById)

@@ -71,9 +71,10 @@ const deleteRecipeById = async (req, res, next) => {
 const insertImage = async (req, res, next) => {
   try {
     const { id } = req.params;
+    const userData = req.body;
     const { filename } = req.file;
 
-    const { result, error } = await recipesService.insertImage(id, filename);
+    const { result, error } = await recipesService.insertImage(id, filename, userData);
 
     if (error) next(error);
 
