@@ -20,7 +20,20 @@ const schemaLoginUser = Joi.object({
       .required(),
 });
 
+const schemaCreateRecipe = Joi.object({
+  name: Joi.string()
+      .min(1)
+      .required(),
+  ingredients: Joi.string()
+      .min(1)
+      .required(),
+  preparation: Joi.string()
+      .min(1)
+      .required(),
+});
+
 module.exports = {
   schemaCreateUser,
   schemaLoginUser,
+  schemaCreateRecipe,
 };

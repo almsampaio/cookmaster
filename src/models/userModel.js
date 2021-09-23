@@ -1,4 +1,3 @@
-// const { ObjectId } = require('mongodb');
 const connect = require('./connection');
 
 const getEmail = async (email) => {

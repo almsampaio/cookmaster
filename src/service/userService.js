@@ -24,8 +24,9 @@ const login = async (email, password) => {
     return {
       err: { message: 'Incorrect username or password' } };
     }
+
   delete user.password;
-    
+
   const token = jwt.sign(user, secret, jwtConfig);
   return { token };
 };

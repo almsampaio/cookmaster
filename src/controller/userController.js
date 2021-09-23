@@ -1,4 +1,3 @@
-// const { ObjectId } = require('mongodb');
 const userService = require('../service/userService');
 
 const create = async (req, res) => {
@@ -7,10 +6,10 @@ const create = async (req, res) => {
 
   if (err) return res.status(409).json(err);
 
-  const { _id } = data;
+  const { password: _, ...dataNotPassword } = data;
 
   return res.status(201)
-    .json({ user: { name: data.name, email: data.email, role: data.role, _id } });
+    .json({ user: dataNotPassword });
 };
 
 const login = async (req, res) => {
