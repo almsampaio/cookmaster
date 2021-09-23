@@ -36,9 +36,19 @@ const getRecipes = rescue(
   },
 );
 
+const getRecipe = rescue(
+  async (req, res) => {
+    const { id } = req.params;
+    const recipe = await serviceUsers.getRecipe(id);
+
+    return res.status(200).json(recipe);
+  },
+);
+
 module.exports = {
   addUser,
   findUser,
   addRecipes,
   getRecipes,
+  getRecipe,
 };

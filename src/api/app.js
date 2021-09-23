@@ -23,6 +23,8 @@ app.post('/recipes', controllerUsers.addRecipes);
 
 app.get('/recipes', controllerUsers.getRecipes);
 
+app.get('/recipes/:id', controllerUsers.getRecipe);
+
 app.use((err, _req, res, _next) => {
   const { message, status } = err;
   res.status(status).json({ message });

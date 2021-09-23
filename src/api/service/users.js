@@ -2,6 +2,7 @@ const jwt = require('jsonwebtoken');
 const ModelUsers = require('../model/users');
 
 const re = /\S+@\S+\.\S+/;
+const validetionId = /[0-9a-z]{24}/;
 const secret = 'Cookmaster';
 
 const util = (status, message) => ({ status, message });
@@ -90,9 +91,20 @@ const getRecipes = async () => {
   return recipes;
 };
 
+const getRecipe = async (id) => {
+  if (!validetionId.test(id)) throw util(404, 'recipe not found');
+
+  const recipe = await ModelUsers.getRecipe(id);
+
+  if (!recipe) throw util(404, 'recipe not found');
+
+  return recipe;
+};
+
 module.exports = {
   addUser,
   findUser,
   addRecipes,
   getRecipes,
+  getRecipe,
 };
