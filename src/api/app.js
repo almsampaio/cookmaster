@@ -7,7 +7,7 @@ const userController = require('../controllers/userController');
 const postRecipieController = require('../controllers/postRecipieController');
 const authMiddleware = require('../middlewares/authMiddleware');
 const valUserMid = require('../middlewares/validateUserMiddleware');
-const getRecipieController = require('../controllers/getRecipeController');
+const recipeController = require('../controllers/recipeController');
 const imageCont = require('../controllers/imageController');
 
 const app = express();
@@ -36,12 +36,12 @@ const upload = multer({ storage });
 app.post('/users', userController);
 app.post('/login', loginController);
 app.post('/recipes', authMiddleware, postRecipieController);
-app.get('/recipes', getRecipieController.getAll);
+app.get('/recipes', recipeController.getAll);
 app.put('/recipes/:id/image', 
 authMiddleware, valUserMid, upload.single('image'), imageCont.addImage);
 app.get('/images/:filename', imageCont.getByName);
-app.get('/recipes/:id', getRecipieController.getById);
-app.put('/recipes/:id', authMiddleware, valUserMid, getRecipieController.updateById);
-app.delete('/recipes/:id', authMiddleware, valUserMid, getRecipieController.deleteById);
+app.get('/recipes/:id', recipeController.getById);
+app.put('/recipes/:id', authMiddleware, valUserMid, recipeController.updateById);
+app.delete('/recipes/:id', authMiddleware, valUserMid, recipeController.deleteById);
 
 module.exports = app;
