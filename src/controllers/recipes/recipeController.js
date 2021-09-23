@@ -29,7 +29,7 @@ const editRecipeController = async (req, res) => {
     
     const recipe = await recipeService
         .editRecipeService(params);
-    res.status(200).json(recipe.message);
+    res.status(recipe.status).json(recipe.message);
 };
 
 const deleteRecipeController = async (req, res) => {

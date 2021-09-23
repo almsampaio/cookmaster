@@ -36,8 +36,8 @@ const editRecipeService = async (params) => {
         return { status: 401, message: { message: 'recipe not found' } };
     }
 
-    if (userId !== getRecipe.message.userId || role !== 'admin') { 
-        return objId;
+    if (userId !== getRecipe.message.userId && role !== 'admin') { 
+        return { status: 401, message: { message: 'missing auth token' } };
     }
     
     await recipeModel
