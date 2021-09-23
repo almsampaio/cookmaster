@@ -27,15 +27,28 @@ const getRecipeById = async (req, res) => {
   
     const recipe = await recipesService.getRecipeById(id);
     if (recipe.error) {
-      console.log(recipe.error.message);
       return res.status(recipe.error.status).json({ message: recipe.error.message });
     }
   
     res.status(200).json(recipe);
 };
 
+const editRecipe = async (req, res) => {
+  console.log('chegou');
+  const { id } = req.params;
+  const { name, ingredients, preparation } = req.body;
+  const recipe = await recipesService.getRecipeById(id);
+  if (recipe.error) {
+    return res.status(recipe.error.status).json({ message: recipe.error.message });
+  }
+  const editedRecipe = await recipesService.editRecipe(id, name, ingredients, preparation);
+
+  res.status(200).json(editedRecipe);
+};
+
 module.exports = {
   createRecipe,
   getAllRecipes,
   getRecipeById,
+  editRecipe,
 }; 
