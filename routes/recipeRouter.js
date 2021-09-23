@@ -7,5 +7,6 @@ const router = Router();
 router.post('/', recipeValidation, authentication, recipeController.createRecipe);
 router.get('/', recipeController.getAllRecipes);
 router.get('/:id', checkIfProductIdExists, recipeController.getRecipeById);
+router.put('/:id', checkIfProductIdExists, authentication, recipeController.updateRecipe);
 
 module.exports = router;

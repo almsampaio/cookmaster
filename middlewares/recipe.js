@@ -12,6 +12,7 @@ const recipeValidation = async (req, _res, next) => {
 
 const checkIfProductIdExists = async (req, _res, next) => {
   const { id } = req.params;
+  
   if (!ObjectId.isValid(id) || !id) {
     return next({ message: 'recipe not found', statusCode: NOT_FOUND }); 
   }
