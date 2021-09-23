@@ -1,4 +1,5 @@
 const User = require('../models/User');
+const AppError = require('../utils/AppError');
 
 // Função verifyEmail consultada no meu próprio PR do projeto Trybe Wallet
 // Link: https://github.com/tryber/sd-010-a-project-trybewallet/pull/70
@@ -28,22 +29,16 @@ const verifyEmailIsUnique = async (email) => {
 
 exports.create = async ({ name, email, password }) => {
   if (!verifyData({ name, email, password })) {
-    return {
-      message: 'Invalid entries. Try again.',
-      code: 400,
-    };
+    throw new AppError(400, 'Invalid entries. Try again.');
   }
 
   const emailAreadyExists = await verifyEmailIsUnique(email);
 
   if (emailAreadyExists) {
-    return {
-      message: 'Email already registered',
-      code: 409,
-    };
+    throw new AppError(409, 'Email already registered');
   }
 
   const user = await User.create({ name, email, password });
 
-  return { user };
+  return user;
 };
