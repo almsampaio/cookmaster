@@ -4,21 +4,19 @@ const server = require('../api/app');
 const sinon = require('sinon');
 const { MongoClient } = require('mongodb');
 const { MongoMemoryServer } = require('mongodb-memory-server');
+const { getConnection } = require('./connection');
 
 chai.use(chaiHttp);
 
 const { expect } = chai;
+const DBServer = new MongoMemoryServer();
 
 describe('POST  /users', () => {
   describe('created successfully', () => {
     let response = {};
-    const DBServer = new MongoMemoryServer();
 
     before(async () => {
-      const URLMock = await DBServer.getUri();
-      const connectionMock = await MongoClient.connect(
-        URLMock, { useNewUrlParser: true, useUnifiedTopology: true }
-      );
+      const connectionMock = await getConnection();
 
       sinon.stub(MongoClient, 'connect')
         .resolves(connectionMock);
@@ -34,7 +32,6 @@ describe('POST  /users', () => {
 
     after(async () => {
       MongoClient.connect.restore();
-      await DBServer.stop();
     });
 
     it('returns status 201', () => {
@@ -68,21 +65,25 @@ describe('POST  /users', () => {
 
   describe('create failed, wrong entries', () => {
     let response = {};
-    const DBServer = new MongoMemoryServer();
 
     before(async () => {
-      const URLMock = await DBServer.getUri();
-      const connectionMock = await MongoClient.connect(
-        URLMock, { useNewUrlParser: true, useUnifiedTopology: true }
-      );
+      const connectionMock = await getConnection();
 
       sinon.stub(MongoClient, 'connect')
         .resolves(connectionMock);
+
+
+      connectionMock.db('Cookmaster')
+        .collection('users')
+        .insertOne({
+          "name": "Marcus Cesar",
+          "email": "email@gmail.com",
+          "password": "123456"
+        });
     });
 
     after(async () => {
       MongoClient.connect.restore();
-      await DBServer.stop();
     });
 
     it('name field required', async () => {
@@ -92,10 +93,7 @@ describe('POST  /users', () => {
           "name": "",
           "email": "email@email.com",
           "password": "123456"
-
-
         });
-
       expect(response).to.have.status(400);
       expect(response.body).to.be.a('object');
       expect(response.body).to.have.property('message');
@@ -150,12 +148,13 @@ describe('POST  /users', () => {
         .post('/users')
         .send({
           "name": "Marcus Cesar",
-          "email": "email@email",
+          "email": "email@gmail.com",
           "password": "123456"
         });
-
-      expect(response).to.have.status(201);
+      expect(response).to.have.status(409);
+      expect(response.body).to.be.a('object');
+      expect(response.body).to.have.property('message');
+      expect(response.body.message).to.be.equal('Email already registered')
     });
-
   });
 });
