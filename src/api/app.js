@@ -1,5 +1,4 @@
 const express = require('express');
-const path = require('path');
 const multer = require('multer');
 const bodyParser = require('body-parser');
 const userController = require('../controllers/user');
@@ -44,7 +43,7 @@ app.get('/recipes/:id', recipesController.recipeId);
 app.post('/recipes', authToken, recipesController.addRecipe);
 app.get('/recipes', recipesController.allRecipes);
 
-app.use('/images', express.static(path.join(__dirname, '..', 'uploads')));
+app.use('/images', express.static('src/uploads/'));
 
 app.use(errorMiddleware);
 
