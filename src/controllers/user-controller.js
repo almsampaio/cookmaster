@@ -8,4 +8,10 @@ const createUser = async (req, res) => {
   return res.status(201).json({ user: userData });
 };
 
-module.exports = { createUser };
+const findEmail = async (_req, res) => {
+  const searchEmail = await userService.findEmail();
+
+  return res.status(200).json({ email: searchEmail });
+};
+
+module.exports = { createUser, findEmail };
