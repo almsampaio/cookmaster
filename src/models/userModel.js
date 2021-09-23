@@ -1,3 +1,4 @@
+const { ObjectId } = require('mongodb');
 const connection = require('./connection');
 
 const coll = 'users';
@@ -19,14 +20,13 @@ const checkLogin = async (email, password) => {
 
   const { password: _, ...userWithoutPassword } = exists;
 
-  console.log(userWithoutPassword);
-
   return userWithoutPassword;
 };
 
 const createUser = async (name, password, email, role) => {
   const newUser = await connection()
-    .then((db) => db.collection(coll).insertOne({ name, password, email, role }))
+    .then((db) => db.collection(coll)
+      .insertOne({ name, password, email, role, userId: new ObjectId() }))
     .then((result) => {
       const { password: _, ...userWithoutPassword } = result.ops[0];
       return { user: userWithoutPassword };
