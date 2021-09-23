@@ -16,4 +16,8 @@ router.get('/', recipesController.getAll);
 
 router.get('/:id', recipesController.getById);
 
+router.put('/:id',
+  validations.validateAuth,
+  recipesController.update);
+
 module.exports = router;
