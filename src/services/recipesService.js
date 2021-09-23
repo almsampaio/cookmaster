@@ -6,33 +6,35 @@ const getAll = async () => {
 };
 
 const findById = async (id) => {
-  const product = await recipesModel.findById(id);
-  if (!product) {
+  const recipe = await recipesModel.findById(id);
+  if (!recipe) {
     return {
       response: {
-        err: {
-          code: 'invalid_data',
-          message: 'Wrong id format',
-        },
+        message: 'recipe not found',
       },
-      status: 422,
+      status: 404,
     };
   }
   return {
-    response: product,
+    response: recipe,
     status: 200,
   };
 };
 
-const deleteById = async (id) => {
-  const productExists = await findById(id);
-  if (productExists.status === 422) {
-    return productExists;
+const deleteById = async (id, user) => {
+  const recipeExists = await findById(id);
+  if (recipeExists.status === 404) {
+    return recipeExists;
+  }
+  const { response: registredRecipe } = recipeExists;
+  const { role, userId } = user;
+  if (userId !== registredRecipe.userId && role !== 'admin') {
+    return { response: { message: 'user not allowed' }, status: 401 };
   }
   await recipesModel.deleteById(id);
   return {
-    response: productExists.response,
-    status: 200,
+    response: null,
+    status: 204,
   };
 };
 
@@ -41,18 +43,19 @@ const create = async (name, ingredients, preparation, userId) => {
   return createdRecipe;
 };
 
-const update = async (id, name, quantity) => {
-  // const infoValidation = checkProductInfo(name, quantity);
-  // if (infoValidation.flag) {
-  //   return { response: infoValidation.errorInfo, status: 422 };
-  // }
-  const productExists = await findById(id);
-  if (productExists.status === 422) {
-    return productExists;
+const update = async (recipe, user) => {
+  const { id, name, ingredients, preparation } = recipe;
+  const { userId, role } = user;
+  const registredRecipe = await recipesModel.findById(id);
+  if (!registredRecipe) {
+    return { response: { message: 'recipe not found' }, status: 404 };
   }
-  const productUpdated = await recipesModel.update(id, name, quantity);
+  if (userId !== registredRecipe.userId && role !== 'admin') {
+    return { response: { message: 'user not allowed' }, status: 401 };
+  }
+  await recipesModel.update(recipe);
   return {
-    response: productUpdated,
+    response: { _id: id, name, ingredients, preparation, userId: registredRecipe.userId },
     status: 200,
   };
 };

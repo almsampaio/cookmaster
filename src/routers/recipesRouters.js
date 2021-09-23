@@ -8,9 +8,9 @@ const router = express.Router();
 
 router.get('/', controller.getAll);
 
-router.get('/:id', userAuthentication, controller.findById);
+router.get('/:id', controller.findById);
 
-router.put('/:id', controller.update);
+router.put('/:id', userAuthentication, controller.update);
 
 router.post('/', userAuthentication, controller.create);
 

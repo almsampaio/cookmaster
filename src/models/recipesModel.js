@@ -39,14 +39,12 @@ const create = async (name, ingredients, preparation, userId) => {
   return productCreated;
 };
 
-const update = async (id, recipeInfo) => {
-  const { name, ingredients, preparation, userId } = recipeInfo;
-  const productUpdated = await connection()
+const update = async (recipeInfo) => {
+  const { id, name, ingredients, preparation } = recipeInfo;
+  await connection()
     .then((db) => db.collection(collectionName)
-      .updateOne({ _id: ObjectId(id) }, { $set: { name, ingredients, preparation, userId } }))
-    .then(() => ({ _id: id, name, ingredients, preparation, userId }))
+      .updateOne({ _id: ObjectId(id) }, { $set: { name, ingredients, preparation } }))
     .catch((err) => console.log(err));
-  return productUpdated;  
 };
 
 module.exports = { getAll, findById, deleteById, create, update, findByName }; 

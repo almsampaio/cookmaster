@@ -22,15 +22,21 @@ const create = async (req, res) => {
 };
 
 const update = async (req, res) => {
+  const { user } = req;
   const { id } = req.params;
-  const { name, quantity } = req.body;
-  const result = await recipeService.update(id, name, quantity);
+  const { name, ingredients, preparation } = req.body;
+  if (!name || !ingredients || !preparation) {
+    return res.status(400).json({ message: 'Invalid entries. Try again.' });
+  }
+  const recipeToUpdate = { id, name, ingredients, preparation };
+  const result = await recipeService.update(recipeToUpdate, user);
   return res.status(result.status).json(result.response);
 };
 
 const deleteRecipe = async (req, res) => {
   const { id } = req.params;
-  const result = await recipeService.deleteById(id);
+  const { user } = req;
+  const result = await recipeService.deleteById(id, user);
   return res.status(result.status).json(result.response);
 };
 
