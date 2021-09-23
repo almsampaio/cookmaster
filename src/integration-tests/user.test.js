@@ -1,11 +1,12 @@
 const chai = require('chai');
 const sinon = require('sinon');
 const chaiHttp = require('chai-http');
+const getConnectionMock = require('./conectionMock');
+const { MongoClient } = require('mongodb');
 
 const server = require('../api/app');
 
-const { MongoClient } = require('mongodb');
-const { MongoMemoryServer } = require('mongodb-memory-server');
+
 
 chai.use(chaiHttp);
 
@@ -14,13 +15,9 @@ const { expect } = chai;
 describe('Verificação de rota de criação de usuário,', () => {
     describe('Quando usuário é criado com sucesso', () => {
         let response = {};
-        const DBServer = new MongoMemoryServer();
-
+        let connectionMock;
         before(async () => {
-            const URLMock = await DBServer.getUri();
-            const connectionMock = await MongoClient.connect(URLMock,
-                { useNewUrlParser: true, useUnifiedTopology: true }
-            );
+            connectionMock = await getConnectionMock();
 
             sinon.stub(MongoClient, 'connect')
                 .resolves(connectionMock);
@@ -36,7 +33,6 @@ describe('Verificação de rota de criação de usuário,', () => {
 
         after(async () => {
             MongoClient.connect.restore();
-            await DBServer.stop();
         })
 
         it('retorna status 201', () => {
@@ -59,13 +55,9 @@ describe('Verificação de rota de criação de usuário,', () => {
 
     describe('Verifica que não é possível criar um usuário faltando a propriedade "name"', () => {
         let response = {};
-        const DBServer = new MongoMemoryServer();
-
+        let connectionMock;
         before(async () => {
-            const URLMock = await DBServer.getUri();
-            const connectionMock = await MongoClient.connect(URLMock,
-                { useNewUrlParser: true, useUnifiedTopology: true }
-            );
+            connectionMock = await getConnectionMock();
 
             sinon.stub(MongoClient, 'connect')
                 .resolves(connectionMock);
@@ -80,7 +72,6 @@ describe('Verificação de rota de criação de usuário,', () => {
 
         after(async () => {
             MongoClient.connect.restore();
-            await DBServer.stop();
         })
 
         it('retorna status 400', () => {
@@ -99,13 +90,9 @@ describe('Verificação de rota de criação de usuário,', () => {
     });
     describe('Verifica que não é possível criar um usuário faltando a propriedade "email"', () => {
         let response = {};
-        const DBServer = new MongoMemoryServer();
-
+        let connectionMock;
         before(async () => {
-            const URLMock = await DBServer.getUri();
-            const connectionMock = await MongoClient.connect(URLMock,
-                { useNewUrlParser: true, useUnifiedTopology: true }
-            );
+            connectionMock = await getConnectionMock();
 
             sinon.stub(MongoClient, 'connect')
                 .resolves(connectionMock);
@@ -120,7 +107,6 @@ describe('Verificação de rota de criação de usuário,', () => {
 
         after(async () => {
             MongoClient.connect.restore();
-            await DBServer.stop();
         })
 
         it('retorna status 400', () => {
@@ -139,13 +125,9 @@ describe('Verificação de rota de criação de usuário,', () => {
     });
     describe('Verifica que não é possível criar um usuário faltando a propriedade "password"', () => {
         let response = {};
-        const DBServer = new MongoMemoryServer();
-
+        let connectionMock;
         before(async () => {
-            const URLMock = await DBServer.getUri();
-            const connectionMock = await MongoClient.connect(URLMock,
-                { useNewUrlParser: true, useUnifiedTopology: true }
-            );
+            connectionMock = await getConnectionMock();
 
             sinon.stub(MongoClient, 'connect')
                 .resolves(connectionMock);
@@ -160,7 +142,6 @@ describe('Verificação de rota de criação de usuário,', () => {
 
         after(async () => {
             MongoClient.connect.restore();
-            await DBServer.stop();
         })
 
         it('retorna status 400', () => {
@@ -179,13 +160,9 @@ describe('Verificação de rota de criação de usuário,', () => {
     });
     describe('Verifica que não é possível criar um usuário a propriedade "email" inválida', () => {
         let response = {};
-        const DBServer = new MongoMemoryServer();
-
+        let connectionMock;
         before(async () => {
-            const URLMock = await DBServer.getUri();
-            const connectionMock = await MongoClient.connect(URLMock,
-                { useNewUrlParser: true, useUnifiedTopology: true }
-            );
+            connectionMock = await getConnectionMock();
 
             sinon.stub(MongoClient, 'connect')
                 .resolves(connectionMock);
@@ -201,7 +178,6 @@ describe('Verificação de rota de criação de usuário,', () => {
 
         after(async () => {
             MongoClient.connect.restore();
-            await DBServer.stop();
         })
 
         it('retorna status 400', () => {
@@ -220,24 +196,16 @@ describe('Verificação de rota de criação de usuário,', () => {
     });
     describe('Verifica que não é possível criar um usuário com email que já esteja registrado no banco', () => {
         let response = {};
-        const DBServer = new MongoMemoryServer();
-
+        let connectionMock;
         before(async () => {
-            const URLMock = await DBServer.getUri();
-            const connectionMock = await MongoClient.connect(URLMock,
-                { useNewUrlParser: true, useUnifiedTopology: true }
-            );
+            connectionMock = await getConnectionMock();
 
             sinon.stub(MongoClient, 'connect')
                 .resolves(connectionMock);
-            
-            await chai.request(server)
-                .post('/users')
-                .send({
-                    name: 'Jane',
-                    email: 'jane@gmail.com',
-                    password: 'senha123'
-                });
+
+            await connectionMock.db('Cookmaster').collection('users')
+              .insertOne({ name: 'Jane', email: 'jane@gmail.com', password: 'senha123', role: 'user' })
+
             response = await chai.request(server)
                 .post('/users')
                 .send({
@@ -249,7 +217,6 @@ describe('Verificação de rota de criação de usuário,', () => {
 
         after(async () => {
             MongoClient.connect.restore();
-            await DBServer.stop();
         })
 
         it('retorna status 409', () => {
