@@ -37,4 +37,16 @@ const editRecipe = async (req, res) => {
     res.status(401).json({ message: err.message });
   }
 };
-module.exports = { recipeRegistration, listAllReceipes, listRecipeById, editRecipe };
+
+const deleteRecipe = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const token = req.headers.authorization;
+    await RecipesService.deleteRecipe(id, token);
+    return res.status(204).json();
+  } catch (err) {
+    res.status(401).json({ message: err.message });
+  }
+};
+
+module.exports = { recipeRegistration, listAllReceipes, listRecipeById, editRecipe, deleteRecipe };

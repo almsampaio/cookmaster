@@ -13,4 +13,7 @@ Recipesrouter.get('/', RecipesController.listAllReceipes);
 Recipesrouter.get('/:id', RecipesController.listRecipeById);
 // Requisito 7 - Edição de uma receita 
 Recipesrouter.put('/:id', RecipesController.editRecipe);
+// Requisito 8 - Exclui uma receita
+Recipesrouter.delete('/:id', RecipesController.deleteRecipe);
+
 module.exports = { Recipesrouter };

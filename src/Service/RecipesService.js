@@ -47,4 +47,11 @@ const editRecipe = async (id, token, data) => {
   return upRecipe;
 };
 
-module.exports = { recipeRegistration, listAllReceipes, listRecipeById, editRecipe };
+const deleteRecipe = async (id, token) => {
+  isValidId(id);
+  isValidToken(token);
+  const { data: { _id } } = jwt.verify(token, secret);
+  await RecipesModel.deleted(id);
+};
+
+module.exports = { recipeRegistration, listAllReceipes, listRecipeById, editRecipe, deleteRecipe };

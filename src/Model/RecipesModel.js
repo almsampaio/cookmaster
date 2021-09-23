@@ -37,4 +37,7 @@ const edition = (data, UserId, id) => {
       .findOneAndUpdate({ _id: ObjectId(id) }, { $set: newRecipe }, { returnOriginal: false }))
     .then((recipe) => recipe);
 };
-module.exports = { registration, getAllRecipes, getById, edition };
+
+const deleted = (id) => connection()
+  .then((db) => db.collection('recipes').deleteOne({ _id: ObjectId(id) }));
+module.exports = { registration, getAllRecipes, getById, edition, deleted };
