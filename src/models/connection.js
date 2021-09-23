@@ -1,7 +1,7 @@
 const { MongoClient } = require('mongodb');
 
 const MONGO_DB_URL = 'mongodb://localhost:27017'; // ou coloque sua URL do MongoDB aqui
-
+const DB_NAME = 'Cookmaster';
 let schema = null;
 
 async function connection() {
@@ -11,7 +11,7 @@ async function connection() {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     })
-    .then((conn) => conn.db('jwt_exercise'))
+    .then((conn) => conn.db(DB_NAME))
     .then((dbSchema) => {
       schema = dbSchema;
       return schema;
