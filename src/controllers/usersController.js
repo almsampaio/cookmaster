@@ -6,14 +6,14 @@ async function register(req, res, next) {
     const user = req.body;
     user.role = 'user';
 
-    const newUserId = await usersService.register(user);
+    const id = await usersService.register(user);
 
     delete user.password;
 
     res.status(201).json({
       user: {
         ...user,
-        _id: newUserId,
+        ...id,
       },
     });
   } catch (err) {

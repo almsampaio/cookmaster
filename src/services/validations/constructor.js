@@ -14,7 +14,7 @@ Validation.prototype.newError = function newError(status, message) {
   throw error;
 };
 
-Validation.prototype.validate = function validate(statusName, customMessage) {
+Validation.prototype.verify = function verify(statusName, customMessage) {
   const { status, message } = this.statusCode[statusName];
   const errorMessage = customMessage || message;
 

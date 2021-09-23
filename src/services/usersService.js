@@ -1,5 +1,5 @@
 const usersModel = require('../models/usersModel');
-const validations = require('./validations/usersValidation');
+const validations = require('./validations');
 
 async function register(user) {
   validations.isNameValid(user.name);
@@ -7,7 +7,7 @@ async function register(user) {
 
   const newUserId = await usersModel.register(user);
 
-  return newUserId;
+  return { _id: newUserId };
 }
 
 module.exports = {
