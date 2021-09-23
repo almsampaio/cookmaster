@@ -48,10 +48,23 @@ const deleteById = async (req, res) => {
    res.status(204).end();
 };
 
+const addImage = async (req, res) => {
+  const { authorization } = req.headers;
+  const { id } = req.params;
+  const userAuthorization = auth.validateToken(authorization);
+  if (userAuthorization.status) {
+    return res.status(userAuthorization.status).json(userAuthorization.obj);
+  }
+  const url = `localhost:3000/src/uploads/${id}.jpeg`;
+  const recipe = await recipesModel.addImage(id, url);
+  res.status(200).json(recipe);
+};
+
 module.exports = {
     createRecipe,
     getAll,
     getById,
     updateById,
     deleteById,
+    addImage,
 };

@@ -34,10 +34,18 @@ const deleteById = async (id) => {
     await db.collection('recipes').deleteOne({ _id: ObjectId(id) });
 };
 
+const addImage = async (id, image) => {
+    const db = await connection.mongoDB();
+    const recipe = await db.collection('recipes').findOneAndUpdate({ _id: ObjectId(id) },
+    { $set: { image } }, { returnOriginal: false });
+    return recipe.value;
+}; 
+
 module.exports = {
     createRecipe,
     getAll,
     getById,
     updateById,
     deleteById,
+    addImage,
 };
