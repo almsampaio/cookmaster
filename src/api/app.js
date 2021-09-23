@@ -1,13 +1,16 @@
-const app = require('express')();
+const express = require('express');
+const path = require('path');
 const bodyParser = require('body-parser');
 const userRouter = require('../routers/userRouter');
 const loginRouter = require('../routers/loginRouter');
 const recipesRouter = require('../routers/recipeRouter');
 require('dotenv').config();
 
-// const path = require('path');
+const app = express();
 
 app.use(bodyParser.json());
+
+app.use('/image', express.static(path.join(__dirname, '..', 'uploads')));
 
 app.use('/users', userRouter);
 app.use('/login', loginRouter);

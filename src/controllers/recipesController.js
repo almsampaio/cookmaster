@@ -45,10 +45,25 @@ const deleteRecipeById = rescue(async (req, res) => {
   return res.status(204).json({});
 });
 
+const updateRecipeImageById = rescue(async (req, res) => {
+  const { id } = req.params;
+  const { filename } = req.file;
+
+  const image = `localhost:3000/src/uploads/${filename}`;
+  
+  const recipeImage = await recipeService.updateRecipeImageById(id, image);
+
+  if (recipeImage.err) {
+    return res.status(recipeImage.err.status).json({ message: recipeImage.err.message });
+  }
+  res.status(200).json(recipeImage);
+});
+
 module.exports = {
   insertRecipe,
   getAllRecipes,
   getRecipeById,
   updateRecipeById,
   deleteRecipeById,
+  updateRecipeImageById,
 };

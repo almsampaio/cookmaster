@@ -38,10 +38,22 @@ const deleteRecipe = async (id) => {
   return result;
 };
 
+const updateRecipeImageById = async (id, image) => {
+  if (!ObjectId.isValid(id)) return null;
+
+  const db = await connection();
+  
+  await db.collection('recipes').updateOne({ _id: ObjectId(id) }, { $set: { image } });
+
+  const result = await getRecipeById(id);
+  return result;
+};
+
 module.exports = {
   insertRecipe,
   getAllRecipes,
   getRecipeById,
   updateRecipeById,
   deleteRecipe,
+  updateRecipeImageById,
 };

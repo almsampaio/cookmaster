@@ -41,10 +41,19 @@ const deleteRecipe = async (id) => {
   return recipe;
 };
 
+const updateRecipeImageById = async (id, image) => {
+  const updatedRecipe = await recipesModel.updateRecipeImageById(id, image);
+  if (!updatedRecipe) {
+    return { err: { status: 404, message: 'recipe not found' } };
+  }
+  return updatedRecipe;
+};
+
 module.exports = {
   createRecipe,
   getAllRecipes,
   getRecipeById,
   updateRecipeById,
   deleteRecipe,
+  updateRecipeImageById,
 };
