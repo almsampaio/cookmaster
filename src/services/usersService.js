@@ -15,7 +15,7 @@ const create = async (name, email, password) => {
   return Users.create(name, email, password);
 };
 
-const createAdmin = async (name, email, password, role) => {
+const createAdmin = async (name, email, password) => {
   const existingUser = await Users.findByEmail(email);
 
   if (existingUser) {
@@ -23,15 +23,6 @@ const createAdmin = async (name, email, password, role) => {
       err: {
         code: 'invalid_data',
         message: 'Email already registered',
-      },
-    };
-  }
-
-  if (role !== 'admin') {
-    return {
-      err: {
-        code: 'wrong_permision',
-        message: 'Only admins can register new admins',
       },
     };
   }

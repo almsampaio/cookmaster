@@ -15,6 +15,8 @@ module.exports = async (req, res, next) => {
 
     const user = await model.findUser(decoded.data.username);
 
+    console.log('Usuario logado', user);
+
     if (!user) {
       return res
         .status(401)

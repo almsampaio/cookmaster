@@ -15,10 +15,12 @@ app.get('/', (request, response) => {
 });
 // Não remover esse end-point, ele é necessário para o avaliador
 
+app.post('/login', Users.login);
+
 // Endpoint para Usuários
 
 app.post('/users', Users.create);
-app.post('/login', Users.login);
+app.post('/users/admin', validateJWT, Users.createAdmin);
 
 // Endpoint para Receitas
 
@@ -40,3 +42,5 @@ module.exports = app;
   a maneira do Adelino Júnior: https://github.com/AdelinoJnr 
   pois com o jeito que eu estava fazendo não chegou a funcionar 
   e vi que eu estava sendo muito redundante no código. */ 
+
+// Para adicionar mais contexto ao Requisito 10 eu busquei entender mais sobre através do link: https://expressjs.com/pt-br/starter/static-files.html
