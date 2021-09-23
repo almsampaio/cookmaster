@@ -41,4 +41,11 @@ const update = rescue(async (req, res) => {
   res.status(HTTP_OK_STATUS).json(updateRecipe);
 });
 
-module.exports = { create, getAll, getById, update };
+const exclude = rescue(async (req, res) => {
+  const { id } = req.params;
+  await recipesSercice.exclude(id);
+
+  return res.status(204).json({});
+});
+
+module.exports = { create, getAll, getById, update, exclude };
