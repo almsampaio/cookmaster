@@ -1,4 +1,6 @@
 const bodyParser = require('body-parser');
+const express = require('express');
+const path = require('path');
 
 const app = require('./app');
 const User = require('../controllers/users');
@@ -8,6 +10,7 @@ const validateToken = require('../middlewares/validateToken');
 const upload = require('../middlewares/uploadImage');
 
 app.use(bodyParser.json());
+
 app.post('/users', User.create);
 
 app.post('/login', Login.login);
@@ -22,6 +25,8 @@ app.put('/recipes/:id', validateToken, Recipes.updateRecipe);
 app.delete('/recipes/:id', validateToken, Recipes.exclude);
 app.post('/recipes', validateToken, Recipes.create);
 app.get('/recipes', Recipes.getAll);
+
+app.use('/images', express.static(path.join(__dirname, '..', 'uploads')));
 
 const PORT = 3000;
 
