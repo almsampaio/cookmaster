@@ -1,3 +1,5 @@
+const multer = require('multer');
+const path = require('path');
 const recipesService = require('../services/recipesService');
 
 const createRecipe = async (req, res) => {
@@ -56,10 +58,29 @@ const deleteRecipe = async (req, res) => {
   res.status(204).json();
 };
 
+const storage = multer.diskStorage({
+  destination: path.join(__dirname, '..', '/uploads'),
+  filename: (req, _file, callback) => {
+    const { id } = req.params;
+    callback(null, `${id}.jpeg`);
+  },
+});
+
+const upload = multer({ storage });
+
+const addImage = async (req, res) => {
+  const { id } = req.params;
+  const { filename } = req.file;
+  const recipe = await recipesService.getRecipeById(id);
+  res.status(200).json({ ...recipe, image: `localhost:3000/src/uploads/${filename}` });
+};
+
 module.exports = {
   createRecipe,
   getAllRecipes,
   getRecipeById,
   editRecipe,
   deleteRecipe,
+  upload,
+  addImage,
 }; 

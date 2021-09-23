@@ -21,5 +21,11 @@ app.get('/recipes', recipesController.getAllRecipes);
 app.get('/recipes/:id', recipesController.getRecipeById);
 app.put('/recipes/:id', validateJWT, recipesController.editRecipe);
 app.delete('/recipes/:id', validateJWT, recipesController.deleteRecipe);
+app.put(
+  '/recipes/:id/image',
+  validateJWT,
+  recipesController.upload.single('image'),
+  recipesController.addImage,
+);
 
 module.exports = app;
