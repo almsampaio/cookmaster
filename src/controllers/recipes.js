@@ -19,10 +19,25 @@ const getRecipeById = async (req, res) => {
   return res.status(status).json(data);
 };
 
-const update = async (req, res) => {
+const updateRecipe = async (req, res) => {
   const { id } = req.params;
   const { _id } = req.user;
-  const { status, data, err } = await Recipes.update(id, req.body, _id);
+  const { status, data, err } = await Recipes.updateRecipe(id, req.body, _id);
+  if (err) return res.status(status).json(err);
+  return res.status(status).json(data);
+};
+
+const removeRecipe = async (req, res) => {
+  const { id } = req.params;
+  const { status, data, err } = await Recipes.removeRecipe(id);
+  if (err) return res.status(status).json(err);
+  res.status(status).json(data);
+};
+
+const addRecipeImage = async (req, res) => {
+  const { id } = req.params;
+  const { file } = req.file;
+  const { status, data, err } = await Recipes.addRecipeImage(id, file);
   if (err) return res.status(status).json(err);
   return res.status(status).json(data);
 };
@@ -31,5 +46,7 @@ module.exports = {
   create,
   getAllRecipes,
   getRecipeById,
-  update,
+  updateRecipe,
+  removeRecipe,
+  addRecipeImage,
 };

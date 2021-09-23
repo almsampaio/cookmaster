@@ -1,4 +1,6 @@
 const { verify } = require('jsonwebtoken');
+const multer = require('multer');
+const path = require('path');
 
 const SECRET = 'segredomegasecreto123';
 
@@ -14,6 +16,17 @@ const authToken = (req, res, next) => {
   next();
 };
 
+const storage = multer.diskStorage({
+  destination: path.join(__dirname, '..', 'uploads'),
+  filename: (req, _file, callback) => {
+    const { id } = req.params;
+    callback(null, `${id}.jpeg`);
+  },
+});
+
+const uploadImg = multer({ storage });
+
 module.exports = {
   authToken,
+  uploadImg,
 };

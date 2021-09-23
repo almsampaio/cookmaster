@@ -20,6 +20,9 @@ app.post('/login', Users.tokenGen);
 app.post('/recipes', Middlewares.authToken, Recipe.create);
 app.get('/recipes', Recipe.getAllRecipes);
 app.get('/recipes/:id', Recipe.getRecipeById);
-app.put('/recipes/:id', Middlewares.authToken, Recipe.update);
+app.put('/recipes/:id', Middlewares.authToken, Recipe.updateRecipe);
+app.delete('/recipes/:id', Middlewares.authToken, Recipe.removeRecipe);
+app.put('/recipes/:id/image', Middlewares.authToken,
+  Middlewares.uploadImg.single('image'), Recipe.addRecipeImage);
 
 module.exports = app;
