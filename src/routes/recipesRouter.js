@@ -8,4 +8,7 @@ router.post('/', recipesController.register);
 router.get('/', recipesController.getAll);
 router.get('/:id', recipesController.getById);
 
+// UPDATE
+router.put('/:id', recipesController.update);
+
 module.exports = router;

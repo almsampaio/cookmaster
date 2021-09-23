@@ -43,8 +43,24 @@ async function getById(req, res, next) {
   }
 }
 
+async function update(req, res, next) {
+  try {
+    const { id } = req.params;
+    const token = req.headers.authorization;
+    const recipe = req.body;
+
+    const updatedRecipe = await recipesService.update(id, recipe, token);
+
+    res.status(200).json(updatedRecipe);
+  } catch (err) {
+    const error = errorDefault(err);
+    next(error);
+  }
+}
+
 module.exports = {
   register,
   getAll,
   getById,
+  update,
 };
