@@ -9,7 +9,7 @@ const app = express();
 
 app.use(bodyParser.json());
 
-app.use('/uploads', express.static(path.join(__dirname, '..', 'uploads')));
+app.use('/images', express.static(path.join(__dirname, '..', 'uploads')));
 // app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 
 // Não remover esse end-point, ele é necessário para o avaliador
