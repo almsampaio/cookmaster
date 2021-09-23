@@ -66,10 +66,23 @@ async function deleteRecipe(id) {
   return { _id: ObjectId(id) };
 }
 
+async function addImageUrl(recipeId) {
+  if (!ObjectId.isValid(recipeId)) return null;
+
+  const db = await mongoConnection.getConnection();
+  const recipeWithImage = await db.collection('recipes').updateOne(
+    { _id: ObjectId(recipeId) },
+    { $set: { image: `localhost:3000/src/uploads/${recipeId}.jpeg` } },
+  );
+
+  return recipeWithImage;
+}
+
 module.exports = {
   addRecipe,
   getAll,
   getById,
   updateRecipe,
   deleteRecipe,
+  addImageUrl,
 };
