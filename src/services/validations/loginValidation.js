@@ -3,28 +3,29 @@ const Validation = require('./constructor');
 const emptyField = 'All fields must be filled';
 const status = 'unauthorized';
 
-function isEmailValid(email) {
+function isLoginEmailValid(email) {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
   const isRegexValid = new Validation(emailRegex.test(email));
   const isEmailTrue = new Validation(!!email);
 
-  isEmailTrue.validate(status, emptyField);
-  isRegexValid.validate(status);
+  isEmailTrue.verify(status, emptyField);
+  isRegexValid.verify(status);
 }
 
-function isPasswordValid(password, user) {
+function isLoginPasswordValid(password, user) {
   const isPasswordTrue = new Validation(!!password);
-  isPasswordTrue.validate(status, emptyField);
+  isPasswordTrue.verify(status, emptyField);
 
   const isUserTrue = new Validation(!!user);
-  isUserTrue.validate(status);
+  isUserTrue.verify(status);
   
   const isPasswordMatch = new Validation(password === user.password);
-  isPasswordMatch.validate(status);
+
+  isPasswordMatch.verify(status);
 }
 
 module.exports = {
-  isEmailValid,
-  isPasswordValid,
+  isLoginEmailValid,
+  isLoginPasswordValid,
 };

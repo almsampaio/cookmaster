@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 const usersModel = require('../models/usersModel');
-const validations = require('./validations/loginValidation');
+const validations = require('./validations');
 
 const SECRET = 'creatingtoken';
 
@@ -12,8 +12,8 @@ const jwtconfig = {
 async function login(email, password) {
   const user = await usersModel.getByEmail(email);
 
-  validations.isEmailValid(email, user);
-  validations.isPasswordValid(password, user);
+  validations.isLoginEmailValid(email, user);
+  validations.isLoginPasswordValid(password, user);
 
   delete user.password;
 
