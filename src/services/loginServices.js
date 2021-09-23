@@ -1,12 +1,12 @@
 const jwt = require('jsonwebtoken');
+require('dotenv').config();
 
 const SECRET = process.env.SECRET || 'secretPassword';
 
 const { usersModel } = require('../models');
 
-const getToken = async (email, password) => {
+module.exports = async (email, password) => {
   const user = await usersModel.getUser(email, password);
-  console.log(user);
 
   if (!user || user.length === 0) {
     throw new Error('Incorrect username or password');
@@ -17,9 +17,11 @@ const getToken = async (email, password) => {
     algorithm: 'HS256',
   };
 
-  const token = jwt.sign({ data: user }, SECRET, jwtConfig);
+  const payload = {
+    email,
+  };
+
+  const token = jwt.sign(payload, SECRET, jwtConfig);
 
   return token;
 };
-
-module.exports = { getToken };

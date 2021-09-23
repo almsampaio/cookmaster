@@ -28,11 +28,19 @@ const getUser = async (email, password) => {
   const data = await generalDB();
 
   const findUser = await data.find({ email, password }).toArray();
-  console.log('findUser', findUser);
+  return findUser;
+};
+
+const getUserByEmail = async (email) => {
+  const data = await generalDB();
+
+  const findUser = await data.findOne({ email });
+
   return findUser;
 };
 
 module.exports = {
   addUser,
   getUser,
+  getUserByEmail,
 };

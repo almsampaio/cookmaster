@@ -20,7 +20,7 @@ module.exports = [
   rescue(async (req, res) => {
     const { email, password } = req.body;
     try {
-      const token = await loginServices.getToken(email, password);
+      const token = await loginServices(email, password);
       res.status(OK).json({ token });
     } catch (e) {
       res.status(UNAUTHORIZED).json({ message: e.message });
