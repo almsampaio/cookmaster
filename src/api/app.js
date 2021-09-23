@@ -12,6 +12,9 @@ app.use(bodyParser.json());
 app.get('/', (request, response) => {
   response.send();
 });
+
+app.get('/recipes', recipeController.getAll);
+
 app.post('/users', usersController.create);
 app.post('/login', loginController.logIn);
 app.post('/recipes', validateWebToken, recipeController.create);

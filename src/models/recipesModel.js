@@ -16,6 +16,13 @@ const create = async (name, ingredients, preparation, userId) => {
     };
 };
 
+const getAll = async () => {
+    const db = await connect();
+    const recipes = await db.collection('recipes').find().toArray();
+    return recipes;
+};
+
 module.exports = {
     create,
+    getAll,
 };
