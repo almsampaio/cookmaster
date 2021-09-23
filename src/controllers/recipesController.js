@@ -20,7 +20,7 @@ async function register(req, res, next) {
   }
 }
 
-async function getAll(req, res, next) {
+async function getAll(_req, res, next) {
   try {
     const recipes = await recipesService.getAll();
 
@@ -31,7 +31,20 @@ async function getAll(req, res, next) {
   }
 }
 
+async function getById(req, res, next) {
+  try {
+    const { id } = req.params;
+    const recipe = await recipesService.getById(id);
+
+    res.status(200).json(recipe);
+  } catch (err) {
+    const error = errorDefault(err);
+    next(error);
+  }
+}
+
 module.exports = {
   register,
   getAll,
+  getById,
 };

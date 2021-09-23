@@ -6,5 +6,6 @@ router.post('/', recipesController.register);
 
 // READ
 router.get('/', recipesController.getAll);
+router.get('/:id', recipesController.getById);
 
 module.exports = router;
