@@ -9,9 +9,10 @@ function validateJWT(req, res, next) {
   }
 
   try {
-    const { email, userId } = jwt.verify(token, JWTsecret);
+    const { email, userId, role } = jwt.verify(token, JWTsecret);
     req.email = email;
     req.userId = userId;
+    req.role = role;
   } catch (err) {
     return res.status(401).json({ message: 'jwt malformed' });
   }
