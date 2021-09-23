@@ -7,7 +7,7 @@ async function emailIsUnique(email) {
   return false;
 }
 
-async function addUser({ name, email, password }) {
+async function addUser({ name, email, password, role }) {
   const validation = userSchema.validateUser({ name, email, password });
   
   if (validation.message) return { code: validation.code, message: validation.message };
@@ -15,7 +15,6 @@ async function addUser({ name, email, password }) {
   const uniqueEmail = await emailIsUnique(email);
   if (!uniqueEmail) return { code: 409, message: 'Email already registered' };
 
-  const role = 'user';
   const addedUser = await userModel.addUser({ name, email, password, role });
   
   return { code: 201, user: addedUser };
