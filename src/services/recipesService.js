@@ -39,9 +39,15 @@ async function update(id, recipe, token) {
   return updatedRecipe;
 }
 
+async function deleteRecipe(id, token) {
+  validations.isTokenValid(token);
+  await recipesModel.deleteRecipe(id);
+}
+
 module.exports = {
   register,
   getAll,
   getById,
   update,
+  deleteRecipe,
 };
