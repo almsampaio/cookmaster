@@ -13,8 +13,19 @@ const VALID_NEW_USER = {
   email: 'userName@email.com',
   password: '12345678',
 };
+const ADMIN_USER = {
+  name: 'adminName',
+  email: 'adminName@email.com',
+  password: '12345678',
+  role: 'admin',
+};
 const VALID_RECIPE = {
   name: 'Frango',
+  ingredients: 'Frango uai',
+  preparation: 'Muito versátil',
+};
+const VALID_RECIPE_EDITED = {
+  name: 'Frango editado',
   ingredients: 'Frango uai',
   preparation: 'Muito versátil',
 };
@@ -27,18 +38,18 @@ const INVALID_RECIPE = {
   preparation: 'Muito versátil',
 };
 
-
 const userSetup = async (user, recipeObj) => {
   await chai.request(server).post('/users').send(user);
   const { body: { token } } = await chai.request(server)
     .post('/login')
     .send({ email: 'userName@email.com', password: '12345678' });
-  const recipe = await chai.request(server)
+  const response = await chai.request(server)
     .post('/recipes')
     .set('authorization', token)
     .send(recipeObj);
-  return recipe;
+  return { response, token };
 };
+
 
 describe('POST /recipes', () => {
   before(async () => {
@@ -54,7 +65,8 @@ describe('POST /recipes', () => {
     let response = {};
 
     before(async () => {
-      response = await userSetup(VALID_NEW_USER, VALID_RECIPE);
+      response = await userSetup(VALID_NEW_USER, VALID_RECIPE)
+        .then(res => res.response);
     });
 
     it('Deve ter status 201', () => {
@@ -74,7 +86,8 @@ describe('POST /recipes', () => {
   describe('Quando a receita não é valida', async () => {
     let response = {};
     before(async () => {
-      response = await userSetup(INVALID_NEW_USER, INVALID_RECIPE);
+      response = await userSetup(INVALID_NEW_USER, INVALID_RECIPE)
+        .then(res => res.response);
     });
     it('Retorna o status 400', () => {
       expect(response).to.have.status(400);
@@ -137,7 +150,8 @@ describe('GET /recipes/:id', () => {
   describe('Todas as informações são validas', async () => {
     let response = {};
     before(async () => {
-      const { body: { recipe: { _id: id } } } = await userSetup(VALID_NEW_USER, VALID_RECIPE);
+      const { body: { recipe: { _id: id } } } = await userSetup(VALID_NEW_USER, VALID_RECIPE)
+        .then(res => res.response);
       response = await chai.request(server).get(`/recipes/${id}`);
     });
 
@@ -152,7 +166,7 @@ describe('GET /recipes/:id', () => {
   });
   describe('Id da receita não existe', async () => {
     let response = {};
-    before( async () => {
+    before(async () => {
       response = await chai.request(server).get('/recipes/1234567890123456678901234');
     });
 
@@ -163,6 +177,148 @@ describe('GET /recipes/:id', () => {
       expect(response).to.be.a('object');
       expect(response.body).to.have.property('message');
       expect(response.body.message).to.be.equal('recipe not found');
+    });
+  });
+});
+
+describe('PUT /recipes/:id', async () => {
+  before(async () => {
+    const VirtualDB = await getConnection();
+    sinon.stub(MongoClient, 'connect').resolves(VirtualDB);
+  });
+
+  after(() => {
+    MongoClient.connect.restore();
+  });
+
+  describe('Todos os dados recebidos estão corretos', async () => {
+    let response = {};
+
+    before(async () => {
+      const result = await userSetup(VALID_NEW_USER, VALID_RECIPE);
+      const { body: { recipe: { _id: id } } } = result.response;
+      const { token } = result;
+
+      response = await chai.request(server)
+        .put(`/recipes/${id}`)
+        .set('authorization', token)
+        .send(VALID_RECIPE_EDITED);
+    });
+
+    it('Tem status 200', async () => {
+      expect(response).to.have.status(200);
+    });
+
+    it('Retorna a nova receita', async () => {
+      expect(response).to.be.a('object');
+      expect(response.body).to.have.property('name');
+      expect(response.body.name).to.be.equal('Frango editado');
+    });
+  });
+
+  describe('Usuário não autorizado', async () => {
+    let response = {};
+
+    before(async () => {
+      const result = await userSetup(VALID_NEW_USER, VALID_RECIPE);
+      const { body: { recipe: { _id: id } } } = result.response;
+
+      response = await chai.request(server)
+        .put(`/recipes/${id}`)
+        .set('authorization', '123456789abc')
+        .send(VALID_RECIPE_EDITED);
+    });
+
+    it('Retorna código 401', async () => {
+      expect(response).to.have.status(401);
+    });
+
+    it('Retorna mensagem informando o ocorrido', async () => {
+      expect(response).to.be.a('object');
+      expect(response.body).to.have.property('message');
+      expect(response.body.message).to.be.equal('jwt malformed');
+    });
+  });
+
+  // describe('Usuário é um admin', async () => {
+  //   let response = {};
+
+  //   before(async () => {
+  //     await chai.request(server).post('/users').send(ADMIN_USER);
+  //     const { body: { token: adminToken } } = await chai.request(server)
+  //       .post('/login')
+  //       .send({ email: 'adminName@email.com', password: '12345678' });
+
+  //     const { response: { body: { _id: id } } } = await userSetup(VALID_NEW_USER, VALID_RECIPE);
+
+  //     response = await chai.request(server)
+  //       .put(`/recipes/${id}`)
+  //       .set('authorization', adminToken)
+  //       .send(VALID_RECIPE_EDITED);
+  //   });
+
+  //   it('Tem status 200', async () => {
+  //     expect(response).to.have.status(200);
+  //   });
+
+  //   it('Retorna a nova receita', async () => {
+  //     expect(response).to.be.a('object');
+  //     expect(response.body).to.have.property('name');
+  //     expect(response.body.name).to.be.equal('Frango editado');
+  //   });
+  // });
+});
+
+describe('DELETE /recipes/:id', async () => {
+  before(async () => {
+    const VirtualDB = await getConnection();
+    sinon.stub(MongoClient, 'connect').resolves(VirtualDB);
+  });
+
+  after(() => {
+    MongoClient.connect.restore();
+  });
+
+  describe('Todos os dados recebidos estão corretos', async () => {
+    let response = {};
+
+    before(async () => {
+      const result = await userSetup(VALID_NEW_USER, VALID_RECIPE);
+      const { body: { recipe: { _id: id } } } = result.response;
+      const { token } = result;
+
+      response = await chai.request(server)
+        .delete(`/recipes/${id}`)
+        .set('authorization', token)
+        .send(VALID_RECIPE_EDITED);
+    });
+
+    it('Tem status 204', async () => {
+      expect(response).to.have.status(204);
+    });
+  });
+
+  describe('Usuário não autorizado', async () => {
+    let response = {};
+
+    before(async () => {
+      const result = await userSetup(VALID_NEW_USER, VALID_RECIPE);
+      const { body: { recipe: { _id: id } } } = result.response;
+
+      response = await chai.request(server)
+        .delete(`/recipes/${id}`)
+        .set('authorization', '123456789abc')
+        .send(VALID_RECIPE_EDITED);
+    });
+
+    it('Retorna código 401', async () => {
+      expect(response).to.have.status(401);
+    });
+
+    it('Retorna mensagem informando o ocorrido', async () => {
+      expect(response).to.be.a('object');
+      expect(response.body).to.have.property('message');
+      expect(response.body.message).to.be.equal('jwt malformed');
     });
   });
 });
