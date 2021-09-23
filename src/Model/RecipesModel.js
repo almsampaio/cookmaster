@@ -38,6 +38,6 @@ const edition = (data, UserId, id) => {
     .then((recipe) => recipe);
 };
 
-const deleted = (id) => connection()
-  .then((db) => db.collection('recipes').deleteOne({ _id: ObjectId(id) }));
+const deleted = (id, _id) => connection()
+  .then((db) => db.collection('recipes').deleteOne({ _id: ObjectId(id), userId: _id }));
 module.exports = { registration, getAllRecipes, getById, edition, deleted };
