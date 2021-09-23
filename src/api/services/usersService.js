@@ -1,18 +1,13 @@
-const Joi = require('joi');
 const models = require('../models');
 const { REQUEST_INVALID_ENTRIES, EMAIL_CONFLICT, CREATED_STATUS } = require('../helpers');
+const { userValidation } = require('../schemas');
 
 // REQUISITO 1
-const validationJoi = Joi.object().keys({
-  name: Joi.string().required(),
-  email: Joi.string().email().required(),
-  password: Joi.string().required(),
-});
 
 const createUsers = async (newUser, role = 'user') => {
   const { email } = newUser;
 
-  const { error } = validationJoi.validate(newUser);
+  const { error } = userValidation.validate(newUser);
   if (error) return REQUEST_INVALID_ENTRIES;
 
   const emailExist = await models.usersModel.usersByEmail(email);
