@@ -28,6 +28,8 @@ const isUniqueEmail = async (req, _res, next) => {
   next();
 };
 
+
+
 module.exports = {
   validatePostLogin,
   isUniqueEmail,
