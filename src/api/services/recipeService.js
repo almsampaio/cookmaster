@@ -8,7 +8,7 @@ const exceptions = {
     },
 };
 
-const verifyIfUserHaveAuthorization = async (recipeId, userId) => {
+const verifyIfUserHaveAuthorizationToEdit = async (recipeId, userId) => {
   const getRecipe = await recipeModel.getById(recipeId);
 
   if (!getRecipe) return false;
@@ -20,6 +20,14 @@ const verifyIfUserHaveAuthorization = async (recipeId, userId) => {
   } 
 
   return true;
+};
+
+// ----------------------------------------------------- || ----------------------------------------------------- //
+
+const updateImageUrl = async (id, imgUrl) => {
+  const result = recipeModel.updateImgUrl(id, imgUrl);
+
+  return result;
 };
 
 // ----------------------------------------------------- || ----------------------------------------------------- //
@@ -43,7 +51,7 @@ const getAll = async () => recipeModel.getAll();
 // ----------------------------------------------------- || ----------------------------------------------------- //
 
 const update = async (recipeId, recipe, userId) => {
-  const authorizedUser = verifyIfUserHaveAuthorization(recipeId, userId);
+  const authorizedUser = verifyIfUserHaveAuthorizationToEdit(recipeId, userId);
 
   if (!authorizedUser) return { error: exceptions.recipeNotFound };
 
@@ -55,7 +63,7 @@ const update = async (recipeId, recipe, userId) => {
 // ----------------------------------------------------- || ----------------------------------------------------- //
 
 const exclude = async (recipeId, userId) => {
-  const authorizedUser = verifyIfUserHaveAuthorization(recipeId, userId);
+  const authorizedUser = verifyIfUserHaveAuthorizationToEdit(recipeId, userId);
   
   if (!authorizedUser) return { error: exceptions.recipeNotFound };
 
@@ -64,4 +72,11 @@ const exclude = async (recipeId, userId) => {
   return result;
 };
 
-module.exports = { create, getAll, getById, update, exclude };
+module.exports = {
+  create,
+  getAll,
+  getById,
+  update,
+  exclude,
+  verifyIfUserHaveAuthorizationToEdit,
+  updateImageUrl };

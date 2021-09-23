@@ -1,9 +1,34 @@
 const express = require('express');
+const path = require('path');
+const multer = require('multer');
 
 const router = express.Router();
 
-const { validateJWT, validateRecipeForm } = require('../middlewares');
+const storage = multer.diskStorage({
+  destination: (req, file, callback) => {
+    callback(null, path.join(__dirname, '../../', 'uploads'));
+  },
+
+  filename: (req, file, callback) => {
+    const { id } = req.params;
+    const filename = `${id}.jpeg`;
+    const pathToImage = `localhost:3000/src/uploads/${filename}`;
+    req.image = pathToImage;
+    callback(null, filename);
+  },
+});
+
+const upload = multer({ storage });
+
+const { validateJWT, validateRecipeForm, validateUpload } = require('../middlewares');
 const recipeController = require('../controllers/recipeController');
+
+router.put('/:id/image/', [
+  validateJWT,
+  validateUpload,
+  upload.single('image'),
+  recipeController.uploadImg,
+]);
 
 router.post('/', [
   validateRecipeForm,

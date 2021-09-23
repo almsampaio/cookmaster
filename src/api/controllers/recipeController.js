@@ -1,5 +1,15 @@
 const recipeService = require('../services/recipeService');
 
+const uploadImg = async (req, res) => {
+  const { image } = req;
+  const { id } = req.params;
+  const result = await recipeService.updateImageUrl(id, image);
+  
+  return res.status(200).json(result);
+};
+
+// ----------------------------------------------------- || ----------------------------------------------------- //
+
 const create = async (req, res) => {
   const { userId } = req;
   const recipe = req.body;
@@ -14,6 +24,8 @@ const create = async (req, res) => {
   return res.status(201).json(result);
 };
 
+// ----------------------------------------------------- || ----------------------------------------------------- //
+
 const getById = async (req, res) => {
   const { id } = req.params;
 
@@ -26,11 +38,15 @@ const getById = async (req, res) => {
   return res.status(200).json(result);
 };
 
+// ----------------------------------------------------- || ----------------------------------------------------- //
+
 const getAll = async (_req, res) => {
   const result = await recipeService.getAll();
 
   return res.status(200).json(result);
 };
+
+// ----------------------------------------------------- || ----------------------------------------------------- //
 
 const update = async (req, res) => {
   const { id } = req.params;
@@ -46,6 +62,8 @@ const update = async (req, res) => {
   return res.status(200).json(result);
 };
 
+// ----------------------------------------------------- || ----------------------------------------------------- //
+
 const exclude = async (req, res) => {
   const { id } = req.params;
   const { userId } = req;
@@ -59,4 +77,4 @@ const exclude = async (req, res) => {
   return res.status(204).end();
 };
 
-module.exports = { create, getAll, getById, update, exclude };
+module.exports = { create, getAll, getById, update, exclude, uploadImg };
