@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken');
+const { ObjectId } = require('mongodb');
 const Validation = require('./constructor');
 
 const usersValidation = require('./usersValidation');
@@ -10,6 +11,11 @@ const SECRET = 'creatingtoken';
 function isNameValid(name) {
   const isNameTrue = new Validation(name);
   isNameTrue.verify('badRequest');
+}
+
+function isIdValid(id, customMessage) {
+  const isObjectIdValid = new Validation(ObjectId.isValid(id));
+  isObjectIdValid.verify('notFound', customMessage);
 }
 
 function isTokenValid(token) {
@@ -28,6 +34,7 @@ function isTokenValid(token) {
 
 module.exports = {
   isNameValid,
+  isIdValid,
   isTokenValid,
   ...usersValidation,
   ...loginValidation,

@@ -21,7 +21,18 @@ async function getAll() {
   return recipes;
 }
 
+async function getById(id) {
+  const notFoundMessage = 'recipe not found';
+  validations.isIdValid(id, notFoundMessage);
+
+  const recipe = await recipesModel.getById(id);
+  validations.isRecipeFound(recipe, notFoundMessage);
+
+  return recipe;
+}
+
 module.exports = {
   register,
   getAll,
+  getById,
 };

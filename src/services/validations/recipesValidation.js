@@ -10,7 +10,13 @@ function isPreparationValid(preparation) {
   isPreparationTrue.verify('badRequest');
 }
 
+function isRecipeFound(recipe, customMessage) {
+  const isRecipeTrue = new Validation(!!recipe);
+  isRecipeTrue.verify('notFound', customMessage);
+}
+
 module.exports = {
   isIngredientsValid,
   isPreparationValid,
+  isRecipeFound,
 };
