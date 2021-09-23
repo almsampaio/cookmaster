@@ -15,6 +15,10 @@ const registersUser = async ({ name, email, password }) => {
   return registeredUser;
 };
 
+// const loginUser = async ({ email, password }) => {
+//   // 
+// };
+
 module.exports = {
   findByEmail,
   registersUser,

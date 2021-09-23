@@ -7,6 +7,7 @@ const app = express();
 app.use(bodyParser.json());
 // utilizar rotas
 app.use('/users', usersRoutes);
+// app.use('login', )
 
 // Não remover esse end-point, ele é necessário para o avaliador
 app.get('/', (request, response) => {
