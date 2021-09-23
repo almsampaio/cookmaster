@@ -63,10 +63,25 @@ const deleteRecipeService = async (id, userId, role) => {
     return true;
 };
 
+const uploadRecipeImageService = async (id, path, userId, role) => {
+    const objId = ObjectId(id);
+    
+    if (!ObjectId.isValid(id)) return { status: 401, message: 'Recipe not found' };
+
+    const getRecipe = await recipeModel.uploadRecipeImageModel(objId, path, role);
+
+    if (role !== 'admin' && getRecipe.userId !== userId) {
+        return { status: 401, message: 'not allowed' };
+    }
+
+    return { status: 200, message: getRecipe };
+};
+
 module.exports = { 
     createRecipeService, 
     getAllRecipesService,
     getRecipeByIdService,
     editRecipeService,
     deleteRecipeService,
+    uploadRecipeImageService,
 };

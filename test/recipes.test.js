@@ -968,7 +968,7 @@ describe('8 - Crie um endpoint para a exclusão de uma receita', () => {
   });
 });
 
-describe.skip('9 - Crie um endpoint para a adição de uma imagem a uma receita', () => {
+describe('9 - Crie um endpoint para a adição de uma imagem a uma receita', () => {
   let connection;
   let db;
 
