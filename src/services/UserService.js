@@ -43,12 +43,9 @@ const userLogin = async (email, password) => {
 
   if (!user) throw errorHandling(401, 'Incorrect username or password');
 
-  const jwtConfig = {
-    expiresIn: '7d',
-    algorithm: 'HS256',
-  };
-
-  const token = jwt.sign({ data: user }, secret, jwtConfig);
+  const jwtConfig = { expiresIn: '7d', algorithm: 'HS256' };
+  const { password: _, ...userWithoutPassword } = user;
+  const token = jwt.sign({ data: userWithoutPassword }, secret, jwtConfig);
 
   return token;
 };
