@@ -37,7 +37,8 @@ app.post('/users', userController);
 app.post('/login', loginController);
 app.post('/recipes', authMiddleware, postRecipieController);
 app.get('/recipes', getRecipieController.getAll);
-app.put('/recipes/:id/image', authMiddleware, upload.single('image'), imageCont.addImage);
+app.put('/recipes/:id/image', 
+authMiddleware, valUserMid, upload.single('image'), imageCont.addImage);
 app.get('/images/:filename', imageCont.getByName);
 app.get('/recipes/:id', getRecipieController.getById);
 app.put('/recipes/:id', authMiddleware, valUserMid, getRecipieController.updateById);

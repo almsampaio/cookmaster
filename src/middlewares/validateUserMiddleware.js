@@ -8,7 +8,7 @@ try {
   const recipe = await recipeModel.getById(id);
   const receivedUserId = '_id';
   if (recipe.userId.toString() !== user[receivedUserId].toString() && user.role !== 'admin') {
-    return res.code(401).json({ message: 'user not alllowed for this operation' });
+    return res.status(401).json({ message: 'user not alllowed for this operation' });
   }
   
   next();
