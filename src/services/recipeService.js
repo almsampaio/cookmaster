@@ -30,10 +30,19 @@ async function deleteRecipe(id) {
   return deletedRecipe;
 }
 
+async function addimageUrl(recipeId) {
+  await recipeModel.addImageUrl(recipeId);
+
+  const recipeWithImage = await recipeModel.getById(recipeId);
+
+  return { code: 200, recipeWithImage };
+}
+
 module.exports = {
   addRecipe,
   getAll,
   getById,
   updateRecipe,
   deleteRecipe,
+  addimageUrl,
 };
