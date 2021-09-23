@@ -1,5 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const path = require('path');
 const usersRouter = require('../routers/usersRouters');
 const loginRouter = require('../routers/loginRouter');
 const recipesRouter = require('../routers/recipesRouter');
@@ -10,6 +11,7 @@ app.use(bodyParser.json());
 app.use('/users', usersRouter);
 app.use('/login', loginRouter);
 app.use('/recipes', recipesRouter);
+app.use('/images', express.static(path.join(__dirname, '..', 'uploads')));
 
 app.use((error, _req, res, _next) => {
   res.status(error.status).json(error.err);
