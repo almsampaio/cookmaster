@@ -60,6 +60,20 @@ const updateRecipe = async (req, res) => {
   }
 };
 
+const updateRecipeImage = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const userId = req.user;
+    const role = req.userRole;
+    const { code, message, recipe } = await recipesServices.updateRecipeImage(id, userId, role);
+    return res.status(code).json({ message, ...recipe });
+  } catch (err) {
+    res.status(INTERNAL_SERVER_ERROR).json(
+      { message: INTERNAL_ERROR_MESSAGE, error: err },
+    );
+  }
+};
+
 const deleteRecipe = async (req, res) => {
   try {
     const { id } = req.params;
@@ -67,7 +81,6 @@ const deleteRecipe = async (req, res) => {
     const role = req.userRole;
 
     const { code, message } = await recipesServices.deleteRecipe(id, userId, role);
-    console.log((code, message));
     return res.status(code).json({ message });
   } catch (err) {
     res.status(INTERNAL_SERVER_ERROR).json(
@@ -81,5 +94,6 @@ module.exports = {
   getRecipeById,
   addRecipes,
   updateRecipe,
+  updateRecipeImage,
   deleteRecipe,
 };

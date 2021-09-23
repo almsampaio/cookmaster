@@ -67,6 +67,22 @@ const updateRecipe = async (recipeToUpdateParameters) => {
   });
 };
 
+const updateRecipeImage = async (id, userId, role) => {
+  const image = `localhost:3000/src/uploads/${id}.jpeg`;
+  const recipeOwner = await recipesModel.checkRecipeOwner(id, userId);
+  if (recipeOwner || role === 'admin') {
+    const recipe = await recipesModel.updateRecipeImage(id, image);
+    return ({
+      code: HTTP_STATUS_OK,
+      recipe,
+    });
+  }
+  return ({
+    code: HTTP_STATUS_UNAUTHORIZED,
+    message: ERROR_TOKEN,
+  });
+};
+
 const deleteRecipe = async (id, userId, role) => {
   const recipeOwner = await recipesModel.checkRecipeOwner(id, userId);
   if (recipeOwner || role === 'admin') {
@@ -86,5 +102,6 @@ module.exports = {
   getRecipeById,
   addRecipes,
   updateRecipe,
+  updateRecipeImage,
   deleteRecipe,
 };
