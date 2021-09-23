@@ -1,6 +1,8 @@
 const { ObjectId } = require('mongodb');
 const recipesModel = require('../models/recipesModel');
 
+const RECIPE_NOT_FOUND = 'recipe not found';
+
 const validatingData = (name, ingredients, preparation) => {
   if (!name || !ingredients || !preparation) {
     return { status: 400, message: { message: 'Invalid entries. Try again.' } };
@@ -23,11 +25,11 @@ const getAll = async () => {
 
 const getById = async (_id) => {
   if (!ObjectId.isValid(_id)) {
-    return { status: 404, message: { message: 'recipe not found' } };
+    return { status: 404, message: { message: RECIPE_NOT_FOUND } };
   }
   const recipe = await recipesModel.getById(_id);
   if (!recipe) {
-    return { status: 404, message: { message: 'recipe not found' } };
+    return { status: 404, message: { message: RECIPE_NOT_FOUND } };
   }
   return { status: 200, message: recipe };
 };
@@ -35,7 +37,7 @@ const getById = async (_id) => {
 const update = async (recipe, _id, userId, role) => {
   const { name, ingredients, preparation } = recipe;
   if (!ObjectId.isValid(_id)) {
-    return { status: 404, message: { message: 'recipe not found' } };
+    return { status: 404, message: { message: RECIPE_NOT_FOUND } };
   }
   const notValid = validatingData(name, ingredients, preparation);
   if (notValid) return notValid;
@@ -49,10 +51,10 @@ const update = async (recipe, _id, userId, role) => {
 
 const deleteOne = async (_id, userId, role) => {
   if (!ObjectId.isValid(_id)) {
-    return { status: 404, message: { message: 'recipe not found' } };
+    return { status: 404, message: { message: RECIPE_NOT_FOUND } };
   }
   const recipeToBeDeleted = await recipesModel.getById(_id);
-  if (recipeToBeDeleted === null) return { status: 404, message: { message: 'recipe not found' } };
+  if (recipeToBeDeleted === null) return { status: 404, message: { message: RECIPE_NOT_FOUND } };
   if (role !== 'admin' && userId !== recipeToBeDeleted.userId) {
     return { status: 401, message: { message: 'missing auth token' } };
   }
