@@ -12,7 +12,10 @@ const newRecipe = async ({ name, ingredients, preparation }) => {
 
 const getRecipes = async () => model.getRecipes();
 
+const getRecipe = async (id) => model.getRecipe(id);
+
 module.exports = {
   newRecipe,
   getRecipes,
+  getRecipe,
 };

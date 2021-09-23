@@ -23,4 +23,7 @@ app.route('/recipes')
   .post(validateToken, recipesController.newRecipe)
   .get(recipesController.getRecipes);
 
+app.route('/recipes/:id')
+  .get(recipesController.getRecipe);
+
 module.exports = app;
