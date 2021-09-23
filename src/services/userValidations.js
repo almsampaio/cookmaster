@@ -34,14 +34,14 @@ const validateUserEmail = async (email) => {
   }
 };
 
-const validateToken1 = async (email, password) => {
+const validateTokenCreation1 = async (email, password) => {
   if (!email || !password) {
     const errorMessage = errorGenerator(errorMsg.blankFields);
     return { errorMessage };
   }
 };
 
-const validateToken2 = async (email, password) => {
+const validateTokenCreation2 = async (email, password) => {
   const getEmail = await usersModel.getByEmail(email);
   if (!getEmail || (password !== getEmail.password)) {
     const errorMessage2 = errorGenerator(errorMsg.incorrectUserOrPass);
@@ -54,6 +54,6 @@ module.exports = {
   validateEmail,
   validateEmailEmpty,
   validateUserEmail,
-  validateToken1,
-  validateToken2,
+  validateTokenCreation1,
+  validateTokenCreation2,
 };

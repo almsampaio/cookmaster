@@ -22,10 +22,10 @@ const createUser = async (name, email, password) => {
   return { user: { name, email, role, id: result.insertedId } };
 };
 
-const loginUser = async (email, password) => {
+const loginUser = async (email) => {
   const connection = await mongoConnection();
 
-  const loggedin = await connection.collection('users').findOne({ email, password });
+  const loggedin = await connection.collection('users').findOne({ email });
 
   return loggedin;
 };

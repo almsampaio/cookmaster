@@ -1,10 +1,10 @@
 const jwt = require('jsonwebtoken');
 const usersModel = require('../models/usersModel');
-const validations = require('./validations');
+const validations = require('./userValidations');
 
 const SECRET = 'supersenhaativar1234';
 const jwtConfig = {
-  expiresIn: '1d',
+  expiresIn: '3d',
   algorithm: 'HS256',
 };
 
@@ -31,10 +31,10 @@ const createUser = async (name, email, password, role) => {
 };
 
 const loginUser = async (email, password) => {
-  const errorMessage = await validations.validateToken1(email, password);
+  const errorMessage = await validations.validateTokenCreation1(email, password);
   if (errorMessage) return errorMessage;
 
-  const errorMessage2 = await validations.validateToken2(email, password);
+  const errorMessage2 = await validations.validateTokenCreation2(email, password);
   if (errorMessage2) return errorMessage2;
 
   const errorMessageEmail = await validations.validateEmail(email);
