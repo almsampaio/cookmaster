@@ -44,6 +44,12 @@ const updateImage = async (id, filename, role, userId) => {
  return Recipes.updateImage(id, imageName, role, userId);
 };
 
+// const getImage = async (id) => {
+//   const image = await Recipes.getImage(id);
+
+//   return image;
+// };
+
 module.exports = {
   create,
   getAll,
@@ -51,4 +57,5 @@ module.exports = {
   update,
   deleteInfo,
   updateImage,
+  // getImage,
 };

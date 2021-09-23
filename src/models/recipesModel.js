@@ -103,6 +103,16 @@ const updateImage = async (id, image, role, userId) => {
   }
 };
 
+// const getImage = async (id) => {
+//   const recipeId = await findById(id.replace('.jpeg', ''));
+
+//   if (!recipeId) return null;
+
+//   console.log('Recipe', recipeId.image);
+
+//   return recipeId.image;
+// };
+
 module.exports = {
   create,
   getAll,
@@ -110,4 +120,5 @@ module.exports = {
   update,
   deleteInfo,
   updateImage,
+  // getImage,
 };
