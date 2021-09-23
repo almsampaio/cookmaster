@@ -45,6 +45,12 @@ const readByIdController = async (req, res) => {
   return res.status(HTTP_OK_STATUS).json(data);
 };
 
+const readImageController = async (req, res) => {
+  const imageHeader = req.file.path;
+
+  return res.status(200).json(imageHeader);
+};
+
 const updateController = async (req, res) => {
   const { id } = req.params;
   const { name, ingredients, preparation } = req.body;
@@ -104,6 +110,7 @@ module.exports = {
   createController,
   readAllController,
   readByIdController,
+  readImageController,
   updateController,
   updateImageController,
   deleteController,
