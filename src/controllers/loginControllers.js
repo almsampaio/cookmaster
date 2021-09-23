@@ -1,3 +1,4 @@
+const jwt = require('jsonwebtoken');
 const {
   STATUS_OK,
   // STATUS_CREATE,
@@ -8,15 +9,24 @@ const {
   // STATUS_CONFLICT,
 } = require('../utils/httpStatus');
 
-const loginUser = async (req, res) => {
-  const { email, password } = req.body;
-  const { Authorization } = req.Authorization;
+const { serviceFoundByEmail } = require('../services/usersServices');
+
+const SECRET = 'secret-validation-string';
+
+const loginUser = async (req, res) => { // este controller só é chamada se o email e password forem válidos
+  const { email } = req.body;
+  const userFound = await serviceFoundByEmail(email);
+  const { _id } = userFound;
   // busco usuário no banco se existir, se existir e as credenciais
   // baterem, loga o user.
-  if (Authorization && email && password) {
-    console.log('Ok!');
-  }
-  return res.status(STATUS_OK).json({ message: 'teste' });
+  const payload = {
+    name: userFound.name,
+    email: userFound.email,
+    _id,
+    role: userFound.role,
+  };
+  const token = jwt.sign(payload, SECRET);
+  return res.status(STATUS_OK).json({ token });
 };
 
 module.exports = {

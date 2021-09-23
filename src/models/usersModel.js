@@ -5,6 +5,7 @@ const findByEmail = async (email) => {
   const userFound = await connection().then((db) => db
     .collection('users').findOne(query)
     .then((res) => res)).catch((err) => console.log(err));
+  // console.log(`findbyemail${userFound.email}`);
   return userFound;
 };
 
