@@ -1,7 +1,7 @@
 const express = require('express');
 const bodyParse = require('body-parser');
 const controllerUsers = require('./controller/users');
-const ver = require('./service/users');
+const ver = require('./model/users');
 
 const app = express();
 
@@ -20,6 +20,8 @@ app.post('/users', controllerUsers.addUser);
 app.post('/login', controllerUsers.findUser);
 
 app.post('/recipes', controllerUsers.addRecipes);
+
+app.get('/recipes', controllerUsers.getRecipes);
 
 app.use((err, _req, res, _next) => {
   const { message, status } = err;

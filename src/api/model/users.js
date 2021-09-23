@@ -24,9 +24,16 @@ const addRecipes = async (recipe) => {
   return value.ops[0];
 };
 
+const getRecipes = async () => {
+  const value = await connection()
+    .then((db) => db.collection('recipes').find({ }).toArray());
+  return value;
+};
+
 module.exports = {
   addUser,
   findEmail,
   findUser,
   addRecipes,
+  getRecipes,
 };

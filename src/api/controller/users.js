@@ -28,8 +28,17 @@ const addRecipes = rescue(
   },
 );
 
+const getRecipes = rescue(
+  async (_req, res) => {
+    const recipes = await serviceUsers.getRecipes();
+
+    return res.status(200).json(recipes);
+  },
+);
+
 module.exports = {
   addUser,
   findUser,
   addRecipes,
+  getRecipes,
 };

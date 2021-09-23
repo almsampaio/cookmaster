@@ -84,8 +84,15 @@ const addRecipes = async (recipe, token) => {
   return newRecipe;
 };
 
+const getRecipes = async () => {
+  const recipes = await ModelUsers.getRecipes();
+
+  return recipes;
+};
+
 module.exports = {
   addUser,
   findUser,
   addRecipes,
+  getRecipes,
 };
