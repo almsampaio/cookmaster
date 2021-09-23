@@ -36,9 +36,7 @@ app.use('/images', express.static('src/uploads/'));
 
 module.exports = app;
 
-/* A resolução de uma maneira mais direta do Requisito 10 eu acabei acatando 
+/* A resolução mais direta do Requisito 10 eu acabei acatando 
   a maneira do Adelino Júnior: https://github.com/AdelinoJnr 
-  pois com o jeito que eu estava fazeno não chegou a funcionar 
+  pois com o jeito que eu estava fazendo não chegou a funcionar 
   e vi que eu estava sendo muito redundante no código. */ 
-
-// Source https://stackoverflow.com/questions/28143419/express-static-keeps-routing-my-files-from-the-route
