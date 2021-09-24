@@ -38,10 +38,19 @@ const getRecipeById = async (id) => {
   if (!validateId(id)) return NOT_FOUND_RECIPE;
 
   const recipe = await models.recipesModel.getRecipeById(id);
-  console.log(recipe);
   if (!recipe) return NOT_FOUND_RECIPE;
 
   return { status: HTTP_OK_STATUS, recipe };
+};
+
+// REQUISITO 7
+const updateRecipe = async (id, recipe, authorization) => {
+  const { status, err } = await tokenValidation(authorization);
+  if (err) return { status, err };
+
+  const updateRecipes = await models.recipesModel.updateRecipe(id, recipe);
+
+  return { status: HTTP_OK_STATUS, updateRecipes };
 };
 
 module.exports = {
@@ -49,4 +58,5 @@ module.exports = {
   createRecipe,
   getAllRecipes,
   getRecipeById,
+  updateRecipe,
 };
