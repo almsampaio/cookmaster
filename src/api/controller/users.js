@@ -55,6 +55,16 @@ const updateRecipe = rescue(
   },
 );
 
+const deleteRecipe = rescue(
+  async (req, res) => {
+    const { id } = req.params;
+    const { authorization } = req.headers;
+    await serviceUsers.deleteRecipe(id, authorization);
+
+    return res.status(204).json();
+  },
+);
+
 module.exports = {
   addUser,
   findUser,
@@ -62,4 +72,5 @@ module.exports = {
   getRecipes,
   getRecipe,
   updateRecipe,
+  deleteRecipe,
 };

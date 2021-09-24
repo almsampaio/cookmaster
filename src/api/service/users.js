@@ -117,6 +117,18 @@ const updateRecipe = async (idRecipe, token, newRecipe) => {
   return recepe;
 };
 
+const deleteRecipe = async (idRecipe, token) => {
+  if (!token) throw util(401, 'missing auth token');
+
+  try {
+    jwt.verify(token, secret);
+  } catch (_err) {
+    throw util(401, 'missing auth token');
+  }
+
+  await ModelUsers.deleteRecipe(idRecipe);
+};
+
 module.exports = {
   addUser,
   findUser,
@@ -124,4 +136,5 @@ module.exports = {
   getRecipes,
   getRecipe,
   updateRecipe,
+  deleteRecipe,
 };
