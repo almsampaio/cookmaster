@@ -21,3 +21,15 @@ exports.getAll = async (_req, res, next) => {
     next(err);
   }
 };
+
+exports.getById = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+
+    const recipe = await recipeService.getById(id);
+
+    res.status(200).json(recipe);
+  } catch (err) {
+    next(err);
+  }
+};

@@ -16,3 +16,11 @@ exports.getAll = async () => {
 
   return recipes;
 };
+
+exports.getById = async (id) => {
+  const recipe = await Recipe.getById(id);
+
+  if (!recipe) throw new AppError(404, 'recipe not found');
+
+  return recipe;
+};
