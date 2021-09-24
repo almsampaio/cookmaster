@@ -57,8 +57,10 @@ exports.login = async ({ email, password }) => {
     throw new AppError(401, 'Incorrect username or password');
   }
 
+  const idString = '_id';
+
   const token = jwt.sign({
-    // id: user._id,
+    userId: user[idString],
     email: user.email,
     role: user.role,
   }, SECRET);
