@@ -129,6 +129,23 @@ const deleteRecipe = async (idRecipe, token) => {
   await ModelUsers.deleteRecipe(idRecipe);
 };
 
+const addImage = async (idRecipe, token) => {
+  if (!token) throw util(401, 'missing auth token');
+
+  try {
+    jwt.verify(token, secret);
+  } catch (_err) {
+    throw util(401, 'jwt malformed');
+  }
+
+  const formatImage = `localhost:3000/src/uploads/${idRecipe}.jpeg`;
+  await ModelUsers.addImage(idRecipe, formatImage);
+
+  const recepe = await ModelUsers.getRecipe(idRecipe);
+
+  return recepe;
+};
+
 module.exports = {
   addUser,
   findUser,
@@ -137,4 +154,5 @@ module.exports = {
   getRecipe,
   updateRecipe,
   deleteRecipe,
+  addImage,
 };

@@ -65,6 +65,18 @@ const deleteRecipe = rescue(
   },
 );
 
+const addImage = rescue(
+  async (req, res) => {
+    const { id } = req.params;
+    const { authorization } = req.headers;
+    const { filename } = req.file;
+
+    const newRecipe = await serviceUsers.addImage(id, filename, authorization);
+
+    return res.status(200).json(newRecipe);
+  },
+);
+
 module.exports = {
   addUser,
   findUser,
@@ -73,4 +85,5 @@ module.exports = {
   getRecipe,
   updateRecipe,
   deleteRecipe,
+  addImage,
 };
