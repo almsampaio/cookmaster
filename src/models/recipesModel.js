@@ -30,6 +30,13 @@ const addNewRecipe = async (recipeData) => {
       }));
 };
 
+const getAllRecipes = async () => {
+  const data = await generalDB();
+
+  return data.find().toArray();
+};
+
 module.exports = {
   addNewRecipe,
+  getAllRecipes,
 };
