@@ -41,6 +41,13 @@ const edition = (data, UserId, id) => {
 const deleted = (id, _id) => connection()
   .then((db) => db.collection('recipes').deleteOne({ _id: ObjectId(id), userId: _id }));
 
-const addition = (image) => console.log(image);
+const addition = (_Userid, id) => connection()
+  .then((db) => db.collection('recipes')
+    .findOneAndUpdate(
+      { _id: ObjectId(id) },
+      { $set: { image: `localhost:3000/src/uploads/${id}.jpeg` } },
+      { returnOriginal: true },
+    ))
+  .then((recipe) => ({ ...recipe.value, image: `localhost:3000/src/uploads/${id}.jpeg` }));
 
 module.exports = { registration, getAllRecipes, getById, edition, deleted, addition };

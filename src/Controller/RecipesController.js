@@ -52,10 +52,12 @@ const deleteRecipe = async (req, res) => {
 const additionOfImage = async (req, res) => {
   try {
     const { id } = req.params;
-    const image = req.body;
     const token = req.headers.authorization;
-    const response = await RecipesService.additionOfImage(id, token, image);
-    return res.status(200).json(response.value);
+    if (req.fileValidationError) {
+      return res.status(403).send({ error: { message: 'Extension must be `jpeg`' } });
+    }
+    const response = await RecipesService.additionOfImage(id, token);
+    return res.status(200).json(response);
   } catch (err) {
     res.status(401).json({ message: err.message });
   }

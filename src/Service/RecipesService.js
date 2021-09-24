@@ -44,6 +44,9 @@ const editRecipe = async (id, token, data) => {
   isValidToken(token);
   const { data: { _id } } = jwt.verify(token, secret);
   const upRecipe = await RecipesModel.edition(data, _id, id);
+  if (upRecipe.value === null) {
+    throw new Error('Recipe not found');
+  }
   return upRecipe;
 };
 
@@ -54,11 +57,11 @@ const deleteRecipe = async (id, token) => {
   await RecipesModel.deleted(id, _id);
 };
 
-const additionOfImage = async (id, token, image) => {
+const additionOfImage = async (id, token) => {
   isValidId(id);
   isValidToken(token);
   const { data: { _id } } = jwt.verify(token, secret);
-  const upRecipe = await RecipesModel.addition(image, _id);
+  const upRecipe = await RecipesModel.addition(_id, id);
   return upRecipe;
 };
 

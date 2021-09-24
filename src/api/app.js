@@ -1,6 +1,5 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-
 const routerUser = require('./routerUser');
 const routerRecipes = require('./routerRecipes');
 const routerAdmin = require('./routerAdmin');
@@ -8,6 +7,8 @@ const routerAdmin = require('./routerAdmin');
 const app = express();
 
 app.use(bodyParser.json());
+
+app.use(express.static(`${__dirname}../uploads`));
 
 app.use('/users', routerUser.Userrouter);
 app.use('/users', routerAdmin.Adminrouter);
