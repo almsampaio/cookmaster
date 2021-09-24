@@ -18,6 +18,7 @@ module.exports = async (req, res, next) => {
 
   try {
     const decoded = jwt.verify(token, secret);
+
     /*
       A variável decoded será um objeto equivalente ao seguinte:
       {
@@ -36,13 +37,13 @@ module.exports = async (req, res, next) => {
     if (!user) {
       return res
         .status(401)
-        .json({ message: 'Erro ao procurar usuário do token.' });
+        .json({ message: 'Usuario nao encontrado' });
     }
 
     req.user = user;
 
     next();
   } catch (err) {
-    return res.status(401).json({ message: err.message });
+    return res.status(401).json({ message: 'jwt malformed' });
   }
 };
