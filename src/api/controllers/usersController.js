@@ -20,7 +20,7 @@ const userLogin = rescue(async (req, res, next) => {
 
   if (login.code) return next(login);
 
-  res.status(201).json({ token: login });
+  res.status(200).json({ token: login });
 });
 
 module.exports = {
