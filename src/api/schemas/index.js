@@ -1,4 +1,5 @@
 const Joi = require('joi');
+const { ObjectId } = require('mongodb');
 
 const userValidation = Joi.object().keys({
   name: Joi.string().required(),
@@ -17,8 +18,11 @@ const recipeValidation = Joi.object().keys({
   preparation: Joi.string().required(),
 });
 
+const validateId = (id) => (ObjectId.isValid(id));
+
 module.exports = {
   userValidation,
   loginValidation,
   recipeValidation,
+  validateId,
 };

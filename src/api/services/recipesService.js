@@ -2,7 +2,13 @@ const models = require('../models');
 const { recipeValidation } = require('../schemas');
 const { tokenValidation } = require('./tokenValidation');
 
-const { HTTP_OK_STATUS, CREATED_STATUS, REQUEST_INVALID_ENTRIES } = require('../helpers');
+const { validateId } = require('../schemas');
+const { 
+  HTTP_OK_STATUS,
+  CREATED_STATUS,
+  REQUEST_INVALID_ENTRIES,
+  NOT_FOUND_RECIPE,
+} = require('../helpers');
 
 // REQUISITO 3
 const createRecipe = async (newRecipe, authorization) => {
@@ -26,8 +32,21 @@ const getAllRecipes = async () => {
   return { status: HTTP_OK_STATUS, recipes };
 };
 
+// REQUISITO 5
+
+const getRecipeById = async (id) => {
+  if (!validateId(id)) return NOT_FOUND_RECIPE;
+
+  const recipe = await models.recipesModel.getRecipeById(id);
+  console.log(recipe);
+  if (!recipe) return NOT_FOUND_RECIPE;
+
+  return { status: HTTP_OK_STATUS, recipe };
+};
+
 module.exports = {
   tokenValidation,
   createRecipe,
   getAllRecipes,
+  getRecipeById,
 };

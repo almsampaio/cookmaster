@@ -8,7 +8,6 @@ const tokenValidation = async (token) => {
   
   try {
     const decoded = jwt.verify(token, secret);
-    console.log(decoded);
     const { email } = decoded.data;
     const user = await models.usersModel.usersByEmail(email);
 
