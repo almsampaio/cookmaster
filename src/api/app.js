@@ -7,16 +7,25 @@ app.use(bodyParser.json());
 
 // Importar validações
 const dadosUsuario = require('../middlewares/validarDadosUsuario');
+const dadosLogin = require('../middlewares/validarLogin');
 
 // Importar camadas
-const usuariosControllers = require('../controllers/usuariosControllers');
+const usuariosController = require('../controllers/usuariosController');
+const loginController = require('../controllers/loginController');
 
 // Início das rotas
 app.post('/users',
 dadosUsuario.verificarNome,
 dadosUsuario.verificarEmail,
 dadosUsuario.verificarEmailExiste,
-usuariosControllers.cadastrarUsuario);
+usuariosController.cadastrarUsuario);
+
+app.post('/login',
+dadosLogin.verificarEmail,
+dadosLogin.verificarSenha,
+dadosLogin.verificarEmailValido,
+dadosLogin.verificarSenhaValida,
+loginController.loginUsuario);
 
 // Fim das rotas
 

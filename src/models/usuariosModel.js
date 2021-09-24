@@ -17,7 +17,15 @@ const cadastrarUsuario = async (name, email, password) => {
   return { user: dadosSemSenha };
 };
 
+const buscarPelaSenha = async (password) => {
+  const db = await conexao();
+
+  const buscar = await db.collection('users').findOne({ password });
+  return buscar;
+};
+
 module.exports = {
   buscarPeloEmail,
   cadastrarUsuario,
+  buscarPelaSenha,
 };
