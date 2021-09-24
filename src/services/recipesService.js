@@ -56,10 +56,16 @@ const deleteRecipeServices = async (id) => {
   return { status: NO_CONTENT_STATUS, result };
 };
 
+const addImageServices = async (id, image) => {
+  const result = await recipesModel.addImageModels(id, image);
+  return { status: OK_STATUS, result };
+};
+
 module.exports = {
   register,
   getRecipesServices,
   getByIdRecipeServices,
   editRecipeServices,
   deleteRecipeServices,
+  addImageServices,
 };
