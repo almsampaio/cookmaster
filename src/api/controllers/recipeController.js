@@ -12,3 +12,12 @@ exports.create = async (req, res, next) => {
     next(err);
   }
 };
+
+exports.getAll = async (_req, res, next) => {
+  try {
+    const recipes = await recipeService.getAll();
+    res.status(200).json(recipes);
+  } catch (err) {
+    next(err);
+  }
+};

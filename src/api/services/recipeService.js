@@ -10,3 +10,9 @@ exports.create = async ({ name, ingredients, preparation, userId }) => {
 
   return recipe;
 };
+
+exports.getAll = async () => {
+  const recipes = await Recipe.getAll();
+
+  return recipes;
+};
