@@ -61,9 +61,20 @@ const updateRecipe = async (id, newData) => {
   return updatedRecipe;
 };
 
+const deleteRecipe = async (id) => {
+  const data = await generalDB();
+
+  const deleteItem = await data.deleteOne({ _id: id });
+
+  if (!deleteItem) throw new Error('recipe not found');
+
+  return deleteItem;
+};
+
 module.exports = {
   addNewRecipe,
   getAllRecipes,
   getRecipeById,
   updateRecipe,
+  deleteRecipe,
 };
