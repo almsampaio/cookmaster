@@ -17,21 +17,22 @@ const authToken = async (req, res, next) => {
   }
 };
 
-// const authAdmin = async (req, res, next) => {
-//   const { role } = req.user;
-//   const { id } = req.params;
-//   const recipe = await Recipes.getById(id);
-//   if (!recipe) return res.status(401).json({ message: 'jwt malformed' });
-//   const { role } = await Users.getById(recipe.userId);
-//   if (role === 'admin') return next();
+const authAdmin = async (req, res, next) => {
+  const { role } = req.user;
+  // const { id } = req.params;
+  // const recipe = await Recipes.getById(id);
+  // if (!recipe) return res.status(401).json({ message: 'jwt malformed' });
+  // const { role } = await Users.getById(recipe.userId);
+  // if (role === 'admin') return next();
 
-//   if (role !== 'admin') {
-//     return res.status(403).json({ message: 'Only admins can register new admins' });
-//   }
+  if (role !== 'admin') {
+    return res.status(403).json({ message: 'Only admins can register new admins' });
+  }
 
-//   next();
-// };
+  next();
+};
 
 module.exports = {
   authToken,
+  authAdmin,
 };
