@@ -23,6 +23,7 @@ app.post('/recipes', recipesControllers.createRecipes);
 app.get('/recipes', recipesControllers.getAllRecipes);
 app.get('/recipes/:id', recipesControllers.getRecipesById);
 app.put('/recipes/:id', recipesControllers.uptadeRecipesById);
+app.delete('/recipes/:id', recipesControllers.deleteRecipes);
 
 app.use(middlewares);
 

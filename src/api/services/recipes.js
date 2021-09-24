@@ -39,9 +39,21 @@ const uptadeRecipesById = async ({ name, ingredients, preparation }, id, token) 
   return uptadeRecipes;
 };
 
+const deleteRecipes = async (id, token) => {
+  const validateToken = await validations
+    .validateTokenToDeleteRecipes(token);
+  if (validateToken.error) return validateToken;
+
+  const DeleteRecipes = await recipesModels
+    .deleteRecipes(id, validateToken.userId);
+
+  return DeleteRecipes;
+};
+
 module.exports = {
   createRecipes,
   getAllRecipes,
   getRecipesById,
   uptadeRecipesById,
+  deleteRecipes,
 };

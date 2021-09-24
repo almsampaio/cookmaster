@@ -52,12 +52,26 @@ function errorsPut(err, res) {
   if (err.item === 'uptadeRecipes') return errorsPutRecipes(err, res);
 }
 
+function errorsDeleteRecipes(err, res) {
+  if (!err.isAuthenticToken) {
+    console.log(err.isAuthenticToken);
+    return res.status(401).json({ message: 'missing auth token' });
+  }
+  return res.status(401).json({ message: 'jwt malformed' });
+}
+
+function errorsDelete(err, res) {
+  if (err.item === 'deleteRecipes') return errorsDeleteRecipes(err, res);
+}
+
 module.exports = (err, _req, res, _next) => {
   if (err.verb === 'post') return errorsPost(err, res);
   
   if (err.verb === 'get') return errorsGet(err, res);
 
   if (err.verb === 'put') return errorsPut(err, res);
+
+  if (err.verb === 'delete') return errorsDelete(err, res);
 
   return res.status(500).json({ message: 'Internal server error' });
 };

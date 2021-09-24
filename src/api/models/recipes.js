@@ -48,9 +48,21 @@ const uptadeRecipesById = async ({ name, ingredients, preparation }, id, userId)
   };
 };
 
+const deleteRecipes = async (id, _userId) => {
+  const usersCollection = await mongoConnection.getConnection()
+    .then((db) => db.collection('recipes'));
+  const upt = await usersCollection
+    .deleteOne({ _id: ObjectId(id) });
+
+  if (!upt.result.n) return { error: true };
+
+ return 'No body returned for response';
+};
+
 module.exports = {
   createRecipes,
   getAllRecipes,
   getRecipesById,
   uptadeRecipesById,
+  deleteRecipes,
 };

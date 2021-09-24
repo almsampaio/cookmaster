@@ -93,6 +93,22 @@ const validateTokenToUpdateRecipes = async (token) => {
   return { error: false, userId: _id };
 };
 
+const validateTokenToDeleteRecipes = async (token) => {
+  const ValidationauthenticatToken = validateToken(token, 'delete', 'deleteRecipes');
+  if (ValidationauthenticatToken.error) return ValidationauthenticatToken;
+
+  const { email } = ValidationauthenticatToken.payload;
+
+  const getUserByEmail = await usersModels.getUserByEmail(email);
+ 
+  if (!getUserByEmail.length) {
+    return { verb: 'delete', item: 'deleteRecipes', error: true, isAuthenticToken: true };
+  }
+
+  const { _id } = getUserByEmail[0];
+  return { error: false, userId: _id };
+};
+
 const validateRecipeExists = async (id, recipe) => {
   if (!recipe) return { verb: 'get', item: 'getRecipesById', error: true };
   return false;
@@ -106,5 +122,6 @@ module.exports = {
   validateBodyUpdateRecipes,
   validateTokenToCreateRecipes,
   validateTokenToUpdateRecipes,
+  validateTokenToDeleteRecipes,
   validateRecipeExists,
 };
