@@ -30,7 +30,7 @@ const checkFieldPreparation = (req, res, next) => {
   }
   next();
 };
-
+// a solução do try/catch foi uma dica do mestre corujão
 const checkToken = (req, res, next) => {
   try {
     const { authorization } = req.headers;

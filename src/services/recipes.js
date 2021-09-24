@@ -9,4 +9,9 @@ const create = async (token, name, ingredients, preparation) => {
   return recipe;
 };
 
-module.exports = { create };
+const getAll = async () => {
+  const recipes = await recipesModels.getAll();
+  return recipes;
+};
+
+module.exports = { create, getAll };

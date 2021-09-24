@@ -8,4 +8,9 @@ const create = async (req, res) => {
   return res.status(schema.status.created).json(registerRecipe);
 };
 
-module.exports = { create };
+const getAll = async (_req, res) => {
+  const recipes = await recipesServices.getAll();
+  return res.status(schema.status.ok).json(recipes);
+};
+
+module.exports = { create, getAll };
