@@ -6,7 +6,7 @@ const checkNameCreate = (req, res, next) => {
   if (!name) {
     return res
     .status(schema.status.badRequest)
-    .json({ message: schema.message.invalidEntries });
+    .json({ message: schema.messages.invalidEntries });
   }
   next();
 };
@@ -18,14 +18,14 @@ const checkEmailCreate = async (req, res, next) => {
   if (!email || !emailFormat) {
     return res
     .status(schema.status.badRequest)
-    .json({ message: schema.message.invalidEntries });
+    .json({ message: schema.messages.invalidEntries });
   }
 
   const user = await userServices.find(email); 
   if (user) {
     return res
     .status(schema.status.conflict)
-    .json({ message: schema.message.emailRegistred });
+    .json({ message: schema.messages.emailRegistred });
   }
   next();
 };
@@ -35,7 +35,7 @@ const checkPasswordCreate = (req, res, next) => {
   if (!password) {
     return res
     .status(schema.status.badRequest)
-    .json({ message: schema.message.invalidEntries });
+    .json({ message: schema.messages.invalidEntries });
   }
   next();
 };
@@ -46,7 +46,7 @@ const checkEmailLogin = async (req, res, next) => {
   if (!email || !password) {
     return res
     .status(schema.status.unauthorized)
-    .json({ message: schema.message.unfilledFields });
+    .json({ message: schema.messages.unfilledFields });
   }
   
   const emailUser = await userServices.find(email);
@@ -54,7 +54,7 @@ const checkEmailLogin = async (req, res, next) => {
   if (!emailUser || email !== emailUser.email) {
     return res
     .status(schema.status.unauthorized)
-    .json({ message: schema.message.wrongEmailPassword });
+    .json({ message: schema.messages.wrongEmailPassword });
   }
   next();
 };
@@ -64,14 +64,14 @@ const checkPasswordLogin = async (req, res, next) => {
   if (!email || !password) {
     return res
     .status(schema.status.unauthorized)
-    .json({ message: schema.message.unfilledFields });
+    .json({ message: schema.messages.unfilledFields });
   }
 
   const passwordUser = await userServices.find(email);
   if (!passwordUser || passwordUser.password !== password) {
     return res
     .status(schema.status.unauthorized)
-    .json({ message: schema.message.wrongEmailPassword });
+    .json({ message: schema.messages.wrongEmailPassword });
   }
   next();
 };

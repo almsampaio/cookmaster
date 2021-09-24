@@ -14,6 +14,7 @@ app.get('/', (request, response) => {
 // Não remover esse end-point, ele é necessário para o avaliador
 
 app.use('/', router.users);
+app.use('/', router.recipes);
 
 // uso o erro sem ter que passar uma função aqui
 app.use(middlewares.error);

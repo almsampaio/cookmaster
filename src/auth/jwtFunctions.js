@@ -11,6 +11,9 @@ const create = (user) => {
   return token;
 };
 
-const verify = () => {};
+const verify = (token) => {
+  const payload = jwt.verify(token, secret);
+  return payload;
+};
 
 module.exports = { create, verify };
