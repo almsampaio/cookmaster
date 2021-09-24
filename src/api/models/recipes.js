@@ -31,8 +31,21 @@ const getRecipesById = async (id) => {
   return getById[0];
 };
 
-const uptadeRecipesById = async (_id) => {
+const uptadeRecipesById = async ({ name, ingredients, preparation }, id, userId) => {
+  const usersCollection = await mongoConnection.getConnection()
+    .then((db) => db.collection('recipes'));
+  const upt = await usersCollection
+    .updateOne({ _id: ObjectId(id) }, { $set: { name, ingredients, preparation } });
 
+  if (!upt.result.n) return { error: true };
+
+  return {
+    _id: id,
+    name,
+    ingredients,
+    preparation,
+    userId,
+  };
 };
 
 module.exports = {

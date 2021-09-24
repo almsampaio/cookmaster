@@ -33,6 +33,10 @@ const uptadeRecipesById = async ({ name, ingredients, preparation }, id, token) 
   const validateToken = await validations
     .validateTokenToUpdateRecipes(token);
   if (validateToken.error) return validateToken;
+
+  const uptadeRecipes = await recipesModels
+    .uptadeRecipesById({ name, ingredients, preparation }, id, validateToken.userId);
+  return uptadeRecipes;
 };
 
 module.exports = {

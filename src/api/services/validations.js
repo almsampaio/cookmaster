@@ -14,9 +14,9 @@ const validateBodyCreateUsers = (body) => {
   return false;
 };
 
-const validateSingleUserEmail = async (email) => {
+const validateAlreadyExistsUserByEmail = async (email, item) => {
   const getUserByEmail = await usersModels.getUserByEmail(email);
-  if (getUserByEmail.length) return { verb: 'post', item: 'createUsers', error: true };
+  if (item === 'createUsers' && getUserByEmail.length) return { verb: 'post', item, error: true };
   return false;
 };
 
@@ -35,11 +35,12 @@ const validateBodyLoginUsers = async (body) => {
   const existsThisUser = await usersModels.getUserByEmail(body.email);
 
   if (error.error || !existsThisUser.length) {
- return { 
-    verb: 'post', item: 'loginUsers', error, isJoy: true, filled: true, 
-  }; 
-}
-  return false;
+  return { 
+     verb: 'post', item: 'loginUsers', error: true, isJoy: true, filled: true, 
+   }; 
+ }
+
+  return { error: false, user: existsThisUser[0] };
 };
 
 const validateBodyRecipes = (body) => {
@@ -87,7 +88,9 @@ const validateTokenToUpdateRecipes = async (token) => {
   if (!getUserByEmail.length) {
     return { verb: 'put', item: 'uptadeRecipes', error: true, isAuthenticToken: true };
   }
-  return false;
+
+  const { _id } = getUserByEmail[0];
+  return { error: false, userId: _id };
 };
 
 const validateRecipeExists = async (id, recipe) => {
@@ -97,7 +100,7 @@ const validateRecipeExists = async (id, recipe) => {
 
 module.exports = {
   validateBodyCreateUsers,
-  validateSingleUserEmail,
+  validateAlreadyExistsUserByEmail,
   validateBodyLoginUsers,
   validateBodyCreateRecipes,
   validateBodyUpdateRecipes,

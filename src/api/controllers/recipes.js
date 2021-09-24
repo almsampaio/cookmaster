@@ -35,7 +35,7 @@ const uptadeRecipesById = async (req, res, next) => {
   const UptadeRecipesById = await recipesServices
   .uptadeRecipesById({ name, ingredients, preparation }, id, token);
   
-  if (UptadeRecipesById) return next(UptadeRecipesById);
+  if (UptadeRecipesById.error) return next(UptadeRecipesById);
 
   res.status(200).json(UptadeRecipesById);
 };

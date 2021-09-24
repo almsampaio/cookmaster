@@ -10,9 +10,9 @@ const createUsers = async ({ name, email, password }) => {
     .validateBodyCreateUsers({ name, email, password });
   if (validateInsertedBodyError) return validateInsertedBodyError;
 
-  const validateSingleUserEmailError = await validations
-    .validateSingleUserEmail(email);
-  if (validateSingleUserEmailError) return validateSingleUserEmailError;
+  const validateAlreadyExistsUserByEmailError = await validations
+    .validateAlreadyExistsUserByEmail(email, 'createUsers');
+  if (validateAlreadyExistsUserByEmailError) return validateAlreadyExistsUserByEmailError;
 
   return usersModels.createUsers({ name, email, password });
 };
@@ -20,13 +20,9 @@ const createUsers = async ({ name, email, password }) => {
 const loginUsers = async ({ email, password }) => {
   const validateInsertedBodyError = await validations
     .validateBodyLoginUsers({ email, password });
-  if (validateInsertedBodyError) return validateInsertedBodyError;
+  if (validateInsertedBodyError.error) return validateInsertedBodyError;
 
-  // const validateSingleUserEmailError = await validations
-  //   .validateSingleUserEmail(email);
-  // if (validateSingleUserEmailError) return validateSingleUserEmailError;
-  const userLogaded = await usersModels.createUsers({ email, password });
-  const { user } = userLogaded;
+  const { user } = validateInsertedBodyError;
   const token = jwt.sign(user, JWT_SECRET, { expiresIn: '1h' });
 
   return token;
