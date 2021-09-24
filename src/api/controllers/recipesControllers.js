@@ -37,9 +37,21 @@ const updateRecipe = async (req, res) => {
   res.status(status).json(updateRecipes);
 };
 
+// REQUISITO 8
+
+const deleteRecipe = async (req, res) => {
+  const { id } = req.params;
+  const { authorization } = req.headers;
+
+  const { status, err } = await services.recipesService.deleteRecipe(id, authorization);
+  if (err) return res.status(status).json({ message: err.message });
+  res.status(status).json();
+};
+
 module.exports = {
   createRecipe,
   getAllRecipes,
   getRecipeById,
   updateRecipe,
+  deleteRecipe,
 };

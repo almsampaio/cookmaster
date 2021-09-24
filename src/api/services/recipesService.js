@@ -8,6 +8,7 @@ const {
   CREATED_STATUS,
   REQUEST_INVALID_ENTRIES,
   NOT_FOUND_RECIPE,
+  NO_CONTENT,
 } = require('../helpers');
 
 // REQUISITO 3
@@ -53,10 +54,21 @@ const updateRecipe = async (id, recipe, authorization) => {
   return { status: HTTP_OK_STATUS, updateRecipes };
 };
 
+// REQUISITO 8
+const deleteRecipe = async (id, authorization) => {
+  const { status, err } = await tokenValidation(authorization);
+  if (err) return { status, err };
+
+  const deletedRecipe = await models.recipesModel.deleteRecipe(id);
+
+  if (!deletedRecipe) return { status: NO_CONTENT };
+};
+
 module.exports = {
   tokenValidation,
   createRecipe,
   getAllRecipes,
   getRecipeById,
   updateRecipe,
+  deleteRecipe,
 };
