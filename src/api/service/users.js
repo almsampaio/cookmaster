@@ -101,10 +101,27 @@ const getRecipe = async (id) => {
   return recipe;
 };
 
+const updateRecipe = async (idRecipe, token, newRecipe) => {
+  if (!token) throw util(401, 'missing auth token');
+
+  try {
+    jwt.verify(token, secret);
+  } catch (_err) {
+    throw util(401, 'jwt malformed');
+  }
+
+  await ModelUsers.updateRecipe(idRecipe, newRecipe);
+
+  const recepe = await ModelUsers.getRecipe(idRecipe);
+
+  return recepe;
+};
+
 module.exports = {
   addUser,
   findUser,
   addRecipes,
   getRecipes,
   getRecipe,
+  updateRecipe,
 };

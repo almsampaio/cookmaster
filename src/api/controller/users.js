@@ -45,10 +45,21 @@ const getRecipe = rescue(
   },
 );
 
+const updateRecipe = rescue(
+  async (req, res) => {
+    const { id } = req.params;
+    const { authorization } = req.headers;
+    const newrecipe = await serviceUsers.updateRecipe(id, authorization, req.body);
+
+    return res.status(200).json(newrecipe);
+  },
+);
+
 module.exports = {
   addUser,
   findUser,
   addRecipes,
   getRecipes,
   getRecipe,
+  updateRecipe,
 };
