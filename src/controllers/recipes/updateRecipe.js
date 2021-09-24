@@ -1,28 +1,23 @@
 const rescue = require('express-rescue');
 
-const { StatusCodes: { BAD_REQUEST, OK, NOT_FOUND } } = require('http-status-codes');
+const { StatusCodes: { OK, NOT_FOUND } } = require('http-status-codes');
+const validateJWT = require('../../auth/validateJWT');
 
 const {
   recipesModel,
 } = require('../../models');
 
 module.exports = [
-  (req, res, next) => {
-    const { id } = req.params;
-
-    if (!id) {
-      return res.status(BAD_REQUEST)
-        .json({ message: 'recipe not found' });
-    } 
-
-    next();
-  },
+  validateJWT,
 
   rescue(async (req, res) => {
     const { id } = req.params;
+    const { name, ingredients, preparation } = req.body;
+
+    const newData = { name, ingredients, preparation };
 
     try {
-      const recipe = await recipesModel.getRecipeById(id);
+      const recipe = await recipesModel.updateRecipe(id, newData);
       res.status(OK).json(recipe);
     } catch (err) {
       res.status(NOT_FOUND).json({ message: 'recipe not found' });

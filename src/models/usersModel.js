@@ -5,9 +5,9 @@ const generalDB = async () => {
   return data;
 };
 
-const addUser = async (name, email, password) => {
+const addUser = async (userData) => {
+  const { name, email, password, role } = userData;
   const data = await generalDB();
-  const role = 'user';
   
   const alreadyExists = await data.find({ email }).toArray();
 
@@ -16,7 +16,7 @@ const addUser = async (name, email, password) => {
       .then((result) => ({
         name,
         email,
-        role,
+        role: role || 'user',
         _id: result.insertedId,
       }));
   }

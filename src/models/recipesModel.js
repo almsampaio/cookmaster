@@ -15,7 +15,6 @@ const addNewRecipe = async (recipeData) => {
   } = recipeData;
 
   const data = await generalDB();
-  console.log(name, user);
 
   const { _id } = user;
 
@@ -47,8 +46,24 @@ const getRecipeById = async (id) => {
   return recipe;
 };
 
+const updateRecipe = async (id, newData) => {
+  const data = await generalDB();
+
+  const recipeId = new ObjectId(id);
+
+  const recipe = await data
+        .findOneAndUpdate({ _id: recipeId }, { $set: newData }, { returnDocument: 'after' })
+        .then((result) => result.value);
+
+  if (!recipe) throw new Error('recipe not found');
+
+  const updatedRecipe = await data.findOne(new ObjectId(id));
+  return updatedRecipe;
+};
+
 module.exports = {
   addNewRecipe,
   getAllRecipes,
   getRecipeById,
+  updateRecipe,
 };
