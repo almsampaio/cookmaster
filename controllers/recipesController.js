@@ -64,6 +64,11 @@ const addImage = async (req, res) => {
   return res.status(httpStatus.UNAUTHORIZED).json({ message: 'unauthorized' });
 };
 
+const getImage = async (req, res) => {
+  const { path } = req.file;
+  return res.status(httpStatus.HTTP_OK_STATUS).render('file', { path });
+};
+
 module.exports = {
   create,
   getAll,
@@ -71,4 +76,5 @@ module.exports = {
   update,
   exclude,
   addImage,
+  getImage,
 };
