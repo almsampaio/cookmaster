@@ -65,4 +65,29 @@ describe('Update Recipes', () => {
       expect(response.body.message).to.be.equal('missing auth token');
     });
   });
+
+  describe('When it is succesfuly updated', () => {
+    let response;
+
+    before(async () => {
+      const recipesCollection = await connectionMock.db('Cookmaster').collection('recipes');
+
+      const { _id } = await recipesCollection.findOne({ name: 'food' });
+
+      response = await chai.request(server)
+      .put(`/recipes/${ _id }`)
+      .set('authorization', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTRkY2U4NGFkMDVmMTM3MTBlZjUwZDkiLCJlbWFpbCI6InVzZXJAdHJ5YmUuY29tLmJyIiwicm9sZSI6InVzZXIiLCJpYXQiOjE2MzI0ODkxNzAsImV4cCI6MTYzMzA5Mzk3MH0.iWrpWGiX8cFBCCles_rKj3mdv2EgyINkf35NZq2EoVo')
+      .send({
+        name: 'user Food',
+        ingredients: 'lots of salt',
+        preparation: '1 hr boiling',
+      });
+    });
+    it('Status 200', () => {
+      expect(response).to.have.status(200);
+    });
+    it('Return an object', () => {
+      expect(response).to.be.an('object');
+    });
+  });
 });
