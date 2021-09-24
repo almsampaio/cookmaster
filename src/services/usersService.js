@@ -1,5 +1,4 @@
 const usersModel = require('../models/usersModel');
-// const jwt = require('jsonwebtoken');
 
 const validateFields = (email, password, name) => {
   const regex = /^\S+@\S+$/;
