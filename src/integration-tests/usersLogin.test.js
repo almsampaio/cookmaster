@@ -9,7 +9,7 @@ const { getConnection } = require('./mockConnection');
 
 const { expect } = chai;
 
-const server = require('../api/server');
+const server = require('../api/app');
 
 describe('Login test when there is no password or email ', () => {
   let response;
