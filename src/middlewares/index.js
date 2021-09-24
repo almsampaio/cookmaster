@@ -1,11 +1,9 @@
-const multer = require('multer');
-const path = require('path');
 const { verify } = require('jsonwebtoken');
+// const Users = require('../models/users');
+// const Recipes = require('../models/recipes');
+const { SECRET } = require('../data');
 
-const pathRouter = path.join(__dirname, '..', 'uploads');
-const SECRET = 'Vaitentanto123';
-
-const authToken = (req, res, next) => {
+const authToken = async (req, res, next) => {
   const { authorization: token } = req.headers;
   if (!token) return res.status(401).json({ message: 'missing auth token' });
 
@@ -19,16 +17,21 @@ const authToken = (req, res, next) => {
   }
 };
 
-const storage = multer.diskStorage({
-  destination: pathRouter,
-  filename: (req, _file, callback) => {
-    const { id } = req.params;
-    callback(null, `${id}.jpeg`);
-  },
-});
-const upload = multer({ storage });
+// const authAdmin = async (req, res, next) => {
+//   const { role } = req.user;
+//   const { id } = req.params;
+//   const recipe = await Recipes.getById(id);
+//   if (!recipe) return res.status(401).json({ message: 'jwt malformed' });
+//   const { role } = await Users.getById(recipe.userId);
+//   if (role === 'admin') return next();
+
+//   if (role !== 'admin') {
+//     return res.status(403).json({ message: 'Only admins can register new admins' });
+//   }
+
+//   next();
+// };
 
 module.exports = {
   authToken,
-  upload,
 };

@@ -33,7 +33,9 @@ const remove = async (id) => {
 
 const updateFile = async (id, image) => {
   const db = await getConnection();
-  await db.collection('recipes').updateOne({ _id: ObjectId(id) }, { $set: { image } });
+  const result = await db.collection('recipes')
+    .findOneAndUpdate({ _id: ObjectId(id) }, { $set: { image } });
+  return { ...result.value, image };
 };
 
 module.exports = {
