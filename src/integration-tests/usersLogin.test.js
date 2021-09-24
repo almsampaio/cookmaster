@@ -10,7 +10,6 @@ const { getConnection } = require('./mockConnection');
 const { expect } = chai;
 
 const server = require('../api/server');
-const { response } = require('express');
 
 describe('Login test when there is no password or email ', () => {
   let response;
