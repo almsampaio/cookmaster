@@ -1,6 +1,5 @@
 const userModel = require('../models/userModel');
 const jwt = require('jsonwebtoken');
-const emailValidator = require('../utils/emailValidator');
 
 const secret = 'secret123';
 
@@ -12,13 +11,9 @@ module.exports = async (req, res) => {
       message: 'All fields must be filled'
     })
 
-    if (!emailValidator.test(email)) return res.status(401).json({
-      message: 'Incorrect username or password'
-    })
-
     const user = await userModel.findUserByEmail(email);
     
-    if (user.password !== password) return res.status(401).json({
+    if (!user || user.password !== password) return res.status(401).json({
       message: 'Incorrect username or password'
     })
 
