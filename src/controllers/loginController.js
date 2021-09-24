@@ -16,7 +16,6 @@ const userAuthentication = (req, res, next) => {
     return res.status(401).json({ message: 'missing auth token' });
   }
   const dataToken = validateToken(token);
-  console.log('data token', dataToken);
   if (!dataToken.isValid) {
    return res.status(401).json({ message: 'jwt malformed' });
   }

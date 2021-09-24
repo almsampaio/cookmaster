@@ -7,9 +7,9 @@ const OPTIONS = {
   useUnifiedTopology: true,
 };
 
-const connectionMock = async () => {
+const getConnectionMock = async () => {
   const URLMock = await DBServer.getUri();
   return await MongoClient.connect(URLMock, OPTIONS);
 }
 
-module.exports = connectionMock;
+module.exports = getConnectionMock;

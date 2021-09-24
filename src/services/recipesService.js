@@ -1,5 +1,16 @@
 const recipesModel = require('../models/recipesModel');
 
+const validateUser = async (recipeId, userId, role) => {
+  const registeredRecipe = await recipesModel.findById(recipeId);
+  if (!registeredRecipe) {
+    return { response: { message: 'recipe not found' }, status: 404 };
+  }
+  if (userId !== registeredRecipe.userId && role !== 'admin') {
+    return { response: { message: 'user not allowed' }, status: 401 };
+  }
+  return { isValid: true, onerUserId: registeredRecipe.userId };
+};
+
 const getAll = async () => {
   const recipes = await recipesModel.getAll();
   return recipes;
@@ -21,16 +32,7 @@ const findById = async (id) => {
   };
 };
 
-const deleteById = async (id, user) => {
-  const recipeExists = await findById(id);
-  if (recipeExists.status === 404) {
-    return recipeExists;
-  }
-  const { response: registredRecipe } = recipeExists;
-  const { role, userId } = user;
-  if (userId !== registredRecipe.userId && role !== 'admin') {
-    return { response: { message: 'user not allowed' }, status: 401 };
-  }
+const deleteById = async (id) => {
   await recipesModel.deleteById(id);
   return {
     response: null,
@@ -43,21 +45,12 @@ const create = async (name, ingredients, preparation, userId) => {
   return createdRecipe;
 };
 
-const update = async (recipe, user) => {
-  const { id, name, ingredients, preparation } = recipe;
-  const { userId, role } = user;
-  const registredRecipe = await recipesModel.findById(id);
-  if (!registredRecipe) {
-    return { response: { message: 'recipe not found' }, status: 404 };
-  }
-  if (userId !== registredRecipe.userId && role !== 'admin') {
-    return { response: { message: 'user not allowed' }, status: 401 };
-  }
+const update = async (recipe) => {
   await recipesModel.update(recipe);
   return {
-    response: { _id: id, name, ingredients, preparation, userId: registredRecipe.userId },
+    response: recipe,
     status: 200,
   };
 };
 
-module.exports = { getAll, findById, deleteById, create, update }; 
+module.exports = { getAll, findById, deleteById, create, update, validateUser }; 
