@@ -16,7 +16,7 @@ exports.login = async (req, res, next) => {
   }
 };
 
-exports.verify = async (req, res, next) => {
+exports.verify = async (req, _res, next) => {
   try {
     const { authorization: token } = req.headers;
 
@@ -25,11 +25,11 @@ exports.verify = async (req, res, next) => {
     }
 
     const decoded = jwt.verify(token, SECRET);
-    console.log(decoded);
+    
+    req.user = decoded;
 
     next();
   } catch (err) {
-    console.log('verify authController: ', err.name);
     next(err);
   }
 };
