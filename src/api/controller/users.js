@@ -69,9 +69,8 @@ const addImage = rescue(
   async (req, res) => {
     const { id } = req.params;
     const { authorization } = req.headers;
-    const { filename } = req.file;
 
-    const newRecipe = await serviceUsers.addImage(id, filename, authorization);
+    const newRecipe = await serviceUsers.addImage(id, authorization);
 
     return res.status(200).json(newRecipe);
   },
