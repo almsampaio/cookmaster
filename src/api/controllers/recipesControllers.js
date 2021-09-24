@@ -48,10 +48,22 @@ const deleteRecipe = async (req, res) => {
   res.status(status).json();
 };
 
+// REQUISITO 9
+
+const addImage = async (req, res) => {
+  const { id } = req.params;
+  const { authorization } = req.headers;
+
+  const { status, addRecipeImage, err } = await services.recipesService.addImage(id, authorization);
+  if (err) return res.status(status).json({ message: err.message });
+  res.status(status).json(addRecipeImage);
+};
+
 module.exports = {
   createRecipe,
   getAllRecipes,
   getRecipeById,
   updateRecipe,
   deleteRecipe,
+  addImage,
 };

@@ -44,9 +44,21 @@ const updateRecipe = async (id, recipe) => {
 
 const deleteRecipe = async (id) => {
   const db = await connection();
-  await db.collection('recipes').deleteOne({ _id: ObjectId(id) });
+  await db.collection(COLLECTION_NAME).deleteOne({ _id: ObjectId(id) });
   const delRecipe = await db.collection(COLLECTION_NAME).findOne({ _id: ObjectId(id) });
   return delRecipe;
+};
+
+// REQUISITO 9
+
+const addImage = async (id, image) => {
+  const db = await connection();
+  await db.collection(COLLECTION_NAME).updateOne(
+    { _id: ObjectId(id) },
+    { $set: { image } },
+  );
+  const addImg = await db.collection(COLLECTION_NAME).findOne({ _id: ObjectId(id) });
+  return addImg;
 };
 
 module.exports = {
@@ -55,4 +67,5 @@ module.exports = {
   getRecipeById,
   updateRecipe,
   deleteRecipe,
+  addImage,
 };

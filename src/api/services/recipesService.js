@@ -64,6 +64,18 @@ const deleteRecipe = async (id, authorization) => {
   if (!deletedRecipe) return { status: NO_CONTENT };
 };
 
+// REQUISITO 9
+const addImage = async (id, authorization) => {
+  const { status, err } = await tokenValidation(authorization);
+  if (err) return { status, err };
+
+  const image = `localhost:3000/src/uploads/${id}.jpeg`;
+
+  const addRecipeImage = await models.recipesModel.addImage(id, image);
+
+  return { status: 200, addRecipeImage };
+};
+
 module.exports = {
   tokenValidation,
   createRecipe,
@@ -71,4 +83,5 @@ module.exports = {
   getRecipeById,
   updateRecipe,
   deleteRecipe,
+  addImage,
 };
