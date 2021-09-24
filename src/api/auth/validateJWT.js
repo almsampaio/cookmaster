@@ -14,14 +14,16 @@ module.exports = async (req, res, next) => {
     return res.status(UNAUTHORIZED).json({ message: 'missing auth token' });
   }
   try {
-    const decoded = jwt.verify(token, SECRET);
+    const payload = jwt.verify(token, SECRET);
 
-    const user = await model.findOnebyEmail(decoded.data.email);
+    const user = await model.findOnebyEmail(payload.data.email);
     if (!user) {
       return res.status(UNAUTHORIZED)
         .json({ message: 'jwt malformed' });
     }
     req.user = user;
+    req.payload = payload;
+    // verificação do payload feita com ajuda da Marília
     next();
   } catch (error) {
     return res.status(UNAUTHORIZED).json({ message: error.message });

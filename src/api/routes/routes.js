@@ -2,6 +2,7 @@ const { Router } = require('express');
 
 const multer = require('multer');
 const createUser = require('../controllers/usersController');
+const createAdmin = require('../controllers/adminController');
 const login = require('../controllers/loginController');
 const multerConfig = require('../utils/multer');
 const validateUser = require('../validations/userValidation');
@@ -21,6 +22,7 @@ const routes = Router();
 const upload = multer(multerConfig);
 
 routes.post('/users', validateUser, createUser); // requisito 1
+routes.post('/users/admin', validateJWT, createAdmin); // requisito 10
 routes.post('/login', login); // requisito 2
 routes.post('/recipes', validateRecipes, validateJWT, createRecipes); // requisito 3
 routes.get('/recipes', getAllRecipes); // requisito 4
