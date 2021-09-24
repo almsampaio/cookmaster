@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
 const usersRouter = require('./router/users/usersRouter');
+const usersAdminRouter = require('./router/users/usersAdminRouter');
 const loginRouter = require('./router/users/loginRouter');
 const recipesRouter = require('./router/recipes/recipesRouter');
 const imageRouter = require('./router/images/imageRouter');
@@ -20,6 +21,7 @@ app.get('/', (_request, response) => {
 // Não remover esse end-point, ele é necessário para o avaliador
 
 app.use('/users', usersRouter);
+app.use('/users', usersAdminRouter);
 app.use('/login', loginRouter);
 app.use('/recipes', recipesRouter);
 app.use('/images', imageRouter);

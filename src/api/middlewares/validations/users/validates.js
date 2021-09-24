@@ -1,7 +1,14 @@
+const jwt = require('jsonwebtoken');
+
 const {
   HTTP_BAD_REQUEST,
+  HTTP_FORBIDDEN,
   HTTP_UNAUTHORIZED,
 } = require('../../../schemas/status');
+
+const {
+  Secret,
+} = require('../../../services/users/jwt');
 
 const validateName = (req, res, next) => {
   const { name } = req.body;
@@ -63,9 +70,31 @@ const validateLogin = (req, res, next) => {
   next();
 };
 
+const validateAdminToken = (req, res, next) => {
+  const { authorization } = req.headers;
+  const token = authorization;
+
+  if (!token) return res.status(HTTP_UNAUTHORIZED).json({ message: 'missing auth token' });
+
+  try {
+    const payload = jwt.verify(token, Secret);
+    
+    if (payload.role !== 'admin') {
+      return res.status(HTTP_FORBIDDEN).json({ message: 'Only admins can register new admins' });
+    }
+
+    req.userAdmin = payload;
+
+    next();
+  } catch (error) {
+    return res.status(HTTP_UNAUTHORIZED).json({ message: error.message });
+  }
+};
+
 module.exports = {
   validateName,
   validateEmail,
   validatePassword,
   validateLogin,
+  validateAdminToken,
 };

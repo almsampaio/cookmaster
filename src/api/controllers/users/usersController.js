@@ -26,6 +26,23 @@ const createController = async (req, res) => {
   });
 };
 
+const createAdminController = async (req, res) => {
+  const { name, email, password } = req.body;
+  const { role } = req.userAdmin;
+
+  const { message, data } = await createServices(name, email, password, role);
+
+  if (!data) {
+    return res.status(HTTP_CONFLICT).json({
+      message,
+    });
+  }
+
+  return res.status(HTTP_CREATED).json({
+    user: data,
+  });
+};
+
 const createTokenController = async (req, res) => {
   const { email, password } = req.body;
   const { message, token } = await createTokenServices(email, password);
@@ -41,5 +58,6 @@ const createTokenController = async (req, res) => {
 
 module.exports = {
   createController,
+  createAdminController,
   createTokenController,
 };
