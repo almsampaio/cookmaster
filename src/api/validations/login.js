@@ -16,7 +16,7 @@ const validPassword = (req, res, next) => {
   if (!password || password === '') {
     return res.status(401).json({ message: 'All fields must be filled' });
   }
-  if (password.length < 6) {
+  if (password.length < 5) {
     return res.status(401).json({ message: 'Incorrect username or password' });
   }
     next();

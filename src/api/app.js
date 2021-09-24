@@ -33,6 +33,6 @@ app.post('/recipes', [
 ]);
 
 app.get('/recipes', controllerRecipes.findRecipes);
-app.get('/recipes/:id', controllerRecipes.findRecipesById, validjwt.validateJWT);
+app.get('/recipes/:id', controllerRecipes.findRecipesById);
 
 module.exports = app;
