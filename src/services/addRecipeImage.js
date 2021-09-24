@@ -12,7 +12,7 @@ module.exports = async (id, user) => {
 
   const { _id: userId, role } = user;
 
-  if (userId !== recipe.userId && role !== 'admin') {
+  if (userId !== recipe.userId && role !== 'admin' && !recipe.userId) {
     throw errorMessages.INVALID_ENTRIES;
   }
 
