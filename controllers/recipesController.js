@@ -52,10 +52,23 @@ const exclude = async (req, res) => {
   return res.status(httpStatus.UNAUTHORIZED).json({ message: 'unauthorized' });
 };
 
+const addImage = async (req, res) => {
+  const { id } = req.params;
+  const { _id: userId, role } = req.user;
+  const { path } = req.file;
+  const oldRecipe = await recipesModel.getById(id);
+  if (userId === oldRecipe.userId || role === 'admin') {
+    const updatedRecipe = await recipesServices.addImage(path, id);
+    return res.status(httpStatus.HTTP_OK_STATUS).json(updatedRecipe);
+  }
+  return res.status(httpStatus.UNAUTHORIZED).json({ message: 'unauthorized' });
+};
+
 module.exports = {
   create,
   getAll,
   getById,
   update,
   exclude,
+  addImage,
 };

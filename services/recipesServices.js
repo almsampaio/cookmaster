@@ -25,10 +25,16 @@ const exclude = async (id) => {
   return removeRecipe;
 };
 
+const addImage = async (image, id) => {
+  const addNewImage = await recipesModel.addImage(image, id);
+  return addNewImage;
+};
+
 module.exports = {
   getAll,
   create,
   getById,
   update,
   exclude,
+  addImage,
 };

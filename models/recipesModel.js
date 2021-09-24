@@ -68,6 +68,23 @@ const exclude = async (id) => {
   return removeRecipe;
 };
 
+const addImage = async (image, id) => {
+  if (!ObjectID.isValid(id)) {
+    return null;
+  }
+
+  const { userId, name, preparation, ingredients } = await getById(id);
+
+  const editRecipe = await connection().then((db) => db
+  .collection('recipes').updateOne({ _id: new ObjectID(id) }, {
+    $set: { image },
+  })).then(() => (
+    { _id: id, image: `localhost:3000/${image}`, userId, name, preparation, ingredients }
+  ));
+
+  return editRecipe;
+};
+
 module.exports = {
   create,
   getAll,
@@ -75,4 +92,5 @@ module.exports = {
   update,
   findRecipeByUserId,
   exclude,
+  addImage,
 };
