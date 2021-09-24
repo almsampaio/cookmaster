@@ -1,7 +1,5 @@
-require('dotenv').config();
-const jwt = require('jsonwebtoken');
 const schema = require('../schema');
-// const { verify } = require('../auth/jwtFunctions');
+const { verify } = require('../auth/jwtFunctions');
 
 const checkFieldName = (req, res, next) => {
   const { name } = req.body;
@@ -33,27 +31,17 @@ const checkFieldPreparation = (req, res, next) => {
   next();
 };
 
-const secret = process.env.SECRET || 'senha_dificil';
-
 const checkToken = (req, res, next) => {
-  // gambiarra temporária
-  const token = req.headers.authorization;
-  jwt.verify(token, secret, (err, _decoded) => {
-    if (err) {
+  try {
+    const { authorization } = req.headers;
+    verify(authorization);
+  } catch (e) {
+    if (e) {
       return res
-         .status(schema.status.unauthorized)
-         .json({ message: schema.messages.jwtMalformed });
+      .status(schema.status.unauthorized)
+      .json({ message: schema.messages.jwtMalformed });
     }
-  });
-
-  // Queria bastante que funcionasse, perguntar isso no plantão depois
-  // const { authorization } = req.headers;
-  // const token = verify(authorization);
-  // if (!token) {
-  //   return res
-  //   .status(schema.status.unauthorized)
-  //   .json({ message: schema.messages.jwtMalformed });
-  // }
+  }
   next();
 };
 
