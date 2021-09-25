@@ -16,8 +16,6 @@ const findUserByEmail = async (email) => {
   const db = await getConnection();
   const user = await db.collection('users').findOne({ email });
 
-  // if (!user) return null;
-
   return user || null;
 };
 

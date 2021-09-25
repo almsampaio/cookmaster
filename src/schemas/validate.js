@@ -6,8 +6,14 @@ const validate = (method) => {
     case 'createUser': {
       return [
         body('name', errors.invalidEntries).exists().notEmpty().isString(),
-        body('email', errors.invalidEntries).exists().isEmail().isString(),
+        body('email', errors.invalidEntries).exists().notEmpty().isEmail(),
         body('password', errors.invalidEntries).exists().notEmpty().isString(),
+      ];
+    }
+    case 'login': {
+      return [
+        body('email', errors.isBlankOrNotExists).exists().isEmail().isString(),
+        body('password', errors.isBlankOrNotExists).exists().notEmpty().isString(),
       ];
     }
     default:
