@@ -1,29 +1,25 @@
 const chai = require('chai');
-const chaiHttp = require('chai-http');
 const sinon = require('sinon');
-const { MongoClient } = require('mongodb');
-const { MongoMemoryServer } = require('mongodb-memory-server');
-const server = require('../api/app');
 
+const chaiHttp = require('chai-http');
 chai.use(chaiHttp);
+
 const { expect } = chai;
+
+const { MongoClient } = require('mongodb');
+const { getConnection } = require('./connectionMock');
+const server = require('../api/app');
 
 const {user, recipe, anotherRecipe, admin, newAdmin} = require('./mockConstants')
 
 describe('POST /users', () => {
   describe('an user is created successfully', () => {
-    let response = {};
-
-    const DBServer = new MongoMemoryServer();
+    let connectionMock;
 
     before(async () => {
       const {name, email, password} = user;
-      const URLMock = await DBServer.getUri();
-      const connectionMock = await MongoClient.connect(URLMock,
-        { useNewUrlParser: true, useUnifiedTopology: true }
-      );
-
-      sinon.stub(MongoClient, 'connect').resolves(connectionMock);
+      connectionMock = await getConnection();
+		  sinon.stub(MongoClient, 'connect').resolves(connectionMock);
       db = connectionMock.db('Cookmaster');
       await db.collection('users').deleteMany({});
       response = await chai.request(server)
@@ -54,18 +50,12 @@ describe('POST /users', () => {
 
 describe('POST /users', () => {
   describe('when an user already exists', () => {
-    let response = {};
-
-    const DBServer = new MongoMemoryServer();
+    let connectionMock;
 
     before(async () => {
       const {name, email, password} = user;
-      const URLMock = await DBServer.getUri();
-      const connectionMock = await MongoClient.connect(URLMock,
-        { useNewUrlParser: true, useUnifiedTopology: true }
-      );
-
-      sinon.stub(MongoClient, 'connect').resolves(connectionMock);
+      connectionMock = await getConnection();
+		  sinon.stub(MongoClient, 'connect').resolves(connectionMock);
       db = connectionMock.db('Cookmaster');
       response = await chai.request(server)
         .post('/users')
@@ -99,18 +89,12 @@ describe('POST /users', () => {
 
 describe('POST /users', () => {
   describe('when name is not provided', () => {
-    let response = {};
-
-    const DBServer = new MongoMemoryServer();
+    let connectionMock;
 
     before(async () => {
       const {email, password} = user;
-      const URLMock = await DBServer.getUri();
-      const connectionMock = await MongoClient.connect(URLMock,
-        { useNewUrlParser: true, useUnifiedTopology: true }
-      );
-
-      sinon.stub(MongoClient, 'connect').resolves(connectionMock);
+      connectionMock = await getConnection();
+		  sinon.stub(MongoClient, 'connect').resolves(connectionMock);
       db = connectionMock.db('Cookmaster');
       await db.collection('users').deleteMany({});
       response = await chai.request(server)
@@ -145,18 +129,12 @@ describe('POST /users', () => {
 
 describe('POST /login', () => {
   describe('when an user login successfully', () => {
-    let response = {};
-
-    const DBServer = new MongoMemoryServer();
+    let connectionMock;
 
     before(async () => {
       const {name, email, password, role} = user;
-      const URLMock = await DBServer.getUri();
-      const connectionMock = await MongoClient.connect(URLMock,
-        { useNewUrlParser: true, useUnifiedTopology: true }
-      );
-
-      sinon.stub(MongoClient, 'connect').resolves(connectionMock);
+      connectionMock = await getConnection();
+		  sinon.stub(MongoClient, 'connect').resolves(connectionMock);
       db = connectionMock.db('Cookmaster');
       await db.collection('users').insertOne({name, email, password, role });
       response = await chai.request(server)
@@ -191,18 +169,12 @@ describe('POST /login', () => {
 
 describe('POST /login', () => {
   describe('when an user try to login without email', () => {
-    let response = {};
-
-    const DBServer = new MongoMemoryServer();
+    let connectionMock;
 
     before(async () => {
       const {name, email, password, role} = user;
-      const URLMock = await DBServer.getUri();
-      const connectionMock = await MongoClient.connect(URLMock,
-        { useNewUrlParser: true, useUnifiedTopology: true }
-      );
-
-      sinon.stub(MongoClient, 'connect').resolves(connectionMock);
+      connectionMock = await getConnection();
+		  sinon.stub(MongoClient, 'connect').resolves(connectionMock);
       db = connectionMock.db('Cookmaster');
       await db.collection('users').insertOne({name, email, password, role });
       response = await chai.request(server)
@@ -237,18 +209,12 @@ describe('POST /login', () => {
 
 describe('POST /login', () => {
   describe('when an user try to login with wrong password', () => {
-    let response = {};
-
-    const DBServer = new MongoMemoryServer();
+    let connectionMock;
 
     before(async () => {
       const {name, email, password, role} = user;
-      const URLMock = await DBServer.getUri();
-      const connectionMock = await MongoClient.connect(URLMock,
-        { useNewUrlParser: true, useUnifiedTopology: true }
-      );
-
-      sinon.stub(MongoClient, 'connect').resolves(connectionMock);
+      connectionMock = await getConnection();
+		  sinon.stub(MongoClient, 'connect').resolves(connectionMock);
       db = connectionMock.db('Cookmaster');
       await db.collection('users').insertOne({name, email, password, role });
       response = await chai.request(server)
@@ -283,18 +249,12 @@ describe('POST /login', () => {
 
 describe('POST /recipes', () => {
   describe('when an user post an recipe successfully', () => {
-    let response = {};
-
-    const DBServer = new MongoMemoryServer();
+    let connectionMock;
 
     before(async () => {
       const {name, email, password, role} = user;
-      const URLMock = await DBServer.getUri();
-      const connectionMock = await MongoClient.connect(URLMock,
-        { useNewUrlParser: true, useUnifiedTopology: true }
-      );
-
-      sinon.stub(MongoClient, 'connect').resolves(connectionMock);
+      connectionMock = await getConnection();
+		  sinon.stub(MongoClient, 'connect').resolves(connectionMock);
       db = connectionMock.db('Cookmaster');
       await db.collection('users').deleteMany({});
       await db.collection('users').insertOne({name, email, password, role });
@@ -337,18 +297,12 @@ describe('POST /recipes', () => {
 
 describe('POST /recipes', () => {
   describe('when an user send an invalid token', () => {
-    let response = {};
-
-    const DBServer = new MongoMemoryServer();
+    let connectionMock;
 
     before(async () => {
       const {name, email, password, role} = user;
-      const URLMock = await DBServer.getUri();
-      const connectionMock = await MongoClient.connect(URLMock,
-        { useNewUrlParser: true, useUnifiedTopology: true }
-      );
-
-      sinon.stub(MongoClient, 'connect').resolves(connectionMock);
+      connectionMock = await getConnection();
+		  sinon.stub(MongoClient, 'connect').resolves(connectionMock);
       db = connectionMock.db('Cookmaster');
       await db.collection('users').deleteMany({});
       await db.collection('users').insertOne({name, email, password, role });
@@ -389,18 +343,12 @@ describe('POST /recipes', () => {
 
 describe('POST /recipes', () => {
   describe('when an user does not send a token', () => {
-    let response = {};
-
-    const DBServer = new MongoMemoryServer();
+    let connectionMock;
 
     before(async () => {
       const {name, email, password, role} = user;
-      const URLMock = await DBServer.getUri();
-      const connectionMock = await MongoClient.connect(URLMock,
-        { useNewUrlParser: true, useUnifiedTopology: true }
-      );
-
-      sinon.stub(MongoClient, 'connect').resolves(connectionMock);
+      connectionMock = await getConnection();
+		  sinon.stub(MongoClient, 'connect').resolves(connectionMock);
       db = connectionMock.db('Cookmaster');
       await db.collection('users').deleteMany({});
       await db.collection('users').insertOne({name, email, password, role });
@@ -441,18 +389,12 @@ describe('POST /recipes', () => {
 
 describe('POST /recipes', () => {
   describe('when an user does not send all recipe data', () => {
-    let response = {};
-
-    const DBServer = new MongoMemoryServer();
+    let connectionMock;
 
     before(async () => {
       const {name, email, password, role} = user;
-      const URLMock = await DBServer.getUri();
-      const connectionMock = await MongoClient.connect(URLMock,
-        { useNewUrlParser: true, useUnifiedTopology: true }
-      );
-
-      sinon.stub(MongoClient, 'connect').resolves(connectionMock);
+      connectionMock = await getConnection();
+		  sinon.stub(MongoClient, 'connect').resolves(connectionMock);
       db = connectionMock.db('Cookmaster');
       await db.collection('users').deleteMany({});
       await db.collection('users').insertOne({name, email, password, role });
@@ -495,18 +437,12 @@ describe('POST /recipes', () => {
 
 describe('GET /recipes', () => {
   describe('list all recipes successfully', () => {
-    let response = {};
-
-    const DBServer = new MongoMemoryServer();
+    let connectionMock;
 
     before(async () => {
       const {name, email, password, role} = user;
-      const URLMock = await DBServer.getUri();
-      const connectionMock = await MongoClient.connect(URLMock,
-        { useNewUrlParser: true, useUnifiedTopology: true }
-      );
-
-      sinon.stub(MongoClient, 'connect').resolves(connectionMock);
+      connectionMock = await getConnection();
+		  sinon.stub(MongoClient, 'connect').resolves(connectionMock);
       db = connectionMock.db('Cookmaster');
       
       await db.collection('users').deleteMany({});
@@ -555,18 +491,12 @@ describe('GET /recipes', () => {
 
 describe('GET /recipes/:id', () => {
   describe('list one recipe successfully', () => {
-    let response = {};
-
-    const DBServer = new MongoMemoryServer();
+    let connectionMock;
 
     before(async () => {
       const {name, email, password, role} = user;
-      const URLMock = await DBServer.getUri();
-      const connectionMock = await MongoClient.connect(URLMock,
-        { useNewUrlParser: true, useUnifiedTopology: true }
-      );
-
-      sinon.stub(MongoClient, 'connect').resolves(connectionMock);
+      connectionMock = await getConnection();
+		  sinon.stub(MongoClient, 'connect').resolves(connectionMock);
       db = connectionMock.db('Cookmaster');
       
       await db.collection('users').deleteMany({});
@@ -610,18 +540,12 @@ describe('GET /recipes/:id', () => {
 
 describe('GET /recipes/:id', () => {
   describe('send an invalid id', () => {
-    let response = {};
-
-    const DBServer = new MongoMemoryServer();
+    let connectionMock;
 
     before(async () => {
       const {name, email, password, role} = user;
-      const URLMock = await DBServer.getUri();
-      const connectionMock = await MongoClient.connect(URLMock,
-        { useNewUrlParser: true, useUnifiedTopology: true }
-      );
-
-      sinon.stub(MongoClient, 'connect').resolves(connectionMock);
+      connectionMock = await getConnection();
+		  sinon.stub(MongoClient, 'connect').resolves(connectionMock);
       db = connectionMock.db('Cookmaster');
       
       await db.collection('users').deleteMany({});
@@ -664,18 +588,12 @@ describe('GET /recipes/:id', () => {
 
 describe('PUT /recipes/:id', () => {
   describe('edit one recipe successfully', () => {
-    let response = {};
-
-    const DBServer = new MongoMemoryServer();
+    let connectionMock;
 
     before(async () => {
       const {name, email, password, role} = user;
-      const URLMock = await DBServer.getUri();
-      const connectionMock = await MongoClient.connect(URLMock,
-        { useNewUrlParser: true, useUnifiedTopology: true }
-      );
-
-      sinon.stub(MongoClient, 'connect').resolves(connectionMock);
+      connectionMock = await getConnection();
+		  sinon.stub(MongoClient, 'connect').resolves(connectionMock);
       db = connectionMock.db('Cookmaster');
       
       await db.collection('users').deleteMany({});
@@ -721,18 +639,12 @@ describe('PUT /recipes/:id', () => {
 
 describe('DELETE /recipes/:id', () => {
   describe('delete one recipe successfully', () => {
-    let response = {};
-
-    const DBServer = new MongoMemoryServer();
+    let connectionMock;
 
     before(async () => {
       const {name, email, password, role} = user;
-      const URLMock = await DBServer.getUri();
-      const connectionMock = await MongoClient.connect(URLMock,
-        { useNewUrlParser: true, useUnifiedTopology: true }
-      );
-
-      sinon.stub(MongoClient, 'connect').resolves(connectionMock);
+      connectionMock = await getConnection();
+		  sinon.stub(MongoClient, 'connect').resolves(connectionMock);
       db = connectionMock.db('Cookmaster');
       
       await db.collection('users').deleteMany({});
@@ -777,18 +689,12 @@ describe('DELETE /recipes/:id', () => {
 
 describe('POST /users/admin', () => {
   describe('add an admin successfully', () => {
-    let response = {};
-
-    const DBServer = new MongoMemoryServer();
+    let connectionMock;
 
     before(async () => {
       const {name, email, password, role} = admin;
-      const URLMock = await DBServer.getUri();
-      const connectionMock = await MongoClient.connect(URLMock,
-        { useNewUrlParser: true, useUnifiedTopology: true }
-      );
-
-      sinon.stub(MongoClient, 'connect').resolves(connectionMock);
+      connectionMock = await getConnection();
+		  sinon.stub(MongoClient, 'connect').resolves(connectionMock);
       db = connectionMock.db('Cookmaster');
       
       await db.collection('users').deleteMany({});

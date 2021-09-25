@@ -4,8 +4,9 @@ const path = require('path');
 const multer = require('multer');
 
 const app = express();
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-app.use('/images', express.static(path.join(__dirname, '..', '/uploads')));
+app.use('/images', express.static(path.join(__dirname, '..', 'uploads')));
 
 const usersController = require('../controllers/usersController');
 const recipesController = require('../controllers/recipesController');
