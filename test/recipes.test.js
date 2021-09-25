@@ -546,7 +546,7 @@ describe('7 - Crie um endpoint para a edição de uma receita', () => {
     await connection.close();
   });
 
-  it.skip('Será validado que não é possível editar receita sem estar autenticado', async () => {
+  it('Será validado que não é possível editar receita sem estar autenticado', async () => {
     let resultRecipes;
 
     await frisby
@@ -593,7 +593,7 @@ describe('7 - Crie um endpoint para a edição de uma receita', () => {
       });
   });
 
-  it.skip('Será validado que não é possível editar receita com token inválido', async () => {
+  it('Será validado que não é possível editar receita com token inválido', async () => {
     let resultRecipes;
 
     await frisby
@@ -648,7 +648,7 @@ describe('7 - Crie um endpoint para a edição de uma receita', () => {
       });
   });
 
-  it.skip('Será validado que é possível editar receita estando autenticado', async () => {
+  it('Será validado que é possível editar receita estando autenticado', async () => {
     let result;
     let resultRecipes;
 
@@ -708,7 +708,7 @@ describe('7 - Crie um endpoint para a edição de uma receita', () => {
       });
   });
 
-  it.skip('Será validado que é possível editar receita com usuário admin', async () => {
+  it('Será validado que é possível editar receita com usuário admin', async () => {
     let resultRecipes;
     let resultAdmin;
 

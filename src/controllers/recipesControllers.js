@@ -12,7 +12,8 @@ const {
 
 const { serviceCreateRecipe,
   getAllRecipes,
-  findRecipeById } = require('../services/recipesServices');
+  findRecipeById,
+  serviceEditRecipe } = require('../services/recipesServices');
 
 const createRecipe = rescue(async (req, res) => {
   const { name, ingredients, preparation } = req.body;
@@ -26,7 +27,7 @@ const createRecipe = rescue(async (req, res) => {
   return res.status(STATUS_UNAUTHORIZED).json({ message: 'Unknown error.' });
 });
 
-const listRecipes = async (req, res) => {
+const listRecipes = async (_req, res) => {
   const recipes = await getAllRecipes();
   if (recipes) {
     return res.status(STATUS_OK).json(recipes);
@@ -42,8 +43,18 @@ const recipeDetails = async (req, res) => {
   }
   return res.status(STATUS_NOT_FOUND).json({ message: 'recipe not found' });
 };
+
+const editRecipe = async (req, res) => {
+  const { name, ingredients, preparation } = req.body;
+  const { id } = req.params;
+  const { _id: userId } = req.user;
+  // console.log(req.user);
+  const updatedRecipe = await serviceEditRecipe({ name, ingredients, preparation, id, userId });
+  return res.status(STATUS_OK).json(updatedRecipe);
+};
 module.exports = {
   createRecipe,
   listRecipes,
   recipeDetails,
+  editRecipe,
 };

@@ -1,7 +1,8 @@
 // importar models
 const { createRecipeM,
   getAllRecipesM,
-  findRecipeByIdM } = require('../models/recipesModel');
+  findRecipeByIdM,
+  editRecipeM } = require('../models/recipesModel');
 
 const serviceCreateRecipe = async (recipeData) => {
   const createdRecipe = await createRecipeM(recipeData);
@@ -18,8 +19,14 @@ const findRecipeById = async (id) => {
   return recipe;
 };
 
+const serviceEditRecipe = async (newRecipe) => {
+  const updatedRecipe = await editRecipeM(newRecipe);
+  return updatedRecipe;
+};
+
 module.exports = {
   serviceCreateRecipe,
   getAllRecipes,
   findRecipeById,
+  serviceEditRecipe,
 };
