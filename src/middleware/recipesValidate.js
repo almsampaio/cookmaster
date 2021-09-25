@@ -5,7 +5,7 @@ const recipesServices = require('../services/recipesServices');
 const existsRecipesFields = (req, _res, next) => {
   const { name, ingredients, preparation } = req.body;
   const { error } = recipeValidate.validate({ name, ingredients, preparation });
-  if(error) {
+  if (error) {
     return next({
       err: { message: 'Invalid entries. Try again.' },
       statusCode: STATUS.STATUS_400_BAD_REQUEST,

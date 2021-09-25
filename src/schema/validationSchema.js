@@ -14,5 +14,5 @@ const recipeValidate = Joi.object({
 
 module.exports = {
   postLoginValidate,
-  recipeValidate
+  recipeValidate,
 };

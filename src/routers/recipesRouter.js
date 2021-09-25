@@ -5,7 +5,7 @@ const { verifyToken } = require('../middleware/jwtValidate');
 
 const recipesRouter = express.Router();
 
-const PostValidations = [verifyToken, existsRecipesFields]
+const PostValidations = [verifyToken, existsRecipesFields];
 
 recipesRouter.post('/', ...PostValidations, recipeController.createRecipe);
 
