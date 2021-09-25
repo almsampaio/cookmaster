@@ -6,7 +6,6 @@ const createRecipe = async (req, res, next) => {
     const { name, ingredients, preparation } = req.body;
     const { userId } = req;
     const recipe = await recipesServices.createRecipe(name, ingredients, preparation, userId);
-    console.log(recipe);
     return res.status(STATUS.STATUS_201_CREATED).json({ recipe });
   } catch (e) {
     next(e);
@@ -43,9 +42,20 @@ const recipeUpdate = async (req, res, next) => {
   }
 };
 
+const deleteById = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const deleteOne = await recipesServices.deleteById(id);
+    return res.status(STATUS.STATUS_204_NO_CONTENT).json(deleteOne);
+  } catch (e) {
+    next(e);
+  }
+};
+
 module.exports = {
   createRecipe,
   getAllRecipes,
   getById,
   recipeUpdate,
+  deleteById,
 };
