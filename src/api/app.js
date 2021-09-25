@@ -34,6 +34,9 @@ recipesData.preparationVerify,
 token.tokenValidation,
 recepiesControllers.createRecepie);
 
+app.get('/recipes', recepiesControllers.showRecipes);
+app.get('/recipes/:id', recepiesControllers.showRecipesByID);
+
 // Não remover esse end-point, ele é necessário para o avaliador
 app.get('/', (request, response) => {
   response.send();
