@@ -15,7 +15,8 @@ const { serviceCreateRecipe,
   getAllRecipes,
   findRecipeById,
   serviceEditRecipe,
-  serviceDeleteRecipe } = require('../services/recipesServices');
+  serviceDeleteRecipe,
+  serviceInsertImg } = require('../services/recipesServices');
 
 const createRecipe = rescue(async (req, res) => {
   const { name, ingredients, preparation } = req.body;
@@ -65,10 +66,19 @@ const deleteRecipe = async (req, res) => {
   }
   return res.status(STATUS_UNAUTHORIZED).json({ message: 'Unknown error.' });
 };
+
+const insertImg = async (req, res) => {
+  const { id } = req.params;
+  const { path } = req.file;
+  // const rescuedRecipe = await findRecipeById(id);
+  const updatedRecipe = await serviceInsertImg(path, id);
+  return res.status(STATUS_OK).json(updatedRecipe);
+};
 module.exports = {
   createRecipe,
   listRecipes,
   recipeDetails,
   editRecipe,
   deleteRecipe,
+  insertImg,
 };

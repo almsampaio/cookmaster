@@ -3,7 +3,8 @@ const { createRecipeM,
   getAllRecipesM,
   findRecipeByIdM,
   editRecipeM,
-  deleteRecipeM } = require('../models/recipesModel');
+  deleteRecipeM,
+  insertImgM } = require('../models/recipesModel');
 
 const serviceCreateRecipe = async (recipeData) => {
   const createdRecipe = await createRecipeM(recipeData);
@@ -29,10 +30,17 @@ const serviceDeleteRecipe = async (id) => {
   const deletedRecipe = await deleteRecipeM(id);
   return deletedRecipe;
 };
+
+const serviceInsertImg = async (path, id) => {
+  const recipeWithImg = await insertImgM(path, id);
+  return recipeWithImg;
+};
+
 module.exports = {
   serviceCreateRecipe,
   getAllRecipes,
   findRecipeById,
   serviceEditRecipe,
   serviceDeleteRecipe,
+  serviceInsertImg,
 };

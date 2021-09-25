@@ -50,10 +50,29 @@ const deleteRecipeM = async (id) => {
   return result;
 };
 
+const insertImgM = async (path, id) => {
+  if (!ObjectId.isValid(id)) return null;
+  const { userId, name, preparation, ingredients } = await findRecipeByIdM(id);
+  const editRecipe = await connection().then((db) => db
+    .collection('recipes').updateOne({ _id: new ObjectId(id) }, { $set: { image: path } }))
+    .then(() => (
+      {
+        _id: id,
+        image: `localhost:3000/${path}`,
+        userId,
+        name,
+        preparation,
+        ingredients,
+      }
+    ));
+  return editRecipe;
+};
+
 module.exports = {
   createRecipeM,
   getAllRecipesM,
   findRecipeByIdM,
   editRecipeM,
   deleteRecipeM,
+  insertImgM,
 };
