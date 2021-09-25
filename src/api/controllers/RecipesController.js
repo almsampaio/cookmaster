@@ -32,9 +32,28 @@ const updateRecipe = async (req, res) => {
   res.status(status).json(data);
 };
 
+const removeRecipe = async (req, res) => {
+  const { id } = req.params;
+  const { status, err } = await recipeService.removeRecipe(id);
+  if (err) return res.status(status).json(err);
+
+  res.status(status).send();
+};
+
+const updateImage = async (req, res) => {
+  const { id } = req.params;
+  const { filename } = req.file;
+  const { status, data, err } = await recipeService.updateImage(id, filename);
+  if (err) return res.status(status).json(err);
+
+  res.status(status).json(data);
+};
+
 module.exports = {
   createRecipe,
   getAll,
   getById,
   updateRecipe,
+  removeRecipe,
+  updateImage,
 };
