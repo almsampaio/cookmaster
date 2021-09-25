@@ -8,10 +8,13 @@ app.use(bodyParser.json());
 // Importar validações
 const dadosUsuario = require('../middlewares/validarDadosUsuario');
 const dadosLogin = require('../middlewares/validarLogin');
+const dadosReceita = require('../middlewares/validarReceita');
+const dadosToken = require('../middlewares/token');
 
 // Importar camadas
 const usuariosController = require('../controllers/usuariosController');
 const loginController = require('../controllers/loginController');
+const receitasController = require('../controllers/receitasController');
 
 // Início das rotas
 app.post('/users',
@@ -26,6 +29,13 @@ dadosLogin.verificarSenha,
 dadosLogin.verificarEmailValido,
 dadosLogin.verificarSenhaValida,
 loginController.loginUsuario);
+
+app.post('/recipes',
+dadosReceita.verificarNome,
+dadosReceita.verificarIngrediente,
+dadosReceita.verificarModoDePreparo,
+dadosToken.validarToken,
+receitasController.cadastrarReceita);
 
 // Fim das rotas
 
