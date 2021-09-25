@@ -1,13 +1,17 @@
-const messages = {
-    emailRegistered: 'Email already registered',
-    invalidEntries: 'Invalid entries. Try again.',
-    allFieldsFilled: 'All fields must be filled',
-    incorrectFieldData: 'Incorrect username or password',
-    wrongJWT: 'jwt malformed',
-    recipeNotFound: 'recipe not found',
-    missingToken: 'missing auth token',
-};
+const emailRegistered = 'Email already registered';
+const invalidEntries = 'Invalid entries. Try again.';
+const allFieldsFilled = 'All fields must be filled';
+const incorrectFieldData = 'Incorrect username or password';
+const wrongJWT = 'jwt malformed';
+const recipeNotFound = 'recipe not found';
+const missingToken = 'missing auth token';
 
 module.exports = {
-    messages,
+    emailRegistered,
+    invalidEntries,
+    allFieldsFilled,
+    incorrectFieldData,
+    wrongJWT,
+    recipeNotFound,
+    missingToken,
 };
