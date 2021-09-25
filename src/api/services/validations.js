@@ -78,7 +78,7 @@ const validateToken = (token, verb, item) => {
 const validateTokenToCreateRecipes = async (token) => validateToken(token, 'post', 'createRecipes');
 
 const validateTokenToUpdateRecipes = async (token) => {
-  const ValidationauthenticatToken = validateToken(token, 'put', 'uptadeRecipes');
+  const ValidationauthenticatToken = validateToken(token, 'put', 'uptadeRecipes'); 
   if (ValidationauthenticatToken.error) return ValidationauthenticatToken;
 
   const { email } = ValidationauthenticatToken.payload;

@@ -1,8 +1,10 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const middlewares = require('./middlewares/error');
+const middlewaresErrors = require('./middlewares/error');
 const usersControllers = require('./controllers/users');
 const recipesControllers = require('./controllers/recipes');
+const { validationsToAddPictures } = require('./middlewares/validationsToAddPictures');
+const upload = require('./middlewares/uploadImage');
 
 const app = express();
 app.use(bodyParser.json());
@@ -25,6 +27,9 @@ app.get('/recipes/:id', recipesControllers.getRecipesById);
 app.put('/recipes/:id', recipesControllers.uptadeRecipesById);
 app.delete('/recipes/:id', recipesControllers.deleteRecipes);
 
-app.use(middlewares);
+app.put('/recipes/:id/image', validationsToAddPictures, upload.single('image'), recipesControllers
+.uptadeRecipesWithImage);
+
+app.use(middlewaresErrors);
 
 module.exports = app;

@@ -59,10 +59,33 @@ const deleteRecipes = async (id, _userId) => {
  return 'No body returned for response';
 };
 
+const uptadeRecipesWithImage = async (id, path) => {
+  const usersCollection = await mongoConnection.getConnection()
+    .then((db) => db.collection('recipes'));
+  const upt = await usersCollection
+    .updateOne({ _id: ObjectId(id) }, { $set: { image: `localhost:3000/${path}` } });
+
+  if (!upt.result.n) return { error: true };
+
+  const recipe = await getRecipesById(id);
+
+  const { _id, name, ingredients, preparation, userId, image } = recipe;
+
+  return {
+    _id,
+    name,
+    ingredients,
+    preparation,
+    userId,
+    image,
+  };
+};
+
 module.exports = {
   createRecipes,
   getAllRecipes,
   getRecipesById,
   uptadeRecipesById,
   deleteRecipes,
+  uptadeRecipesWithImage,
 };

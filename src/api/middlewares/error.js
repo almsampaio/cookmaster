@@ -42,7 +42,6 @@ function errorsPutRecipes(err, res) {
     }
 
     if (!err.isAuthenticToken) {
-      console.log(err.isAuthenticToken);
       return res.status(401).json({ message: 'missing auth token' });
     }
     return res.status(401).json({ message: 'jwt malformed' });
@@ -54,7 +53,6 @@ function errorsPut(err, res) {
 
 function errorsDeleteRecipes(err, res) {
   if (!err.isAuthenticToken) {
-    console.log(err.isAuthenticToken);
     return res.status(401).json({ message: 'missing auth token' });
   }
   return res.status(401).json({ message: 'jwt malformed' });
@@ -69,7 +67,7 @@ module.exports = (err, _req, res, _next) => {
   
   if (err.verb === 'get') return errorsGet(err, res);
 
-  if (err.verb === 'put') return errorsPut(err, res);
+  if (err.verb === 'put') return errorsPut(err, res); // está entrando aqui
 
   if (err.verb === 'delete') return errorsDelete(err, res);
 

@@ -51,10 +51,20 @@ const deleteRecipes = async (req, res, next) => {
   res.status(204).json(DeleteRecipes);
 };
 
+const uptadeRecipesWithImage = async (req, res, _next) => {
+  const { id } = req.params;
+  const { path } = req.file;
+  
+  const recipeUdated = await recipesServices.uptadeRecipesWithImage(id, path);
+
+  res.status(200).json(recipeUdated);
+};
+
 module.exports = {
   createRecipes,
   getAllRecipes,
   getRecipesById,
   uptadeRecipesById,
   deleteRecipes,
+  uptadeRecipesWithImage,
 };

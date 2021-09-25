@@ -50,10 +50,13 @@ const deleteRecipes = async (id, token) => {
   return DeleteRecipes;
 };
 
+const uptadeRecipesWithImage = async (id, path) => recipesModels.uptadeRecipesWithImage(id, path);
+
 module.exports = {
   createRecipes,
   getAllRecipes,
   getRecipesById,
   uptadeRecipesById,
   deleteRecipes,
+  uptadeRecipesWithImage,
 };
