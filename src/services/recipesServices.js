@@ -1,5 +1,6 @@
+// const { ObjectId } = require('mongodb');
 const modelsRecipes = require('../models/recipesModels');
-const validToken = require('../schemas/validationsRecipes');
+const validRecipes = require('../schemas/validationsRecipes');
 const authVerify = require('../auth/authBasic');
 
 const createRecipe = async (name, ingredients, preparation, token) => {
@@ -7,7 +8,7 @@ const createRecipe = async (name, ingredients, preparation, token) => {
 
   // console.log('tokenVerify', tokenVerify);
 
-  const validFields = validToken.fieldsRequired(name, ingredients, preparation);
+  const validFields = validRecipes.fieldsRequired(name, ingredients, preparation);
   if (validFields) return { status: 400, data: validFields };
 
   if (tokenVerify.message) return { status: 401, data: tokenVerify };
@@ -17,7 +18,7 @@ const createRecipe = async (name, ingredients, preparation, token) => {
 
   // const { _id, name, ingredients, preparation } = newRecipes;
 
-  console.log('service', newRecipes);
+  // console.log('service', newRecipes);
 
   return { status: 201, data: { recipe: { ...newRecipes } } };
   
@@ -31,7 +32,19 @@ const getAllRecipes = async () => {
   return { status: 200, data: [...recipes] };
 };
 
+const getByIdRecipe = async (id) => {
+  const recipe = await modelsRecipes.getByIdRecipe(id);
+
+  const recipeExists = validRecipes.idExists(recipe);
+  if (recipeExists) return { status: 404, data: recipeExists };
+
+  console.log('service', recipe);
+  
+  return { status: 200, data: { ...recipe } };
+};
+
 module.exports = {
   createRecipe,
   getAllRecipes,
+  getByIdRecipe,
 };
