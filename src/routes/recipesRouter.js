@@ -1,19 +1,21 @@
 const router = require('express').Router();
+const path = require('path');
 const multer = require('multer');
 
 const recipesController = require('../controllers/recipesController');
 
-const uploadConfig = multer.diskStorage({
+const storage = multer.diskStorage({
   destination: (_req, _file, callback) => {
-    callback(null, 'uploads');
+    callback(null, path.join(__dirname, '..', 'uploads'));
   },
   filename: (req, _file, callback) => {
     const { id } = req.params;
+    console.log(_file);
     callback(null, `${id}.jpeg`);
   },
 });
 
-const upload = multer({ uploadConfig });
+const upload = multer({ storage });
 
 // CREATE
 router.post('/', recipesController.register);

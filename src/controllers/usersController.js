@@ -1,5 +1,4 @@
 const usersService = require('../services/usersService');
-const errorDefault = require('../utils/errorDefault');
 
 async function register(req, res, next) {
   try {
@@ -17,8 +16,7 @@ async function register(req, res, next) {
       },
     });
   } catch (err) {
-    const error = errorDefault(err);
-    next(error);
+    next(err);
   }
 }
 

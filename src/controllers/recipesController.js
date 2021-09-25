@@ -1,5 +1,4 @@
 const recipesService = require('../services/recipesService');
-const errorDefault = require('../utils/errorDefault');
 
 async function register(req, res, next) {
   try {
@@ -15,8 +14,7 @@ async function register(req, res, next) {
       },
      });
   } catch (err) {
-    const error = errorDefault(err);
-    next(error);
+    next(err);
   }
 }
 
@@ -26,8 +24,7 @@ async function getAll(_req, res, next) {
 
     res.status(200).json(recipes);
   } catch (err) {
-    const error = errorDefault(err);
-    next(error);
+    next(err);
   }
 }
 
@@ -38,8 +35,7 @@ async function getById(req, res, next) {
 
     res.status(200).json(recipe);
   } catch (err) {
-    const error = errorDefault(err);
-    next(error);
+    next(err);
   }
 }
 
@@ -53,8 +49,7 @@ async function update(req, res, next) {
 
     res.status(200).json(updatedRecipe);
   } catch (err) {
-    const error = errorDefault(err);
-    next(error);
+    next(err);
   }
 }
 
@@ -67,8 +62,7 @@ async function deleteRecipe(req, res, next) {
     
     res.status(204).send();
   } catch (err) {
-    const error = errorDefault(err);
-    next(error);
+    next(err);
   }
 }
 
@@ -81,8 +75,7 @@ async function uploadFile(req, res, next) {
 
     res.status(200).json(updatedRecipe);
   } catch (err) {
-    const error = errorDefault(err);
-    next(error);
+    next(err);
   }
 }
 

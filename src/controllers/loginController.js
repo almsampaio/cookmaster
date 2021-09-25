@@ -1,5 +1,4 @@
 const loginService = require('../services/loginService');
-const errorDefault = require('../utils/errorDefault');
 
 async function login(req, res, next) {
   try {
@@ -9,8 +8,7 @@ async function login(req, res, next) {
 
     res.status(200).json({ token });
   } catch (err) {
-    const error = errorDefault(err);
-    next(error);
+    next(err);
   }
 }
 
