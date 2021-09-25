@@ -13,7 +13,6 @@ const createRecipeService = async (name, ingredients, preparation, userId) => {
 };
 
 const getAllRecipesService = async () => {
-    // just proxy
     const recipes = await recipeModel.getAllRecipesModel();
     return recipes;
 };
@@ -77,6 +76,12 @@ const uploadRecipeImageService = async (id, path, userId, role) => {
     return { status: 200, message: getRecipe };
 };
 
+const getImageService = async (id) => {
+    const objId = ObjectId(id);
+    const image = await recipeModel.getImageModel(objId);
+    return image;
+};
+
 module.exports = { 
     createRecipeService, 
     getAllRecipesService,
@@ -84,4 +89,5 @@ module.exports = {
     editRecipeService,
     deleteRecipeService,
     uploadRecipeImageService,
+    getImageService,
 };

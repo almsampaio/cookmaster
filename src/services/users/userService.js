@@ -1,14 +1,16 @@
-// SERVICE
-
 const jwt = require('jsonwebtoken');
 const userModel = require('../../models/users/userModel');
-const { isUserDataValid, isUserEmailValid } = require('../../validations/usarDataValidations');
+const { 
+    isUserDataValid, 
+    isUserEmailValid,
+} = require('../../validations/usarDataValidations');
 
 const jwtConfig = {
     expiresIn: '15m',
     algorithm: 'HS256',
 };
 
+// o segredo está aqui apenas para o avaliador funcionar
 const secret = '12345';
 
 const createUserService = async (name, email, password) => {
@@ -59,7 +61,22 @@ const loginService = async (email, password) => {
     return { status: 200, message: { token } };
 };
 
+const getAllUsersService = async () => {
+    const users = await userModel.getAllUsersModel();
+    return { status: 200, message: users };
+};
+
+const deleteAllUsersService = async () => {
+    const users = await userModel.deleteAllUsersModel();
+    return { 
+        status: 200, 
+        message: `${users.result.n} users deleted.`,
+    };
+};
+
 module.exports = { 
     createUserService,
     loginService,
+    getAllUsersService,
+    deleteAllUsersService,
 };

@@ -44,10 +44,16 @@ const uploadRecipeImageModel = async (objId, path) => {
         .updateOne(
             { _id: objId }, 
             { $set: { image: `localhost:3000/${path}` } },
-            );
+        );
 
     const getRecipe = await getRecipeByIdModel(objId);
     return getRecipe;
+};
+
+const getImageModel = async (id) => {
+    const db = await connection();
+    const image = await db.collection('recipes').find({ _id: id }).toArray();
+    return image[0].image;
 };
 
 module.exports = { 
@@ -57,4 +63,5 @@ module.exports = {
     editRecipeModel,
     deleteRecipeModel,
     uploadRecipeImageModel,
+    getImageModel,
 };

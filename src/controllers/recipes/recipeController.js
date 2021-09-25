@@ -52,6 +52,13 @@ const uploadRecipeImageController = async (req, res) => {
     res.status(uploadImage.status).send(uploadImage.message);
 };
 
+// const getImageController = async (req, res) => {
+//     const { id } = req.params;
+//     const image = await recipeService.getImageService(id);
+//     const imagePath = `<img src='${image}' alt='imagem'`;
+//     return res.status(200).send(imagePath);
+// };
+
 module.exports = {
     createRecipeController,
     getAllRecipesController,
@@ -59,4 +66,5 @@ module.exports = {
     editRecipeController,
     deleteRecipeController,
     uploadRecipeImageController,
+    // getImageController,
 };

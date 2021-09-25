@@ -1,5 +1,3 @@
-// MODEL
-
 const connection = require('../connection');
 
 const findUserModel = async (email) => {
@@ -25,8 +23,22 @@ const loginModel = async (email, password) => {
     return user;
 };
 
+const getAllUsersModel = async () => {
+    const db = await connection();
+    const users = await db.collection('users').find({}).toArray();
+    return users;
+};
+
+const deleteAllUsersModel = async () => {
+    const db = await connection();
+    const users = await db.collection('users').remove({});
+    return users;
+};
+
 module.exports = {
     createUserModel,
     findUserModel,  
     loginModel,  
+    getAllUsersModel,
+    deleteAllUsersModel,
 };

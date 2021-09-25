@@ -1,5 +1,3 @@
-// CONTROLLER
-
 const userService = require('../../services/users/userService');
 
 const createUserController = async (req, res) => {
@@ -14,7 +12,19 @@ const loginController = async (req, res) => {
     return res.status(login.status).json(login.message);
 };
 
+const getAllUsersController = async (req, res) => {
+    const user = await userService.getAllUsersService();
+    return res.status(user.status).json(user.message);
+};
+
+const deleteAllUsersController = async (req, res) => {
+    const user = await userService.deleteAllUsersService();
+    return res.status(user.status).json({ message: user.message });
+};
+
 module.exports = { 
     createUserController, 
     loginController,
+    getAllUsersController,
+    deleteAllUsersController,
 };
