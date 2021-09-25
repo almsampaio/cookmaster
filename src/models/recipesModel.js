@@ -7,6 +7,14 @@ const createRecipeM = async ({ name, ingredients, preparation, userId }) => {
   return createdRecipe;
 };
 
+const getAllRecipesM = async () => {
+  const recipesFound = await connection().then((db) => db
+    .collection('recipes').find({}).toArray())
+    .then((res) => res).catch((err) => console.log(err));
+  return recipesFound;
+};
+
 module.exports = {
   createRecipeM,
+  getAllRecipesM,
 };

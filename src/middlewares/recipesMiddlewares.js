@@ -16,8 +16,6 @@ const verifyToken = (req, res, next) => {
   try {
     const token = req.headers.authorization;
     const payload = jwt.verify(token, SECRET);
-    const { _id } = payload;
-    console.log(`payload retornado do jwt.verify p/ criar receita ${_id}`);
     req.user = payload;
     next();
   } catch (_e) {
