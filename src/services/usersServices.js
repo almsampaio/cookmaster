@@ -6,7 +6,9 @@ const validLogin = require('../schemas/validationsLogin');
 const SECRET = 'meusupersegredo';
 
 const createdToken = async (email, password) => {
-  const userSearch = await modelsUsers.getAll();
+  const userSearch = await modelsUsers.findByEmail(email);
+
+  // console.log(userSearch);
 
   const validEmail = validLogin.emailORequired(email);
   if (validEmail) return { status: 401, data: validEmail };
