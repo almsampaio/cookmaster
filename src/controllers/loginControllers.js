@@ -15,7 +15,7 @@ const SECRET = 'secret-validation-string';
 
 const loginUser = async (req, res) => { // este controller só é chamada se o email e password forem válidos
   const { email } = req.body;
-  const userFound = await serviceFoundByEmail(email);
+  const { password: _, ...userFound } = await serviceFoundByEmail(email);
   const { _id } = userFound;
   // busco usuário no banco se existir, se existir e as credenciais
   // baterem, loga o user.
