@@ -2,7 +2,7 @@
 
 Ao iniciar este projeto, você concorda com as diretrizes do Código de Ética e Conduta e do Manual da Pessoa Estudante da Trybe
 
-# Boas vindas ao repositório do projeto Cookmaster!
+# Boas vindas ao repositório do projeto Cookmaster
 
 Você já usa o GitHub diariamente para desenvolver os exercícios, certo? Agora, para desenvolver os projetos, você deverá seguir as instruções a seguir. Fique atento a cada passo, e se tiver qualquer dúvida, nos envie por Slack! #vqv 🚀
 
@@ -12,7 +12,8 @@ Aqui você vai encontrar os detalhes de como estruturar o desenvolvimento do seu
 
 # Sumário
 
-- [Boas vindas ao repositório do projeto Cookmaster!](#boas-vindas-ao-repositório-do-projeto-cookmaster)
+- [Boas vindas ao repositório do projeto Cookmaster](#boas-vindas-ao-repositório-do-projeto-cookmaster)
+- [Sumário](#sumário)
 - [Habilidades](#habilidades)
 - [Entregáveis](#entregáveis)
   - [O que deverá ser desenvolvido](#o-que-deverá-ser-desenvolvido)
@@ -30,23 +31,10 @@ Aqui você vai encontrar os detalhes de como estruturar o desenvolvimento do seu
     - [Dica: desativando testes](#dica-desativando-testes)
 - [Requisitos do projeto](#requisitos-do-projeto)
   - [Requisitos Obrigatórios](#requisitos-obrigatórios)
-    - [1 - Crie um endpoint para o cadastro de usuários](#1---crie-um-endpoint-para-o-cadastro-de-usuários)
-    - [2 - Crie um endpoint para o login de usuários](#2---crie-um-endpoint-para-o-login-de-usuários)
-    - [3 - Crie um endpoint para o cadastro de receitas](#3---crie-um-endpoint-para-o-cadastro-de-receitas)
-    - [4 - Crie um endpoint para a listagem de receitas](#4---crie-um-endpoint-para-a-listagem-de-receitas)
-    - [5 - Crie um endpoint para visualizar uma receita específica](#5---crie-um-endpoint-para-visualizar-uma-receita-específica)
-    - [6 - Crie uma query em mongo que insira uma pessoa usuária com permissões de admin](#6---crie-uma-query-em-mongo-que-insira-uma-pessoa-usuária-com-permissões-de-admin)
-    - [7 - Crie um endpoint para a edição de uma receita](#7---crie-um-endpoint-para-a-edição-de-uma-receita)
-    - [8 - Crie um endpoint para a exclusão de uma receita](#8---crie-um-endpoint-para-a-exclusão-de-uma-receita)
-    - [9 - Crie um endpoint para a adição de uma imagem a uma receita](#9---crie-um-endpoint-para-a-adição-de-uma-imagem-a-uma-receita)
-    - [10 - Crie um endpoint para acessar a imagem de uma receita](#10---crie-um-endpoint-para-acessar-a-imagem-de-uma-receita)
-    - [11 - Crie testes de integração que cubram no mínimo 30% dos arquivos em `src`, com um mínimo de 50 linhas cobertas](#11---crie-testes-de-integração-que-cubram-no-mínimo-30-dos-arquivos-em-src-com-um-mínimo-de-50-linhas-cobertas)
   - [Requisitos Bônus](#requisitos-bônus)
-    - [12 - Crie um endpoint para cadastro de pessoas administradoras](#12---crie-um-endpoint-para-cadastro-de-pessoas-administradoras)
-    - [13 - Crie testes de integração que cubram no mínimo 60% dos arquivos em `src`, com um mínimo de 100 linhas cobertas](#13---crie-testes-de-integração-que-cubram-no-mínimo-60-dos-arquivos-em-src-com-um-mínimo-de-100-linhas-cobertas)
-    - [14 - Crie testes de integração que cubram no mínimo 90% dos arquivos em `src`, com um mínimo de 150 linhas cobertas](#14---crie-testes-de-integração-que-cubram-no-mínimo-90-dos-arquivos-em-src-com-um-mínimo-de-150-linhas-cobertas)
   - [Depois de terminar o desenvolvimento (opcional)](#depois-de-terminar-o-desenvolvimento-opcional)
 - [Revisando um pull request](#revisando-um-pull-request)
+- [VQV](#vqv)
 - [Avisos finais](#avisos-finais)
 
 ---
@@ -161,13 +149,13 @@ Deverá ser possível adicionar uma imagem à uma receita, utilizando o upload d
 - Verifique que as mudanças ainda não estão no _stage_
   - Exemplo: `git status` (deve aparecer listada a pasta _joaozinho_ em vermelho)
 - Adicione o novo arquivo ao _stage_ do Git
-    - Exemplo:
-      - `git add .` (adicionando todas as mudanças - _que estavam em vermelho_ - ao stage do Git)
-      - `git status` (deve aparecer listado o arquivo _joaozinho/README.md_ em verde)
+  - Exemplo:
+    - `git add .` (adicionando todas as mudanças - _que estavam em vermelho_ - ao stage do Git)
+    - `git status` (deve aparecer listado o arquivo _joaozinho/README.md_ em verde)
 - Faça o `commit` inicial
-    - Exemplo:
-      - `git commit -m 'iniciando o projeto x'` (fazendo o primeiro commit)
-      - `git status` (deve aparecer uma mensagem tipo _nothing to commit_ )
+  - Exemplo:
+    - `git commit -m 'iniciando o projeto x'` (fazendo o primeiro commit)
+    - `git status` (deve aparecer uma mensagem tipo _nothing to commit_ )
 
 5. Adicione a sua branch com o novo `commit` ao repositório remoto
 
@@ -206,11 +194,11 @@ Deverá ser possível adicionar uma imagem à uma receita, utilizando o upload d
 
 **👀 Observações importantes:**
 
- - O não cumprimento de um requisito, total ou parcialmente, impactará em sua avaliação;
- - O projeto deve rodar na porta **3000**;
- - A testagem local depende da API estar rodando (utilize `npm run dev` para facilitar o processo);
+- O não cumprimento de um requisito, total ou parcialmente, impactará em sua avaliação;
+- O projeto deve rodar na porta **3000**;
+- A testagem local depende da API estar rodando (utilize `npm run dev` para facilitar o processo);
 
-##  Todos os seus endpoints devem estar no padrão REST
+## Todos os seus endpoints devem estar no padrão REST
 
 - Use os verbos HTTP adequados para cada operação.
 
@@ -222,7 +210,7 @@ Deverá ser possível adicionar uma imagem à uma receita, utilizando o upload d
 
 ---
 
-Há dois arquivos em `./src/api/` no repositório: `server.js` e `app.js`, **ambos não devem ser renomeados ou apagados**. 
+Há dois arquivos em `./src/api/` no repositório: `server.js` e `app.js`, **ambos não devem ser renomeados ou apagados**.
 
 Em `app.js` o seguinte trecho de código não deve ser removido:
 
@@ -231,6 +219,7 @@ app.get('/', (request, response) => {
   response.send();
 });
 ```
+
 Isso está configurado para o avaliador funcionar corretamente.
 
 ## Conexão com o Banco
@@ -266,6 +255,7 @@ A resposta do insert para ser retornada após a criação é esta:
 ```json
 { "_id" : ObjectId("5f46914677df66035f61a355"), "name" : "Erick Jacquin", "email" : "erickjacquin@gmail.com", "password" : "12345678", "role" : "user" }
 ```
+
 (O _id será gerado automaticamente pelo mongodb)
 
 A coleção de receitas deverá ter o seguinte nome: `recipes`.
@@ -281,6 +271,7 @@ A resposta do insert para ser retornada após a criação é esta:
 ```json
 { "_id" : ObjectId("5f46919477df66035f61a356"), "name" : "string", "ingredients" : "string", "preparation" : "string", "userId" : ObjectId("5f46914677df66035f61a355") }
 ```
+
 (O _id será gerado automaticamente pelo mongodb, e o userId será gerado com o id do usuário que criou a receita)
 
 ---
@@ -352,7 +343,11 @@ npm test users.test.js
 
 ## Requisitos Obrigatórios
 
-### 1 - Crie um endpoint para o cadastro de usuários
+<details>
+  <summary style="font-size: 16px; font-weight: bold;">
+    1 - Crie um endpoint para o cadastro de usuários
+  </summary>
+<br>
 
 - A rota deve ser (`/users`).
 
@@ -373,6 +368,7 @@ npm test users.test.js
     "password": "string"
   }
   ```
+
 - Não use `bcrypt` ou outra biblioteca para encriptar a senha, para que o avaliador funcione corretamente.
 
 **Além disso, as seguintes verificações serão feitas:**
@@ -418,8 +414,13 @@ Se o usuário for cadastrado com sucesso o resultado retornado deverá ser confo
 Se o usuário for criado com sucesso o resultado retornado deverá ser conforme exibido abaixo, com um status http `201`:
 
 ![Campo Role](./public/validarrole.png)
+</details>
 
-### 2 - Crie um endpoint para o login de usuários
+<details>
+  <summary style="font-size: 16px; font-weight: bold;">
+    2 - Crie um endpoint para o login de usuários
+  </summary>
+<br>
 
 - A rota deve ser (`/login`).
 
@@ -470,7 +471,13 @@ Se foi feito login com sucesso o resultado retornado deverá ser conforme exibid
 
 ![Login com Sucesso](./public/logincomsucesso.png)
 
-### 3 - Crie um endpoint para o cadastro de receitas
+</details>
+
+<details>
+  <summary style="font-size: 16px; font-weight: bold;">
+    3 - Crie um endpoint para o cadastro de receitas
+  </summary>
+<br>
 
 - A rota deve ser (`/recipes`).
 
@@ -526,7 +533,13 @@ O resultado retornado para cadastrar a receita com sucesso deverá ser conforme 
 
 ![Receita com Sucesso](./public/receitacomsucesso.png)
 
-### 4 - Crie um endpoint para a listagem de receitas
+</details>
+
+<details>
+  <summary style="font-size: 16px; font-weight: bold;">
+    4 - Crie um endpoint para a listagem de receitas
+  </summary>
+<br>
 
 - A rota deve ser (`/recipes`).
 
@@ -546,7 +559,13 @@ O resultado retornado para listar receitas com sucesso deverá ser conforme exib
 
 ![Receita com Sucesso](./public/listarreceitas.png)
 
-### 5 - Crie um endpoint para visualizar uma receita específica
+</details>
+
+<details>
+  <summary style="font-size: 16px; font-weight: bold;">
+    5 - Crie um endpoint para visualizar uma receita específica
+  </summary>
+<br>
 
 - A rota deve ser (`/recipes/:id`).
 
@@ -572,7 +591,13 @@ O resultado retornado para listar uma receita que não existe deverá ser confor
 
 ![Listar uma Receita inexistente](./public/receitanaoencontrada.png)
 
-### 6 - Crie uma query em mongo que insira uma pessoa usuária com permissões de admin
+</details>
+
+<details>
+  <summary style="font-size: 16px; font-weight: bold;">
+    6 - Crie uma query em mongo que insira uma pessoa usuária com permissões de admin
+  </summary>
+<br>
 
 Crie um arquivo `seed.js` na raiz do projeto com uma query do Mongo DB capaz de inserir um usuário na coleção _users_ com os seguintes valores:
 
@@ -582,11 +607,17 @@ Crie um arquivo `seed.js` na raiz do projeto com uma query do Mongo DB capaz de 
 
 **Além disso, as seguintes verificações serão feitas:**
 
-- **[Será validado que o projeto tem um arquivo de seed, com um comando para inserir um usuário root e verifico que é possível fazer login]**    
+- **[Será validado que o projeto tem um arquivo de seed, com um comando para inserir um usuário root e verifico que é possível fazer login]**
 
 Será validado no arquivo `seed.js` existe a query para criar um usuário root
 
-### 7 - Crie um endpoint para a edição de uma receita
+</details>
+
+<details>
+  <summary style="font-size: 16px; font-weight: bold;">
+    7 - Crie um endpoint para a edição de uma receita
+  </summary>
+<br>
 
 - A rota deve ser (`/recipes/:id`).
 
@@ -630,7 +661,13 @@ O resultado retornado para editar uma receita com sucesso deverá ser conforme e
 
 ![Editar uma Receita](./public/editarcomsucesso.png)
 
-### 8 - Crie um endpoint para a exclusão de uma receita
+</details>
+
+<details>
+  <summary style="font-size: 16px; font-weight: bold;">
+    8 - Crie um endpoint para a exclusão de uma receita
+  </summary>
+<br>
 
 - A rota deve ser (`/recipes/:id`).
 
@@ -658,7 +695,13 @@ O resultado retornado para excluir uma receita com sucesso deverá ser conforme 
 
 ![Excluir uma Receita](./public/excluircomsucesso.png)
 
-### 9 - Crie um endpoint para a adição de uma imagem a uma receita
+</details>
+
+<details>
+  <summary style="font-size: 16px; font-weight: bold;">
+    9 - Crie um endpoint para a adição de uma imagem a uma receita
+  </summary>
+<br>
 
 - A rota deve ser (`/recipes/:id/image/`).
 
@@ -702,7 +745,13 @@ O resultado retornado para adicionar uma foto na receita com sucesso deverá ser
 
 ![Foto Autenticada](./public/fotocomsucesso.png)
 
-### 10 - Crie um endpoint para acessar a imagem de uma receita
+</details>
+
+<details>
+  <summary style="font-size: 16px; font-weight: bold;">
+    10 - Crie um endpoint para acessar a imagem de uma receita
+  </summary>
+<br>
 
 - As imagens devem estar disponíveis através da rota `/images/<id-da-receita>.jpeg` na API.
 
@@ -713,8 +762,6 @@ O resultado retornado para adicionar uma foto na receita com sucesso deverá ser
 O resultado retornado deverá ser do tipo imagem, com um status http `200`:
 
 ![Foto Autenticada](./public/imagemrecetornada.png)
-
-### 11 - Crie testes de integração que cubram no mínimo 30% dos arquivos em `src`, com um mínimo de 50 linhas cobertas
 
 - Os testes de integração devem ser criados na pasta `./src/integration-tests`, essa pasta **não pode ser renomeada ou removida**;
 
@@ -734,9 +781,15 @@ Nenhum teste pode ser pulado;
 O resultado do percentual total de cobertura deve ser igual ou maior que `30`;
 O resultado do numero total de linhas cobertas deve ser igual ou maior que `50`.
 
+</details>
+
 ## Requisitos Bônus
 
-### 12 - Crie um endpoint para cadastro de pessoas administradoras
+<details>
+  <summary style="font-size: 16px; font-weight: bold;">
+    12 - Crie um endpoint para cadastro de pessoas administradoras
+  </summary>
+<br>
 
 - A rota deve ser (`/users/admin`).
 
@@ -768,7 +821,13 @@ Se o usuário admin é criado com sucesso o resultado retornado deverá ser conf
 
 ![Criar admin](./public/criaradmin.png)
 
-### 13 - Crie testes de integração que cubram no mínimo 60% dos arquivos em `src`, com um mínimo de 100 linhas cobertas
+</details>
+
+<details>
+  <summary style="font-size: 16px; font-weight: bold;">
+    13 - Crie testes de integração que cubram no mínimo 60% dos arquivos em `src`, com um mínimo de 100 linhas cobertas
+  </summary>
+<br>
 
 - Os testes de integração devem ser criados na pasta `./src/integration-tests`, essa pasta **não pode ser renomeada ou removida**;
 
@@ -788,7 +847,13 @@ Nenhum teste pode ser pulado;
 O resultado do percentual total de cobertura deve ser igual ou maior que `60`;
 O resultado do numero total de linhas cobertas deve ser igual ou maior que `100`.
 
-### 14 - Crie testes de integração que cubram no mínimo 90% dos arquivos em `src`, com um mínimo de 150 linhas cobertas
+</details>
+
+<details>
+  <summary style="font-size: 16px; font-weight: bold;">
+    14 - Crie testes de integração que cubram no mínimo 90% dos arquivos em `src`, com um mínimo de 150 linhas cobertas
+  </summary>
+<br>
 
 - Os testes de integração devem ser criados na pasta `./src/integration-tests`, essa pasta **não pode ser renomeada ou removida**;
 
@@ -810,17 +875,19 @@ O resultado do numero total de linhas cobertas deve ser igual ou maior que `150`
 
 ---
 
+</details>
+
 ## Depois de terminar o desenvolvimento (opcional)
 
 Para sinalizar que o seu projeto está pronto para o _"Code Review"_ dos seus colegas, faça o seguinte:
 
-* Vá até a página **DO SEU** _Pull Request_, adicione a label de _"code-review"_ e marque seus colegas:
+- Vá até a página **DO SEU** _Pull Request_, adicione a label de _"code-review"_ e marque seus colegas:
 
-  * No menu à direita, clique no _link_ **"Labels"** e escolha a _label_ **code-review**;
+  - No menu à direita, clique no _link_ **"Labels"** e escolha a _label_ **code-review**;
 
-  * No menu à direita, clique no _link_ **"Assignees"** e escolha **o seu usuário**;
+  - No menu à direita, clique no _link_ **"Assignees"** e escolha **o seu usuário**;
 
-  * No menu à direita, clique no _link_ **"Reviewers"** e digite `students`, selecione o time `tryber/students-sd-00`.
+  - No menu à direita, clique no _link_ **"Reviewers"** e digite `students`, selecione o time `tryber/students-sd-00`.
 
 Caso tenha alguma dúvida, [aqui tem um video explicativo](https://vimeo.com/362189205).
 
@@ -830,7 +897,7 @@ Caso tenha alguma dúvida, [aqui tem um video explicativo](https://vimeo.com/362
 
 Use o conteúdo sobre [Code Review](https://course.betrybe.com/real-life-engineer/code-review/) para te ajudar a revisar os _Pull Requests_.
 
-#VQV
+# VQV
 
 ---
 
