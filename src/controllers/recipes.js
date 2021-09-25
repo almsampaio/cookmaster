@@ -9,7 +9,8 @@ const service = require('../services/recipes');
 const createRecipes = rescue(async (req, res) => {
     const { name, ingredients, preparation } = req.body;
     const { _id } = req.user;
-    const createdRecipe = await service.createRecipes(name, ingredients, preparation, _id);
+    const userId = _id;
+    const createdRecipe = await service.createRecipes(name, ingredients, preparation, userId);
   if (createdRecipe.message) {
     return res.status(409).json(createdRecipe.message);
   }
@@ -32,4 +33,14 @@ const findRecipesById = rescue(async (req, res) => {
   return res.status(200).json(recipe);
 });
 
-module.exports = { createRecipes, findRecipes, findRecipesById };
+const updateRecipes = rescue(async (req, res) => {
+  const { id } = req.params;
+  const { name, ingredients, preparation } = req.body;
+  const updatedRecipes = await service.updateRecipes(id, name, ingredients, preparation);
+  if (updatedRecipes.message) {
+    return res.status(404).json(updatedRecipes.message);
+  }
+  return res.status(200).json(updatedRecipes);
+});
+
+module.exports = { createRecipes, findRecipes, findRecipesById, updateRecipes };

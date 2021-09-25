@@ -34,5 +34,6 @@ app.post('/recipes', [
 
 app.get('/recipes', controllerRecipes.findRecipes);
 app.get('/recipes/:id', controllerRecipes.findRecipesById);
+app.put('/recipes/:id', validjwt.validateJWT, controllerRecipes.updateRecipes);
 
 module.exports = app;

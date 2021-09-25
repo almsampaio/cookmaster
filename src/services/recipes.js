@@ -1,7 +1,7 @@
 const model = require('../models/recipes');
 
-const createRecipes = async (name, ingredients, preparation, _id) => {
-    const createdRecipe = await model.createRecipes(name, ingredients, preparation, _id);
+const createRecipes = async (name, ingredients, preparation, userId) => {
+    const createdRecipe = await model.createRecipes(name, ingredients, preparation, userId);
     if (!createdRecipe) {
         return ({ message: 'Incorrect username or password' });
     }
@@ -24,4 +24,12 @@ const findRecipesById = async (id) => {
   return recipe;
 };
 
-module.exports = { createRecipes, findRecipes, findRecipesById };
+const updateRecipes = async (id, name, ingredients, preparation) => {
+  const updatedRecipes = await model.updateRecipes(id, name, ingredients, preparation);
+  if (!updatedRecipes) {
+    return ({ message: 'recipe not found' });
+  }
+  return updatedRecipes;
+};
+
+module.exports = { createRecipes, findRecipes, findRecipesById, updateRecipes };
