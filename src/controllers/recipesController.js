@@ -72,10 +72,25 @@ async function deleteRecipe(req, res, next) {
   }
 }
 
+async function uploadFile(req, res, next) {
+  try {
+    const { id } = req.params;
+    const token = req.headers.authorization;
+
+    const updatedRecipe = await recipesService.uploadFile(id, token);
+
+    res.status(200).json(updatedRecipe);
+  } catch (err) {
+    const error = errorDefault(err);
+    next(error);
+  }
+}
+
 module.exports = {
   register,
   getAll,
   getById,
   update,
   deleteRecipe,
+  uploadFile,
 };
