@@ -24,8 +24,17 @@ const getById = async (id) => {
   return recipe;
 };
 
+const editRecipe = async (newData) => {
+  const edited = await recipeModel.editRecipe(newData);
+
+  if (!edited) return { code: 404, message: notFoundMessage };
+
+  return edited;
+};
+
 module.exports = {
   createRecipe,
   getRecipes,
   getById,
+  editRecipe,
 };

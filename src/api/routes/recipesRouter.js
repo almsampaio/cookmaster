@@ -9,5 +9,6 @@ const validateNewRecipe = require('../middlewares/validateNewRecipe');
 route.post('/', validateNewRecipe, authMiddleware, recipesController.createRecipe);
 route.get('/', recipesController.getRecipes);
 route.get('/:id', recipesController.getById);
+route.put('/:id', authMiddleware, recipesController.editRecipe);
 
 module.exports = route;
