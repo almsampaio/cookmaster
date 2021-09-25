@@ -15,7 +15,7 @@ const createUser = async (email, senha, nome, role = 'user') => {
   console.log(account);
   if (account) return ({ status: 409, message: 'Email already registered' });
 
-  const { password, ...user } = await usersModel.createUser(email, senha, nome, role);
+  const { password: passDB, ...user } = await usersModel.createUser(email, senha, nome, role);
   return ({ status: 201, message: user });
 };
 
