@@ -52,5 +52,6 @@ app.get('/recipes/:id', validateId, getRecipeById);
 app.put('/recipes/:id', validateToken, editRecipe);
 app.delete('/recipes/:id', validateToken, deleteRecipe);
 app.put('/recipes/:id/image', validateToken, upload.single('image'), addImageRecipe);
+app.use('/images', express.static('src/uploads'));
 
 module.exports = app;
