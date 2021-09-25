@@ -44,10 +44,22 @@ const deleteRecipe = async (id) => {
   await connection.collection('recipes').deleteOne({ _id: ObjectId(id) });
 };
 
+const uploadImage = async (id, image) => {
+  const connection = await mongoConnection();
+  await connection.collection('recipes').updateOne(
+    { _id: ObjectId(id) },
+    { $set: { image } },
+  );
+
+  const result = await connection.collection('recipes').findOne({ _id: ObjectId(id) });
+  return result;
+};
+
 module.exports = {
   getAllRecipes,
   getRecipeById,
   createRecipe,
   updateRecipe,
   deleteRecipe,
+  uploadImage,
 };
