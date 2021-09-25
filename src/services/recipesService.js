@@ -44,10 +44,21 @@ async function deleteRecipe(id, token) {
   await recipesModel.deleteRecipe(id);
 }
 
+async function uploadFile(id, token) {
+  validations.isTokenValid(token);
+
+  const pathName = { image: `localhost:3000/src/uploads/${id}.jpeg` };
+
+  const updatedRecipe = await recipesModel.update(id, pathName);
+  
+  return updatedRecipe;
+}
+
 module.exports = {
   register,
   getAll,
   getById,
   update,
   deleteRecipe,
+  uploadFile,
 };
