@@ -1,6 +1,9 @@
 // Conectando a camada Controllers com a camada Services
 const receitasService = require('../services/receitasService');
 
+// Conectando a camada Controllers com a camada Model
+const receitasModel = require('../models/receitasModel');
+
 const cadastrarReceita = async (req, res) => {
   const { name, ingredients, preparation } = req.body;
   const userID = req.user;
@@ -10,6 +13,12 @@ const cadastrarReceita = async (req, res) => {
   return res.status(201).json(cadastrar);
 };
 
+const listarReceitas = async (_req, res) => {
+  const receitas = await receitasModel.listarReceitas();
+  return res.status(200).json(receitas);
+};
+
 module.exports = {
   cadastrarReceita,
+  listarReceitas,
 };
