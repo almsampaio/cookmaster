@@ -9,4 +9,6 @@ const PostValidations = [verifyToken, existsRecipesFields]
 
 recipesRouter.post('/', ...PostValidations, recipeController.createRecipe);
 
+recipesRouter.get('/', recipeController.getAllRecipes);
+
 module.exports = recipesRouter;
