@@ -37,11 +37,13 @@ const updateRecipe = async (req, res) => {
 
   const { updatedRecipe } = await recipesServices.updateRecipe(id, name, ingredients, preparation);
 
-  // if (errorMessageId) {
-  //   return res.status(httpStatus.forbidden).json(errorMessageId);
-  // }
-
   res.status(httpStatus.ok).json(updatedRecipe);
+};
+
+const deleteRecipe = async (req, res) => {
+  await recipesServices.deleteRecipe(req.params.id);
+
+  return res.status(httpStatus.noContent).json({});
 };
 
 module.exports = {
@@ -49,4 +51,5 @@ module.exports = {
   getRecipeById,
   createRecipe,
   updateRecipe,
+  deleteRecipe,
 };

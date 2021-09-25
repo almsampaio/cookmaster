@@ -35,9 +35,19 @@ const updateRecipe = async (id, name, ingredients, preparation) => {
     { $set: { name, ingredients, preparation } });
 };
 
+const deleteRecipe = async (id) => {
+  if (!ObjectId.isValid(id)) {
+    return null;
+  }
+
+  const connection = await mongoConnection();
+  await connection.collection('recipes').deleteOne({ _id: ObjectId(id) });
+};
+
 module.exports = {
   getAllRecipes,
   getRecipeById,
   createRecipe,
   updateRecipe,
+  deleteRecipe,
 };

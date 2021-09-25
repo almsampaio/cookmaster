@@ -24,6 +24,8 @@ app.post('/recipes', validateJWT.validateJWT, recipesController.createRecipe);
 
 app.put('/recipes/:id', validateJWT.validateJWT, recipesController.updateRecipe);
 
+app.delete('/recipes/:id', validateJWT.validateJWT, recipesController.deleteRecipe);
+
 // Não remover esse end-point, ele é necessário para o avaliador
 app.get('/', (request, response) => {
   response.send();
