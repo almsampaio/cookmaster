@@ -27,11 +27,13 @@ const update = async (req, res) => {
 const deleteOne = async (req, res) => {
   const { params: { _id }, userId, role } = req;
   const deleteRecipe = await recipesService.deleteOne(_id, userId, role);
-  console.log(deleteRecipe);
-  if (deleteRecipe.status !== 204) {
-    return res.status(deleteRecipe.status).json(deleteRecipe.message);
-  }
   return res.status(deleteRecipe.status).json(deleteRecipe.message);
+};
+
+const uploadPicture = async (req, res) => {
+  const { params: { _id }, userId, role, file } = req;
+  const uploadPictureRecipe = await recipesService.uploadPicture(_id, file, userId, role);
+  return res.status(uploadPictureRecipe.status).json(uploadPictureRecipe.message);
 };
 
 module.exports = {
@@ -40,4 +42,5 @@ module.exports = {
   getById,
   update,
   deleteOne,
+  uploadPicture,
 };

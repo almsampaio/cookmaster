@@ -62,10 +62,26 @@ const deleteOne = async (_id, userId, role) => {
   return { status: 204, message: '' };
 };
 
+const uploadPicture = async (_id, file, userId, role) => {
+  if (!ObjectId.isValid(_id)) {
+    return { status: 404, message: { message: RECIPE_NOT_FOUND } };
+  }
+  const recipeToUpdatePicture = await recipesModel.getById(_id);
+  if (recipeToUpdatePicture === null) {
+    return { status: 404, message: { message: RECIPE_NOT_FOUND } };
+  }
+  if (role !== 'admin' && userId !== recipeToUpdatePicture.userId) {
+    return { status: 401, message: { message: 'missing auth token' } };
+  }
+  const recipeUploaded = await recipesModel.uploadPicture(_id, file);
+  return { status: 200, message: recipeUploaded };
+};
+
 module.exports = {
   create,
   getAll,
   getById,
   update,
   deleteOne,
+  uploadPicture,
 };

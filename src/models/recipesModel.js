@@ -27,7 +27,6 @@ const getById = async (_id) => {
   const recipeCollection = await mongoConnection.getConnection()
     .then((db) => db.collection('recipes'));
   const recipe = await recipeCollection.findOne({ _id: ObjectId(_id) });
-  console.log(recipe);
   return recipe;
 };
 
@@ -44,8 +43,17 @@ const update = async (name, ingredients, preparation, _id) => {
 const deleteOne = async (_id) => {
   const recipeCollection = await mongoConnection.getConnection()
     .then((db) => db.collection('recipes'));
-  console.log(_id);
   await recipeCollection.deleteOne({ _id: ObjectId(_id) });
+};
+
+const uploadPicture = async (_id, file) => {
+  const recipeCollection = await mongoConnection.getConnection()
+    .then((db) => db.collection('recipes'));
+  await recipeCollection
+    .updateOne({ _id: ObjectId(_id) },
+    { $set: { image: `localhost:3000/${file.path}` },
+  });
+  return getById(_id);
 };
 
 module.exports = {
@@ -54,4 +62,5 @@ module.exports = {
   getById,
   update,
   deleteOne,
+  uploadPicture,
 };
