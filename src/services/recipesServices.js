@@ -25,6 +25,13 @@ const createRecipe = async (name, ingredients, preparation, token) => {
   // data: { recipe: { _id, name, ingredients, preparation, userId: tokenVerify.id } } };
 };
 
+const getAllRecipes = async () => {
+  const recipes = await modelsRecipes.getAllRecipes();
+
+  return { status: 200, data: [...recipes] };
+};
+
 module.exports = {
   createRecipe,
+  getAllRecipes,
 };
