@@ -1,3 +1,4 @@
+const { ObjectId } = require('mongodb');
 const recipeModel = require('../models/RecipeModel');
 
 const createRecipe = async (recipeData, userId) => {
@@ -22,8 +23,17 @@ const getById = async (id) => {
   return result;
 };
 
+const updateRecipe = async (id, data, idUser) => {
+  const checked = ObjectId.isValid(id);
+  if (!checked) return { status: 404, err: { message: 'recipe not found' } };
+
+  const recipe = await recipeModel.updateRecipe(id, data, idUser);
+  return { status: 200, data: recipe };
+};
+
 module.exports = {
   createRecipe,
   getAll,
   getById,
+  updateRecipe,
 };

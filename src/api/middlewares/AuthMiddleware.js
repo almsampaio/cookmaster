@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 
 const SECRET = 'meusupersegredo';
 
-const authMiddleware = (req, res, next) => {
+const authMiddleware = async (req, res, next) => {
   const token = req.headers.authorization;
 
   if (!token) return res.status(401).json({ message: 'missing auth token' });
