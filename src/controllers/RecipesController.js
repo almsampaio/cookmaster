@@ -12,4 +12,10 @@ const createRecipe = async (req, res) => {
   res.status(201).json({ recipe });
 };
 
-module.exports = { createRecipe };
+const getAllRecipes = async (_req, res) => {
+  const recipes = await RecipesService.getAllRecipes();
+
+  res.status(200).json(recipes);
+};
+
+module.exports = { createRecipe, getAllRecipes };

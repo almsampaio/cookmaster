@@ -1,6 +1,6 @@
 const express = require('express');
 const { login } = require('../controllers/LoginController');
-const { createRecipe } = require('../controllers/RecipesController');
+const { createRecipe, getAllRecipes } = require('../controllers/RecipesController');
 const { createUser } = require('../controllers/UserController');
 const validateLogin = require('../middlewares/validateLogin');
 const validateOnCreate = require('../middlewares/validateOnCreate');
@@ -18,6 +18,7 @@ loginRouter.route('/')
   .post(validate.login(), validateLogin, login);
   
 recipesRouter.route('/')
+  .get(getAllRecipes)
   .post(auth, validate.createRecipe(), validateOnCreate, createRecipe);
   
 module.exports = { userRouter, loginRouter, recipesRouter };
