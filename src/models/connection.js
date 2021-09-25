@@ -9,7 +9,7 @@ const connection = async () => MongoClient
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
-  .then((connection) => connection.db(DB_NAME))
+  .then((connect) => connect.db(DB_NAME))
   .catch((err) => {
     console.error(err);
     process.exit(1);
