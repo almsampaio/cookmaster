@@ -31,8 +31,22 @@ const createRecipe = async (req, res) => {
   res.status(httpStatus.created).json({ recipe: createdRecipe });
 };
 
+const updateRecipe = async (req, res) => {
+  const { name, ingredients, preparation } = req.body;
+  const { id } = req.params;
+
+  const { updatedRecipe } = await recipesServices.updateRecipe(id, name, ingredients, preparation);
+
+  // if (errorMessageId) {
+  //   return res.status(httpStatus.forbidden).json(errorMessageId);
+  // }
+
+  res.status(httpStatus.ok).json(updatedRecipe);
+};
+
 module.exports = {
   getAllRecipes,
   getRecipeById,
   createRecipe,
+  updateRecipe,
 };

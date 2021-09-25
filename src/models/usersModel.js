@@ -1,3 +1,5 @@
+const { ObjectId } = require('mongodb');
+
 const mongoConnection = require('./connection');
 
 const getAllUsers = async () => {
@@ -13,6 +15,22 @@ const getByEmail = async (email) => {
 
   return emailResult;
 };
+
+const getByUserId = async (userId) => {
+  if (!ObjectId.isValid(userId)) return null;
+
+  const connection = await mongoConnection();
+  const userIdResult = await connection.collection('users').findOne({ userId });
+
+  return userIdResult;
+};
+
+// const getByUserId2 = async (userId) => {
+//   const connection = await mongoConnection();
+//   const userIdResult = await connection.collection('users').findOne({ _id: ObjectId(userId) });
+
+//   return userIdResult;
+// };
 
 const createUser = async (name, email, password) => {
   const connection = await mongoConnection();
@@ -33,6 +51,8 @@ const loginUser = async (email) => {
 module.exports = {
   getAllUsers,
   getByEmail,
+  getByUserId,
+  // getByUserId2,
   createUser,
   loginUser,
 };
