@@ -24,5 +24,6 @@ app.put('/recipes/:id', Middlewares.authToken, Recipe.updateRecipe);
 app.delete('/recipes/:id', Middlewares.authToken, Recipe.removeRecipe);
 app.put('/recipes/:id/image', Middlewares.authToken,
   Middlewares.uploadImg.single('image'), Recipe.addRecipeImage);
+app.use('/images', express.static('src/uploads'));
 
 module.exports = app;
