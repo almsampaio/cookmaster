@@ -7,7 +7,7 @@ const validateJWT = async (req, res, next) => {
   const token = req.headers.authorization;
 
   if (!token) {
-    return res.status(401).json({ error: 'Token não encontrado ou informado' });
+    return res.status(401).json({ message: 'Token não encontrado ou informado' });
   }
 
   try {
@@ -19,6 +19,7 @@ const validateJWT = async (req, res, next) => {
     }
 
     req.user = user;
+    console.log(user);
     next();
   } catch (_err) {
     return res.status(401).json({ message: 'jwt malformed' });

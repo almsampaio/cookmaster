@@ -6,7 +6,6 @@ const segredo = 'bem-te-vi';
 
 const validateFields = (name, ingredients, preparation) => {
   if (!name || !ingredients || !preparation) {
-    console.log('entrei');
     throw new CustomError(400, 'Invalid entries. Try again.');
   }
 };

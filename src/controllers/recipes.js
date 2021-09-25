@@ -8,7 +8,7 @@ const createRecipes = async (req, res) => {
 
     return res.status(result.status).json({ recipe: result.message });
   } catch (e) { // apartir de agora começarei a usar o Throw new Error, Obrigado Caputo
-    return res.status(500).json({ message: e.message });
+    return res.status(e.status).json({ message: e.message });
   }
 };
 
