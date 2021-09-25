@@ -19,4 +19,16 @@ const getOne = async (req, res) => {
   return res.status(schema.status.ok).json(recipe);
 };
 
-module.exports = { create, getAll, getOne };
+const update = async (req, res) => {
+  const { id } = req.params;
+  const { name, ingredients, preparation } = req.body;
+  const updateRecipe = await recipesServices.update(id, name, ingredients, preparation);
+  return res.status(schema.status.ok).json(updateRecipe);
+};
+
+module.exports = {
+  create,
+  getAll,
+  getOne,
+  update,
+};

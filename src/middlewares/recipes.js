@@ -46,6 +46,16 @@ const checkToken = (req, res, next) => {
   next();
 };
 
+const checkExistToken = (req, res, next) => {
+  const { authorization } = req.headers;
+  if (!authorization) {
+    return res
+    .status(schema.status.unauthorized)
+    .json({ message: schema.messages.jwtNoFound });
+  }
+  next();
+};
+
 const checkExistRecipe = async (req, res, next) => {
   const { id } = req.params;
   const checkId = await recipesServices.getOne(id);
@@ -63,4 +73,5 @@ module.exports = {
   checkFieldPreparation,
   checkToken,
   checkExistRecipe,
+  checkExistToken,
 };

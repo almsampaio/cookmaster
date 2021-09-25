@@ -9,7 +9,13 @@ const fieldsRecipes = [
 
 const recipeNotExist = [middlewaresRecipes.checkExistRecipe];
 
+const credencialsEdit = [
+  middlewaresRecipes.checkExistToken,
+  middlewaresRecipes.checkToken,
+];
+
 module.exports = {
   fieldsRecipes,
   recipeNotExist,
+  credencialsEdit,
 };

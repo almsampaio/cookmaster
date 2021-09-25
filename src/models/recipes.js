@@ -6,7 +6,8 @@ const create = async (userId, name, ingredients, preparation) => {
     .then((db) => db
       .collection('recipes')
       .insertOne({ name, ingredients, preparation, userId }));
-  return { recipe: { name, ingredients, preparation, userId, _id } };
+  const recipesInFormat = { recipe: { name, ingredients, preparation, userId, _id } };
+  return recipesInFormat;
 };
 
 const getAll = async () => {
@@ -18,8 +19,22 @@ const getAll = async () => {
 const getOne = async (id) => {
   if (!ObjectId.isValid(id)) return null;
   const recipe = await connection()
-  .then((db) => db.collection('recipes').findOne(ObjectId(id)));
+    .then((db) => db.collection('recipes').findOne(ObjectId(id)));
   return recipe;
 };
 
-module.exports = { create, getAll, getOne };
+const update = async (id, name, ingredients, preparation) => {
+  await connection()
+    .then((db) => db
+      .collection('recipes')
+      .updateOne({ _id: ObjectId(id) }, { $set: { name, ingredients, preparation } }));
+  const recipeUpdated = getOne(id);
+  return recipeUpdated;
+};
+
+module.exports = {
+  create,
+  getAll,
+  getOne,
+  update,
+};
