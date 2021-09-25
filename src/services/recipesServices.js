@@ -26,10 +26,18 @@ const deleteById = async (id) => {
   return deletedOne;
 };
 
+const addImg = async (id, img) => {
+  const imgUrl = `localhost:3000/src/uploads/${img}`;
+  await recipesModel.addImg(imgUrl, id);
+  const recipe = await recipesModel.getById(id);
+  return recipe;
+};
+
 module.exports = {
   createRecipe,
   getAllRecipes,
   getById,
   recipesUpdate,
   deleteById,
+  addImg,
 };

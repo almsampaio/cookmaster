@@ -52,10 +52,21 @@ const deleteById = async (req, res, next) => {
   }
 };
 
+const addImg = async (req, res, next) => {
+  try {
+    const { params: { id }, file: { filename } } = req;
+    const recipe = await recipesServices.addImg(id, filename);
+    return res.status(STATUS.STATUS_200_OK).json(...recipe);
+  } catch (e) {
+    next(e);
+  }
+};
+
 module.exports = {
   createRecipe,
   getAllRecipes,
   getById,
   recipeUpdate,
   deleteById,
+  addImg,
 };
