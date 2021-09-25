@@ -46,9 +46,20 @@ const editRecipe = rescue(async (req, res, next) => {
   res.status(200).json(edited);
 });
 
+const vaporizeRecipe = rescue(async (req, res, next) => {
+  const { id } = req.params;
+
+  const deleted = await recipeService.vaporizeRecipe(id);
+
+  if (deleted.code) return next(deleted);
+
+  res.sendStatus(204);
+});
+
 module.exports = {
   createRecipe,
   getRecipes,
   getById,
   editRecipe,
+  vaporizeRecipe,
 };

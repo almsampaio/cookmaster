@@ -6,7 +6,6 @@ const create = rescue(async (req, res, next) => {
   const { name, email, password } = req.body;
 
   const user = await usersService.create({ name, email, password });
-  // console.log(err);
 
   if (user.code) return next(user);
 

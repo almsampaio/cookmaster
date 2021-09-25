@@ -11,7 +11,6 @@ const createRecipe = async (newRecipe) => {
 const getRecipes = async () => {
   const db = await connection();
   const user = await db.collection('recipes').find().toArray();
-  // console.log(email);
   
   return user;
 };
@@ -28,7 +27,7 @@ const getById = async (id) => {
 };
 
 const editRecipe = async (newData) => {
-  const { id, ...recipeToUpdate } = newData;
+  const { id, name, ingredients, preparation } = newData;
   if (!ObjectId.isValid(id)) {
     return null;
   }
@@ -37,11 +36,30 @@ const editRecipe = async (newData) => {
 
   const edited = await db
     .collection('recipes')
-    .findOneAndUpdate({ _id: ObjectID(id) }, { $set: recipeToUpdate });
+    .findOneAndUpdate(
+      { _id: ObjectID(id) }, 
+      { $set: { name, ingredients, preparation } }, 
+      { returnOriginal: false },
+    );
 
   if (!edited) return null;
-  
+
   return edited.value;
+};
+
+const vaporizeRecipe = async (id) => {
+  if (!ObjectId.isValid(id)) {
+    return null;
+  }
+
+  const db = await connection();
+
+  const deleted = await db.collection('recipes').findOneAndDelete({ _id: ObjectId(id) });
+  console.log(deleted);
+  
+  if (!deleted.value) return null;
+
+  return deleted;
 };
 
 module.exports = {
@@ -49,4 +67,5 @@ module.exports = {
   getRecipes,
   getById,
   editRecipe,
+  vaporizeRecipe,
 };

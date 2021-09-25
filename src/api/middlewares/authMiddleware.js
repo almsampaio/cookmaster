@@ -6,11 +6,13 @@ module.exports = (req, res, next) => {
   try {
     const token = req.headers.authorization;
 
-  const payload = jwt.verify(token, SECRET);
+    if (!token) return next({ code: 401, isError: true, message: 'missing auth token' });
 
-  req.user = payload;
+    const payload = jwt.verify(token, SECRET);
 
-  next();
+    req.user = payload;
+
+    next();
   } catch (err) {
     res.status(401).json({ message: 'jwt malformed' });
   }

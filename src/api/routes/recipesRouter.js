@@ -10,5 +10,6 @@ route.post('/', validateNewRecipe, authMiddleware, recipesController.createRecip
 route.get('/', recipesController.getRecipes);
 route.get('/:id', recipesController.getById);
 route.put('/:id', authMiddleware, recipesController.editRecipe);
+route.delete('/:id', authMiddleware, recipesController.vaporizeRecipe);
 
 module.exports = route;

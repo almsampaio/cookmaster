@@ -17,7 +17,6 @@ const getRecipes = async () => {
 
 const getById = async (id) => {
   const recipe = await recipeModel.getById(id);
-  console.log(id);
 
   if (!recipe) return { code: 404, message: notFoundMessage };
 
@@ -32,9 +31,18 @@ const editRecipe = async (newData) => {
   return edited;
 };
 
+const vaporizeRecipe = async (id) => {
+  const deleted = await recipeModel.vaporizeRecipe(id);
+
+  if (!deleted) return { code: 404, message: notFoundMessage };
+
+  return deleted;
+};
+
 module.exports = {
   createRecipe,
   getRecipes,
   getById,
   editRecipe,
+  vaporizeRecipe,
 };

@@ -11,7 +11,6 @@ const create = async (newUser, role = 'user') => {
 const findByEmail = async (email) => {
   const db = await connection();
   const user = await db.collection('users').findOne({ email });
-  console.log(email);
 
   return user;
 };
