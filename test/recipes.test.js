@@ -130,7 +130,7 @@ describe('3 - Crie um endpoint para o cadastro de receitas', () => {
       });
   });
 
-  it.skip('Será validado que não é possível cadastrar uma receita com token invalido', async () => {
+  it('Será validado que não é possível cadastrar uma receita com token invalido', async () => {
     await frisby
       .setup({
         request: {
