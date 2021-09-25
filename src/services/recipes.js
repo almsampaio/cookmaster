@@ -14,4 +14,10 @@ const getAll = async () => {
   return recipes;
 };
 
-module.exports = { create, getAll };
+const getOne = async (id) => {
+  const recipe = await recipesModels.getOne(id);
+  if (!recipe) return null;
+  return recipe;
+};
+
+module.exports = { create, getAll, getOne };

@@ -1,5 +1,6 @@
 const schema = require('../schema');
 const { verify } = require('../auth/jwtFunctions');
+const { recipesServices } = require('../services');
 
 const checkFieldName = (req, res, next) => {
   const { name } = req.body;
@@ -45,9 +46,21 @@ const checkToken = (req, res, next) => {
   next();
 };
 
+const checkExistRecipe = async (req, res, next) => {
+  const { id } = req.params;
+  const checkId = await recipesServices.getOne(id);
+  if (!checkId) {
+    return res
+    .status(schema.status.notFound)
+    .json({ message: schema.messages.recipeNotFound });
+  }
+  next(); 
+};
+
 module.exports = {
   checkFieldName,
   checkFieldIngredients,
   checkFieldPreparation,
   checkToken,
+  checkExistRecipe,
 };

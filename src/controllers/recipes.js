@@ -13,4 +13,10 @@ const getAll = async (_req, res) => {
   return res.status(schema.status.ok).json(recipes);
 };
 
-module.exports = { create, getAll };
+const getOne = async (req, res) => {
+  const { id } = req.params;
+  const recipe = await recipesServices.getOne(id);
+  return res.status(schema.status.ok).json(recipe);
+};
+
+module.exports = { create, getAll, getOne };

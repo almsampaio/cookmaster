@@ -7,4 +7,9 @@ const fieldsRecipes = [
   middlewaresRecipes.checkToken,
 ];
 
-module.exports = { fieldsRecipes };
+const recipeNotExist = [middlewaresRecipes.checkExistRecipe];
+
+module.exports = {
+  fieldsRecipes,
+  recipeNotExist,
+};
