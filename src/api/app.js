@@ -12,6 +12,7 @@ const {
   getRecipeById,
   editRecipe,
   deleteRecipe,
+  addImageRecipe,
 } = require('../controllers/recipes');
 
 const {
@@ -26,6 +27,10 @@ const {
   validateToken,
   validateId,
 } = require('../middlewares/recipes');
+
+const { 
+  upload,
+} = require('../middlewares/multer');
 
 const app = express();
 
@@ -46,5 +51,6 @@ app.get('/recipes', getAllRecipes);
 app.get('/recipes/:id', validateId, getRecipeById);
 app.put('/recipes/:id', validateToken, editRecipe);
 app.delete('/recipes/:id', validateToken, deleteRecipe);
+app.put('/recipes/:id/image', validateToken, upload.single('image'), addImageRecipe);
 
 module.exports = app;
