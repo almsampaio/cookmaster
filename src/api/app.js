@@ -39,6 +39,8 @@ receitasController.cadastrarReceita);
 
 app.get('/recipes', receitasController.listarReceitas);
 
+app.get('/recipes/:id', receitasController.listarReceitasPorID);
+
 // Fim das rotas
 
 // Não remover esse end-point, ele é necessário para o avaliador

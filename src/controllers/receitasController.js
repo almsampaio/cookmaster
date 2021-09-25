@@ -18,7 +18,16 @@ const listarReceitas = async (_req, res) => {
   return res.status(200).json(receitas);
 };
 
+const listarReceitasPorID = async (req, res) => {
+  const { id } = req.params;
+  const receita = await receitasModel.listarReceitasPorID(id);
+  if (!receita) return res.status(404).json({ message: 'recipe not found' });
+  
+  return res.status(200).json(receita);
+};
+
 module.exports = {
   cadastrarReceita,
   listarReceitas,
+  listarReceitasPorID,
 };

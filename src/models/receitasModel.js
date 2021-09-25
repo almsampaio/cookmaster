@@ -1,3 +1,4 @@
+const { ObjectId } = require('bson');
 const conexao = require('./conexao');
 
 const cadastrarUsuario = async (name, ingredients, preparation, userID) => {
@@ -15,7 +16,16 @@ const listarReceitas = async () => {
   return receitas;
 };
 
+const listarReceitasPorID = async (id) => {
+  // Verificando se o id é válido
+  if (!ObjectId.isValid(id)) return null;
+  const db = await conexao();
+  const receita = await db.collection('recipes').findOne({ _id: ObjectId(id) });
+  return receita;
+};
+
 module.exports = {
   cadastrarUsuario,
   listarReceitas,
+  listarReceitasPorID,
 };
