@@ -1,15 +1,23 @@
 const express = require('express');
 const { login } = require('../controllers/LoginController');
+const { createRecipe } = require('../controllers/RecipesController');
 const { createUser } = require('../controllers/UserController');
 const validateLogin = require('../middlewares/validateLogin');
-const validateUser = require('../middlewares/validateUser');
+const validateOnCreate = require('../middlewares/validateOnCreate');
 const validate = require('../schemas/validate');
+const auth = require('../middlewares/auth');
 
 const userRouter = express.Router();
 const loginRouter = express.Router();
+const recipesRouter = express.Router();
 
-userRouter.post('/', validate('createUser'), validateUser, createUser);
+userRouter.route('/')
+  .post(validate.createUser(), validateOnCreate, createUser);
 
-loginRouter.post('/', validate('login'), validateLogin, login);
-
-module.exports = { userRouter, loginRouter };
+loginRouter.route('/')
+  .post(validate.login(), validateLogin, login);
+  
+recipesRouter.route('/')
+  .post(auth, validate.createRecipe(), validateOnCreate, createRecipe);
+  
+module.exports = { userRouter, loginRouter, recipesRouter };
