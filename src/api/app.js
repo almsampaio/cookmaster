@@ -3,11 +3,13 @@ const bodyParser = require('body-parser');
 const errorHandler = require('../middleware/erroHandler');
 const userRouter = require('../routers/usersRouter');
 const loginRouter = require('../routers/loginRouter');
+const recipesRouter = require('../routers/recipesRouter');
 
 const app = express();
 app.use(bodyParser.json());
 app.use('/users', userRouter, errorHandler);
 app.use('/login', loginRouter, errorHandler);
+app.use('/recipes', recipesRouter, errorHandler);
 
 // Não remover esse end-point, ele é necessário para o avaliador
 app.get('/', (request, response) => {

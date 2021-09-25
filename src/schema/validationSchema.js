@@ -6,6 +6,13 @@ const postLoginValidate = Joi.object({
   email: Joi.string().email().required(),
 });
 
+const recipeValidate = Joi.object({
+  name: Joi.string().required(),
+  ingredients: Joi.string().required(),
+  preparation: Joi.string().required(),
+});
+
 module.exports = {
   postLoginValidate,
+  recipeValidate
 };
