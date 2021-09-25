@@ -26,9 +26,16 @@ const update = async (req, res) => {
   return res.status(schema.status.ok).json(updateRecipe);
 };
 
+const exclude = async (req, res) => {
+  const { id } = req.params;
+  await recipesServices.exclude(id);
+  return res.status(schema.status.noContent).json();
+};
+
 module.exports = {
   create,
   getAll,
   getOne,
   update,
+  exclude,
 };
