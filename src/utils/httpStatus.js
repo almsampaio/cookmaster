@@ -5,6 +5,7 @@ const STATUS_UNAUTHORIZED = 401;
 const STATUS_NOT_FOUND = 404;
 const STATUS_UNPROCESSABLE = 422;
 const STATUS_CONFLICT = 409;
+const STATUS_NO_CONTENT = 204;
 
 module.exports = {
   STATUS_OK,
@@ -14,5 +15,6 @@ module.exports = {
   STATUS_NOT_FOUND,
   STATUS_UNPROCESSABLE,
   STATUS_CONFLICT,
+  STATUS_NO_CONTENT,
 };
 // https://developer.mozilla.org/pt-BR/docs/Web/HTTP/Status

@@ -8,12 +8,14 @@ const {
   STATUS_NOT_FOUND,
   STATUS_UNPROCESSABLE,
   // STATUS_CONFLICT,
+  STATUS_NO_CONTENT,
 } = require('../utils/httpStatus');
 
 const { serviceCreateRecipe,
   getAllRecipes,
   findRecipeById,
-  serviceEditRecipe } = require('../services/recipesServices');
+  serviceEditRecipe,
+  serviceDeleteRecipe } = require('../services/recipesServices');
 
 const createRecipe = rescue(async (req, res) => {
   const { name, ingredients, preparation } = req.body;
@@ -52,9 +54,21 @@ const editRecipe = async (req, res) => {
   const updatedRecipe = await serviceEditRecipe({ name, ingredients, preparation, id, userId });
   return res.status(STATUS_OK).json(updatedRecipe);
 };
+
+const deleteRecipe = async (req, res) => {
+  console.log('controller delete chamado!');
+  const { id } = req.params;
+  const deletedRecipe = await serviceDeleteRecipe(id);
+  if (deletedRecipe) {
+    console.log(`receitaDeletada: ${deletedRecipe}`);
+    return res.status(STATUS_NO_CONTENT).send();
+  }
+  return res.status(STATUS_UNAUTHORIZED).json({ message: 'Unknown error.' });
+};
 module.exports = {
   createRecipe,
   listRecipes,
   recipeDetails,
   editRecipe,
+  deleteRecipe,
 };
