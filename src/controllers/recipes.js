@@ -36,8 +36,8 @@ const removeRecipe = async (req, res) => {
 
 const addRecipeImage = async (req, res) => {
   const { id } = req.params;
-  const { file } = req.file;
-  const { status, data, err } = await Recipes.addRecipeImage(id, file);
+  const { filename } = req.file;
+  const { status, data, err } = await Recipes.addRecipeImage(id, filename);
   if (err) return res.status(status).json(err);
   return res.status(status).json(data);
 };

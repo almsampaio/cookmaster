@@ -32,9 +32,9 @@ const removeRecipe = async (id) => {
   return recipe;
 };
 
-const addRecipeImage = async (id, img) => {
+const addRecipeImage = async (id, image) => {
   const db = await getConnection();
-  await db.collection('recipes').updateOne({ _id: ObjectId(id) }, { $set: { img } });
+  await db.collection('recipes').updateOne({ _id: ObjectId(id) }, { $set: { image } });
 };
 
 module.exports = {
