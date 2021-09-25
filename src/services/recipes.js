@@ -31,5 +31,17 @@ const updateRecipes = async (id, name, ingredients, preparation) => {
   }
   return updatedRecipes;
 };
-
-module.exports = { createRecipes, findRecipes, findRecipesById, updateRecipes };
+const deleteRecipes = async (id) => {
+  const recipesId = await model.findRecipesById(id);
+  if (!recipesId) {
+    return {
+      err: {
+        code: 'invalid_data',
+        message: 'Wrong id format',
+      },
+    };
+  }
+  const deletedRecipes = await model.deleteRecipes(id);
+  return deletedRecipes;
+};
+module.exports = { createRecipes, findRecipes, findRecipesById, updateRecipes, deleteRecipes };

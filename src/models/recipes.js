@@ -31,10 +31,20 @@ const findRecipesById = async (id) => {
       { $set: 
         { name, ingredients, preparation },
       },
-      { returnDocument: 'after' },
+      // ? { returnDocument: 'after' },
     );
     const result = await findRecipesById(id);
     return result;
   };
+  const deleteRecipes = async (id) => {
+    const db = await getConnection();
+    const isDelete = await db.collection('recipes').findOne({ _id: ObjectId(id) });
+    if (isDelete) {
+      const deletedProduct = await db.collection('recipes').deleteOne(
+        { _id: ObjectId(id) }, 
+      );
+      if (deletedProduct !== isDelete) return isDelete;
+    }
+  };
 
-module.exports = { createRecipes, findRecipes, findRecipesById, updateRecipes };
+module.exports = { createRecipes, findRecipes, findRecipesById, updateRecipes, deleteRecipes };

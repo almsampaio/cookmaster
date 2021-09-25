@@ -43,4 +43,13 @@ const updateRecipes = rescue(async (req, res) => {
   return res.status(200).json(updatedRecipes);
 });
 
-module.exports = { createRecipes, findRecipes, findRecipesById, updateRecipes };
+const deleteRecipes = rescue(async (req, res) => {
+  const { id } = req.params;
+  const deletedRecipes = await service.deleteRecipes(id);
+  if (deletedRecipes.err) {
+    return res.status(422).json(deletedRecipes);
+  }
+  res.status(204).json();
+});
+
+module.exports = { createRecipes, findRecipes, findRecipesById, updateRecipes, deleteRecipes };
