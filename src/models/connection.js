@@ -1,7 +1,7 @@
 const { MongoClient } = require('mongodb');
 
 const OPTIONS = {
-  useNewURLParser: true,
+  useNewUrlParser: true,
   useUnifiedTopology: true,
 };
 
