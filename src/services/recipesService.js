@@ -24,8 +24,12 @@ const create = async (obj) => {
 };
 
 const update = async (user, recipe, recipeId) => {
-  const { _id } = user;
+  const { _id /* , role */ } = user;
   const { id: recipeID } = recipeId;
+  // const { userId } = await getById(recipeId);
+  // if (_id !== userId && role !== 'admin') {
+  //   return { status: httpStatus.UNAUTHORIZED, msg: errorMsg.unauth }; 
+  // }
   const result = await recipeModel.update(recipeID, { ...recipe, userId: _id });
   return result;
 };
@@ -35,10 +39,16 @@ const remove = async (id) => {
   if (!result) return { status: httpStatus.NOT_FOUND, msg: errorMsg.recipeNotFound };
 };
 
+const uploadImage = async (id, file) => {
+  const result = await recipeModel.uploadImage(id, file);
+  return result;
+};
+
 module.exports = {
   getAll,
   getById,
   create,
   update,
   remove,
+  uploadImage,
 };

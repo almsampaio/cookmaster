@@ -22,6 +22,7 @@ const create = async (req, res) => {
 
 const update = async (req, res) => {
   const result = await recipeService.update(req.user, req.body, req.params);
+  // if (result.msg) return res.status(result.status).json(result.msg);
   res.status(httpStatus.OK).json(result);
 };
 
@@ -32,10 +33,18 @@ const remove = async (req, res) => {
   res.status(httpStatus.NO_CONTENT).end();
 };
 
+const uploadImage = async (req, res) => {
+  const { id } = req.params;
+  const { file } = req;
+  const result = await recipeService.uploadImage(id, file);
+  res.status(httpStatus.OK).json(result);
+};
+
 module.exports = {
   getAll,
   getById,
   create,
   update,
   remove,
+  uploadImage,
 };

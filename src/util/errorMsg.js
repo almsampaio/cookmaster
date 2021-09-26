@@ -26,6 +26,10 @@ const noToken = {
   message: 'missing auth token',
 };
 
+const unauth = {
+  message: 'not your recipe or not admin',
+};
+
 module.exports = {
   invalidEntries,
   conflict,
@@ -34,4 +38,5 @@ module.exports = {
   badJwt,
   recipeNotFound,
   noToken,
+  unauth,
 };
