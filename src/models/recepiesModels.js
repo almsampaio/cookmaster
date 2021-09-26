@@ -49,10 +49,24 @@ const deleteRecipe = async (id, role, _id) => {
   }
 };
 
+const insertImage = async (id, userId, role, image) => {
+  if (!ObjectId.isValid(id)) return null;
+    const recipe = await showRecipesByID(id);
+    const { name, ingredients, preparation } = recipe;
+    const dataUser = await usersModels.searchUserByID(userId);
+    if (dataUser.role === role || role === 'admin') {
+      const db = await connection();
+      await db.collection('recipes')
+      .updateOne({ _id: ObjectId(id) }, { $set: { image } });
+      return { _id: id, name, ingredients, preparation, userId, image: `localhost:3000/${image}` };
+    }
+  };
+
 module.exports = {
   createRecepie,
   showRecipes,
   showRecipesByID,
   updateRecipe,
   deleteRecipe,
+  insertImage,
 };
