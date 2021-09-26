@@ -12,11 +12,22 @@ const getRecipeById = async (id) => {
   return result;
 };
 
-const updateRecipe = async (id, name, ingredients, preparation) => {
+const updateRecipe = async (entries) => {
   await connect().then((db) => db.collection('recipes')
-    .updateOne({ _id: ObjectId(id) }, { $set: { name, ingredients, preparation } }));
+    .updateOne({ _id: ObjectId(entries.id) }, 
+      { $set: { 
+        name: entries.name, 
+        ingredients: entries.ingredients, 
+        preparation: entries.preparation,
+      } }));
 
-  return { _id: ObjectId(id), name, ingredients, preparation };
+  return { 
+    _id: ObjectId(entries.id),
+    name: entries.name,
+    ingredients: entries.ingredients,
+    preparation: entries.preparation,
+    userId: entries.userId,
+  };
 };
 
 const getRecipes = async () => {

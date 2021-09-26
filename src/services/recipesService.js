@@ -23,11 +23,11 @@ const updateRecipe = async (allEntries) => {
   if (!ObjectId.isValid(id)) throw new CustomError(404, 'recipe not found');
 
   const recipe = await recipesModel.getRecipeById(id);
-  
-  if (recipe.userId !== _id && role !== 'admin') {
+  if (JSON.stringify(recipe.userId) !== JSON.stringify(_id) && role !== 'admin') {
     throw new CustomError(401, 'missing auth token');
   } else {
-    const response = await recipesModel.updateRecipe(id, name, ingredients, preparation);
+    const response = await recipesModel
+      .updateRecipe({ id, name, ingredients, preparation, userId: recipe.userId });
     return { status: 200, response };
   }
 };

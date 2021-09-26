@@ -30,7 +30,7 @@ const updateRecipe = async (req, res) => {
       .updateRecipe({ id, name, ingredients, preparation, user });
     return res.status(response.status).json(response.response);
   } catch (e) {
-    return res.status(e.status).json(e.message);
+    return res.status(500).json(e.message);
   }
 };
 
