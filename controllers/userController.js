@@ -4,7 +4,7 @@ const registerUser = async (req, res) => {
     const { name, email, password } = req.body;
     const user = { name, email, password };
     const result = await userService.registerUser(user);
-    if (result.message) return res.status(result.status).json(result.message);
+    if (result.message) return res.status(result.status).json({ message: result.message });
     return res.status(201).send(result);
 };
 
