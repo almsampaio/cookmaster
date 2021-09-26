@@ -1,32 +1,27 @@
 const recipeModel = require('../models/recipeModel');
 
-// const jwt = require('jsonwebtoken');
-
-// const secret = 'tokensecreto';
-
-// const jwtConfig = {
-//     expiresIn: '7d',
-//     algorithm: 'HS256',
-//   };
-
-//   const token = jwt.sign({ user }, secret, jwtConfig);
-
-//   res.status(200).json({ token });
-
-// const {
+const {
 //     // emailRegistered,
 // // invalidEntries,
 // // allFieldsFilled,
 // // incorrectFieldData, /*
 // wrongJWT,
-// recipeNotFound,
-// missingToken */ } = require('../utils/errorMessages');
+recipeNotFound,
+// missingToken 
+} = require('../utils/errorMessages');
 
 const getRecipes = async () => {
     const result = await recipeModel.getRecipes();
     return result;
 };
 
+const gettingOneRecipe = async (id) => {
+    const result = await recipeModel.gettingOneRecipe(id);
+    if (!result) { return { status: 404, message: recipeNotFound }; }
+    return result;
+};
+
 module.exports = {
     getRecipes,
+    gettingOneRecipe,
 };
