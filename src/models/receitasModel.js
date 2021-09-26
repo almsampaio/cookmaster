@@ -31,7 +31,6 @@ const atualizarReceita = async (id, atualizacao, role, _id) => {
   if (!ObjectId.isValid(id)) return null;
   const { name, ingredients, preparation } = atualizacao;
 
-  // const infoReceita = await listarReceitasPorID(id);
   const infoUsuario = await usuariosModel.buscarPeloUsuarioID(_id);
     
   if (infoUsuario.role === role || role === 'admin') {
@@ -45,7 +44,6 @@ const atualizarReceita = async (id, atualizacao, role, _id) => {
 const deletarReceita = async (id, role, _id) => {
   if (!ObjectId.isValid(id)) return null;
 
-  // const infoReceita = await listarReceitasPorID(id);
   const infoUsuario = await usuariosModel.buscarPeloUsuarioID(_id);
     
   if (infoUsuario.role === role || role === 'admin') {
@@ -55,10 +53,26 @@ const deletarReceita = async (id, role, _id) => {
   }
 };
 
+const imagemDaReceita = async (id, userId, role, image) => {
+if (!ObjectId.isValid(id)) return null;
+
+  const receita = await listarReceitasPorID(id);
+  const { name, ingredients, preparation } = receita;
+
+  const infoUsuario = await usuariosModel.buscarPeloUsuarioID(userId);
+  if (infoUsuario.role === role || role === 'admin') {
+    const db = await conexao();
+    await db.collection('recipes')
+    .updateOne({ _id: ObjectId(id) }, { $set: { image } });
+    return { _id: id, name, ingredients, preparation, userId, image: `localhost:3000/${image}` };
+  }
+};
+
 module.exports = {
   cadastrarReceita,
   listarReceitas,
   listarReceitasPorID,
   atualizarReceita,
   deletarReceita,
+  imagemDaReceita,
 };

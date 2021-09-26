@@ -1,9 +1,21 @@
 const express = require('express');
+const multer = require('multer');
 
 const app = express();
 const bodyParser = require('body-parser');
 
 app.use(bodyParser.json());
+
+const storage = multer.diskStorage({
+  destination: (_req, _file, callback) => {
+    callback(null, 'src/uploads');
+  },
+  filename: (req, _file, callback) => {
+    callback(null, `${req.params.id}.jpeg`);
+  },
+});
+
+const imagemReceita = multer({ storage });
 
 // Importar validações
 const dadosUsuario = require('../middlewares/validarDadosUsuario');
@@ -47,6 +59,11 @@ receitasController.atualizarReceita);
 app.delete('/recipes/:id',
 dadosToken.validarToken,
 receitasController.deletarReceita);
+
+app.put('/recipes/:id/image/',
+dadosToken.validarToken,
+imagemReceita.single('image'),
+receitasController.imagemDaReceita);
 
 // Fim das rotas
 
