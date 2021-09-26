@@ -32,6 +32,21 @@ const updateRecipe = async (allEntries) => {
   }
 };
 
+const deleteRecipe = async (id, { _id, role }) => {
+  if (!ObjectId.isValid(id)) throw new CustomError(404, 'recipe not found');
+
+  const recipe = await recipesModel.getRecipeById(id);
+  if (!recipe) throw new CustomError(404, 'recipe not found');
+
+  if (JSON.stringify(recipe.userId) !== JSON.stringify(_id) && role !== 'admin') {
+    throw new CustomError(401, 'missing auth token');
+  } else {
+    await recipesModel
+      .deleteRecipe(id);
+    return { status: 200 };
+  }
+};
+
 const getRecipeById = async (id) => {
   if (!ObjectId.isValid(id)) throw new CustomError(404, 'recipe not found');
   const response = await recipesModel.getRecipeById(id);
@@ -52,4 +67,5 @@ module.exports = {
   getRecipes,
   getRecipeById,
   updateRecipe,
+  deleteRecipe,
 };

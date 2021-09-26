@@ -30,7 +30,19 @@ const updateRecipe = async (req, res) => {
       .updateRecipe({ id, name, ingredients, preparation, user });
     return res.status(response.status).json(response.response);
   } catch (e) {
-    return res.status(500).json(e.message);
+    return res.status(e.status).json(e.message);
+  }
+};
+
+const deleteRecipe = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { user } = req;
+    const response = await recipesService
+      .deleteRecipe(id, user);
+    return res.status(response.status).end();
+  } catch (e) {
+    return res.status(e.status).json(e.message);
   }
 };
 
@@ -50,4 +62,5 @@ module.exports = {
   getRecipes,
   getRecipeById,
   updateRecipe,
+  deleteRecipe,
 };

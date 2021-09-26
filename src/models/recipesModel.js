@@ -15,11 +15,13 @@ const getRecipeById = async (id) => {
 const updateRecipe = async (entries) => {
   await connect().then((db) => db.collection('recipes')
     .updateOne({ _id: ObjectId(entries.id) }, 
-      { $set: { 
+      {
+        $set: {
         name: entries.name, 
         ingredients: entries.ingredients, 
         preparation: entries.preparation,
-      } }));
+        },
+      }));
 
   return { 
     _id: ObjectId(entries.id),
@@ -28,6 +30,11 @@ const updateRecipe = async (entries) => {
     preparation: entries.preparation,
     userId: entries.userId,
   };
+};
+
+const deleteRecipe = async (id) => {
+  await connect().then((db) => db.collection('recipes')
+    .deleteOne({ _id: ObjectId(id) }));
 };
 
 const getRecipes = async () => {
@@ -41,4 +48,5 @@ module.exports = {
   getRecipes,
   getRecipeById,
   updateRecipe,
+  deleteRecipe,
 };
