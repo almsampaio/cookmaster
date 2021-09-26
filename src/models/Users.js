@@ -4,7 +4,7 @@ const create = async (name, email, password) => {
   const operation = await connection();
   const result = await operation
     .collection('users').insertOne({ name, email, password, role: 'user' });
-  return result;
+  return result.ops[0];
 };
 
 module.exports = {
