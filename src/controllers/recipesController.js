@@ -40,6 +40,12 @@ const uploadImage = async (req, res) => {
   res.status(httpStatus.OK).json(result);
 };
 
+const getImage = async (req, res) => {
+  const { id } = req.params;
+  const url = `./uploads/${id}`;
+  res.status(httpStatus.OK).send(url);
+};
+
 module.exports = {
   getAll,
   getById,
@@ -47,4 +53,5 @@ module.exports = {
   update,
   remove,
   uploadImage,
+  getImage,
 };
