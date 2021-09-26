@@ -3,8 +3,9 @@ module.exports = {
   emailAlreadyRegistered: 'Email already registered',
   incorrectUser: 'Incorrect username or password',
   isBlankOrNotExists: 'All fields must be filled',
-  tokenNotFound: 'Token not found',
+  missingToken: 'missing auth token',
   invalidToken: 'jwt malformed',
   userNotFound: 'User not found',
   recipeNotFound: 'recipe not found',
+  userUnauthorized: 'user unauthorized',
 };

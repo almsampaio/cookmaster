@@ -16,24 +16,24 @@ const getUser = async (email) => {
 module.exports = async (req, res, next) => {
   const { authorization } = req.headers;
 
-  if (!authorization) {
-    return res.status(401).json({ error: errors.tokenNotFound });
-  }
+  try {
+    if (!authorization) {
+      throw new Error(errors.missingToken);
+    }
+    
+    const decoded = jwt.verify(authorization, SECRET);
 
- try {
- const decoded = jwt.verify(authorization, SECRET);
+    if (!decoded.data) {
+      throw new Error(errors.invalidToken);
+    }
 
-  if (!decoded.data) {
-    throw new Error(errors.invalidToken);
-  }
+    const user = await getUser(decoded.data.email);
 
-  const user = await getUser(decoded.data.email);
-  
-  const { password: userPass, ...rest } = user;
+    const { password: userPass, ...rest } = user;
 
-  req.user = rest;
-  next();
- } catch (err) {
+    req.user = rest;
+    next();
+  } catch (err) {
     return res.status(401).json({ message: err.message });
   }
 };
