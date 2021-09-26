@@ -3,7 +3,8 @@ const {
 } = require('../models/Users');
 
 const verifyDataUser = (name, email, password) => {
-  if (!name || !email || !password) return { status: 400, message: 'Invalid entries. Try angain' };
+  if (!name || !email || !password) return { status: 400, message: 'Invalid entries. Try again.' };
+
   return false;
 };
 
