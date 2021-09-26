@@ -4,6 +4,7 @@ const chaiHttp = require('chai-http');
 const { MongoClient } = require('mongodb');
 const { MongoMemoryServer } = require('mongodb-memory-server');
 const sinon = require('sinon');
+const { connection } = require('./mockConnection');
 
 const server = require('../api/app');
 
@@ -12,14 +13,9 @@ chai.use(chaiHttp);
 describe('POST /users', () => {
   describe('Ao não informar o name', () => {
     let response = {};
-    const DBServer = new MongoMemoryServer();
 
     before(async () => {
-      const URLMock = await DBServer.getUri();
-      const connectionMock = await MongoClient.connect( URLMock,
-        { useNewUrlParser: true, useUnifiedTopology: true }
-      );
-
+      const connectionMock = await connection();
       sinon.stub(MongoClient, 'connect').resolves(connectionMock);
 
       response = await chai.request(server)
@@ -32,7 +28,6 @@ describe('POST /users', () => {
 
     after(async () => {
       MongoClient.connect.restore();
-      await DBServer.stop();
     });
     
     it('retorna status 400', () => {
@@ -46,14 +41,9 @@ describe('POST /users', () => {
 
   describe('Ao não informar o email', () => {
     let response = {};
-    const DBServer = new MongoMemoryServer();
 
     before(async () => {
-      const URLMock = await DBServer.getUri();
-      const connectionMock = await MongoClient.connect( URLMock,
-        { useNewUrlParser: true, useUnifiedTopology: true }
-      );
-
+      const connectionMock = await connection();
       sinon.stub(MongoClient, 'connect').resolves(connectionMock);
 
       response = await chai.request(server)
@@ -66,7 +56,6 @@ describe('POST /users', () => {
 
     after(async () => {
       MongoClient.connect.restore();
-      await DBServer.stop();
     });
     
     it('retorna status 400', () => {
@@ -80,14 +69,9 @@ describe('POST /users', () => {
 
   describe('Ao não informar o password', () => {
     let response = {};
-    const DBServer = new MongoMemoryServer();
 
     before(async () => {
-      const URLMock = await DBServer.getUri();
-      const connectionMock = await MongoClient.connect( URLMock,
-        { useNewUrlParser: true, useUnifiedTopology: true }
-      );
-
+      const connectionMock = await connection();
       sinon.stub(MongoClient, 'connect').resolves(connectionMock);
 
       response = await chai.request(server)
@@ -100,7 +84,6 @@ describe('POST /users', () => {
 
     after(async () => {
       MongoClient.connect.restore();
-      await DBServer.stop();
     });
     
     it('retorna status 400', () => {
@@ -114,7 +97,6 @@ describe('POST /users', () => {
 
   describe('Ao informar um email repetido', () => {
     let response = {};
-    const DBServer = new MongoMemoryServer();
     const data = {
       name: 'teste',
       email: 'teste@email.com',
@@ -122,11 +104,7 @@ describe('POST /users', () => {
     };
 
     before(async () => {
-      const URLMock = await DBServer.getUri();
-      const connectionMock = await MongoClient.connect( URLMock,
-        { useNewUrlParser: true, useUnifiedTopology: true }
-      );
-
+      const connectionMock = await connection();
       sinon.stub(MongoClient, 'connect').resolves(connectionMock);
 
       await connectionMock.db('Cookmaster').collection('users')
@@ -142,7 +120,6 @@ describe('POST /users', () => {
     });
 
     after(async () => {
-      // await DBServer.stop();
       MongoClient.connect.restore();
     });
     
@@ -157,7 +134,6 @@ describe('POST /users', () => {
 
   describe('Ao informar todos os dados corretamente', () => {
     let response = {};
-    const DBServer = new MongoMemoryServer();
     const data = {
       name: 'teste',
       email: 'testando@email.com',
@@ -165,11 +141,7 @@ describe('POST /users', () => {
     };
 
     before(async () => {
-      const URLMock = await DBServer.getUri();
-      const connectionMock = await MongoClient.connect( URLMock,
-        { useNewUrlParser: true, useUnifiedTopology: true }
-      );
-
+      const connectionMock = await connection();
       sinon.stub(MongoClient, 'connect').resolves(connectionMock);
 
       response = await chai.request(server)
@@ -179,7 +151,6 @@ describe('POST /users', () => {
 
     after(async () => {
       MongoClient.connect.restore();
-      await DBServer.stop();
     });
     
     it('retorna status 200', () => {
@@ -193,6 +164,61 @@ describe('POST /users', () => {
       expect(response.body.user).to.deep.include({ name: data.name });
       expect(response.body.user).to.deep.include({ email: data.email });
       expect(response.body.user).to.deep.include({ role: 'user' });
+    });
+  });
+});
+
+describe('POST /users/admin', () => {
+  let connectionMock;
+
+  before( async () => {
+    connectionMock = await connection();
+    sinon.stub(MongoClient, 'connect').resolves(connectionMock);
+  });
+
+  describe('Ao informar todos os dados corretamente', () => {
+    let response = {};
+    let token = '';
+    const data = {
+      name: 'teste',
+      email: 'admin@root.com',
+      password: '12345678',
+    };
+
+    after(async () => {
+      MongoClient.connect.restore();
+    });
+
+    before(async () => {
+      await connectionMock.db('Cookmaster').collection('users')
+        .insertOne({ name: 'admin', email: 'admin@admin.com', password: '123456', role: 'admin' });
+
+      const { body } = await chai.request(server)
+        .post('/login')
+        .send({
+          email: 'admin@admin.com',
+          password: '123456',
+        });
+
+      token = body.token;
+
+      response = await chai.request(server)
+        .post('/users/admin')
+        .set('Authorization', token)
+        .send(data);
+    });
+    
+    it('retorna status 200', () => {
+      expect(response).to.have.status(201);
+    });
+
+    it('retorna o usuário criado', () => {
+      expect(response.body).to.have.property('user');
+      expect(response.body.user).to.not.have.property('password');
+      expect(response.body.user).to.have.property('_id');
+      expect(response.body.user).to.deep.include({ name: data.name });
+      expect(response.body.user).to.deep.include({ email: data.email });
+      expect(response.body.user).to.deep.include({ role: 'admin' });
     });
   });
 });
