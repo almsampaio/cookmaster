@@ -13,6 +13,13 @@ const create = async (name, email, password) => {
   };
 };
 
+const getAll = async () => {
+  const operation = await connection();
+  const result = await operation.collection('users').find().toArray();
+  return result;
+};
+
 module.exports = {
   create,
+  getAll,
 };
