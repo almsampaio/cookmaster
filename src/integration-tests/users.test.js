@@ -2,7 +2,6 @@ const { expect } = require('chai');
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 const { MongoClient } = require('mongodb');
-const { MongoMemoryServer } = require('mongodb-memory-server');
 const sinon = require('sinon');
 const { connection } = require('./mockConnection');
 
@@ -178,16 +177,11 @@ describe('POST /users/admin', () => {
 
   describe('Ao informar todos os dados corretamente', () => {
     let response = {};
-    let token = '';
     const data = {
       name: 'teste',
       email: 'admin@root.com',
       password: '12345678',
     };
-
-    after(async () => {
-      MongoClient.connect.restore();
-    });
 
     before(async () => {
       await connectionMock.db('Cookmaster').collection('users')
@@ -200,7 +194,7 @@ describe('POST /users/admin', () => {
           password: '123456',
         });
 
-      token = body.token;
+      const token = body.token;
 
       response = await chai.request(server)
         .post('/users/admin')
@@ -219,6 +213,42 @@ describe('POST /users/admin', () => {
       expect(response.body.user).to.deep.include({ name: data.name });
       expect(response.body.user).to.deep.include({ email: data.email });
       expect(response.body.user).to.deep.include({ role: 'admin' });
+    });
+  });
+
+  describe('Ao utilizar um usuário com a role "user"', () => {
+    let response = {};
+    const data = {
+      name: 'teste2',
+      email: 'admin2@root.com',
+      password: '12345678',
+    };
+
+    before(async () => {
+      await connectionMock.db('Cookmaster').collection('users')
+        .insertOne({ name: 'admin', email: 'user@admin.com', password: '123456', role: 'user' });
+
+      const { body } = await chai.request(server)
+        .post('/login')
+        .send({
+          email: 'user@admin.com',
+          password: '123456',
+        });
+
+      const token = body.token;
+
+      response = await chai.request(server)
+        .post('/users/admin')
+        .set('Authorization', token)
+        .send(data);
+    });
+    
+    it('retorna status 403', () => {
+      expect(response).to.have.status(403);
+    });
+
+    it('retorna mensagem de erro', () => {
+      expect(response.body.message).to.be.equal('Only admins can register new admins');
     });
   });
 });
