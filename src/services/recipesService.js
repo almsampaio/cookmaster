@@ -22,4 +22,11 @@ const getRecipeById = async (id) => {
   return { status: 200, recipe };
 };
 
-module.exports = { addRecipe, getAllRecipes, getRecipeById };
+const editRecipe = async (id, token, { name, ingredients, preparation }) => {
+  recipeValidations.validateAuthentication(token);
+  recipeValidations.validateToken(token);
+  const recipe = await recipesModel.editRecipe(id, name, ingredients, preparation);
+  return { status: 200, recipe };
+};
+
+module.exports = { addRecipe, getAllRecipes, getRecipeById, editRecipe };

@@ -23,6 +23,13 @@ const NOT_FOUND_RECIPE = {
   },
 };
 
+const UNAUTHORIZED_MISSING_TOKEN = {
+  status: 401,
+  error: {
+    message: 'missing auth token',
+  },
+};
+
 const validateName = (name) => {
   if (!name) throw BAD_REQUEST_INVALID_ENTRIES;
 };
@@ -48,10 +55,15 @@ const recipeExists = (recipe) => {
   if (!recipe) throw NOT_FOUND_RECIPE;
 };
 
+const validateAuthentication = (token) => {
+  if (!token) throw UNAUTHORIZED_MISSING_TOKEN;
+};
+
 module.exports = {
   validateName,
   validateIngredients,
   validatePreparation,
   validateToken,
   recipeExists,
+  validateAuthentication,
 };
