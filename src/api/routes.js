@@ -5,6 +5,7 @@ const {
   getAllRecipes,
   getRecipeById,
   editRecipe,
+  deleteRecipe,
 } = require('../controllers/RecipesController');
 const { createUser } = require('../controllers/UserController');
 const validateLogin = require('../middlewares/validateLogin');
@@ -30,6 +31,7 @@ recipesRouter.route('/')
 
 recipeRouter.route('/:id')
   .get(getRecipeById)
-  .put(auth, validateUserOnEdit, editRecipe);
+  .put(auth, validateUserOnEdit, editRecipe)
+  .delete(auth, deleteRecipe);
   
 module.exports = { userRouter, loginRouter, recipesRouter, recipeRouter };

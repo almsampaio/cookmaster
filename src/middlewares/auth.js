@@ -10,7 +10,8 @@ const getUser = async (email) => {
   if (!user) {
     throw new Error(errors.userNotFound);
   }
-  return user;
+  const { password: userPass, ...rest } = user;
+  return rest;
 };
 
 module.exports = async (req, res, next) => {
@@ -20,7 +21,7 @@ module.exports = async (req, res, next) => {
     if (!authorization) {
       throw new Error(errors.missingToken);
     }
-    
+
     const decoded = jwt.verify(authorization, SECRET);
 
     if (!decoded.data) {
@@ -29,9 +30,8 @@ module.exports = async (req, res, next) => {
 
     const user = await getUser(decoded.data.email);
 
-    const { password: userPass, ...rest } = user;
+    if (user) req.user = { ...user, authenticated: true };
 
-    req.user = rest;
     next();
   } catch (err) {
     return res.status(401).json({ message: err.message });
