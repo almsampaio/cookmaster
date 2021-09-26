@@ -6,4 +6,9 @@ const addRecipe = async (req, res) => {
   res.status(status).json(result);
 };
 
-module.exports = { addRecipe };
+const getAllRecipes = async (req, res) => {
+  const { status, allRecipes } = await recipesService.getAllRecipes();
+  return res.status(status).json(allRecipes);
+};
+
+module.exports = { addRecipe, getAllRecipes };
