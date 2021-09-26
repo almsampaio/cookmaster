@@ -18,7 +18,7 @@ const newToken = (dataWithoutPassword) => {
 const tokenValidation = async (request, response, next) => {
   const userToken = request.headers.authorization;
   if (!userToken) {
-    response.status(401).json({ message: 'missing auth token' });
+    return response.status(401).json({ message: 'missing auth token' });
   }
 
   try {
@@ -31,8 +31,7 @@ const tokenValidation = async (request, response, next) => {
 
     const { password, ...dataWithoutPassword } = userVerify;
 
-    const { _id } = dataWithoutPassword;
-    request.user = _id;
+    request.user = dataWithoutPassword;
 
     next();
 } catch (err) {

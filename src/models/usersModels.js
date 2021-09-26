@@ -24,8 +24,15 @@ const searchByPassword = async (password) => {
   return search;
 };
 
+const searchUserByID = async (_id) => {
+  const db = await connection();
+  const search = await db.collection('users').findOne({ _id });
+  return search;
+};
+
 module.exports = {
   searchByEmail,
   createUser,
   searchByPassword,
+  searchUserByID,
 };
