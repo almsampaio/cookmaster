@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken');
+const { ObjectId } = require('mongodb');
 const recipesModel = require('../models/recipesModel');
 const CustomError = require('../utils/CustomError');
 
@@ -15,6 +16,12 @@ const getRecipes = async () => {
   return ({ status: 200, response });
 };
 
+const getRecipeById = async (id) => {
+  if (!ObjectId.isValid(id)) throw new CustomError(404, 'recipe not found');
+  const response = await recipesModel.getRecipeById(id);
+  return ({ status: 200, response });
+};
+
 const createRecipe = async (nome, ingredientes, preparacao, token) => {
   validateFields(nome, ingredientes, preparacao);
   const { data: { _id } } = jwt.verify(token, segredo);
@@ -27,4 +34,5 @@ const createRecipe = async (nome, ingredientes, preparacao, token) => {
 module.exports = {
   createRecipe,
   getRecipes,
+  getRecipeById,
 };

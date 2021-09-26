@@ -15,14 +15,25 @@ const createRecipes = async (req, res) => {
 const getRecipes = async (_req, res) => {
   try {
     const response = await recipesService.getRecipes();
-    console.log(response);
     return res.status(response.status).json(response.response);
   } catch (e) {
     return res.status(500).json(e.message);
   }
 };
 
+const getRecipeById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const response = await recipesService.getRecipeById(id);
+
+    return res.status(response.status).json(response.response);
+  } catch (e) {
+    return res.status(e.status).json({ message: e.message });
+  }
+};
+
 module.exports = {
   createRecipes,
   getRecipes,
+  getRecipeById,
 };
