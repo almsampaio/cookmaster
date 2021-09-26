@@ -51,9 +51,19 @@ const updateRecipe = async (id, dataBody, token) => {
   return { status: 200, data: { ...result } };
 };
 
+const excludeRecipe = async (id, token) => {
+  const exitsToken = await validRecipes.missingAuthToken(token);
+  if (exitsToken) return { status: 401, data: exitsToken };
+
+  await modelsRecipes.excludeRecipe(id);
+
+  return { status: 204 };
+};
+
 module.exports = {
   createRecipe,
   getAllRecipes,
   getByIdRecipe,
   updateRecipe,
+  excludeRecipe,
 };
