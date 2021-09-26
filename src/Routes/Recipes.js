@@ -2,16 +2,27 @@ const express = require('express');
 
 const Router = express.Router();
 
-// const loginController = require('../useCases/login/loginController');
 const authToken = require('../middlewares/authToken');
 const authRecipe = require('../middlewares/authRecipe');
-const createRecipeController = require('../useCases/createRecipe/createRecipeController');
+const authRecipeId = require('../middlewares/authRecipeId');
 
-Router.post(
-  '/', 
-  authToken, 
-  authRecipe,
-  createRecipeController,
-);
+const createRecipeController = require('../useCases/createRecipe/createRecipeController');
+const listRecipeController = require('../useCases/listRecipes/listRecipesController');
+
+Router.route('/')
+  .get(
+    listRecipeController.getAll,
+  )
+  .post(
+    authToken, 
+    authRecipe,
+    createRecipeController,
+  );
+
+Router.route('/:id')
+    .get(
+      authRecipeId,
+      listRecipeController.getById,
+    );
 
 module.exports = Router;
