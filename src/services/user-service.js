@@ -3,7 +3,7 @@ const userMiddleware = require('../middlewares/user-middleware');
 
 const validateEmail = async (email) => {
   const findEmail = await userModel.findEmail(email);
-  if (findEmail.length >= 1) return { status: 409, message: 'Email already registered' };
+  if (findEmail) return { status: 409, message: 'Email already registered' };
 
   return false;
 };

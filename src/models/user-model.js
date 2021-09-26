@@ -13,7 +13,7 @@ const createUser = async (name, email, password) => {
 
 const findEmail = async (email) => {
   const userEmail = await connect().then((db) =>
-    db.collection('users').find({ email }).toArray());
+    db.collection('users').findOne({ email }));
 
   return userEmail;
 };
