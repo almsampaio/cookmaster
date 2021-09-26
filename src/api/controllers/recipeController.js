@@ -33,6 +33,16 @@ const update = async (req, res) => {
   res.status(status).json(recipe);
 };
 
+const updateImage = async (req, res) => {
+  const { id } = req.params;
+  const { path } = req.file;
+
+  const image = `localhost:3000/${path}`;
+
+  const { status, recipe } = await recipeService.updateImage({ id, image });
+  res.status(status).json(recipe);
+};
+
 const exclude = async (req, res) => {
   const { id } = req.params;
   const { status } = await recipeService.exclude(id);
@@ -44,6 +54,7 @@ module.exports = {
   getAll,
   getById,
   update,
+  updateImage,
   exclude,
 };
 

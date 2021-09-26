@@ -32,6 +32,16 @@ const update = async (id, name, ingredients, preparation) => {
   return recipe;
 };
 
+const updateImage = async (id, image) => {
+  if (!ObjectId.isValid(id)) return null;
+
+  const db = await connect();
+  await db.collection('recipes').updateOne({ _id: ObjectId(id) }, { $set: { image } });
+
+  const recipe = await getById(id);
+  return recipe;
+};
+
 const exclude = async (id) => {
   if (!ObjectId.isValid(id)) return null;
 
@@ -44,5 +54,6 @@ module.exports = {
   getAll,
   getById,
   update,
+  updateImage,
   exclude,
 };
