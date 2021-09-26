@@ -36,4 +36,18 @@ const deleteRecipe = async (id, token) => {
   return { status: 204 };
 };
 
-module.exports = { addRecipe, getAllRecipes, getRecipeById, editRecipe, deleteRecipe };
+const addRecipeImage = async (id, token, filename) => {
+  recipeValidations.validateAuthentication(token);
+  const path = `localhost:3000/src/uploads/${filename}`;
+  const result = await recipesModel.addRecipeImage(id, path);
+  return { status: 200, result };
+};
+
+module.exports = {
+  addRecipe,
+  getAllRecipes,
+  getRecipeById,
+  editRecipe,
+  deleteRecipe,
+  addRecipeImage,
+};

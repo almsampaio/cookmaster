@@ -10,9 +10,6 @@ app.use(bodyParser.json());
 app.use('/users', usersRouter);
 app.use('/login', loginRouter);
 app.use('/recipes', recipesRouter);
-app.use('/recipes/:id', recipesRouter);
-app.use('/recipes/:id', recipesRouter);
-app.use('/recipes/:id', recipesRouter);
 app.use((err, _req, res, _next) => res.status(err.status).json(err.error));
 
 // Não remover esse end-point, ele é necessário para o avaliador
