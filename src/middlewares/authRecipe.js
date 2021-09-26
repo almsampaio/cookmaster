@@ -7,7 +7,7 @@ const authRecipe = (request, _response, next) => {
 
   const { error } = recipeSchema.validate(recipe);
 
-  if (error) return next({ status: badRequest, message: 'Invalid entries. Try again' });
+  if (error) return next({ status: badRequest, message: 'Invalid entries. Try again.' });
 
   next();
 };
