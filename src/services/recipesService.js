@@ -31,6 +31,7 @@ const editRecipe = async (id, token, { name, ingredients, preparation }) => {
 
 const deleteRecipe = async (id, token) => {
   recipeValidations.validateAuthentication(token);
+  console.log('service recipes token ', token);
   await recipesModel.deleteRecipe(id);
   return { status: 204 };
 };
