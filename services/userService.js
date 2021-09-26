@@ -45,11 +45,10 @@ const registerUser = async (user) => {
     const { name, email, password } = user;
     const validEmail = await checkEmail(email);
     const validatedFields = await noRequiredFields(name, validEmail, password);
-    if (!validatedFields) { return { status: 400, message: invalidEntries }; }
+    if (validatedFields === false) { return { status: 400, message: invalidEntries }; }
     const emailFound = await findEmail(email);
     if (emailFound) { return { status: 409, message: emailRegistered }; }
     const result = await userModel.registerUser(name, email, password);
-    // console.log('RESULTADO DO CADASTRO - - - - - ', result);
     if (result.message) { return { status: result.status, message: result.message }; }
     return result;
 };

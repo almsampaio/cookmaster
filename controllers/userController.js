@@ -1,11 +1,10 @@
 const userService = require('../services/userService');
 
 const registerUser = async (req, res) => {
-    const user = req.body;
+    const { name, email, password } = req.body;
+    const user = { name, email, password };
     const result = await userService.registerUser(user);
-    // console.log('result - - - - -- Controller', result);
-    // console.log('STATUS - - - - - - -- -', result.status, 'MESSAGE - - - - ', result.message);
-    if (result.message) return res.status(result.status).send(result.message);
+    if (result.message) return res.status(result.status).json(result.message);
     return res.status(201).send(result);
 };
 

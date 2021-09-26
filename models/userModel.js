@@ -4,7 +4,7 @@ const connect = require('./connection');
 const registerUser = async (name, email, password) => {
     const db = await connect();
     const user = await db.collection('users').insertOne({ name, email, password, role: 'user' });
-    return { user: { name, email, password, _id: user.insertedId, role: 'user' } };
+    return { user: { name, email, role: 'user', _id: user.insertedId } };
 };
 
 const findEmail = async (email) => {
