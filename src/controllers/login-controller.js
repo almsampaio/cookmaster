@@ -7,6 +7,7 @@ const loginController = async (req, res) => {
     const loginData = await loginService.validatingLogin(email, password);
 
     if (loginData.message) return res.status(loginData.status).json({ message: loginData.message });
+    
     res.status(200).json(loginData.token);
   } catch (error) {
     console.error(error);
