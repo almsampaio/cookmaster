@@ -41,4 +41,8 @@ app.put('/recipes/:id',
 authMiddlewares.authValidation,
 recipeController.update);
 
+app.delete('recipes/:id',
+authMiddlewares.authValidation,
+recipeController.exclude);
+
 module.exports = app;
