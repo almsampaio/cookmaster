@@ -16,4 +16,7 @@ app.get('/', (request, response) => {
 app.post('/users', middleware.isValidEmail, userController.addUser);
 app.get('/users', userController.findAll);
 
+// login
+app.post('/login', userController.login);
+
 module.exports = app;
