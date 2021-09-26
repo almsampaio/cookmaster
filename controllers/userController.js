@@ -14,7 +14,7 @@ const checkLogin = async (req, res) => {
     console.log('req.body -  - - - CONTROLLER', req.body);
     const result = await userService.checkLogin({ email, password });
     console.log('result -  - - - CONTROLLER', result);
-    if (result.message) return res.status(result.status).send(result.message);
+    if (result.message) return res.status(result.status).json({ message: result.message });
     return res.status(200).send(result);
 };
 
