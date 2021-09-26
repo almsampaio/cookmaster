@@ -16,6 +16,22 @@ const getRecipes = async () => {
   return ({ status: 200, response });
 };
 
+const updateRecipe = async (allEntries) => {
+  const { id, name, ingredients, preparation, user } = allEntries;
+  const { _id, role } = user;
+
+  if (!ObjectId.isValid(id)) throw new CustomError(404, 'recipe not found');
+
+  const recipe = await recipesModel.getRecipeById(id);
+  
+  if (recipe.userId !== _id && role !== 'admin') {
+    throw new CustomError(401, 'missing auth token');
+  } else {
+    const response = await recipesModel.updateRecipe(id, name, ingredients, preparation);
+    return { status: 200, response };
+  }
+};
+
 const getRecipeById = async (id) => {
   if (!ObjectId.isValid(id)) throw new CustomError(404, 'recipe not found');
   const response = await recipesModel.getRecipeById(id);
@@ -35,4 +51,5 @@ module.exports = {
   createRecipe,
   getRecipes,
   getRecipeById,
+  updateRecipe,
 };
