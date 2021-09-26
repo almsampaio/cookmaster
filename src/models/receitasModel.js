@@ -43,8 +43,6 @@ const atualizarReceita = async (id, atualizacao, role, _id) => {
     .updateOne({ _id: ObjectId(id) }, { $set: { name, ingredients, preparation } });
     return { _id, name, ingredients, preparation, userId: _id };
   }
-
-  return false;
 };
 
 // "_id": 615078e9e291645a98c75bf6
