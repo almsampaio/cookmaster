@@ -29,4 +29,10 @@ const editRecipe = async (id, token, { name, ingredients, preparation }) => {
   return { status: 200, recipe };
 };
 
-module.exports = { addRecipe, getAllRecipes, getRecipeById, editRecipe };
+const deleteRecipe = async (id, token) => {
+  recipeValidations.validateAuthentication(token);
+  await recipesModel.deleteRecipe(id);
+  return { status: 204 };
+};
+
+module.exports = { addRecipe, getAllRecipes, getRecipeById, editRecipe, deleteRecipe };
