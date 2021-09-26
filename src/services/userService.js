@@ -18,7 +18,10 @@ const authorizeLogin = async (email, password) => {
   if (validations.message) return validations;
 
   const user = await userModel.findUserEmail(email);
-  const token = jwt.sign(user, SECRET);
+
+  const { password: _, ...userPayload } = user;
+  const token = jwt.sign(userPayload, SECRET);
+
   return { token };
 };
 

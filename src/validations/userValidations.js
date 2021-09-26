@@ -51,6 +51,7 @@ switch (true) {
 
 const validateLogin = async (email, password) => {
   const code401 = 401;
+  
 switch (true) {
   case mandatoryLogin(email, password): return { code: code401, message: mandatoryEntries };
   case (await checkLogin(email, password)): return { code: code401, message: IncorrectData };
