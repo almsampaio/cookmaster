@@ -4,9 +4,9 @@ const {
 
 const createUSer = async (req, res) => {
   const { name, email, password } = req.body;
-  const result = await addUser(name, email, password);
+  const user = await addUser(name, email, password);
 
-  res.status(201).json(result);
+  res.status(201).json({ user });
 };
 
 module.exports = {
