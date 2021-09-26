@@ -25,7 +25,6 @@ const findByPersonalData = async (email, password) => {
   }
 
   const findEmail = await usersModel.findByEmail(email);
-
   if (!findEmail || findEmail.password !== password) {
     return { status: STATUS_UNAUTHORIZED, message: INCORRECT_EMAIL_PASSWORD };
   }
@@ -36,7 +35,6 @@ const findByPersonalData = async (email, password) => {
     algorithm: 'HS256',
     expiresIn: '15d',
   });
-
   return ({ status: STATUS_OK, token });
 };
 
