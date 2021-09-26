@@ -24,9 +24,7 @@ const validarToken = async (req, res, next) => {
 
   try {
     const payload = jwt.verify(usuarioToken, senha);
-    console.log('1 - ', payload);
     const verificaUsuario = await usuariosModel.buscarPeloEmail(payload.email);
-    console.log('1 - ', payload.email);
     if (!verificaUsuario || verificaUsuario === undefined) {
       return res.status(401).json({ message: 'jwt malformed' });
     }
@@ -34,8 +32,6 @@ const validarToken = async (req, res, next) => {
     const { password, ...tokenSemPassword } = verificaUsuario;
 
     req.user = tokenSemPassword;
-    // console.log('token - ', tokenSemPassword);
-    // _id, name, email, role
 
     next();
 } catch (err) {

@@ -44,6 +44,10 @@ app.put('/recipes/:id',
 dadosToken.validarToken,
 receitasController.atualizarReceita);
 
+app.delete('/recipes/:id',
+dadosToken.validarToken,
+receitasController.deletarReceita);
+
 // Fim das rotas
 
 // Não remover esse end-point, ele é necessário para o avaliador

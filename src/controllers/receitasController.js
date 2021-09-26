@@ -41,9 +41,22 @@ const atualizarReceita = async (req, res) => {
   res.status(200).json(receita);
 };
 
+const deletarReceita = async (req, res) => {
+  const { id } = req.params;
+  const { _id, role } = req.user;
+  
+  const receita = await receitasModel.deletarReceita(id, role, _id);
+  
+  if (receita === null) return res.status(404).json({ message: 'recipe not found' });
+  if (receita === false) return res.status(401).json({ message: 'missing auth token' });
+  
+  res.status(204).json(receita);
+};
+
 module.exports = {
   cadastrarReceita,
   listarReceitas,
   listarReceitasPorID,
   atualizarReceita,
+  deletarReceita,
 };

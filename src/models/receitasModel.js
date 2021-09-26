@@ -33,10 +33,7 @@ const atualizarReceita = async (id, atualizacao, role, _id) => {
 
   // const infoReceita = await listarReceitasPorID(id);
   const infoUsuario = await usuariosModel.buscarPeloUsuarioID(_id);
-  // console.log(infoReceita.userId);
-  // console.log(infoUsuario.role);
     
-  // if (_id !== infoReceita.userId) console.log('a');
   if (infoUsuario.role === role || role === 'admin') {
     const db = await conexao();
     await db.collection('recipes')
@@ -45,9 +42,23 @@ const atualizarReceita = async (id, atualizacao, role, _id) => {
   }
 };
 
+const deletarReceita = async (id, role, _id) => {
+  if (!ObjectId.isValid(id)) return null;
+
+  // const infoReceita = await listarReceitasPorID(id);
+  const infoUsuario = await usuariosModel.buscarPeloUsuarioID(_id);
+    
+  if (infoUsuario.role === role || role === 'admin') {
+    const db = await conexao();
+    const receita = await db.collection('recipes').findOneAndDelete({ _id: ObjectId(id) });
+    return receita;
+  }
+};
+
 module.exports = {
   cadastrarReceita,
   listarReceitas,
   listarReceitasPorID,
   atualizarReceita,
+  deletarReceita,
 };
