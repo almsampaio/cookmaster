@@ -1,7 +1,7 @@
 const {
   emailIsValid,
   nameIsValid,
-  passwordIsValid } = require('../validations');
+  passwordIsValid } = require('./validations');
 
 function validateUser({ name, email, password }) {
   if (!nameIsValid(name) || !emailIsValid(email) || !passwordIsValid(password)) {
