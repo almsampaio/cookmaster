@@ -16,6 +16,13 @@ const UNAUTHORIZED_INVALID_TOKEN = {
   },
 };
 
+const NOT_FOUND_RECIPE = {
+  status: 404,
+  error: {
+    message: 'recipe not found',
+  },
+};
+
 const validateName = (name) => {
   if (!name) throw BAD_REQUEST_INVALID_ENTRIES;
 };
@@ -37,9 +44,14 @@ const validateToken = (token) => {
   }
 };
 
+const recipeExists = (recipe) => {
+  if (!recipe) throw NOT_FOUND_RECIPE;
+};
+
 module.exports = {
   validateName,
   validateIngredients,
   validatePreparation,
   validateToken,
+  recipeExists,
 };

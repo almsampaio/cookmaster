@@ -6,7 +6,6 @@ const addRecipe = async (token, { name, ingredients, preparation }) => {
   recipeValidations.validateIngredients(ingredients);
   recipeValidations.validatePreparation(preparation);
   const decoded = recipeValidations.validateToken(token);
-  console.log(decoded);
   const result = await recipesModel.addRecipe(decoded.data, name, ingredients, preparation);
   return { status: 201, result };
 };
@@ -16,4 +15,11 @@ const getAllRecipes = async () => {
   return { status: 200, allRecipes };
 };
 
-module.exports = { addRecipe, getAllRecipes };
+const getRecipeById = async (id) => {
+  const recipe = await recipesModel.getRecipeById(id);
+  console.log(recipe);
+  recipeValidations.recipeExists(recipe);
+  return { status: 200, recipe };
+};
+
+module.exports = { addRecipe, getAllRecipes, getRecipeById };
