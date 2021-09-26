@@ -38,8 +38,11 @@ dadosToken.validarToken,
 receitasController.cadastrarReceita);
 
 app.get('/recipes', receitasController.listarReceitas);
-
 app.get('/recipes/:id', receitasController.listarReceitasPorID);
+
+app.put('/recipes/:id',
+dadosToken.validarToken,
+receitasController.atualizarReceita);
 
 // Fim das rotas
 

@@ -32,8 +32,9 @@ const validarToken = async (req, res, next) => {
 
     const { password, ...tokenSemPassword } = verificaUsuario;
 
-    const { _id } = tokenSemPassword;
-    req.user = _id;
+    req.user = tokenSemPassword;
+    // console.log('token - ', tokenSemPassword);
+    // _id, name, email, role
 
     next();
 } catch (err) {

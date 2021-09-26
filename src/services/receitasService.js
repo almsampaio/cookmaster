@@ -4,12 +4,12 @@
 // Conectando a camada Services com a camada Models
 const receitasModel = require('../models/receitasModel');
 
-const cadastrarUsuario = async (name, ingredients, preparation, userID) => {
-  const cadastrar = await receitasModel.cadastrarUsuario(name, ingredients, preparation, userID);
+const cadastrarReceita = async (name, ingredients, preparation, userID) => {
+  const cadastrar = await receitasModel.cadastrarReceita(name, ingredients, preparation, userID);
 
   return cadastrar;
 };
 
 module.exports = {
-  cadastrarUsuario,
+  cadastrarReceita,
 };

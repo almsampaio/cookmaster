@@ -1,11 +1,14 @@
 const { ObjectId } = require('bson');
 const conexao = require('./conexao');
 
-const cadastrarUsuario = async (name, ingredients, preparation, userID) => {
+// Conectando receitasModel com usuariosModel
+const usuariosModel = require('./usuariosModel');
+
+const cadastrarReceita = async (name, ingredients, preparation, userId) => {
   const db = await conexao();
   
  const cadastrar = await db.collection('recipes')
- .insertOne({ name, ingredients, preparation, userID });
+ .insertOne({ name, ingredients, preparation, userId });
 
   return { recipe: cadastrar.ops[0] };
 };
@@ -24,8 +27,31 @@ const listarReceitasPorID = async (id) => {
   return receita;
 };
 
+const atualizarReceita = async (id, atualizacao, role, _id) => {
+  if (!ObjectId.isValid(id)) return null;
+  const { name, ingredients, preparation } = atualizacao;
+
+  // const infoReceita = await listarReceitasPorID(id);
+  const infoUsuario = await usuariosModel.buscarPeloUsuarioID(_id);
+  // console.log(infoReceita.userId);
+  // console.log(infoUsuario.role);
+    
+  // if (_id !== infoReceita.userId) console.log('a');
+  if (infoUsuario.role === role || role === 'admin') {
+    const db = await conexao();
+    await db.collection('recipes')
+    .updateOne({ _id: ObjectId(id) }, { $set: { name, ingredients, preparation } });
+    return { _id, name, ingredients, preparation, userId: _id };
+  }
+
+  return false;
+};
+
+// "_id": 615078e9e291645a98c75bf6
+
 module.exports = {
-  cadastrarUsuario,
+  cadastrarReceita,
   listarReceitas,
   listarReceitasPorID,
+  atualizarReceita,
 };
