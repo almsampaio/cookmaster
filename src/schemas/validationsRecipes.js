@@ -4,10 +4,12 @@
 
 // 401
 // message: 'jwt malformed'
+// message: 'missing auth token'
 
 const err = {
   fieldRequired: 'Invalid entries. Try again.',
   isExistsRecipes: 'recipe not found',
+  authToken: 'missing auth token',
 };
 
 const fieldsRequired = (name, ingredients, preparation) => {
@@ -15,27 +17,18 @@ const fieldsRequired = (name, ingredients, preparation) => {
   return false;
 };
 
-// const idExists = async (id) => {
-//   const recipes = await modelsRecipes.getAllRecipes();
-//   const idRecipe = recipes.find((recipe) => recipe.id === id);
-
-//   console.log('validRecipes', idRecipe);
-  
-//   if (idRecipe) return { message: err.isExistsRecipes };
-
-//   return false;
-// };
-
 const idExists = (recipe) => {
-  // const recipes = await modelsRecipes.getAllRecipes();
-  // const idRecipe = recipes.find((recipe) => recipe.id === id);
-  
   if (!recipe) return { message: err.isExistsRecipes };
+  return false;
+};
 
+const missingAuthToken = (token) => {
+  if (!token) return { message: err.authToken };
   return false;
 };
 
 module.exports = {
   fieldsRequired,
   idExists,
+  missingAuthToken,
 };

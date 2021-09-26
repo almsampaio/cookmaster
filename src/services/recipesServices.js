@@ -18,12 +18,7 @@ const createRecipe = async (name, ingredients, preparation, token) => {
 
   // const { _id, name, ingredients, preparation } = newRecipes;
 
-  // console.log('service', newRecipes);
-
   return { status: 201, data: { recipe: { ...newRecipes } } };
-  
-  // return { status: 201,
-  // data: { recipe: { _id, name, ingredients, preparation, userId: tokenVerify.id } } };
 };
 
 const getAllRecipes = async () => {
@@ -38,13 +33,27 @@ const getByIdRecipe = async (id) => {
   const recipeExists = validRecipes.idExists(recipe);
   if (recipeExists) return { status: 404, data: recipeExists };
 
-  console.log('service', recipe);
+  // console.log('service', recipe);
   
   return { status: 200, data: { ...recipe } };
+};
+
+const updateRecipe = async (id, dataBody, token) => {
+  const exitsToken = await validRecipes.missingAuthToken(token);
+  if (exitsToken) return { status: 401, data: exitsToken };
+
+  const tokenVerify = await authVerify.validToken(token);
+  if (tokenVerify.message) return { status: 401, data: tokenVerify };
+
+  const result = await modelsRecipes
+    .updateRecipe(id, dataBody, tokenVerify.id);
+
+  return { status: 200, data: { ...result } };
 };
 
 module.exports = {
   createRecipe,
   getAllRecipes,
   getByIdRecipe,
+  updateRecipe,
 };

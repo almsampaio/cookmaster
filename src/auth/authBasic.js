@@ -1,4 +1,4 @@
-const jwtVarify = require('./jwtFunctions');
+const jwtVerify = require('./jwtFunctions');
 const modelsUsers = require('../models/usersModels');
 
 const err = {
@@ -8,7 +8,7 @@ const err = {
 
 const validToken = async (token) => {
   try {
-    const verifyToken = jwtVarify.verify(token);
+    const verifyToken = jwtVerify.verify(token);
 
     const user = await modelsUsers.findByEmail(verifyToken.email);
 
