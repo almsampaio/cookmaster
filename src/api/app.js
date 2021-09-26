@@ -21,6 +21,7 @@ app.post('/login', loginController.logIn);
 app.post('/recipes', validateWebToken, recipeController.create);
 
 app.put('/recipes/:id', validateWebToken, recipeController.update);
+app.delete('/recipes/:id', validateWebToken, recipeController.exclude);
 
 // Não remover esse end-point, ele é necessário para o avaliador
 

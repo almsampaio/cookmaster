@@ -41,9 +41,18 @@ const update = (rescue(async (req, res) => {
     return res.status(200).json(recipes);
 }));
 
+const exclude = (rescue(async (req, res) => {
+    const { id } = req.params;
+
+    const recipes = await recipeService.exclude(id);
+
+    res.status(204).json(recipes);
+}));
+
 module.exports = {
     create,
     getAll,
     getById,
     update,
+    exclude,
 };
