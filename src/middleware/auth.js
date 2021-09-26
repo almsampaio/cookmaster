@@ -11,8 +11,12 @@ const validateJWT = async (req, res, next) => {
   
   try {
     const decoded = jwt.verify(token, secret);
-
+    
     req.user = decoded;
+
+    // if (req.user.role !== 'admin') {
+    //  return false;
+   // }
 
     next();
   } catch (err) {

@@ -5,6 +5,7 @@ const usersController = require('../controllers/usersController');
 const loginController = require('../controllers/loginController');
 const recipeController = require('../controllers/recipeController');
 const auth = require('../middleware/auth');
+const admin = require('../middleware/admin');
 
 const app = express();
 app.use(bodyParser.json());
@@ -24,5 +25,9 @@ app.post('/recipes', auth.validateJWT, recipeController.createRecipe);
 app.get('/recipes', recipeController.getRecipes);
 
 app.get('/recipes/:_id', recipeController.getRecipeById);
+
+app.put('/recipes/:_id', admin, recipeController.editeRecipe);
+
+app.delete('/recipes/:_id', admin, recipeController.deleteRecipe);
 
 module.exports = app;
