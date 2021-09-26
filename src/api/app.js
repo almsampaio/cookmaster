@@ -34,5 +34,6 @@ app.put('/recipes/:id', recipeMiddleware.validateJWT, recipeController.update);
 app.delete('/recipes/:id', recipeMiddleware.validateJWT, recipeController.exclude);
 app.put('/recipes/:id/image', recipeMiddleware.validateJWT, 
   upload.single('image'), recipeController.updateImage);
+app.use('/images', express.static('src/uploads'));
 
 module.exports = app;
