@@ -6,4 +6,5 @@ module.exports = {
   tokenNotFound: 'Token not found',
   invalidToken: 'jwt malformed',
   userNotFound: 'User not found',
+  recipeNotFound: 'recipe not found',
 };

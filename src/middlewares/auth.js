@@ -4,6 +4,15 @@ const UserService = require('../services/UserService');
 
 const SECRET = 'secretstring';
 
+const getUser = async (email) => {
+  const user = await UserService.findUserByEmail(email);
+
+  if (!user) {
+    throw new Error(errors.userNotFound);
+  }
+  return user;
+};
+
 module.exports = async (req, res, next) => {
   const { authorization } = req.headers;
 
@@ -11,22 +20,20 @@ module.exports = async (req, res, next) => {
     return res.status(401).json({ error: errors.tokenNotFound });
   }
 
-  try {
-    const { data } = jwt.verify(authorization, SECRET);
+ try {
+ const decoded = jwt.verify(authorization, SECRET);
 
-    if (!data) {
-      return res.status(401).json({ error: errors.invalidToken });
-    }
+  if (!decoded.data) {
+    throw new Error(errors.invalidToken);
+  }
 
-    const user = UserService.findUserByEmail(data.email);
+  const user = await getUser(decoded.data.email);
+  
+  const { password: userPass, ...rest } = user;
 
-    if (!user) {
-      return res.status(404).json({ message: errors.userNotFound });
-    }
-
-    req.user = user;
-    next();
-  } catch (err) {
+  req.user = rest;
+  next();
+ } catch (err) {
     return res.status(401).json({ message: err.message });
   }
 };

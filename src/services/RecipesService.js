@@ -12,4 +12,10 @@ const getAllRecipes = async () => {
   return recipes;
 };
 
-module.exports = { createRecipe, getAllRecipes };
+const getRecipeById = async (id) => {
+  const recipe = await RecipesModel.getRecipeById(id);
+
+  return recipe;
+};
+
+module.exports = { createRecipe, getAllRecipes, getRecipeById };
