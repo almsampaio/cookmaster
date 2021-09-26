@@ -6,9 +6,9 @@ const loginService = async ({ email, password }) => {
 
   if (!validUser) return { err: true };
 
-  const { email: userEmail, role: userRole } = validUser;
+  const { email: userEmail, role, _id } = validUser;
 
-  const token = jwt.generateToken({ email: userEmail, role: userRole });
+  const token = jwt.generateToken({ email: userEmail, role, _id });
   return { token };
 };
 
