@@ -1,5 +1,7 @@
 const recipeService = require('../services/recipeService');
 
+const STATUS_OK = 200;
+
 const createRecipe = async (req, res) => {
   const { userId } = req;
   const recipeData = req.body;
@@ -11,6 +13,12 @@ const createRecipe = async (req, res) => {
   res.status(status).json({ recipe });
 };
 
+const getAll = async (_req, res) => {
+  const result = await recipeService.getAll();
+  return res.status(STATUS_OK).json(result);
+};
+
 module.exports = {
   createRecipe,
+  getAll,
 };

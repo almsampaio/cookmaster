@@ -13,10 +13,15 @@ const createRecipe = async (recipeData, userId) => {
   }
 
   const recipe = await recipeModel.createRecipe(recipeData, userId);
-
   return { status: STATUS_CREATED, recipe };
+};
+
+const getAll = async () => {
+  const result = await recipeModel.getAll();
+  return result;
 };
 
 module.exports = {
   createRecipe,
+  getAll,
 };
