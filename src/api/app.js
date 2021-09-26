@@ -19,5 +19,6 @@ app.post('/users', validUsers.validateFields, usersController.createUser);
 app.post('/login', usersController.findByPersonalData);
 app.post('/recipes', authenticationMiddleware, recipeController.createRecipe);
 app.get('/recipes', recipeController.getAll);
+app.get('/recipes/:id', recipeController.getById);
 
 module.exports = app;
