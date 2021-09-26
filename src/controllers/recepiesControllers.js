@@ -32,9 +32,19 @@ const updateRecipe = async (request, response) => {
   return response.status(200).json(recipe);
 };
 
+const deleteRecipe = async (request, response) => {
+  const { id } = request.params;
+  const { _id, role } = request.user;
+  const recipe = await recepiesModels.deleteRecipe(id, role, _id);
+  if (recipe === null) return response.status(404).json({ message: 'recipe not found' });
+  if (recipe === false) return response.status(401).json({ message: 'missing auth token' });
+  return response.status(204).json(recipe);
+};
+
 module.exports = {
   createRecepie,
   showRecipes,
   showRecipesByID,
   updateRecipe,
+  deleteRecipe,
 };
