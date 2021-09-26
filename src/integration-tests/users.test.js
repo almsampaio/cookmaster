@@ -8,7 +8,6 @@ const { expect } = chai;
 chai.use(chaiHttp);
 
 const server = require('../api/app');
-const { response } = require('express');
 
 const userModel = require('../models/userModel');
 
