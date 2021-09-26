@@ -59,9 +59,27 @@ const deleteRecipe = async (req, res) => {
     return res.status(404).json({ message: errors.recipeNotFound });
   }
 
-  console.log(recipe);
-
   res.status(204).send();
 };
 
-module.exports = { createRecipe, getAllRecipes, getRecipeById, editRecipe, deleteRecipe };
+const uploadImage = async (req, res) => {
+  const { id } = req.params;
+  const { path } = req.file;
+
+  console.log(req.file);
+
+  res.setHeader('Content-Type', 'multipart/form-data');
+
+  const recipe = await RecipesService.editRecipe(id, { image: `localhost:3000/${path}` });
+
+  res.status(200).json(recipe);
+};
+
+module.exports = {
+  createRecipe,
+  getAllRecipes,
+  getRecipeById,
+  editRecipe,
+  deleteRecipe,
+  uploadImage,
+};

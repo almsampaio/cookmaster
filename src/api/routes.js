@@ -1,4 +1,5 @@
 const express = require('express');
+const multer = require('multer');
 const { login } = require('../controllers/LoginController');
 const {
   createRecipe,
@@ -6,6 +7,7 @@ const {
   getRecipeById,
   editRecipe,
   deleteRecipe,
+  uploadImage,
 } = require('../controllers/RecipesController');
 const { createUser } = require('../controllers/UserController');
 const validateLogin = require('../middlewares/validateLogin');
@@ -17,21 +19,36 @@ const validateUserOnEdit = require('../middlewares/validateUserOnEdit');
 const userRouter = express.Router();
 const loginRouter = express.Router();
 const recipesRouter = express.Router();
-const recipeRouter = express.Router();
 
-userRouter.route('/')
-  .post(validate.createUser(), validateOnCreate, createUser);
+const storage = multer.diskStorage({
+  destination: (_req, _image, callback) => {
+    callback(null, 'src/uploads');
+  },
+  filename: (req, image, callback) => {
+    const fileExtension = image.mimetype.split('/')[1];
+    callback(null, `${req.params.id}.${fileExtension}`);
+  },
+});
 
-loginRouter.route('/')
-  .post(validate.login(), validateLogin, login);
-  
-recipesRouter.route('/')
+const upload = multer({ storage });
+
+userRouter.route('/').post(validate.createUser(), validateOnCreate, createUser);
+
+loginRouter.route('/').post(validate.login(), validateLogin, login);
+
+recipesRouter
+  .route('/')
   .get(getAllRecipes)
   .post(auth, validate.createRecipe(), validateOnCreate, createRecipe);
 
-recipeRouter.route('/:id')
+recipesRouter
+  .route('/:id')
   .get(getRecipeById)
   .put(auth, validateUserOnEdit, editRecipe)
   .delete(auth, deleteRecipe);
-  
-module.exports = { userRouter, loginRouter, recipesRouter, recipeRouter };
+
+recipesRouter
+  .route('/:id/image')
+  .put(auth, validateUserOnEdit, upload.single('image'), uploadImage);
+
+module.exports = { userRouter, loginRouter, recipesRouter };

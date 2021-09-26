@@ -5,11 +5,7 @@ module.exports = async (req, res, next) => {
   const { _id: userId, role } = req.user;
   const { id } = req.params;
 
-  console.log('edit', req.user);
-
   const recipe = await getRecipeById(id);
-
-  console.log('User não autorizado', !userId.equals(recipe.userId) || role !== 'admin');
 
   if (userId.equals(recipe.userId) || role === 'admin') {
     return next();
