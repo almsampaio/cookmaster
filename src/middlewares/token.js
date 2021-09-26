@@ -19,13 +19,14 @@ const novoToken = (dadosUsuario) => {
 const validarToken = async (req, res, next) => {
   const usuarioToken = req.headers.authorization;
   if (!usuarioToken) {
-    res.status(401).json({ message: 'missing auth token' });
+    return res.status(401).json({ message: 'missing auth token' });
   }
 
   try {
     const payload = jwt.verify(usuarioToken, senha);
-
+    console.log('1 - ', payload);
     const verificaUsuario = await usuariosModel.buscarPeloEmail(payload.email);
+    console.log('1 - ', payload.email);
     if (!verificaUsuario || verificaUsuario === undefined) {
       return res.status(401).json({ message: 'jwt malformed' });
     }

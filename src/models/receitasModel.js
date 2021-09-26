@@ -45,8 +45,6 @@ const atualizarReceita = async (id, atualizacao, role, _id) => {
   }
 };
 
-// "_id": 615078e9e291645a98c75bf6
-
 module.exports = {
   cadastrarReceita,
   listarReceitas,
