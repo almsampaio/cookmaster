@@ -10,6 +10,11 @@ const validateFields = (name, ingredients, preparation) => {
   }
 };
 
+const getRecipes = async () => {
+  const response = await recipesModel.getRecipes();
+  return ({ status: 200, response });
+};
+
 const createRecipe = async (nome, ingredientes, preparacao, token) => {
   validateFields(nome, ingredientes, preparacao);
   const { data: { _id } } = jwt.verify(token, segredo);
@@ -21,4 +26,5 @@ const createRecipe = async (nome, ingredientes, preparacao, token) => {
 // throw new CustomError(401, 'XABLAUU');
 module.exports = {
   createRecipe,
+  getRecipes,
 };
