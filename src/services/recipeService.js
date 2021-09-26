@@ -9,6 +9,12 @@ const createRecipe = async (name, ingredients, preparation, userId) => {
   return { recipe };
 };
 
+const listRecipes = async () => {
+  const list = await recipeModel.listRecipes();
+  return list;
+};
+
 module.exports = {
   createRecipe,
+  listRecipes,
 };
