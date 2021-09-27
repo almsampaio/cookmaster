@@ -38,8 +38,28 @@ const getRecipesById = async (id) => {
   };
 };
 
+const updateRecipe = async (id, token) => {
+const validId = await validateRecipe.validateRecipeId(id);
+const validToken = await auth.validateToken(token);
+
+if (validId.errorCode) return validId;
+if (validToken.errorCode) return validToken;
+console.log(id);
+const recipeUpt = await modelRecipes.updateRecipe(id);
+
+console.log('console do token', recipeUpt);
+
+const updatedRecipe = await modelRecipes.getRecipesById(id);
+
+return {
+  code: 200,
+  recipe: updatedRecipe,
+};
+};
+
 module.exports = {
   createRecipes,
   getRecipes,
   getRecipesById,
+  updateRecipe,
 };

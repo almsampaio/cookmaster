@@ -8,8 +8,13 @@ const jwtError = {
   errorInfo: { message: 'jwt malformed' },
 };
 
+const missingToken = {
+  code: 401,
+  errorInfo: { message: 'missing auth token' },
+};
+
 const validateToken = async (token) => {
-  if (!token) return jwtError;
+  if (!token || token === undefined) return missingToken;
   try {
     const jwtVerify = jwt.verify(token, SECRET);
     const user = await usersAuth.getUserByEmail(jwtVerify.email);
