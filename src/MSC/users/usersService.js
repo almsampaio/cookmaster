@@ -22,7 +22,7 @@ async function userRegisterService({ name, email, password }) {
   const validUser = validateUserFields(name, password);
   const validEMail = validateEmail(email);
   if (!validUser || !validEMail) return { statusCode: 400, message: 'Invalid entries. Try again.' };
-
+  
   const existsInDB = await findAUserWithEmail(email);
   if (!existsInDB) {
     const registeredUser = await userRegisterModel({ name, email, password, role: 'user' });
