@@ -6,7 +6,7 @@ function TokenValidator(req, res, next) {
   if (!authorization) return res.status(401).json({ message: 'jwt malformed' });
   try {
     const decoded = jwt.verify(authorization, SECRET);
-    req.validated = decoded; // ATENÇÃO
+    req.validated = decoded;
     next();
   } catch (error) {
     console.log(error);
