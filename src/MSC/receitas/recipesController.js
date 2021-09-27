@@ -1,11 +1,15 @@
-const { userRegisterService } = require('./usersService');
+const { postRecipe } = require('./recipesService');
 
-async function userRegisterController(_req, res) {
-  const teste = await userRegisterService();
-  if (teste === true) return res.status(200).json({ message: true });
-  return res.status(200).json({ message: false });
+async function controlPostRecipe(req, res) {
+  const { name, ingredients, preparation } = req.body;
+  const tryPostRecipe = await postRecipe(name, ingredients, preparation);
+  if (tryPostRecipe.statusCode) {
+    const { statusCode, message } = tryPostRecipe;
+    return res.status(statusCode).json({ message });
+  }
+  return res.status(201).json({ recipe: tryPostRecipe });
 }
 
 module.exports = {
-  userRegisterController,
+  controlPostRecipe,
 };

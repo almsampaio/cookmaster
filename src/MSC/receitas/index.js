@@ -1,6 +1,6 @@
-const { userRegisterController } = require('./usersController');
-const { userRegisterService } = require('./usersService');
-const { userRegisterModel } = require('./usersModel');
+const { userRegisterController } = require('./recipesController');
+const { userRegisterService } = require('./recipesService');
+const { userRegisterModel } = require('./recipesModel');
 
 module.exports = {
   userRegisterController,

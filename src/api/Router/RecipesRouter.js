@@ -1,9 +1,11 @@
 const express = require('express');
 
-const { userRegisterController } = require('../../MSC/users');
+const recipesController = require('../../MSC/receitas/recipesController');
+
+const { controlPostRecipe } = recipesController;
 
 const router = express.Router();
 
-router.post('/', userRegisterController);
+router.post('/', controlPostRecipe);
 
 module.exports = router;
