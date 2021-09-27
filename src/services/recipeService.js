@@ -17,7 +17,13 @@ const getAll = async () => {
   return recipes;
 }
 
+const find = async (id) => {
+  const recipe = await recipeModel.find(id);
+  return recipe;
+}
+
 module.exports = {
   create,
   getAll,
+  find,
 }
