@@ -14,6 +14,20 @@ async function insertOneRecipe(recipeToInsert) {
   }
 }
 
+async function findAllRecipes() {
+  try {
+    const db = await connection();
+    const queryResponse = await db.collection('recipes').find().toArray();
+    return queryResponse;
+  } catch (err) {
+    console.log(err);
+    return {
+      err,
+    };
+  }
+}
+
 module.exports = {
   insertOneRecipe,
+  findAllRecipes,
 };

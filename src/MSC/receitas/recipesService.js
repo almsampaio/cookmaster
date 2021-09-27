@@ -1,4 +1,4 @@
-const { insertOneRecipe } = require('./recipesModel');
+const { insertOneRecipe, findAllRecipes } = require('./recipesModel');
 const { findAUserWithEmail } = require('../users/usersModel');
 
 function validateSingleField(field) {
@@ -21,10 +21,19 @@ async function postRecipe(recipe, user) {
   if (!validUser) return ({ statusCode: 400, message: 'jwt malformed' });
   const validFields = validateFields(recipe);
   if (!validFields) return ({ statusCode: 400, message: 'Invalid entries. Try again.' });
-  const insertedRecipe = await insertOneRecipe(recipe);
+  const { _id: userId } = validUser;
+  const recipeAndUser = { ...recipe, userId };
+  const insertedRecipe = await insertOneRecipe(recipeAndUser);
   return insertedRecipe;
+}
+
+async function getAllRecipes() {
+  const allRecipes = await findAllRecipes();
+  if (!allRecipes) return { statusCode: 404, message: 'No recipes found' };
+  return allRecipes;
 }
 
 module.exports = {
   postRecipe,
+  getAllRecipes,
 };
