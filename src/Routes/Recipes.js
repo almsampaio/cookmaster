@@ -1,5 +1,7 @@
 const express = require('express');
 
+const upload = require('../utils/uploadFile');
+
 const Router = express.Router();
 
 const authToken = require('../middlewares/authToken');
@@ -21,6 +23,15 @@ Router.route('/')
     authRequestRecipe,
     createRecipeController,
   );
+
+Router.route('/:id/image')
+    .put(
+      authToken,
+      authRecipeId,
+      authUserPermissions,
+      upload.single('image'),
+      listRecipeController.getById,
+    );
 
 Router.route('/:id')
     .get(
