@@ -24,14 +24,14 @@ async function userRegisterService({ name, email, password }) {
   if (!validUser || !validEMail) return { statusCode: 400, message: 'Invalid entries. Try again.' };
 
   const existsInDB = await findAUserWithEmail(email);
+  if (!existsInDB) {
+    const registeredUser = await userRegisterModel({ name, email, role: 'user' });
+    return { user: registeredUser };
+  }
   if (existsInDB.err) {
     return { statusCode: 500, message: 'Internal Database Error' };
   }
-  if (existsInDB) return { statusCode: 409, message: 'Email already registered' };
-
-  const registeredUser = await userRegisterModel({ name, email, password, role: 'user' });
-
-  return { user: registeredUser };
+  return { statusCode: 409, message: 'Email already registered' };
 }
 
 module.exports = {

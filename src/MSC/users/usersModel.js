@@ -19,7 +19,7 @@ async function userRegisterModel(productToInsert) {
 async function findAUserWithEmail(emailToFind) {
   try {
     const db = await connection();
-    const queryResponse = await db.collection('users').find({ email: emailToFind });
+    const queryResponse = await db.collection('users').findOne({ email: emailToFind });
     return queryResponse;
   } catch (err) {
     console.log(err);
