@@ -18,7 +18,6 @@ function validateFields({ name, ingredients, preparation }) {
 
 async function postRecipe(recipe, user) {
   const validUser = await findAUserWithEmail(user.email);
-  console.log(validUser);
   if (!validUser) return ({ statusCode: 400, message: 'jwt malformed' });
   const validFields = validateFields(recipe);
   if (!validFields) return ({ statusCode: 400, message: 'Invalid entries. Try again.' });
