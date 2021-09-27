@@ -1,11 +1,7 @@
-const { userRegisterService } = require('./loginService');
-
-async function userRegisterController(_req, res) {
-  const teste = await userRegisterService();
-  if (teste === true) return res.status(200).json({ message: true });
-  return res.status(200).json({ message: false });
+async function loginController(_req, res) {
+  return res.status(200).json({ message: 'Funcionando em /login pelo controller' });
 }
 
 module.exports = {
-  userRegisterController,
+  loginController,
 };
