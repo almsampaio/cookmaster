@@ -27,4 +27,9 @@ module.exports = {
     await db.collection('recipes').updateOne({ _id: ObjectId(id) }, { $set: recipeUpdated });
     return recipeUpdated;
   },
+
+  async delete(id) {
+    const db = await connect();
+    return db.collection('recipes').deleteOne({ _id: ObjectId(id) });
+  },
 };
