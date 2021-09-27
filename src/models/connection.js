@@ -11,7 +11,7 @@ const OPTIONS = {
 let db = null;
 
 const getConnection = async () => {
-  if (db) Promise.resolve(db);
+  if (db) return Promise.resolve(db);
   const conn = await MongoClient.connect(MONGO_DB_URL, OPTIONS);
   db = await conn.db(DB_NAME);
   return db;
