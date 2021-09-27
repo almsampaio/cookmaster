@@ -5,6 +5,7 @@ const UserController = require('../controllers/userController');
 const RecipeController = require('../controllers/recipeController');
 const Login = require('../controllers/login');
 const validateJWT = require('../api/auth/validateJWT');
+const authenticateUser = require('../api/auth/authenticateUser');
 
 const app = express();
 
@@ -18,8 +19,10 @@ app.get('/', (request, response) => {
 
 app.post('/users', UserController.create);
 app.post('/login', Login);
-app.post('/recipes', validateJWT, RecipeController.create);
+app.delete('/recipes/:id', validateJWT, RecipeController.remove);
 app.get('/recipes/:id', RecipeController.find);
+app.put('/recipes/:id', validateJWT, RecipeController.edit);
+app.post('/recipes', validateJWT, RecipeController.create);
 app.get('/recipes', RecipeController.getAll);
 
 module.exports = app;
