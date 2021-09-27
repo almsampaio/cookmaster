@@ -24,7 +24,16 @@ module.exports = {
       const recipeUpdated = await recipesService.update(req.params.id, req.body);
       return res.status(200).json(recipeUpdated);
     } catch (error) {
-      return res.status(error.code).json(error.message);
+      return res.status(error.code).json({ message: error.message });
+    }
+  },
+
+  async delete(req, res) {
+    try {
+      await recipesService.delete(req.params.id, req.user);
+      return res.status(204).end();
+    } catch (error) {
+      return res.status(error.code).json({ message: error.message });
     }
   },
 };
