@@ -8,6 +8,7 @@ const {
   editRecipe,
   deleteRecipe,
   uploadImage,
+  renderImage,
 } = require('../controllers/RecipesController');
 const { createUser } = require('../controllers/UserController');
 const validateLogin = require('../middlewares/validateLogin');
@@ -19,6 +20,7 @@ const validateUserOnEdit = require('../middlewares/validateUserOnEdit');
 const userRouter = express.Router();
 const loginRouter = express.Router();
 const recipesRouter = express.Router();
+const imagesRouter = express.Router();
 
 const storage = multer.diskStorage({
   destination: (_req, _image, callback) => {
@@ -26,6 +28,9 @@ const storage = multer.diskStorage({
   },
   filename: (req, image, callback) => {
     const fileExtension = image.mimetype.split('/')[1];
+    if (fileExtension !== 'jpeg') {
+      return callback(new Error('Only .jpeg format allowed!'));
+    }
     callback(null, `${req.params.id}.${fileExtension}`);
   },
 });
@@ -51,4 +56,6 @@ recipesRouter
   .route('/:id/image')
   .put(auth, validateUserOnEdit, upload.single('image'), uploadImage);
 
-module.exports = { userRouter, loginRouter, recipesRouter };
+imagesRouter.route('/:id.jpeg').get(renderImage);
+
+module.exports = { userRouter, loginRouter, recipesRouter, imagesRouter };

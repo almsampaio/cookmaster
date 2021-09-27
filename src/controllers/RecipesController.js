@@ -1,3 +1,4 @@
+const path = require('path');
 const errors = require('../errors');
 const RecipesService = require('../services/RecipesService');
 
@@ -64,15 +65,20 @@ const deleteRecipe = async (req, res) => {
 
 const uploadImage = async (req, res) => {
   const { id } = req.params;
-  const { path } = req.file;
-
-  console.log(req.file);
+  const { path: pathImg } = req.file;
 
   res.setHeader('Content-Type', 'multipart/form-data');
 
-  const recipe = await RecipesService.editRecipe(id, { image: `localhost:3000/${path}` });
+  const recipe = await RecipesService.editRecipe(id, {
+    image: `localhost:3000/${pathImg}`,
+  });
 
   res.status(200).json(recipe);
+};
+
+const renderImage = (req, res) => {
+  const fullfilepath = path.join(__dirname, '..', `uploads${req.path}`);
+  return res.sendFile(fullfilepath);
 };
 
 module.exports = {
@@ -82,4 +88,5 @@ module.exports = {
   editRecipe,
   deleteRecipe,
   uploadImage,
+  renderImage,
 };

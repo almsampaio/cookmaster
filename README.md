@@ -763,6 +763,14 @@ O resultado retornado deverá ser do tipo imagem, com um status http `200`:
 
 ![Foto Autenticada](./public/imagemrecetornada.png)
 
+</details>
+
+<details>
+  <summary style="font-size: 16px; font-weight: bold;">
+    11 - Crie testes de integração que cubram no mínimo 30% dos arquivos em `src`, com um mínimo de 50 linhas cobertas
+  </summary>
+<br>
+
 - Os testes de integração devem ser criados na pasta `./src/integration-tests`, essa pasta **não pode ser renomeada ou removida**;
 
 - O arquivo `change.me.test.js` pode ser alterado, renomeado ou removido;
