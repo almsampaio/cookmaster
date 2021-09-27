@@ -46,6 +46,19 @@ const deleteRecipe = async (req, res) => {
   }
 };
 
+const insertImage = async (req, res) => {
+  try {
+    console.log(req.file);
+    const { id } = req.params;
+    const { path } = req.file;
+    const { user } = req;
+    const response = await recipesService.insertImage(id, path, user);
+    res.status(response.status).json(response.response);
+  } catch (e) {
+    return res.status(e.status).json(e.message);
+  }
+};
+
 const getRecipeById = async (req, res) => {
   try {
     const { id } = req.params;
@@ -63,4 +76,5 @@ module.exports = {
   getRecipeById,
   updateRecipe,
   deleteRecipe,
+  insertImage,
 };

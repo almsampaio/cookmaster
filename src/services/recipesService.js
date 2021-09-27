@@ -4,6 +4,7 @@ const recipesModel = require('../models/recipesModel');
 const CustomError = require('../utils/CustomError');
 
 const segredo = 'bem-te-vi';
+const RECIPE_ERROR = 'recipe not found'; 
 
 const validateFields = (name, ingredients, preparation) => {
   if (!name || !ingredients || !preparation) {
@@ -20,7 +21,7 @@ const updateRecipe = async (allEntries) => {
   const { id, name, ingredients, preparation, user } = allEntries;
   const { _id, role } = user;
 
-  if (!ObjectId.isValid(id)) throw new CustomError(404, 'recipe not found');
+  if (!ObjectId.isValid(id)) throw new CustomError(404, RECIPE_ERROR);
 
   const recipe = await recipesModel.getRecipeById(id);
   if (JSON.stringify(recipe.userId) !== JSON.stringify(_id) && role !== 'admin') {
@@ -32,23 +33,36 @@ const updateRecipe = async (allEntries) => {
   }
 };
 
-const deleteRecipe = async (id, { _id, role }) => {
-  if (!ObjectId.isValid(id)) throw new CustomError(404, 'recipe not found');
+const insertImage = async (id, path, { _id, role }) => {
+  if (!ObjectId.isValid(id)) throw new CustomError(404, RECIPE_ERROR);
 
   const recipe = await recipesModel.getRecipeById(id);
-  if (!recipe) throw new CustomError(404, 'recipe not found');
+  if (JSON.stringify(recipe.userId) !== JSON.stringify(_id) && role !== 'admin') {
+    throw new CustomError(401, 'missing auth token');
+  } else {
+    const response = await recipesModel
+      .insertImage(id, path);
+    return { status: 200, response };
+  }
+};
+
+const deleteRecipe = async (id, { _id, role }) => {
+  if (!ObjectId.isValid(id)) throw new CustomError(404, RECIPE_ERROR);
+
+  const recipe = await recipesModel.getRecipeById(id);
+  if (!recipe) throw new CustomError(404, RECIPE_ERROR);
 
   if (JSON.stringify(recipe.userId) !== JSON.stringify(_id) && role !== 'admin') {
     throw new CustomError(401, 'missing auth token');
   } else {
     await recipesModel
       .deleteRecipe(id);
-    return { status: 200 };
+    return { status: 204 };
   }
 };
 
 const getRecipeById = async (id) => {
-  if (!ObjectId.isValid(id)) throw new CustomError(404, 'recipe not found');
+  if (!ObjectId.isValid(id)) throw new CustomError(404, RECIPE_ERROR);
   const response = await recipesModel.getRecipeById(id);
   return ({ status: 200, response });
 };
@@ -68,4 +82,5 @@ module.exports = {
   getRecipeById,
   updateRecipe,
   deleteRecipe,
+  insertImage,
 };
