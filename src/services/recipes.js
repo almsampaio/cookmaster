@@ -30,10 +30,16 @@ const exclude = async (id) => {
   return deleteRecipe;
 };
 
+const putWithImage = async (id, image) => {
+  const recipeWithImage = await recipesModels.putWithImage(id, image);
+  return recipeWithImage;
+};
+
 module.exports = {
   create,
   getAll,
   getOne,
   update,
   exclude,
+  putWithImage,
 };

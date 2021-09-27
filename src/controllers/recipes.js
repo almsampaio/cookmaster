@@ -32,10 +32,19 @@ const exclude = async (req, res) => {
   return res.status(schema.status.noContent).json();
 };
 
+const putWithImage = async (req, res) => {
+  const { id } = req.params;
+  const { filename } = req.file;
+  const image = `localhost:3000/src/uploads/${filename}`;
+  const recipeWithImage = await recipesServices.putWithImage(id, image);
+  return res.status(schema.status.ok).json(recipeWithImage);
+};
+
 module.exports = {
   create,
   getAll,
   getOne,
   update,
   exclude,
+  putWithImage,
 };

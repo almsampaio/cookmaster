@@ -40,10 +40,20 @@ const exclude = async (id) => {
   return deleteRecipe;
 };
 
+const putWithImage = async (id, image) => {
+  await connection()
+    .then((db) => db
+      .collection('recipes')
+      .updateOne({ _id: ObjectId(id) }, { $set: { image } }));
+  const recipeWithImage = getOne(id);
+  return recipeWithImage;
+};
+
 module.exports = {
   create,
   getAll,
   getOne,
   update,
   exclude,
+  putWithImage,
 };
