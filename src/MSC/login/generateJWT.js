@@ -1,15 +1,14 @@
-const SECRET = require('../../CONSTANTS/SECRET');
 const jwt = require('jsonwebtoken');
+const SECRET = require('../../CONSTANTS/SECRET');
 
 /* function checkAdmin(username, password) {
   if (username === 'admin' && password === 's3nh4S3gur4???') return { data: username, admin: true };
   return { data: username };
 } */
 
-function generateJWT({ user }) {
-  const payload = {
-    user,
-  };
+function generateJWT({ email, role }) {
+  const payload = { email, role };
+
   try {
     const jwtConfig = {
       // expiresIn: '1h',

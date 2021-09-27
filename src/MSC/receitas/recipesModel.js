@@ -1,8 +1,7 @@
 const connection = require('../Connection');
 
-async function insertOneRecipe(name, ingredients, preparation) {
+async function insertOneRecipe(recipeToInsert) {
   try {
-    const recipeToInsert = { name, ingredients, preparation };
     const db = await connection();
     const queryResponse = await db.collection('recipes').insertOne(recipeToInsert);
     const { ops: [insertedProduct] } = queryResponse;

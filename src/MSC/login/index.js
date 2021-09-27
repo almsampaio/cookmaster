@@ -1,9 +1,9 @@
-const { userRegisterController } = require('./usersController');
-const { userRegisterService } = require('./usersService');
-const { userRegisterModel } = require('./usersModel');
+const { loginController } = require('./loginController');
+const { loginService } = require('./loginService');
+const { findUserByEmail } = require('./loginModel');
 
 module.exports = {
-  userRegisterController,
-  userRegisterService,
-  userRegisterModel,
+  loginController,
+  loginService,
+  findUserByEmail,
 };

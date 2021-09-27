@@ -3,8 +3,6 @@ const bodyParser = require('body-parser');
 
 const { UsersRouter, LoginRouter, RecipesRouter } = require('./Router');
 
-const TokenValidator = require('../middlewares/TokenValidator');
-
 const app = express();
 
 app.use(bodyParser.json());
@@ -19,7 +17,6 @@ app.get('/ping', (_req, res) => res.status(200).json({ message: 'pong' }));
 
 app.use('/users', UsersRouter);
 app.use('/login', LoginRouter);
-app.use('/recipes', TokenValidator);
 app.use('/recipes', RecipesRouter);
 
 module.exports = app;

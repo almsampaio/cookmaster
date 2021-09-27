@@ -1,11 +1,12 @@
 const { insertOneRecipe } = require('./recipesModel');
+const { findAUserWithEmail } = require('../users/usersModel');
 
 function validateSingleField(field) {
   if (!field || field === '') return false;
   return true;
 }
 
-function validateFields(name, ingredients, preparation) {
+function validateFields({ name, ingredients, preparation }) {
   if (validateSingleField(name)
     && validateSingleField(ingredients)
     && validateSingleField(preparation)
@@ -15,10 +16,13 @@ function validateFields(name, ingredients, preparation) {
   return false;
 }
 
-async function postRecipe(name, ingredients, preparation) {
-  const validFields = validateFields(name, ingredients, preparation);
+async function postRecipe(recipe, user) {
+  const validUser = await findAUserWithEmail(user.email);
+  console.log(validUser);
+  if (!validUser) return ({ statusCode: 400, message: 'jwt malformed' });
+  const validFields = validateFields(recipe);
   if (!validFields) return ({ statusCode: 400, message: 'Invalid entries. Try again.' });
-  const insertedRecipe = await insertOneRecipe(name, ingredients, preparation);
+  const insertedRecipe = await insertOneRecipe(recipe);
   return insertedRecipe;
 }
 

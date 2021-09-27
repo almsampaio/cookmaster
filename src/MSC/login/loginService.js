@@ -20,7 +20,7 @@ async function loginService(email, password) {
 
   const canLogin = await loginAttempt(email, password);
   if (canLogin.statusCode) return canLogin;
-  const token = generateJWT({ user: canLogin.user });
+  const token = generateJWT(canLogin);
   return token;
 }
 
