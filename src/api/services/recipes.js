@@ -26,4 +26,17 @@ module.exports = {
     const recipeUpdated = await recipesModel.update(id, updatesForRecipe);
     return recipeUpdated;
   },
+
+  async delete(id, user) {
+    if (id && !ObjectId.isValid(id)) errorRecipeNotFound();
+
+    const foundRecipe = await recipesModel.get(id);
+
+    if (user.role !== 'admin' && foundRecipe.userId !== user.id) {
+      throw new CustomError(401, 'not allowed');
+    }
+
+    const recipeDeleted = await recipesModel.delete(id, user);
+    return recipeDeleted;
+  },
 };
