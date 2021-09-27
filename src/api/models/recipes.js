@@ -20,10 +20,11 @@ module.exports = {
     return recipeCreated.ops[0];
   },
 
-  async update(id, updatesForRecipe) {
+  async update(id, updatesForRecipe, file) {
     const db = await connect();
     const currentRecipe = await this.get(id);
     const recipeUpdated = { ...currentRecipe, ...updatesForRecipe };
+    if (file) recipeUpdated.image = `localhost:3000/src/uploads/${id}.jpeg`;
     await db.collection('recipes').updateOne({ _id: ObjectId(id) }, { $set: recipeUpdated });
     return recipeUpdated;
   },
