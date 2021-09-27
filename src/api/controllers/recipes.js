@@ -21,7 +21,7 @@ module.exports = {
 
   async update(req, res) {
     try {
-      const recipeUpdated = await recipesService.update(req.params.id, req.body);
+      const recipeUpdated = await recipesService.update(req.params.id, req);
       return res.status(200).json(recipeUpdated);
     } catch (error) {
       return res.status(error.code).json({ message: error.message });
