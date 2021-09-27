@@ -190,21 +190,21 @@ describe('POST /users/admin', () => {
       // criar um novo user
       const userCollection = connectionMock.db('Cookmaster').collection('users')
       await userCollection.insertOne({
-        name: 'sergio',
-        email: 'sergio@email.com',
+        name: 'juan',
+        email: 'juan@email.com',
         password: '123456',
         role: 'admin'
       })
       // loga o usuario
       const {body: { token }} = await chai.request(server)
         .post('/login')
-        .send({email: 'sergio@email.com', password: '123456'});
+        .send({email: 'juan@email.com', password: '123456'});
 
       // tenta adicionar admin
       response = await chai.request(server)
         .post('/users/admin')
         .set('authorization', token)
-        .send({name: 'duda', email: 'duda@mail.com', password: '123456'})
+        .send({name: 'jonah', email: 'jonah@mail.com', password: '123456'})
     })
 
     it('retorna um status 201', () => {
