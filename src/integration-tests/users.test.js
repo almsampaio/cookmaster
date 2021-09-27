@@ -2,18 +2,24 @@ const chai = require('chai');
 const chaiHttp = require('chai-http');
 const sinon = require('sinon');
 const { MongoClient } = require('mongodb');
-const { MongoMemoryServer } = require('mongodb-memory-server');
+const { getConnection } = require('./connectionMock');
 
 const { expect } = chai;
 chai.use(chaiHttp);
 
 const server = require('../api/app');
 
-const userModel = require('../models/userModel');
-
-const DBServer = new MongoMemoryServer();
-
 describe('POST /users', () => {
+  let connectionMock
+
+  before(async () => {
+    connectionMock = await getConnection();
+    sinon.stub(MongoClient, 'connect').resolves(connectionMock);
+  });
+
+  after(() => {
+    MongoClient.connect.restore()
+  });
   describe('quando utiliza dados inválidos', () => {
     describe('com um nome inválido', () => {
       let response = {}
@@ -29,10 +35,6 @@ describe('POST /users', () => {
 
       it('retorna o código 400', () => {
         expect(response).to.have.status(400);
-      });
-
-      it('retorna uma mensagem de erro', () => {
-        expect(response.body).to.have.property('message');
       });
 
       it('a propriedade "message" possui o texto "Invalid entries. Try again."', () => {
@@ -54,10 +56,6 @@ describe('POST /users', () => {
 
       it('retorna o código 400', () => {
         expect(response).to.have.status(400);
-      });
-
-      it('retorna uma mensagem de erro', () => {
-        expect(response.body).to.have.property('message');
       });
 
       it('a propriedade "message" possui o texto "Invalid entries. Try again."', () => {
@@ -92,23 +90,16 @@ describe('POST /users', () => {
   });
 
   describe('quando o usuário já existe', () => {
-    let repeatedUser = {}
-    let correctUser = {}
-    before(async () => {
-      // mocking DB in memory
-      const URLMock = await DBServer.getUri();
-      const connectionMock = await MongoClient.connect(URLMock,
-        { useNewUrlParser: true, useUnifiedTopology: true }
-      );
-      sinon.stub(MongoClient, 'connect').resolves(connectionMock);
+    let repeatedUser
 
-      correctUser = await chai.request(server)
-        .post('/users')
-        .send({
-          name: 'joao',
-          email: 'joao@email.com',
-          password: '123456789'
-        });
+    before(async () => {
+      // cria um user
+      const userCollection = connectionMock.db('Cookmaster').collection('users')
+      await userCollection.insertOne({
+        name: 'joao',
+        email: 'joao@email.com',
+        password: '123456789'
+      })
 
       repeatedUser = await chai.request(server)
         .post('/users')
@@ -117,11 +108,6 @@ describe('POST /users', () => {
           email: 'joao@email.com',
           password: '123456789'
         });
-    });
-
-    after(async () => {
-      MongoClient.connect.restore();
-      await DBServer.stop();
     });
 
     it('retorna o status 409', () => {
@@ -135,16 +121,20 @@ describe('POST /users', () => {
 });
 
 describe('POST /users/admin', () => {
+  let connectionMock
+
+  before(async () => {
+    connectionMock = await getConnection();
+    sinon.stub(MongoClient, 'connect').resolves(connectionMock);
+  });
+
+  after(() => {
+    MongoClient.connect.restore()
+  });
+
   describe('quando um usuário não logado tenta adicionar um admin', () => {
     let response = {};
     before(async () => {
-      // mocking DB in memory
-      const URLMock = await DBServer.getUri();
-      const connectionMock = await MongoClient.connect(URLMock,
-        { useNewUrlParser: true, useUnifiedTopology: true }
-      );
-      sinon.stub(MongoClient, 'connect').resolves(connectionMock);
-
       response = await chai.request(server)
         .post('/users/admin')
         .send({
@@ -152,11 +142,7 @@ describe('POST /users/admin', () => {
           email: 'joao@email.com',
           password: '123456',
         })
-    });
-
-    after(async () => {
-      MongoClient.connect.restore();
-      await DBServer.stop();
+        .set('authorization', '')
     });
 
     it('retorna um código 401', () => {
@@ -169,5 +155,63 @@ describe('POST /users/admin', () => {
   });
 
   describe('quando um usuário logado, porém não admin, tenta adicionar outro admin', () => {
+    let response
+    before(async () => {
+      // criar um novo user
+      const userCollection = connectionMock.db('Cookmaster').collection('users')
+      await userCollection.insertOne({
+        name: 'joao',
+        email: 'joao@email.com',
+        password: '123456',
+        role: 'user'
+      })
+      // loga o usuario
+      const {body: { token }} = await chai.request(server)
+        .post('/login')
+        .send({email: 'joao@email.com', password: '123456'});
+
+      // tenta adicionar admin
+      response = await chai.request(server)
+        .post('/users/admin')
+        .set('authorization', token)
+        .send({name: 'duda', email: 'duda@mail.com', password: '123456'})
+    })
+
+    it('retorna um status 403', () => {
+      expect(response).to.have.status(403)
+    });
+    it('retorna uma mensagem especifica', () => {
+      expect(response.body.message).to.equal('Only admins can register new admins');
+    });
+  });
+  describe('quando um admin logado adiciona outro admin', () => {
+    let response
+    before(async () => {
+      // criar um novo user
+      const userCollection = connectionMock.db('Cookmaster').collection('users')
+      await userCollection.insertOne({
+        name: 'sergio',
+        email: 'sergio@email.com',
+        password: '123456',
+        role: 'admin'
+      })
+      // loga o usuario
+      const {body: { token }} = await chai.request(server)
+        .post('/login')
+        .send({email: 'sergio@email.com', password: '123456'});
+
+      // tenta adicionar admin
+      response = await chai.request(server)
+        .post('/users/admin')
+        .set('authorization', token)
+        .send({name: 'duda', email: 'duda@mail.com', password: '123456'})
+    })
+
+    it('retorna um status 201', () => {
+      expect(response).to.have.status(201)
+    });
+    it('retorna uma mensagem especifica', () => {
+      expect(response.body).to.have.property('user');
+    });
   });
 });
