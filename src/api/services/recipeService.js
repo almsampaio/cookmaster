@@ -44,3 +44,15 @@ exports.update = async ({ id, name, ingredients, preparation, user }) => {
 
   return updatedRecipe;
 };
+
+exports.delete = async ({ user, id }) => {
+  const isUserAuthorized = await verifyAuthorizedUser(user, id);
+
+  if (!isUserAuthorized) throw new AppError(401, 'User not authorized');
+
+  const deletedProduct = await Recipe.delete(id);
+
+  if (!deletedProduct) throw new AppError(404, 'Invalid Recipe');
+
+  return deletedProduct;
+};

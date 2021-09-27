@@ -56,3 +56,15 @@ exports.update = async ({ id, name, ingredients, preparation }) => {
 
   return null;
 };
+
+exports.delete = async (id) => {
+  if (!ObjectId.isValid(id)) return null;
+
+  const db = await connection();
+
+  await db
+    .collection('products')
+    .deleteOne({ _id: ObjectId(id) });
+
+  return { ok: 1 };
+};

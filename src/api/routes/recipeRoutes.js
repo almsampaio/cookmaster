@@ -10,6 +10,7 @@ router.route('/')
 
 router.route('/:id')
   .get(recipeController.getById)
-  .put(authController.verify, recipeController.update);
+  .put(authController.verify, recipeController.update)
+  .delete(authController.verify, recipeController.delete);
 
 module.exports = router;

@@ -47,3 +47,16 @@ exports.update = async (req, res, next) => {
     next(err);
   }
 };
+
+exports.delete = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const { user } = req;
+
+    await recipeService.delete({ user, id });
+
+    res.status(204).end();
+  } catch (err) {
+    next(err);
+  }
+};
