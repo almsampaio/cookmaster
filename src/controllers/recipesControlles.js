@@ -47,10 +47,25 @@ const excludeRecipe = async (req, res) => {
   return res.status(status).json(data);
 };
 
+const updateFile = async (req, res) => {
+  const { id } = req.params;
+  const { filename } = req.file;
+
+  // console.log('controllerFile', filename);
+
+  const token = req.headers.authorization;
+
+  const { status, data } = await servicesRecipes
+    .updateFile(id, req.body, filename, token);
+
+  return res.status(status).json(data);
+};
+
 module.exports = {
   createRecipe,
   getAllRecipes,
   getByIdRecipe,
   updateRecipe,
   excludeRecipe,
+  updateFile,
 };

@@ -38,12 +38,29 @@ const updateRecipe = async (id, dataBody, userId) => {
   const recipeUpdate = await connectDB();
 
   await recipeUpdate.collection('recipes')
-    .findOneAndUpdate({ _id: ObjectId(id) }, { $set: { name, ingredients, preparation, userId } });
+    .findOneAndUpdate(
+      { _id: ObjectId(id) },
+      { $set: { name, ingredients, preparation, userId } },
+      // { returnOriginal: false }, // terceiro parâmetro (true ou false)
+    );
 
-  // console.log('testeModel', value);
-
-  // return { ...value };
   return { _id: id, name, ingredients, preparation, userId };
+};
+
+const updateFile = async (id, dataBody, userId, image) => {
+  // const { name, ingredients, preparation } = dataBody;
+  if (!ObjectId.isValid(id)) return null;
+
+  const recipeUpdate = await connectDB();
+
+  const { value } = await recipeUpdate.collection('recipes')
+    .findOneAndUpdate(
+      { _id: ObjectId(id) },
+      { $set: { ...dataBody, userId, image } },
+      { returnOriginal: false }, // terceiro parâmetro (true ou false)
+    );
+
+  return { ...value };
 };
 
 const excludeRecipe = async (id) => {
@@ -62,4 +79,5 @@ module.exports = {
   getByIdRecipe,
   updateRecipe,
   excludeRecipe,
+  updateFile,
 };

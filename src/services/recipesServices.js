@@ -60,10 +60,25 @@ const excludeRecipe = async (id, token) => {
   return { status: 204 };
 };
 
+const updateFile = async (id, dataBody, filename, token) => { // filename = id + extensão(jpeg)
+  const tokenVerify = await authVerify.validToken(token);
+
+  const authToken = await validRecipes.missingAuthToken(token);
+  if (authToken) return { status: 401, data: authToken };
+
+  const image = `localhost:3000/src/uploads/${filename}`;
+
+  const result = await modelsRecipes
+    .updateFile(id, dataBody, tokenVerify.id, image);
+
+  return { status: 200, data: { ...result } };
+};
+
 module.exports = {
   createRecipe,
   getAllRecipes,
   getByIdRecipe,
   updateRecipe,
   excludeRecipe,
+  updateFile,
 };
