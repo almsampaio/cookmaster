@@ -51,10 +51,11 @@ const validateUser = async (req, res, next) => {
   next();
 };
 
-const registerImage = (req, res) => {
-  const { file } = req.body;
-  console.log('O QUE TEM NA CHAVE FILE DO BODY', file);
-  res.status(200).json({ message: 'salvou maluco' });
+const registerImage = async (req, res) => {
+  const { filename } = req.file;
+  const { id } = req.params;
+  const { status, response } = await recipeService.registerImage(id, filename);
+  res.status(status).json(response);
 };
 
 module.exports = {

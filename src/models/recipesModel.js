@@ -47,4 +47,11 @@ const update = async (recipeInfo) => {
     .catch((err) => console.log(err));
 };
 
-module.exports = { getAll, findById, deleteById, create, update, findByName }; 
+const registerImage = async (id, imagePath) => {
+  await connection()
+  .then((db) => db.collection(collectionName)
+    .updateOne({ _id: ObjectId(id) }, { $set: { image: imagePath } }))
+  .catch((err) => console.log(err));
+};
+
+module.exports = { getAll, findById, deleteById, create, update, findByName, registerImage }; 

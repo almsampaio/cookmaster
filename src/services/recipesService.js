@@ -53,4 +53,14 @@ const update = async (recipe) => {
   };
 };
 
-module.exports = { getAll, findById, deleteById, create, update, validateUser }; 
+const registerImage = async (id, filename) => {
+  const recipe = await recipesModel.findById(id);
+  const imagePath = `localhost:3000/src/uploads/${filename}`;
+  await recipesModel.registerImage(id, imagePath);
+  return {
+    status: 200,
+    response: { ...recipe, image: imagePath },
+  };
+};
+
+module.exports = { getAll, findById, deleteById, create, update, validateUser, registerImage }; 

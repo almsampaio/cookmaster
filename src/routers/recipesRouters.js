@@ -2,6 +2,8 @@ const express = require('express');
 
 const multer = require('multer');
 
+const path = require('path');
+
 const {
   getAll,
   findById,
@@ -14,12 +16,13 @@ const {
 const { userAuthentication } = require('../controllers/loginController');
 
 const storage = multer.diskStorage({
-  destination: (req, file, callback) => {
-    callback(null, 'uploads');
+  destination: (_req, _file, callback) => {
+    console.log('ENTROU NO MULTER', __dirname);
+    callback(null, path.join(__dirname, '..', 'uploads'));
   },
-  filename: (req, file, callback) => {
+  filename: (req, _file, callback) => {
     const { id } = req.params;    
-    callback(null, `${id}.jpg`);
+    callback(null, `${id}.jpeg`);
   },
 });
 
@@ -35,7 +38,7 @@ router.put('/:id', userAuthentication, validateUser, update);
 
 router.post('/', userAuthentication, create);
 
-router.post('/:id/image', userAuthentication, validateUser, upload.single('image'), registerImage);
+router.put('/:id/image/', userAuthentication, validateUser, upload.single('image'), registerImage);
 
 router.delete('/:id', userAuthentication, validateUser, deleteRecipe);
 
