@@ -14,6 +14,7 @@ const listRecipeController = require('../useCases/listRecipes/listRecipesControl
 const editRecipeController = require('../useCases/editRecipe/editRecipeController');
 const deleteRecipeController = require('../useCases/deleteRecipe/deleteRecipeController');
 
+// test
 Router.route('/')
   .get(
     listRecipeController.getAll,
