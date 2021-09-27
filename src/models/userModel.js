@@ -7,13 +7,20 @@ const create = async (name, email, password) => {
   return { name, email, role, _id: insertedUser.insertedId };
 };
 
- const findEmail = async (email) => {
+const findEmail = async (email) => {
   const db = await connection();
-  const registeredEmail = await db.collection('users').findOne({ email });
-  return registeredEmail;
+  return db.collection('users').findOne({ email });
+};
+
+const login = async (email, password) => {
+  const db = await connection();
+  const userLogin = await db.collection('users').findOne({ email, password });
+  if (!userLogin) return null;
+  return { id: userLogin.id, email, role: userLogin.role };
 };
 
 module.exports = {
   create,
   findEmail,
+  login,
 };
