@@ -8,7 +8,7 @@ const loginController = async (req, res) => {
 
     if (loginData.message) return res.status(loginData.status).json({ message: loginData.message });
     
-    res.status(200).json(loginData.token);
+    res.status(200).json({ token: loginData.token });
   } catch (error) {
     console.error(error);
   }

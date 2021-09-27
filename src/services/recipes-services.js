@@ -20,4 +20,10 @@ const createRecipe = async (name, ingredients, preparation, userId) => {
   } };
 };
 
-module.exports = { createRecipe };
+const findRecipes = async () => {
+  const recipes = await recipesModel.findRecipes();
+
+  return recipes;
+};
+
+module.exports = { createRecipe, findRecipes };

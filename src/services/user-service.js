@@ -2,8 +2,8 @@ const userModel = require('../models/user-model');
 const userMiddleware = require('../middlewares/user-middleware');
 
 const validateEmail = async (email) => {
-  const findEmail = await userModel.findEmail(email);
-  if (findEmail) return { status: 409, message: 'Email already registered' };
+  const find = await userModel.find(email);
+  if (find) return { status: 409, message: 'Email already registered' };
 
   return false;
 };

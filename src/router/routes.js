@@ -10,5 +10,6 @@ const istoken = require('../middlewares/authorization');
 router.post('/users', userController.createUser);
 router.post('/login', login.loginController);
 router.post('/recipes', istoken, recipes.createRecipe);
+router.get('/recipes', recipes.findRecipes);
 
 module.exports = router;

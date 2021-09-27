@@ -6,7 +6,7 @@ const SECRET = 'minhasenha';
 const validatingLogin = async (email, password) => {
   if (!email || !password) return { status: 401, message: 'All fields must be filled' };
 
-  const resolt = await userModel.findEmail(email);
+  const resolt = await userModel.find(email);
   
   if (!resolt) return { status: 401, message: 'Incorrect username or password' };
 
@@ -14,8 +14,8 @@ const validatingLogin = async (email, password) => {
     return { status: 401, message: 'Incorrect username or password' };
   }
 
-  const { name, password: _, ...userPayload } = resolt;
-
+  const { password: _, ...userPayload } = resolt;
+  
   const token = jwt.sign(userPayload, SECRET, {
     algorithm: 'HS256',
     expiresIn: '15d',
