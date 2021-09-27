@@ -13,7 +13,14 @@ async function findEmail(email) {
   return data;
 }
 
+async function findPassword(password) {
+  const db = await getConnection();
+  const findId = await db.collection('users').findOne({ password });
+  return findId;
+}
+
 module.exports = {
   create,
   findEmail,
+  findPassword,
 };
