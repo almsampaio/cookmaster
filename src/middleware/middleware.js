@@ -1,3 +1,6 @@
+const { verify } = require('jsonwebtoken');
+const { SECRET } = require('../util/util');
+
 const isValidEmail = (req, res, next) => {
   const { email } = req.body;
   const validEmail = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+(\.[a-z]+)?$/i;
@@ -8,39 +11,22 @@ const isValidEmail = (req, res, next) => {
   next();
 };
 
-const isValidQuanty = (req, res, next) => {
-  const { quantity } = req.body;
-  if (quantity <= 0) {
-  return res.status(422).json({ err: { code: 'invalid_data',
-    message: '"quantity" must be larger than or equal to 1' } });
+const authToken = async (req, res, next) => {
+  const { authorization: token } = req.headers;
+  if (!token) return res.status(401).json({ message: 'missing auth token' });
+
+  try {
+    const { user: { _id } } = verify(token, SECRET);
+
+    req.user = _id;
+
+    next();
+  } catch (_e) {
+    res.status(401).json({ message: 'jwt malformed' });
   }
-
-  if (typeof quantity !== 'number') {
-    return res.status(422).json({ err: { code: 'invalid_data',
-      message: '"quantity" must be a number' } });
-  }
-
-  next();
-};
-
-const isValidSales = (req, res, next) => {
-  let err = null;
-
-  req.body.forEach((sale) => {
-    if (typeof sale.quantity !== 'number') {
-      err = { err: { code: 'invalid_data', message: 'Wrong product ID or invalid quantity' } };
-    }
-    if (sale.quantity <= 0) {
-      err = { err: { code: 'invalid_data', message: 'Wrong product ID or invalid quantity' } };
-    }
-  });
-  if (err !== null) return res.status(422).json(err);
-
-  next();
 };
 
 module.exports = {
   isValidEmail,
-  isValidQuanty,
-  isValidSales,
+  authToken,
 };

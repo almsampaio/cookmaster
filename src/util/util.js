@@ -1,6 +1,6 @@
 const SECRET = 'meLasquei';
 const config = {
-  expiresIn: '5min',
+  expiresIn: '1h',
   algorithm: 'HS256',
 };
 

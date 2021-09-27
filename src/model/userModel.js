@@ -21,8 +21,16 @@ const findByEmail = async (email) => {
   return user;
 };
 
+const addRecipe = async (name, ingredients, preparation, userId) => {
+  const db = await connect();
+  const user = await db.collection('recipes').insertOne({ name, ingredients, preparation, userId });
+
+  return { _id: user.insertedId, name, ingredients, preparation, userId };
+};
+
 module.exports = {
   addUser,
   findAll,
   findByEmail,
+  addRecipe,
 };

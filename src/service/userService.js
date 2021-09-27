@@ -35,9 +35,20 @@ const login = async (email, password) => {
   return { token };
 };
 
+const addRecipes = async (name, ingredients, preparation, userId) => {
+  if (!name || !ingredients || !preparation) {
+    return { status: 400, message: 'Invalid entries. Try again.' };
+  }
+
+  const addedRecipe = await userModel.addRecipe(name, ingredients, preparation, userId);
+
+  return addedRecipe;
+};
+
 module.exports = {
   addUser,
   findAll,
   findByEmail,
   login,
+  addRecipes,
 };

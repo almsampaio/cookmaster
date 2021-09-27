@@ -19,4 +19,7 @@ app.get('/users', userController.findAll);
 // login
 app.post('/login', userController.login);
 
+// recipes
+app.post('/recipes', middleware.authToken, userController.addRecipes);
+
 module.exports = app;
