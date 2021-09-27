@@ -45,7 +45,7 @@ const deleteRecipeController = async (req, res) => {
 const uploadRecipeImageController = async (req, res) => {
     const { id } = req.params;
     const { role, userId } = req.user;
-    const { path } = req.file;
+    const path = `src/uploads/${id}.jpeg`;
 
     const uploadImage = await recipeService.uploadRecipeImageService(id, path, userId, role);
 
