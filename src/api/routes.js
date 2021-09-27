@@ -12,10 +12,10 @@ const {
 } = require('../controllers/RecipesController');
 const { createUser } = require('../controllers/UserController');
 const validateLogin = require('../middlewares/validateLogin');
-const validateOnCreate = require('../middlewares/validateOnCreate');
-const validate = require('../schemas/validate');
 const auth = require('../middlewares/auth');
 const validateUserOnEdit = require('../middlewares/validateUserOnEdit');
+const validateUserOnCreate = require('../middlewares/validateUserOnCreate');
+const validateRecipeOnCreate = require('../middlewares/validateRecipeOnCreate');
 
 const userRouter = express.Router();
 const loginRouter = express.Router();
@@ -37,14 +37,14 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
-userRouter.route('/').post(validate.createUser(), validateOnCreate, createUser);
+userRouter.route('/').post(validateUserOnCreate, createUser);
 
-loginRouter.route('/').post(validate.login(), validateLogin, login);
+loginRouter.route('/').post(validateLogin, login);
 
 recipesRouter
   .route('/')
   .get(getAllRecipes)
-  .post(auth, validate.createRecipe(), validateOnCreate, createRecipe);
+  .post(auth, validateRecipeOnCreate, createRecipe);
 
 recipesRouter
   .route('/:id')
