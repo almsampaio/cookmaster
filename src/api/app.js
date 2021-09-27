@@ -10,7 +10,6 @@ const recipesController = require('./controllers/recipesController');
 const upMiddleware = require('./middlewares/uploadMiddleware');
 
 require('dotenv').config();
- 
 
 const app = express();
 app.use(bodyParser.json());
