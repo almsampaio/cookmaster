@@ -10,6 +10,7 @@ const authRecipeId = require('../middlewares/authRecipeId');
 const createRecipeController = require('../useCases/createRecipe/createRecipeController');
 const listRecipeController = require('../useCases/listRecipes/listRecipesController');
 const editRecipeController = require('../useCases/editRecipe/editRecipeController');
+const deleteRecipeController = require('../useCases/deleteRecipe/deleteRecipeController');
 
 Router.route('/')
   .get(
@@ -32,6 +33,12 @@ Router.route('/:id')
       authRequestRecipe,
       authUserPermissions,
       editRecipeController,
+    )
+    .delete(
+      authToken,
+      authRecipeId,
+      authUserPermissions,
+      deleteRecipeController,
     );
 
 module.exports = Router;
