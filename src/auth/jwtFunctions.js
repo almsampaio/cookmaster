@@ -16,4 +16,7 @@ const verify = (token) => {
   return payload;
 };
 
-module.exports = { create, verify };
+module.exports = {
+  create,
+  verify,
+};
