@@ -1,5 +1,6 @@
 require('dotenv').config();
 const express = require('express');
+const path = require('path');
 const bodyParser = require('body-parser');
 const usersRoutes = require('./routes/users');
 const loginRoutes = require('./routes/login');
@@ -8,6 +9,7 @@ const recipesRoutes = require('./routes/recipes');
 const app = express();
 
 app.use(bodyParser.json());
+app.use(express.static(path.join(__dirname, 'uploads')));
 app.use('/users', usersRoutes);
 app.use('/login', loginRoutes);
 app.use('/recipes', recipesRoutes);
