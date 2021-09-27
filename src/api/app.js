@@ -29,6 +29,7 @@ app.post('/recipes', validationCreateRecipe, validationtoken, recipeController.c
 app.get('/recipes', recipeController.getAll);
 app.get('/recipes/:id', recipeController.getById);
 app.put('/recipes/:id', validationtoken, recipeController.update);
+app.delete('/recipes/:id', validationtoken, recipeController.exclude);
 
 // ______________________________________________________________ //
 

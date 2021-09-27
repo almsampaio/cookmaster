@@ -20,9 +20,16 @@ const update = async (id, body, userId) => {
   return recipe;
 };
 
+const exclude = async (id, role) => {
+  if (role === 'admin') {
+    return recipeModel.exclude(id);
+  }
+};
+
 module.exports = {
   create,
   getAll,
   getById,
   update,
+  exclude,
 };
