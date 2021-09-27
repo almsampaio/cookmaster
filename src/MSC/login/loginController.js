@@ -7,7 +7,6 @@ async function loginController(req, res) {
     const { statusCode, message } = tryLogin;
     return res.status(statusCode).json({ message });
   }
-  console.log(tryLogin);
   return res.status(200).json({ token: tryLogin });
 }
 
