@@ -24,3 +24,23 @@ exports.getById = async (id) => {
 
   return recipe;
 };
+
+const verifyAuthorizedUser = async (user, recipeId) => {
+  const recipe = await exports.getById(recipeId);
+
+  if (recipe.userId === user.userId || user.role === 'admin') return true;
+
+  return false;
+};
+
+exports.update = async ({ id, name, ingredients, preparation, user }) => {
+  const isUserAuthorized = await verifyAuthorizedUser(user, id);
+
+  if (!isUserAuthorized) throw new AppError(401, 'User not authorized');
+
+  await Recipe.update({ id, name, ingredients, preparation });
+
+  const updatedRecipe = await Recipe.getById(id);
+
+  return updatedRecipe;
+};

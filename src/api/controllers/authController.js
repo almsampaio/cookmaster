@@ -21,7 +21,7 @@ exports.verify = async (req, _res, next) => {
     const { authorization: token } = req.headers;
 
     if (!token) {
-      return next(new AppError(401, 'jwt malformed'));
+      return next(new AppError(401, 'missing auth token'));
     }
 
     const decoded = jwt.verify(token, SECRET);

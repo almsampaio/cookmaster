@@ -35,3 +35,24 @@ exports.getById = async (id) => {
 
   return recipe;
 };
+
+exports.update = async ({ id, name, ingredients, preparation }) => {
+  if (!ObjectId.isValid(id)) return null;
+
+  const db = await connection();
+
+  const { result } = await db
+    .collection(COLLECTION)
+    .updateOne({ _id: ObjectId(id) }, { $set: { name, ingredients, preparation } });
+
+  if (result.ok) {
+      return {
+      _id: id,
+      name,
+      ingredients,
+      preparation,
+    };
+  }
+
+  return null;
+};

@@ -33,3 +33,17 @@ exports.getById = async (req, res, next) => {
     next(err);
   }
 };
+
+exports.update = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const { name, ingredients, preparation } = req.body;
+    const { user } = req;
+
+    const recipe = await recipeService.update({ id, name, ingredients, preparation, user });
+  
+    res.status(200).json(recipe);
+  } catch (err) {
+    next(err);
+  }
+};
