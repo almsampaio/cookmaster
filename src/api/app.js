@@ -28,6 +28,7 @@ app.post('/login', validationLoginUser, userController.login);
 app.post('/recipes', validationCreateRecipe, validationtoken, recipeController.create);
 app.get('/recipes', recipeController.getAll);
 app.get('/recipes/:id', recipeController.getById);
+app.put('/recipes/:id', validationtoken, recipeController.update);
 
 // ______________________________________________________________ //
 

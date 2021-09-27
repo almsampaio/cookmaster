@@ -15,6 +15,8 @@ const validationCreateRecipe = async (req, res, next) => {
 
 const validationtoken = async (req, res, next) => {
   const { authorization } = req.headers;
+  
+  if (!authorization) return res.status(401).json({ message: 'missing auth token' });
 
   try {
     const validToken = jwt.verify(authorization, secret);
