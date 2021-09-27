@@ -4,6 +4,11 @@ const CustomError = require('../../lib/CustomError');
 const recipesModel = require('../models/recipes');
 
 const errorRecipeNotFound = () => { throw new CustomError(404, 'recipe not found'); };
+const errorIfUserNotAllowed = (user, recipe) => { 
+  if (user.role !== 'admin' && recipe.userId !== user.id) {
+    throw new CustomError(401, 'not allowed');
+  }
+};
 
 module.exports = {
   async get(id) {
@@ -20,10 +25,14 @@ module.exports = {
     return recipesModel.create(recipe, user);
   },
 
-  async update(id, updatesForRecipe) {
+  async update(id, req) {
     if (id && !ObjectId.isValid(id)) errorRecipeNotFound();
 
-    const recipeUpdated = await recipesModel.update(id, updatesForRecipe);
+    const foundRecipe = await recipesModel.get(id);
+
+    errorIfUserNotAllowed(req.user, foundRecipe);
+
+    const recipeUpdated = await recipesModel.update(id, req.body, req.file);
     return recipeUpdated;
   },
 
@@ -32,9 +41,7 @@ module.exports = {
 
     const foundRecipe = await recipesModel.get(id);
 
-    if (user.role !== 'admin' && foundRecipe.userId !== user.id) {
-      throw new CustomError(401, 'not allowed');
-    }
+    errorIfUserNotAllowed(user, foundRecipe);
 
     const recipeDeleted = await recipesModel.delete(id, user);
     return recipeDeleted;
