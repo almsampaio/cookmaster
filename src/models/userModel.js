@@ -21,4 +21,11 @@ const filterByEmail = async (email) => {
   return userCollection;  
 };
   
-module.exports = { create, filterByEmail };
+const filterByUser = async ({ email, password }) => {
+  const userCollection = await mongoConnect.getConnection()
+    .then((db) => db.collection('users').findOne({ email, password }));
+
+  return userCollection;  
+};
+
+  module.exports = { create, filterByEmail, filterByUser };
