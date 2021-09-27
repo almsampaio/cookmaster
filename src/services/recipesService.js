@@ -10,6 +10,17 @@ const validatingData = (name, ingredients, preparation) => {
   return false;
 };
 
+const validateId = async (_id) => {
+  if (!ObjectId.isValid(_id)) {
+    return { status: 404, message: { message: RECIPE_NOT_FOUND } };
+  }
+  const recipe = await recipesModel.getById(_id);
+  if (recipe === null) {
+    return { status: 404, message: { message: RECIPE_NOT_FOUND } };
+  }
+  return recipe;
+};
+
 const create = async (recipe, userId) => {
   const { name, ingredients, preparation } = recipe;
   const notValid = validatingData(name, ingredients, preparation);
@@ -63,16 +74,12 @@ const deleteOne = async (_id, userId, role) => {
 };
 
 const uploadPicture = async (_id, file, userId, role) => {
-  if (!ObjectId.isValid(_id)) {
-    return { status: 404, message: { message: RECIPE_NOT_FOUND } };
-  }
-  const recipeToUpdatePicture = await recipesModel.getById(_id);
-  if (recipeToUpdatePicture === null) {
-    return { status: 404, message: { message: RECIPE_NOT_FOUND } };
-  }
-  if (role !== 'admin' && userId !== recipeToUpdatePicture.userId) {
+  const idValidation = await validateId(_id);
+  if (idValidation.status) return idValidation;
+  if (role !== 'admin' && userId !== idValidation.userId) {
     return { status: 401, message: { message: 'missing auth token' } };
   }
+  if (!file) return { status: 404, message: { message: 'file not found' } };
   const recipeUploaded = await recipesModel.uploadPicture(_id, file);
   return { status: 200, message: recipeUploaded };
 };
