@@ -9,6 +9,9 @@ const adminToken = require('./middlewares/authMiddlewareAdmin');
 const recipesController = require('./controllers/recipesController');
 const upMiddleware = require('./middlewares/uploadMiddleware');
 
+require('dotenv').config();
+ 
+
 const app = express();
 app.use(bodyParser.json());
 const storage = multer.diskStorage({
@@ -26,6 +29,7 @@ app.use('../uploads', express.static(path.join(__dirname, '..', 'uploads')));
 app.get('/', (request, response) => {
   response.send();
 });
+
 // Não remover esse end-point, ele é necessário para o avaliador
 
 app.post('/users', userController.register);

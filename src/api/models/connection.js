@@ -1,26 +1,22 @@
 const { MongoClient } = require('mongodb');
-
 require('dotenv').config();
 
-const MONGO_DB_URL = process.env.MONGO_DB_URL || 'mongodb://mongodb:27017/CookMaster';
-const DB_NAME = 'Cookmaster';
-let schema = null; 
-    
-  async function connection() {
-    if (schema) return Promise.resolve(schema);
-    return MongoClient
-    .connect(MONGO_DB_URL, {
+const OPTIONS = {
     useNewUrlParser: true,
     useUnifiedTopology: true,
-    })
-    .then((conn) => conn.db(DB_NAME))
-    .then((dbSchema) => {
-    schema = dbSchema;
-    return schema;
-    })
-    .catch((err) => {
-    console.error(err);
-    });
-    } 
+};
 
-module.exports = connection; 
+const MONGO_DB_URL = process.env.MONGO_DB_URL || 'mongodb://mongodb:27017/Cookmaster';
+const DB_NAME = 'Cookmaster';
+
+let db = null;
+
+const connection = () => (db
+    ? Promise.resolve(db)
+    : MongoClient.connect(MONGO_DB_URL, OPTIONS)
+    .then((conn) => {
+    db = conn.db(DB_NAME);
+    return db;
+    }));
+
+module.exports = connection;
