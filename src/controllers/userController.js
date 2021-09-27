@@ -9,6 +9,8 @@ const create = async (req, res) => {
     message
   });
 
+  delete createdUser.password;
+
   return res.status(201).json({ user: createdUser });
 };
 
