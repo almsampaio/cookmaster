@@ -23,4 +23,17 @@ const login = async (email) => {
   return searchUser;
 };
 
-module.exports = { create, find, login };
+const createAdmin = async (name, email, password) => {
+  const { insertedId } = await connection()
+    .then((db) => db
+      .collection('users')
+      .insertOne({ name, email, password, role: 'admin' }));
+    return { user: { name, email, role: 'admin', _id: insertedId } };
+};
+
+module.exports = {
+  create,
+  find,
+  login,
+  createAdmin,
+};

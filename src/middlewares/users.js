@@ -1,4 +1,5 @@
 const schema = require('../schema');
+const { verify } = require('../auth/jwtFunctions');
 const { userServices } = require('../services');
 
 const checkNameCreate = (req, res, next) => {
@@ -76,10 +77,22 @@ const checkPasswordLogin = async (req, res, next) => {
   next();
 };
 
+const checkTokenAdmin = (req, res, next) => {
+  const { authorization } = req.headers;
+  const { role } = verify(authorization); 
+  if (role !== 'admin') {
+    return res
+    .status(schema.status.forbiddden)
+    .json({ message: schema.messages.isNotAdmin });
+  }
+  next();
+};
+
 module.exports = {
   checkNameCreate,
   checkEmailCreate,
   checkPasswordCreate,
   checkEmailLogin,
   checkPasswordLogin,
+  checkTokenAdmin,
 };

@@ -11,4 +11,12 @@ const loginUser = [
   middlewaresUsers.checkPasswordLogin,
 ];
 
-module.exports = { registerUser, loginUser };
+const checkAdmin = [
+  middlewaresUsers.checkTokenAdmin,
+];
+
+module.exports = {
+  registerUser,
+  loginUser,
+  checkAdmin,
+};

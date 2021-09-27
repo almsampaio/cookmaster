@@ -17,4 +17,14 @@ const login = async (email) => {
   return token;
 };
 
-module.exports = { create, find, login };
+const createAdmin = async (name, email, password) => {
+  const admin = await userModels.createAdmin(name, email, password);
+  return admin;
+};
+
+module.exports = {
+  create,
+  find,
+  login,
+  createAdmin,
+};
