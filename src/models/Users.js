@@ -13,6 +13,12 @@ const create = async (name, email, password) => {
   };
 };
 
+const getByEmail = async (email) => {
+  const operation = await connection();
+  const result = await operation.collection('users').findOne({ email });
+  return result;
+};
+
 const getAll = async () => {
   const operation = await connection();
   const result = await operation.collection('users').find().toArray();
@@ -22,4 +28,5 @@ const getAll = async () => {
 module.exports = {
   create,
   getAll,
+  getByEmail,
 };
