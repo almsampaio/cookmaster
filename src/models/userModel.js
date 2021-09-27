@@ -2,7 +2,7 @@ const connection = require('./connection');
 
 const create = async (user) => {
   return connection()
-    .then((db) => db.collection('users').insertOne({...user, role: 'user'}))
+    .then((db) => db.collection('users').insertOne({...user, role: user.role || 'user'}))
     .then(result => result.ops[0]);
 }
 
