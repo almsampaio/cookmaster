@@ -1,7 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 
-const { UsersRouter } = require('./Router');
+const { UsersRouter, LoginRouter } = require('./Router');
 
 const app = express();
 
@@ -16,5 +16,6 @@ app.get('/', (_req, res) => {
 app.get('/ping', (_req, res) => res.status(200).json({ message: 'pong' }));
 
 app.use('/users', UsersRouter);
+app.use('/login', LoginRouter);
 
 module.exports = app;
