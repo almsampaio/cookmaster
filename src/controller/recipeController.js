@@ -43,10 +43,22 @@ const exclude = async (req, res) => {
   return res.status(204).json(recipe);
 };
 
+const uploadImage = async (req, res) => {
+  const { params: { id: _id }, file: { filename } } = req;
+  const uploadedImage = await recipeService.uploadImage(_id, filename);
+
+  if (!uploadedImage) {
+    return res.status(401).json({ message: 'something went wrong' });
+  }
+
+  return res.status(200).json(uploadedImage);
+  };
+
 module.exports = {
   create,
   getAll,
   getById,
   update,
   exclude,
+  uploadImage,
 };

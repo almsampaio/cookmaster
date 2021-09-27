@@ -39,10 +39,26 @@ const exclude = async (_id) => {
   await db.collection('recipes').deleteOne({ _id: ObjectId(_id) });
 };
 
+const uploadImage = async (_id, filename) => {
+  if (!ObjectId.isValid(_id)) return null;
+
+  const db = await connect();
+  await db.collection('recipes')
+    .findOneAndUpdate(
+      { _id: new ObjectId(_id) }, { $set: { image: `localhost:3000/src/uploads/${filename}` },
+    },
+  );
+
+  const recipe = await getById(_id);
+
+  return recipe;
+};
+
 module.exports = {
   create,
   getAll,
   getById,
   update,
   exclude,
+  uploadImage,
 };

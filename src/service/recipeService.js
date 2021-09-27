@@ -26,10 +26,13 @@ const exclude = async (id, role) => {
   }
 };
 
+const uploadImage = async (id, filename) => recipeModel.uploadImage(id, filename);
+
 module.exports = {
   create,
   getAll,
   getById,
   update,
   exclude,
+  uploadImage,
 };

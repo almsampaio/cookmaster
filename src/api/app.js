@@ -1,7 +1,9 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const path = require('path');
 const userController = require('../controller/userController');
 const recipeController = require('../controller/recipeController');
+const upload = require('../middlewares/upload');
 const {
   validationCreateUser,
   validationLoginUser } = require('../middlewares/validateUser');
@@ -30,7 +32,13 @@ app.get('/recipes', recipeController.getAll);
 app.get('/recipes/:id', recipeController.getById);
 app.put('/recipes/:id', validationtoken, recipeController.update);
 app.delete('/recipes/:id', validationtoken, recipeController.exclude);
+app
+  .put('/recipes/:id/image', validationtoken, upload.single('image'), recipeController.uploadImage);
 
 // ______________________________________________________________ //
+
+// IMAGES
+
+app.use('/images', express.static(path.join(__dirname, '..', 'uploads')));
 
 module.exports = app;
