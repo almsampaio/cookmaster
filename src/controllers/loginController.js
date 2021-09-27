@@ -23,4 +23,16 @@ const userAuthentication = (req, res, next) => {
   next();
 };
 
-module.exports = { makeLogin, userAuthentication };
+const validateAdminCreator = (req, res, next) => {
+  const token = req.headers.authorization;
+  if (token) {
+    const dataToken = validateToken(token);
+    if (dataToken.isValid && dataToken.user.role === 'admin') {
+      req.isAdmin = true;
+      next();
+    }
+  }
+  return res.status(403).json({ message: 'Only admins can register new admin' });
+};
+
+module.exports = { makeLogin, userAuthentication, validateAdminCreator };

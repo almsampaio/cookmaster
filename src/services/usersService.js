@@ -45,12 +45,11 @@ const isUserValid = async (name, email, password) => {
   return { isValid: true };
 };
 
-const create = async (name, email, password) => {
+const create = async (name, email, password, role) => {
   const { isValid, response, status } = await isUserValid(name, email, password);
   if (!isValid) {
     return { response, status };
   }
-  const role = 'user';
   const userCreated = await usersModel.create(name, email, password, role);
   return { response: { user: userCreated }, status: 201 };
 };
