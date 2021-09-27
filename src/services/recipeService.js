@@ -1,6 +1,6 @@
 const recipeModel = require('../models/recipeModel');
 
-const create = async (recipe) => {
+const create = async (recipe, userId) => {
   const { name = '', ingredients = '', preparation = '' } = recipe;
   
   if (!name || !ingredients || !preparation) return {
@@ -8,7 +8,7 @@ const create = async (recipe) => {
     message: 'Invalid entries. Try again.'
   }
 
-  const createdRecipe = await recipeModel.create(recipe);
+  const createdRecipe = await recipeModel.create(recipe, userId);
   return { createdRecipe };
 }
 
@@ -19,11 +19,29 @@ const getAll = async () => {
 
 const find = async (id) => {
   const recipe = await recipeModel.find(id);
-  return recipe;
+
+  if (!recipe) return { code: 404, message: 'recipe not found' };
+
+  return { recipe };
+}
+
+const edit = async (recipe, id) => {
+  const editedRecipe = await recipeModel.edit(recipe, id);
+  return editedRecipe;
+}
+
+const remove = async (id) => {
+  const deletedRecipe = await recipeModel.remove(id);
+  
+  if (!deletedRecipe) return { code: 404, message: 'invalid ID' };
+
+  return { code: 204 };
 }
 
 module.exports = {
   create,
   getAll,
   find,
+  edit,
+  remove,
 }
