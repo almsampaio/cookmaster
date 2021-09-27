@@ -29,7 +29,6 @@ const {
 router.get('/', getAllRecipes);
 router.get('/:id', getRecipeById);
 router.post('/', validateJWT, addRecipes);
-
 router.put('/:id/image/', upload.single('image'), validateJWT, updateRecipeImage);
 router.put('/:id', validateJWT, updateRecipe);
 router.delete('/:id', validateJWT, deleteRecipe);
