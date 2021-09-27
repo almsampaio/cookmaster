@@ -16,7 +16,17 @@ const gettingOneRecipe = async (id) => {
     return recipe;
 };
 
+const editingRecipe = async (id, name, ingredients, preparation, userId) => {
+    if (!ObjectId.isValid(id)) return false;
+    const db = await connect();
+    const recipe = await db.collection('recipes')
+    .updateOne({ _id: ObjectId(id), name, ingredients, preparation, userId });
+    if (!recipe) return false;
+    return recipe;
+};
+
 module.exports = {
     getRecipes,
     gettingOneRecipe,
+    editingRecipe,
 };

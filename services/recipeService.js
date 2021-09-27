@@ -7,7 +7,7 @@ const {
 // // incorrectFieldData, /*
 // wrongJWT,
 recipeNotFound,
-// missingToken 
+missingToken,
 } = require('../utils/errorMessages');
 
 const getRecipes = async () => {
@@ -21,7 +21,17 @@ const gettingOneRecipe = async (id) => {
     return result;
 };
 
+const editingRecipe = async (recipeData) => {
+    const { id, name, ingredients, preparation, userId } = recipeData;
+    const result = await recipeModel.gettingOneRecipe(id);
+    if (!result) { return { status: 401, message: missingToken }; }
+    const updateResult = await recipeModel
+    .editingRecipe(id, name, ingredients, preparation, userId);
+    return updateResult;
+};
+
 module.exports = {
     getRecipes,
     gettingOneRecipe,
+    editingRecipe,
 };
