@@ -7,7 +7,6 @@ const storage = multer.diskStorage({
   destination: (_req, _file, callback) => callback(null, 'src/uploads'),
   filename: (req, _file, callback) => {
     const { _id } = req.params;
-    console.log(_id);
     return callback(null, `${_id}.jpeg`); 
   },
 });
@@ -31,12 +30,13 @@ app.post('/users', usersControllers.create);
 app.post('/login', usersControllers.login);
 app.post('/recipes', validateJWT, recipesControllers.create);
 app.get('/recipes', recipesControllers.getAll);
-app.post('/recipes/:_id/image',
+app.put('/recipes/:_id/image',
   validateJWT, upload.single('image'),
   recipesControllers.uploadPicture);
 app.get('/recipes/:_id', recipesControllers.getById);
 app.put('/recipes/:_id', validateJWT, recipesControllers.update);
 app.delete('/recipes/:_id', validateJWT, recipesControllers.deleteOne);
+app.get('/recipes/images/:_id');
 // Não remover esse end-point, ele é necessário para o avaliador
 
 module.exports = app;
