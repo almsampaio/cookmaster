@@ -16,6 +16,13 @@ const create = async (name, ingredients, preparation, userId) => {
   return { newRecipe: insertedRecipe, status: HTTP_CREATED_STATUS };
 };
 
+const getAll = async () => {
+const HTTP_OK_STATUS = 200;
+const recipes = await recipeModel.getAll();
+return { recipesList: recipes, status: HTTP_OK_STATUS };
+};
+
 module.exports = {
   create,
+  getAll,
 };
