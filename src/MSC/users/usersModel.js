@@ -6,8 +6,8 @@ async function userRegisterModel(productToInsert) {
     const db = await connection();
     const queryResponse = await db.collection('users').insertOne(productToInsert);
     const { ops: [insertedProduct] } = queryResponse;
-    console.log(insertedProduct);
-    return insertedProduct;
+    const { name, email, role } = insertedProduct;
+    return { name, email, role };
   } catch (err) {
     console.log(err);
     return {

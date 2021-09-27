@@ -25,7 +25,7 @@ async function userRegisterService({ name, email, password }) {
 
   const existsInDB = await findAUserWithEmail(email);
   if (!existsInDB) {
-    const registeredUser = await userRegisterModel({ name, email, role: 'user' });
+    const registeredUser = await userRegisterModel({ name, email, password, role: 'user' });
     return { user: registeredUser };
   }
   if (existsInDB.err) {
