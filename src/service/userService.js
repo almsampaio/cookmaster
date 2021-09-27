@@ -45,10 +45,17 @@ const addRecipes = async (name, ingredients, preparation, userId) => {
   return addedRecipe;
 };
 
+const findAllRecipes = async () => {
+  const users = await userModel.findAllRecipes();
+
+  return users;
+};
+
 module.exports = {
   addUser,
   findAll,
   findByEmail,
   login,
   addRecipes,
+  findAllRecipes,
 };

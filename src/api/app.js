@@ -21,5 +21,6 @@ app.post('/login', userController.login);
 
 // recipes
 app.post('/recipes', middleware.authToken, userController.addRecipes);
+app.get('/recipes', userController.findAllRecipes);
 
 module.exports = app;

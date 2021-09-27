@@ -28,9 +28,17 @@ const addRecipe = async (name, ingredients, preparation, userId) => {
   return { _id: user.insertedId, name, ingredients, preparation, userId };
 };
 
+const findAllRecipes = async () => {
+  const db = await connect();
+  const users = await db.collection('recipes').find().toArray();
+
+  return users;
+};
+
 module.exports = {
   addUser,
   findAll,
   findByEmail,
   addRecipe,
+  findAllRecipes,
 };

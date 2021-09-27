@@ -34,9 +34,18 @@ const addRecipes = async (req, res) => {
   res.status(201).json({ recipe });
 };
 
+const findAllRecipes = async (_req, res) => {
+  const user = await userService.findAllRecipes();
+
+console.log(user);
+
+  res.status(200).json(user);
+};
+
 module.exports = {
   addUser,
   findAll,
   login,
   addRecipes,
+  findAllRecipes,
 };
