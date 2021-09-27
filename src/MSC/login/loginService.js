@@ -1,3 +1,4 @@
+const generateJWT = require('./generateJWT');
 const { findUserByEmail } = require('./loginModel');
 
 function validateLogin(email, password) {
@@ -19,8 +20,8 @@ async function loginService(email, password) {
 
   const canLogin = await loginAttempt(email, password);
   if (canLogin.statusCode) return canLogin;
-
-  return canLogin;
+  const token = generateJWT({ user: canLogin.user });
+  return token;
 }
 
 module.exports = {
