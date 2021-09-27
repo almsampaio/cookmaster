@@ -1,8 +1,11 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const { resolve } = require('path');
 const router = require('../routes');
 
 const middlewares = require('../middlewares');
+
+const uploadPath = resolve(__dirname, '..', 'uploads');
 
 const app = express();
 app.use(bodyParser.json());
@@ -15,6 +18,7 @@ app.get('/', (request, response) => {
 
 app.use('/', router.users);
 app.use('/', router.recipes);
+app.use('/images', express.static(`${uploadPath}`));
 
 // uso o erro sem ter que passar uma função aqui
 app.use(middlewares.error);
