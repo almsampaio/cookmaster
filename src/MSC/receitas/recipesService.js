@@ -1,4 +1,4 @@
-const { insertOneRecipe, findAllRecipes } = require('./recipesModel');
+const { insertOneRecipe, findAllRecipes, findRecipeById } = require('./recipesModel');
 const { findAUserWithEmail } = require('../users/usersModel');
 
 function validateSingleField(field) {
@@ -29,11 +29,18 @@ async function postRecipe(recipe, user) {
 
 async function getAllRecipes() {
   const allRecipes = await findAllRecipes();
-  if (!allRecipes) return { statusCode: 404, message: 'No recipes found' };
+  if (!allRecipes) return { statusCode: 404, message: 'recipe not found' };
   return allRecipes;
+}
+
+async function getRecipeById(id) {
+  const recipe = await findRecipeById(id);
+  if (!recipe) return { statusCode: 404, message: 'recipe not found' };
+  return recipe;
 }
 
 module.exports = {
   postRecipe,
   getAllRecipes,
+  getRecipeById,
 };
