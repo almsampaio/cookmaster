@@ -31,13 +31,16 @@ const update = async (req, res) => {
   const { id } = req.params;
   const { userId } = req;
   const { name, ingredients, preparation } = req.body;
-  const { err, status, updatedRecipe } = await recipeService
+  const { status, updatedRecipe } = await recipeService
     .update({ id, name, ingredients, preparation, userId });
-  if (err) {
-    return res.status(err.code)
-      .json({ message: err.message }); 
-    }
   res.status(status).json(updatedRecipe);
+};
+
+const remove = async (req, res) => {
+  const { id } = req.params;
+  const { userId } = req;
+  const { status } = await recipeService.remove(id, userId);
+  res.status(status).end();
 };
 
 module.exports = {
@@ -45,4 +48,5 @@ module.exports = {
   getAll,
   getById,
   update,
+  remove,
 };

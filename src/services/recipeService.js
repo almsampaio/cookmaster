@@ -2,6 +2,7 @@ const recipeModel = require('../models/recipeModel');
 
 const HTTP_OK_STATUS = 200;
 const HTTP_CREATED_STATUS = 201;
+const HTTP_NO_CONTENT_STATUS = 204;
 
 const validateEntries = (name, ingredients, preparation) => {
   const invalidEntriesError = { err: { code: 400, message: 'Invalid entries. Try again.' } };
@@ -28,19 +29,23 @@ const getById = async (id) => {
   const recipe = await recipeModel.getById(id);
   if (!recipe) return notFoundError;
   return { recipeById: recipe, status: HTTP_OK_STATUS };
-  };
+};
 
 const update = async (recipeData) => {
   const { id, name, ingredients, preparation, userId } = recipeData;
-  const notFoundError = { err: { code: 404, message: 'recipe not found' } };
   const recipe = await recipeModel.update({ id, name, ingredients, preparation, userId });
-  if (!recipe) return notFoundError;
   return { updatedRecipe: recipe, status: HTTP_OK_STATUS };
-  };  
+};
+
+const remove = async (id, userId) => {
+  await recipeModel.remove(id, userId);
+  return { status: HTTP_NO_CONTENT_STATUS };
+};  
   
 module.exports = {
   create,
   getAll,
   getById,
   update,
+  remove,
 };
