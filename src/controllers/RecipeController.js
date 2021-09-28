@@ -4,8 +4,12 @@ const RecipeService = require('../services/RecipeService');
 const create = rescue(async (req, res) => {
   const { name, ingredients, preparation } = req.body;
   const { userId } = req;
-
-  const recipe = await RecipeService.create(name, ingredients, preparation, userId);
+  const recipe = await RecipeService.create(
+    name,
+    ingredients,
+    preparation,
+    userId,
+  );
 
   return res.status(201).json({ recipe });
 });
@@ -26,7 +30,12 @@ const getById = rescue(async (req, res) => {
 const update = rescue(async (req, res) => {
   const { id } = req.params;
   const { name, ingredients, preparation } = req.body;
-  const recipeUpdate = await RecipeService.update(id, name, ingredients, preparation);
+  const recipeUpdate = await RecipeService.update(
+    id,
+    name,
+    ingredients,
+    preparation,
+  );
 
   return res.status(200).json(recipeUpdate);
 });

@@ -7,17 +7,17 @@ const schemaRecipe = Joi.object({
   preparation: Joi.required(),
 });
 
+/* Source: https://github.com/tryber/sd-09-cookmaster-v2/tree/Henrique-Moura-cookmaster */
 const errorHandling = (status, message) => ({
   status,
   message,
 });
 
+/* Source: https://github.com/tryber/sd-09-cookmaster-v2/tree/Henrique-Moura-cookmaster */
 const create = async (name, ingredients, preparation, userId) => {
   const { error } = schemaRecipe.validate({ name, ingredients, preparation });
 
-  if (error) {
-    throw errorHandling(400, 'Invalid entries. Try again.');
-  }
+  if (error) throw errorHandling(400, 'Invalid entries. Try again.');
 
   const recipe = await RecipeModel.create(name, ingredients, preparation, userId);
 

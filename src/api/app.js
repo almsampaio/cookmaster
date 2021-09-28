@@ -7,6 +7,7 @@ const errorMiddleware = require('../middlewares/error');
 const { tokenValidation } = require('../middlewares/tokenValidation');
 
 const app = express();
+
 app.use(bodyParser.json());
 // Não remover esse end-point, ele é necessário para o avaliador
 app.get('/', (request, response) => {
@@ -16,6 +17,7 @@ app.get('/', (request, response) => {
 
 app.post('/users', UserController.create);
 app.post('/login', UserController.userLogin);
+
 app.post('/recipes', tokenValidation, RecipeController.create);
 app.get('/recipes', RecipeController.getAll);
 app.get('/recipes/:id', RecipeController.getById);

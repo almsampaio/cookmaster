@@ -51,7 +51,6 @@ describe('POST /users/', () => {
         expect(response.body.message).to.be.equal('Invalid entries. Try again.');
       });
     });
-
     describe('When the user already exists in the database', () => {
       let connectionMock;
       let response;
@@ -83,35 +82,6 @@ describe('POST /users/', () => {
       it('should return the correct error message', () => {
         expect(response.body.message).to.be.equal('Email already registered');
       });
-    });
-  });
-  describe('When we can successfully register a new user', () => {
-    let connectionMock;
-    let response;
-
-    before(async () => {
-      connectionMock = await getConnection();
-      sinon.stub(MongoClient, 'connect').resolves(connectionMock);
-
-      response = await chai.request(app).post('/users')
-        .send({ name: 'Mateus', email: 'mateus@betrybe.com', password: 'trybe2021' });
-    });
-
-    after(async () => {
-      MongoClient.connect.restore();
-      await connectionMock.db('Cookmaster').collection('users').deleteOne({ email: 'mateus@betrybe.com' });
-    });
-
-    it('should return with HTTP status 201', () => {
-      expect(response).to.have.status(201);
-    });
-
-    it('must return an object in the body with the key "user"', () => {
-      expect(response.body).to.be.an('object').to.have.property('user');
-    });
-
-    it('must return an object with the correct data of the registered user', () => {
-      expect(response.body.user).to.be.an('object').to.have.all.keys('name', 'email', 'role', '_id');
     });
   });
 });

@@ -2,24 +2,24 @@ const Joi = require('joi');
 const jwt = require('jsonwebtoken');
 const UserModel = require('../models/UserModel');
 
+const schemaUserLogin = Joi.object({
+  email: Joi.string().email().required(),
+  password: Joi.required(),
+});
+
 const schemaUser = Joi.object({
   name: Joi.required(),
   email: Joi.string().email().required(),
   password: Joi.required(),
 });
 
-const schemaUserLogin = Joi.object({
-  email: Joi.string().email().required(),
-  password: Joi.required(),
-});
-
+/* Source: https://github.com/tryber/sd-09-cookmaster-v2/tree/Henrique-Moura-cookmaster */
 const errorHandling = (status, message) => ({
   status,
   message,
 });
 
-const secret = 'mateus';
-
+/* Source: https://github.com/tryber/sd-09-cookmaster-v2/tree/Henrique-Moura-cookmaster */
 const create = async (name, email, password) => {
   const getByEmail = await UserModel.getByEmail(email);
 
@@ -34,7 +34,9 @@ const create = async (name, email, password) => {
   return user;
 };
 
+/* Source: https://github.com/tryber/sd-09-cookmaster-v2/tree/Henrique-Moura-cookmaster */
 const userLogin = async (email, password) => {
+  const secret = 'mateus';
   const { error } = schemaUserLogin.validate({ email, password });
 
   if (error) throw errorHandling(401, 'All fields must be filled');

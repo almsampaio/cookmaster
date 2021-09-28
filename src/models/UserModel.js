@@ -1,5 +1,6 @@
 const connection = require('./connection');
 
+/* Source: https://github.com/tryber/sd-09-cookmaster-v2/tree/Henrique-Moura-cookmaster */
 const create = async (name, email, password) => {
   const newUser = await connection().then((db) => db.collection('users').insertOne({
     name,
