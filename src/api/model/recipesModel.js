@@ -10,4 +10,10 @@ const create = async ({ name, ingredients, preparation }) => {
   };
 };
 
-module.exports = { create };
+const get = async () => {
+  const dbConn = await conn().then((db) => db.collection(COLLECTION));
+  const recipes = await dbConn.find({}).toArray();
+  return recipes;
+};
+
+module.exports = { create, get };

@@ -5,4 +5,9 @@ const create = async (req, res) => {
   return res.status(createRecipe.status).json(createRecipe.message);
 };
 
-module.exports = { create };
+const get = async (_req, res) => {
+  const recipes = await recipesServices.get();
+  return res.status(recipes.status).json(recipes.message);
+};
+
+module.exports = { create, get };

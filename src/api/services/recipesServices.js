@@ -1,5 +1,5 @@
 const recipesModel = require('../model/recipesModel');
-const { CREATED } = require('../utils/status');
+const { CREATED, OK } = require('../utils/status');
 
 const create = async (recipe) => {
   const createRecipe = await recipesModel.create(recipe);
@@ -9,4 +9,12 @@ const create = async (recipe) => {
   };
 };
 
-module.exports = { create };
+const get = async () => {
+  const recipes = await recipesModel.get();
+  return {
+    status: OK,
+    message: recipes,
+  };
+};
+
+module.exports = { create, get };

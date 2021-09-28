@@ -20,5 +20,6 @@ app.post('/users', valideUser.usersVAlidations, valideUser.emailExists, usersCon
 app.post('/login', valideUser.loginValitation, valideUser.checkUser, usersControllers.login);
 
 app.post('/recipes', tokenValidation, valideRecipe.usersVAlidations, recipesControllers.create);
+app.get('/recipes', recipesControllers.get);
 
 module.exports = app;
