@@ -2,8 +2,9 @@ const recipeService = require('../services/recipesService');
 
 const create = async (req, res) => {
   const { name, ingredients, preparation } = req.body;
+  const { _id: userId } = req.user;
 
-  const recipe = await recipeService.create(name, ingredients, preparation);
+  const recipe = await recipeService.create(name, ingredients, preparation, userId);
 
   if (recipe.message) return res.status(recipe.code).json({ message: recipe.message });
 

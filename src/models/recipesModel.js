@@ -1,8 +1,8 @@
 const { ObjectId } = require('mongodb');
 const connection = require('./connection');
 
-const create = (name, ingredients, preparation) => connection()
-  .then((db) => db.collection('recipes').insertOne({ name, ingredients, preparation }))
+const create = (name, ingredients, preparation, userId) => connection()
+  .then((db) => db.collection('recipes').insertOne({ name, ingredients, preparation, userId }))
   .then((result) => result.ops[0]);
 
 const getAll = () => connection()

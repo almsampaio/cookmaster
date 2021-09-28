@@ -2,9 +2,9 @@ const { ObjectId } = require('mongodb');
 const recipesModel = require('../models/recipesModel');
 const ERRORS = require('../utils/errorRecipes');
 
-const create = async (name, ingredients, preparation) => {
+const create = async (name, ingredients, preparation, userId) => {
   if (!name || !ingredients || !preparation) return ERRORS.INVALID_ENTRIES;
-  const recipe = await recipesModel.create(name, ingredients, preparation);
+  const recipe = await recipesModel.create(name, ingredients, preparation, userId);
 
   if (!recipe) return ERRORS.INVALID_ENTRIES;
 
