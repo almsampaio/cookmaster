@@ -45,6 +45,18 @@ exports.update = async ({ id, name, ingredients, preparation, user }) => {
   return updatedRecipe;
 };
 
+exports.setImage = async ({ id, imagePath, user }) => {
+  const isUserAuthorized = await verifyAuthorizedUser(user, id);
+
+  if (!isUserAuthorized) throw new AppError(401, 'User not authorized');
+
+  await Recipe.setImage({ id, imagePath });
+
+  const updatedRecipe = await Recipe.getById(id);
+
+  return updatedRecipe;
+};
+
 exports.delete = async ({ user, id }) => {
   const isUserAuthorized = await verifyAuthorizedUser(user, id);
 

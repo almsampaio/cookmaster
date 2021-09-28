@@ -57,6 +57,19 @@ exports.update = async ({ id, name, ingredients, preparation }) => {
   return null;
 };
 
+exports.setImage = async ({ id, imagePath }) => {
+  if (!ObjectId.isValid(id)) return null;
+  const db = await connection();
+
+  const { result } = await db
+    .collection(COLLECTION)
+    .updateOne({ _id: ObjectId(id) }, { $set: { image: imagePath } });
+
+  if (result.ok) return true;
+
+  return null;
+};
+
 exports.delete = async (id) => {
   if (!ObjectId.isValid(id)) return null;
 

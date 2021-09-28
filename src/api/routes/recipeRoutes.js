@@ -8,6 +8,9 @@ router.route('/')
   .post(authController.verify, recipeController.create)
   .get(recipeController.getAll);
 
+router.route('/:id/image')
+  .put(authController.verify, recipeController.upload.single('image'), recipeController.addImage);
+
 router.route('/:id')
   .get(recipeController.getById)
   .put(authController.verify, recipeController.update)
