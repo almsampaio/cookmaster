@@ -7,8 +7,11 @@ const valid = require('./validations/users');
 const validUser = require('./validations/login');
 const validRecipes = require('./validations/recipes');
 const validjwt = require('./auth/validateJWT');
+const receiveFile = require('./uploadFile');
 
 const app = express();
+
+app.use(express.static(`${__dirname}src/uploads`));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
@@ -36,5 +39,5 @@ app.get('/recipes', controllerRecipes.findRecipes);
 app.get('/recipes/:id', controllerRecipes.findRecipesById);
 app.put('/recipes/:id', validjwt.validateJWT, controllerRecipes.updateRecipes);
 app.delete('/recipes/:id', validjwt.validateJWT, controllerRecipes.deleteRecipes);
-
+app.put('/recipes/:id/image', validjwt.validateJWT, receiveFile);
 module.exports = app;
