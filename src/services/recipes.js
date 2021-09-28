@@ -55,9 +55,18 @@ return {
 };
 };
 
+const removeRecipe = async (id, token) => {
+const validToken = await auth.validateToken(token);
+if (validToken.errorCode) return validToken;
+
+await modelRecipes.removeRecipe(id);
+return { code: 204 };
+};
+
 module.exports = {
   createRecipes,
   getRecipes,
   getRecipesById,
   updateRecipe,
+  removeRecipe,
 };

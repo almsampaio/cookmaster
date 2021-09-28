@@ -14,7 +14,6 @@ const missingToken = {
 };
 
 const validateToken = async (token) => {
-  console.log('token aqui', token);
   if (!token || token === undefined) return missingToken;
   try {
     const jwtVerify = jwt.verify(token, SECRET);

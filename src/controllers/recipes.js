@@ -37,9 +37,22 @@ if (updatedRecipe.errorCode) {
 return res.status(updatedRecipe.code).json(updatedRecipe.recipe);
 };
 
+const removeRecipe = async (req, res) => {
+  const { id } = req.params;
+  const token = req.headers.authorization;
+
+  const removedRecipe = await serviceRecipes.removeRecipe(id, token);
+  if (removedRecipe.errorCode) {
+ return res.status(removedRecipe.errorCode)
+  .json(removedRecipe.errorInfo); 
+}
+  res.status(removedRecipe.code).end();
+};
+
 module.exports = {
   createRecipes,
   getRecipes,
   getRecipesById,
   updateRecipe,
+  removeRecipe,
 };
