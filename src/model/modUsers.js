@@ -1,4 +1,3 @@
-// const { ObjectID } = require('mongodb');
 const connection = require('./connection');
 
 const createUser = async (name, email, password) => {

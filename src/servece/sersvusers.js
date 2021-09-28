@@ -1,6 +1,4 @@
-/* const { required } = require('joi'); */
 const model = require('../model/modUsers');
-/* const schema = require('../schema/users'); */
 
 const invalidEntries = {
   status: 400,
