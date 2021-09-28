@@ -11,6 +11,7 @@ const recipesController = require('../Controllers/recipesController');
 const app = express();
 app.use(bodyParser.json());
 
+app.get('/recipes', recipesController.getAllRecipes);
 app.post('/users', validateUsers, usersController.create);
 app.post('/login', validateLogin, loginController.login);
 app.post('/recipes', validateToken, validateRecipes, recipesController.createdRecipes);

@@ -1,5 +1,6 @@
 const recipesSchema = require('../Models/recipesSchema');
 const { invEntries } = require('../helpers');
+const recipesModel = require('../Models/recipesModel');
 
 const validateRecipes = async (req, res, next) => {
   try {
@@ -14,6 +15,12 @@ const validateRecipes = async (req, res, next) => {
   }
 }; 
 
+const getAllRecipes = async () => {
+  const allRecipes = await recipesModel.getAllRecipes();
+  return allRecipes;
+};
+
 module.exports = {
   validateRecipes,
+  getAllRecipes,
 };
