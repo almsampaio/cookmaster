@@ -27,4 +27,13 @@ const getId = async (id) => {
   return listRecipeID;
 };
 
-module.exports = { create, getAll, getId };
+const update = async ({ id, name, ingredients, preparation }) => {
+  if (!ObjectId.isValid(id)) return null;
+  const recipesCollection = await mongoConnect.getConnection();
+  const updateRecipe = await recipesCollection.collection('recipes').updateOne(
+    { _id: ObjectId(id) }, { $set: { name, ingredients, preparation } },
+  );
+  return updateRecipe;
+};
+
+module.exports = { create, getAll, getId, update };

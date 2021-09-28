@@ -20,5 +20,6 @@ app.post('/login', loginController.login);
 app.post('/recipes', validateToken, recipesController.create);
 app.get('/recipes', recipesController.getAll);
 app.get('/recipes/:id', recipesController.getId);
+app.put('/recipes/:id', validateToken, recipesController.update);
 
 module.exports = app;

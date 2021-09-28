@@ -31,4 +31,14 @@ const getId = async (req, res) => {
   return res.status(statusCode.OK).json(recipe);
 };
 
-module.exports = { create, getAll, getId }; 
+const update = async (req, res) => {
+  const { name, ingredients, preparation } = req.body;
+  const { id } = req.params;
+  const { _id } = await recipesModel.getId(id);
+  await recipesModel.update({ id, name, ingredients, preparation });
+  return res.status(statusCode.OK).json(
+    { _id: id, name, ingredients, preparation, userId: _id },
+  );
+};
+
+module.exports = { create, getAll, getId, update }; 
