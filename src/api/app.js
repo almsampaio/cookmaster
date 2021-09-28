@@ -35,8 +35,8 @@ app.post('/login', ...loginValid, userLogin);
 
 app.post('/recipes', ...recepieValid, tokenValidation, createRecepie);
 
-app.get('recipes', findRecepies);
+app.get('/recipes', findRecepies);
 
-app.get('recipes', findRecepieById);
+app.get('/recipes', findRecepieById);
 
 module.exports = app;
