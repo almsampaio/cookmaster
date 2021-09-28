@@ -1,5 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const multer = require('multer');
+const storage = require('./storage');
 const userController = require('../controllers/userController');
 const recipeController = require('../controllers/recipeController');
 const userMiddlewares = require('../middlewares/userMiddlewares');
@@ -7,6 +9,7 @@ const recipeMiddlewares = require('../middlewares/recipeMiddlewares');
 const authMiddlewares = require('../middlewares/authMiddlewares');
 
 const app = express();
+const upload = multer({ storage });
 app.use(bodyParser.json());
 
 // Não remover esse end-point, ele é necessário para o avaliador
@@ -46,8 +49,8 @@ authMiddlewares.authValidation,
 recipeController.exclude);
 
 app.put('/recipes/:id/image/', 
+upload.single('image'),
 authMiddlewares.authValidation,
-recipeMiddlewares.upload,
 recipeController.addImage);
 
 app.use('/images', express.static('src/uploads/'));

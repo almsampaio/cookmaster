@@ -34,6 +34,7 @@ const addImage = async (req, res) => {
   const { id } = req.params;
   const { filename } = req.file;
   const { _id } = req.user;
+  if (!req.user) return res.status(401).json({ message: 'missing auth token' });
   const { status, data } = await recipeService.addImage(id, filename, _id);
   res.status(status).json(data);
 };
