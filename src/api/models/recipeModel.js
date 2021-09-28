@@ -28,9 +28,23 @@ const editRecipe = async (id, data, idUser) => {
    return result;
  };
 
+ const deleteRecipe = async (id) => {
+  const db = await getConnection();
+  await db.collection('recipes').deleteOne({ _id: ObjectId(id) });
+};
+
+const addImage = async (id, image) => {
+  const db = await getConnection();
+  const result = await db.collection('recipes')
+    .findOneAndUpdate({ _id: ObjectId(id) }, { $set: { image } });
+  return { ...result.value, image };
+};
+
 module.exports = {
   createRecipe,
   getAll,
   getById,
   editRecipe,
+  deleteRecipe,
+  addImage,
 };
