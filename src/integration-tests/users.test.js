@@ -51,7 +51,7 @@ describe('POST  /users', () => {
     })
 
     it('contains the correct name value', () => {
-      expect(response.body.user.name).to.be.equal('Marcus Cesar')
+      expect(response.body.user.name).to.be.equal('Marcus Cesar');
     })
 
     it('contains the correct email value', () => {
@@ -95,7 +95,7 @@ describe('POST  /users', () => {
           "password": "123456"
         });
       expect(response).to.have.status(400);
-      expect(response.body).to.be.a('object');
+      expect(response.body).to.be.an('object');
       expect(response.body).to.have.property('message');
       expect(response.body.message).to.be.equal('Invalid entries. Try again.')
     });
