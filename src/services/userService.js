@@ -4,11 +4,11 @@ const userModel = require('../models/userModel');
 const emailRegex = /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
 
 const isEmailCreated = async (name, email, password) => {
-    const isProductCreated = await userModel.getByUserEmail(email);
-    if (isProductCreated) {
+    const isEmailUsed = await userModel.getByUserEmail(email);
+    if (isEmailUsed) {
         return { message: 'Email already registered', status: 409 };
     }
-    return userModel.createProduct(name, email, password);
+    return userModel.createUser(name, email, password);
 };
 
 const create = async (name, email, password) => {
