@@ -23,8 +23,16 @@ async function findRecepieById(req, res) {
   return res.status(200).json(recepie);
 }
 
+async function editRecepie(req, res) {
+  const { id } = req.params;
+  const { name, ingredients, preparation } = req.body;
+  const editedRecepie = await recepiesModel.editRecepie(id, name, ingredients, preparation);
+  return res.status(200).json(editedRecepie);
+}
+
 module.exports = {
   createRecepie,
   findRecepies,
   findRecepieById,
+  editRecepie,
 };

@@ -5,4 +5,11 @@ async function createRecepie(name, ingredients, preparation, userId) {
   return data;
 }
 
-module.exports = { createRecepie };
+async function editRecepie(id, name, ingredients, preparation) {
+  const editedRecepie = await recipieModel.editRecepie(id, name, ingredients, preparation);
+  return editedRecepie;
+}
+module.exports = {
+  createRecepie,
+  editRecepie,
+};

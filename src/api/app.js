@@ -9,7 +9,12 @@ app.use('/images', express.static(path.join(__dirname, '..', 'uploads')));
 
 const { create } = require('../controllers/users');
 const { userLogin } = require('../controllers/login');
-const { createRecepie, findRecepies, findRecepieById } = require('../controllers/recepie');
+const { 
+  createRecepie,
+  findRecepies,
+  findRecepieById,
+  editRecepie,
+} = require('../controllers/recepie');
 const { verifyName, verifyEmail, emailExists } = require('../middlewares/userValidation');
 const { verifyEmailPass, emailValid, passwordValid } = require('../middlewares/loginValidations');
 const { tokenValidation } = require('../middlewares/tokenValidations');
@@ -38,5 +43,7 @@ app.post('/recipes', ...recepieValid, tokenValidation, createRecepie);
 app.get('/recipes', findRecepies);
 
 app.get('/recipes/:id', findRecepieById);
+
+app.put('/recipes/:id', tokenValidation, editRecepie);
 
 module.exports = app;
