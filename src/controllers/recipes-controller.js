@@ -15,8 +15,8 @@ const createRecipe = async (req, res) => {
     if (recipeData.message) {
       return res
         .status(recipeData.status)
-        .json({ message: recipeData.message }); 
-}
+        .json({ message: recipeData.message });
+    }
 
     res.status(201).json(recipeData);
   } catch (error) {
@@ -43,4 +43,21 @@ const findById = async (req, res) => {
   }
 };
 
-module.exports = { createRecipe, findRecipes, findById };
+const updateRecipeById = async (req, res) => {
+  const { id } = req.params;
+  const { name, ingredients, preparation } = req.body;
+  try {
+    const recipe = await recipesService.updateRecipeById(
+      id,
+      name,
+      ingredients,
+      preparation,
+    );
+    if (recipe.message) return res.status(recipe.status).json({ message: recipe.message });
+    res.status(200).json(recipe);
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+module.exports = { createRecipe, findRecipes, findById, updateRecipeById };

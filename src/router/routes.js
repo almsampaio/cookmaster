@@ -12,5 +12,6 @@ router.post('/login', login.loginController);
 router.post('/recipes', istoken, recipes.createRecipe);
 router.get('/recipes', recipes.findRecipes);
 router.get('/recipes/:id', recipes.findById);
+router.put('/recipes/:id', istoken, recipes.updateRecipeById);
 
 module.exports = router;
