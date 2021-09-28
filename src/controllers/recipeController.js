@@ -30,10 +30,19 @@ const exclude = async (req, res) => {
   res.status(status).end();
 };
 
+const addImage = async (req, res) => {
+  const { id } = req.params;
+  const { filename } = req.file;
+  const { _id } = req.user;
+  const { status, data } = await recipeService.addImage(id, filename, _id);
+  res.status(status).json(data);
+};
+
 module.exports = {
   create,
   getAll,
   getById,
   update,
   exclude,
+  addImage,
 };

@@ -26,10 +26,16 @@ const exclude = async (id) => {
   return { status: 204 };
 };
 
+const addImage = async (id, filename, userId) => {
+  const recipeToUpdate = await recipeModel.addImage(id, filename, userId);
+  return { status: 200, data: recipeToUpdate };
+};
+
 module.exports = {
   create,
   getAll,
   getById,
   update,
   exclude,
+  addImage,
 };
