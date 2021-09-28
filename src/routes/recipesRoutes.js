@@ -9,5 +9,6 @@ router.use(bodyParser.json());
 
 router.post('/', validateJWT, recipesController.create);
 router.get('/', recipesController.getAll);
+router.get('/:id', recipesController.getById);
 
 module.exports = router;
