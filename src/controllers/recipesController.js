@@ -10,6 +10,13 @@ const create = async (req, res) => {
   res.status(201).json(recipe);
 };
 
+const getAll = async (req, res) => {
+  const recipes = await recipeService.getAll();
+
+  res.status(200).json(recipes);
+};
+
 module.exports = {
   create,
+  getAll,
 };
