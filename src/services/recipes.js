@@ -5,7 +5,7 @@ const {
   findById,
   updateRecipe,
   deleteRecipe,
-  // addImage,
+  addImage,
 } = require('../models/recipes');
 
 const OK_STATUS = 200;
@@ -60,15 +60,15 @@ const removeRecipe = async (id) => {
   return { status: NO_CONTENT_STATUS };
 };
 
-// const addImageRecipe = async (id, image) => {
-//   const findImage = ObjectId.isValid(id);
-//   if (!findImage) return { status: NOT_FOUND_STATUS, message: 'recipe not found' };
+const addImageRecipe = async (id, image) => {
+  const findImage = ObjectId.isValid(id);
+  if (!findImage) return { status: NOT_FOUND_STATUS, message: 'recipe not found' };
 
-//   const imagePath = `localhost:3000/src/uploads/${image}`;
-//   const newImage = await addImage(id, imagePath);
+  const imagePath = `localhost:3000/src/uploads/${image}`;
+  const newImage = await addImage(id, imagePath);
 
-//   return { status: OK_STATUS, data: newImage };
-// };
+  return { status: OK_STATUS, data: newImage };
+};
 
 module.exports = {
   createRecipe,
@@ -76,5 +76,5 @@ module.exports = {
   findRecipeById,
   update,
   removeRecipe,
-  // addImageRecipe,
+  addImageRecipe,
 };

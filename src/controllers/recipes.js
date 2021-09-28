@@ -4,7 +4,7 @@ const {
   findRecipeById,
   update,
   removeRecipe,
-  // addImageRecipe,
+  addImageRecipe,
 } = require('../services/recipes');
 
 const create = async (req, res) => {
@@ -31,7 +31,6 @@ const updateRecipe = async (req, res) => {
   const { id } = req.params;
   const { name, preparation, ingredients } = req.body;
   const dataRecipe = { name, preparation, ingredients };
-  // const { _id: userId } = req.user;
   const { status, data, message } = await update(id, dataRecipe);
   if (message) return res.status(status).json({ message });
   res.status(status).json(data);
@@ -44,14 +43,14 @@ const deleteRecipe = async (req, res) => {
   res.status(status).send();
 };
 
-// const addImage = async (req, res) => {
-//   const { id } = req.params;
-//   const { image } = req.file;
-//   const { status, data, message } = await addImageRecipe(id, image);
-//   if (message) return res.status(status).json({ message });
+const addImage = async (req, res) => {
+  const { id } = req.params;
+  const { filename } = req.file;
+  const { status, data, message } = await addImageRecipe(id, filename);
+  if (message) return res.status(status).json({ message });
 
-//   res.status(status).json(data);
-// };
+  res.status(status).json(data);
+};
 
 module.exports = {
   create,
@@ -59,5 +58,5 @@ module.exports = {
   findById,
   updateRecipe,
   deleteRecipe,
-  // addImage,
+  addImage,
 };

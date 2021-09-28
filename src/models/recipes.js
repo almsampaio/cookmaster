@@ -40,11 +40,12 @@ const deleteRecipe = async (id) => {
     .deleteOne({ _id: ObjectId(id) });
 };
 
-// const addImage = async (id, image) => {
-//   const newImage = await db.collection('recipes')
-//     .findOneAndUpdate({ _id: ObjectId(id) }, { $set: { image } });
-//   return { ...newImage.value, image };
-// };
+const addImage = async (id, image) => {
+  const db = await connect();
+  const newImage = await db.collection('recipes')
+    .findOneAndUpdate({ _id: ObjectId(id) }, { $set: { image } });
+  return { ...newImage.value, image };
+};
 
 module.exports = {
   create,
@@ -52,5 +53,5 @@ module.exports = {
   findById,
   updateRecipe,
   deleteRecipe,
-  // addImage,
+  addImage,
 };
