@@ -9,6 +9,7 @@ const app = express();
 app.use(bodyParser.json());
 app.use('/users', routes.RoutesUsers);
 app.use('/login', routes.RouteLogin);
+app.use('/recipes', routes.RoutesRecipes);
 
 // Não remover esse end-point, ele é necessário para o avaliador
 app.get('/', (request, response) => {
