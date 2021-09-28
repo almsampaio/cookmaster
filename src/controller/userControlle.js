@@ -49,6 +49,18 @@ const findByIdRecipes = async (req, res) => {
   res.status(200).json(recipe);
 };
 
+const upDateRecipes = async (req, res) => {
+  const { id } = req.params;
+  const userId = req.user;
+  const { name, ingredients, preparation } = req.body;
+  const data = { name, ingredients, preparation };
+  const recipe = await userService.upDateRecipes(data, userId, id);
+
+  if (recipe.message) return res.status(recipe.status).json({ message: recipe.message });
+
+  res.status(201).json(recipe);
+};
+
 module.exports = {
   addUser,
   findAll,
@@ -56,4 +68,5 @@ module.exports = {
   addRecipes,
   findAllRecipes,
   findByIdRecipes,
+  upDateRecipes,
 };

@@ -60,6 +60,12 @@ const findByIdRecipes = async (id) => {
   return result;
 };
 
+const upDateRecipes = async (data, userId, id) => {
+  const addedRecipe = await userModel.addRecipe(data, userId, id);
+
+  return addedRecipe;
+};
+
 module.exports = {
   addUser,
   findAll,
@@ -68,4 +74,5 @@ module.exports = {
   addRecipes,
   findAllRecipes,
   findByIdRecipes,
+  upDateRecipes,
 };
