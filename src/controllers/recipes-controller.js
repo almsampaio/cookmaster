@@ -65,4 +65,12 @@ const updateRecipeById = async (req, res) => {
   }
 };
 
-module.exports = { createRecipe, findRecipes, findById, updateRecipeById };
+const deleteRecipeById = async (req, res) => {
+  const { id } = req.params;
+
+  await recipesService.deleteRecipeById(id);
+
+  res.status(204).send();
+};
+
+module.exports = { createRecipe, findRecipes, findById, updateRecipeById, deleteRecipeById };

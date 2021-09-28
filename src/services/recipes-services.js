@@ -56,8 +56,18 @@ const updateRecipeById = async (id, name, ingredients, preparation) => {
   if (!upRecipe) {
     return { status: 404, message: 'recipe not found' };
   }
-  
+
   return upRecipe;
 };
 
-module.exports = { createRecipe, findRecipes, findById, updateRecipeById };
+const deleteRecipeById = async (id) => {
+  recipesModel.deleteRecipeById(id);
+};
+
+module.exports = {
+  createRecipe,
+  findRecipes,
+  findById,
+  updateRecipeById,
+  deleteRecipeById,
+};

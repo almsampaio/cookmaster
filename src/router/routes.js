@@ -13,5 +13,6 @@ router.post('/recipes', istoken, recipes.createRecipe);
 router.get('/recipes', recipes.findRecipes);
 router.get('/recipes/:id', recipes.findById);
 router.put('/recipes/:id', istoken, recipes.updateRecipeById);
+router.delete('/recipes/:id', istoken, recipes.deleteRecipeById);
 
 module.exports = router;
