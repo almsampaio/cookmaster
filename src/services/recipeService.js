@@ -40,7 +40,12 @@ const update = async (recipeData) => {
 const remove = async (id, userId) => {
   await recipeModel.remove(id, userId);
   return { status: HTTP_NO_CONTENT_STATUS };
-};  
+};
+
+const addImage = async (id, userId) => {
+  const recipe = await recipeModel.addImage(id, userId);
+  return { updatedRecipe: recipe, status: HTTP_OK_STATUS };
+};
   
 module.exports = {
   create,
@@ -48,4 +53,5 @@ module.exports = {
   getById,
   update,
   remove,
+  addImage,
 };
