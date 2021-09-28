@@ -27,7 +27,7 @@ const emailExists = async (req, res, next) => {
   const { email } = req.body;
 
   const searchByEmail = await usersModel.searchByEmail(email);
-  console.log(searchByEmail);
+  // console.log(searchByEmail);
   if (searchByEmail) return res.status(409).json({ message: 'Email already registered' });
   next();
 };

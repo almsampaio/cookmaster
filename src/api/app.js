@@ -6,8 +6,17 @@ const app = express();
 app.use(bodyParser.json());
 
 const users = require('../middlewares/userValidation');
+const login = require('../middlewares/loginValidation');
 
 const usersControllers = require('../controllers/userController');
+const loginControllers = require('../controllers/loginController');
+
+app.post('/login',
+login.emailValidate,
+login.passwordValidate,
+login.emailVerifyValidate,
+login.passwordVerifyValidate,
+loginControllers.userLogin);
 
 app.post('/users',
 users.nameValidate,

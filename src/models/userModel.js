@@ -17,7 +17,15 @@ const create = async (name, email, password) => {
   return { user: dataWithoutPassword };
 };
 
+const getByPassword = async (password) => {
+  const db = await connection();
+
+  const search = await db.collection('users').findOne({ password });
+  return search;
+};
+
 module.exports = {
   searchByEmail,
   create,
+  getByPassword,
 };
