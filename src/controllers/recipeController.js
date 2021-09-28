@@ -45,10 +45,20 @@ const remove = async (req, res) => {
   return res.status(code).json();
 }
 
+const addImage = async (req, res) => {
+  const { id } = req.params;
+  const { path: image } = req.file;
+
+  const { recipe, code } = await recipeService.addImage(id, image);
+
+  return res.status(code).json(recipe);
+}
+
 module.exports = {
   create,
   getAll,
   find,
   edit,
   remove,
+  addImage,
 }

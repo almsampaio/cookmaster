@@ -38,10 +38,17 @@ const remove = async (id) => {
   return { code: 204 };
 }
 
+const addImage = async (id, image) => {
+  const recipe = await recipeModel.addImage(id, image);
+
+  return { code: 200, recipe };
+}
+
 module.exports = {
   create,
   getAll,
   find,
   edit,
   remove,
+  addImage,
 }

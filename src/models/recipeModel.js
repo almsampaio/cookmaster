@@ -38,10 +38,23 @@ const remove = async (id) => {
     .catch(() => null);
 }
 
+const addImage = async (id, image) => {
+  const recipe = await find(id);
+  const imageURL = `localhost:3000/${image}`;
+
+  return connection()
+    .then((db) => db.collection('recipes').updateOne(
+      {_id: ObjectId(id)},
+      { $set: { image: imageURL } }
+    ))
+    .then(() => ({ ...recipe, image: imageURL }));
+}
+
 module.exports = {
   create,
   getAll,
   find,
   edit,
   remove,
+  addImage,
 }
