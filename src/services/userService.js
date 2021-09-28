@@ -19,7 +19,7 @@ const validateEmail = (email) => {
 const create = async ({ name, email, password, role }) => {
   const validateFields = validateEntry(name, email, password);
   const validEmail = validateEmail(email);
-  const existEmail = await userModel.filterByEmail(email);
+  const existEmail = await userModel.getEmail(email);
   if (!validateFields || !validEmail) {
     return { message: 'Invalid entries. Try again.' }; 
   }

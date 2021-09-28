@@ -14,18 +14,18 @@ const create = async ({ name, email, password, role }) => {
     };
   };
 
-const filterByEmail = async (email) => {
+const getEmail = async (email) => {
   const userCollection = await mongoConnect.getConnection()
     .then((db) => db.collection('users').findOne({ email }));
 
   return userCollection;  
 };
   
-const filterByUser = async ({ email, password }) => {
+const getUser = async ({ email, password }) => {
   const userCollection = await mongoConnect.getConnection()
     .then((db) => db.collection('users').findOne({ email, password }));
 
   return userCollection;  
 };
 
-  module.exports = { create, filterByEmail, filterByUser };
+  module.exports = { create, getEmail, getUser };

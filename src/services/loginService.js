@@ -44,7 +44,7 @@ const login = async ({ email, password }) => {
         return { message: 'Incorret username or password' }; 
     }
 
-    const userLogin = await userModel.filterByUser({ email, password });
+    const userLogin = await userModel.getUser({ email, password });
 
     const existentPasswords = existentPassword(userLogin, password);
     if (!existentPasswords) {
