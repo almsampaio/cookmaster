@@ -7,9 +7,15 @@ app.use(bodyParser.json());
 
 const users = require('../middlewares/userValidation');
 const login = require('../middlewares/loginValidation');
-
+const recipes = require('../middlewares/recipesValidation');
+const token = require('../middlewares/token');
 const usersControllers = require('../controllers/userController');
 const loginControllers = require('../controllers/loginController');
+const recipesControllers = require('../controllers/recipesControllers');
+
+app.post('/recipes',
+token.token,
+recipesControllers.createRecipe);
 
 app.post('/login',
 login.emailValidate,
