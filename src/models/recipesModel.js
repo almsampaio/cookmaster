@@ -2,17 +2,17 @@ const { ObjectId } = require('mongodb');
 const mongoConnect = require('./connection');
 
 const create = async ({ name, ingredients, preparation }) => {
-    const usersCollection = await mongoConnect.getConnection()
-      .then((db) => db.collection('recipes'));
-    const createdUser = await usersCollection.insertOne({ name, ingredients, preparation });
+  const usersCollection = await mongoConnect.getConnection()
+    .then((db) => db.collection('recipes'));
+  const createdUser = await usersCollection.insertOne({ name, ingredients, preparation });
 
-    return {
-      name,
-      ingredients,
-      preparation,
-      _id: createdUser.insertedId,
-    };
+  return {
+    name,
+    ingredients,
+    preparation,
+    _id: createdUser.insertedId,
   };
+};
 
 const getAll = async () => {
   const recipesCollection = await mongoConnect.getConnection()
@@ -49,4 +49,14 @@ const exclude = async (id) => {
   return deleteRecipe;
 };
 
-module.exports = { create, getAll, getId, update, exclude };
+const uploadImage = async (id, image) => {
+  if (!ObjectId.isValid(id)) return null;
+  const recipesCollection = await mongoConnect.getConnection();
+  const updateImage = await recipesCollection.collection('recipes').updateOne(
+    { _id: ObjectId(id) }, { $set: { image } },
+  );
+
+  return updateImage;
+};
+
+module.exports = { create, getAll, getId, update, exclude, uploadImage };
