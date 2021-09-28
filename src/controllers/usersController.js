@@ -10,7 +10,6 @@ const create = async (req, res) => {
   const { name, email, password } = req.body;
   const { isAdmin } = req;
   const role = !isAdmin ? 'user' : 'admin';
-  console.log(isAdmin, role);
   const result = await usersService.create(name, email, password, role);
   return res.status(result.status).json(result.response);
 };
