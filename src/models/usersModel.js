@@ -14,7 +14,11 @@ const create = (email, password, name, role) => connection()
 const getAll = () => connection()
   .then((db) => db.collection('users').find().toArray());
 
+const findUser = (email) => connection()
+  .then((db) => db.collection('users').findOne({ email }));
+
 module.exports = {
   create,
   getAll,
+  findUser,
 };
