@@ -2,14 +2,14 @@ const recipesService = require('../services/recipes-services');
 
 const createRecipe = async (req, res) => {
   const { name, ingredients, preparation } = req.body;
-  const { userId } = req;
+  const { _id } = req.user;
 
   try {
     const recipeData = await recipesService.createRecipe(
       name,
       ingredients,
       preparation,
-      userId,
+      _id,
     );
 
     if (recipeData.message) {
@@ -30,4 +30,17 @@ const findRecipes = async (_req, res) => {
   res.status(200).json(recipes);
 };
 
-module.exports = { createRecipe, findRecipes };
+const findById = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const recipe = await recipesService.findById(id);
+    if (recipe.message) return res.status(recipe.status).json({ message: recipe.message });
+
+    res.status(200).json(recipe);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+module.exports = { createRecipe, findRecipes, findById };

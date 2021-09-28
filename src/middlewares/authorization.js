@@ -10,15 +10,15 @@ module.exports = async (req, res, next) => {
 
   try {
     const payload = jwt.verify(token, SECRET);
-    const { _id, email } = payload;
-    console.log(payload);
+    const { email } = payload;
+
     const validatePayload = await userModel.find(email);
     if (!validatePayload) {
       res.status(401).json({ message: 'jwt malformed' });
     }
-    
-    req.userId = _id;
-    
+
+    req.user = payload;
+
     next();
   } catch (error) {
     res.status(401).json({ message: 'jwt malformed' });
