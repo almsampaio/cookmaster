@@ -35,11 +35,18 @@ const addRecipes = async (req, res) => {
 };
 
 const findAllRecipes = async (_req, res) => {
-  const user = await userService.findAllRecipes();
+  const recipes = await userService.findAllRecipes();
 
-console.log(user);
+  res.status(200).json(recipes);
+};
 
-  res.status(200).json(user);
+const findByIdRecipes = async (req, res) => {
+  const { id } = req.params;
+  console.log(id);
+  const recipe = await userService.findByIdRecipes(id);
+  if (recipe.message) return res.status(recipe.status).json({ message: recipe.message });
+
+  res.status(200).json(recipe);
 };
 
 module.exports = {
@@ -48,4 +55,5 @@ module.exports = {
   login,
   addRecipes,
   findAllRecipes,
+  findByIdRecipes,
 };

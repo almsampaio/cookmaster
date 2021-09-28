@@ -46,9 +46,18 @@ const addRecipes = async (name, ingredients, preparation, userId) => {
 };
 
 const findAllRecipes = async () => {
-  const users = await userModel.findAllRecipes();
+  const recipes = await userModel.findAllRecipes();
 
-  return users;
+  return recipes;
+};
+
+const findByIdRecipes = async (id) => {
+  const result = await userModel.findByIdRecipes(id);
+  if (!result) {
+    return { status: 404, message: 'recipe not found' };
+  }
+
+  return result;
 };
 
 module.exports = {
@@ -58,4 +67,5 @@ module.exports = {
   login,
   addRecipes,
   findAllRecipes,
+  findByIdRecipes,
 };
