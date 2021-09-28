@@ -4,6 +4,6 @@ const rescue = require('../rescue/rescue');
 
 const PORT = 3000;
 
-app.post('/users', user.createProduct, rescue);
+app.post('/users', user.createUser, rescue);
 
 app.listen(PORT, () => console.log(`conectado na porta ${PORT}`));
