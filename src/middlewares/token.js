@@ -1,15 +1,14 @@
 const jwt = require('jsonwebtoken');
-require('dotenv').config();
 
-const SECRET = process.env.SECRET || 'senhaSecreta';
+const SECRET = 'xablau';
 
 function createToken(user) {
   const { password: _, ...payload } = user;
   const jwtConfig = {
     algorithm: 'HS256',
-    expiresIn: '1d',
+    expiresIn: '15d',
   };
-  const token = jwt.sign(payload, SECRET, jwtConfig);
+  const token = jwt.sign({ data: payload }, SECRET, jwtConfig);
   return { token };
 }
 
