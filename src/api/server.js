@@ -6,4 +6,4 @@ const PORT = 3000;
 
 app.post('/users', user.createUser, rescue);
 
-app.listen(PORT, () => console.log(`conectado na porta ${PORT}`));
+app.listen(PORT, () => console.log('Boraaa torradeira !'));
