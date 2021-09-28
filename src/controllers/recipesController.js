@@ -1,5 +1,6 @@
 const statusCode = require('http-status-codes');
 const recipesService = require('../services/recipesService');
+const recipesModel = require('../models/recipesModel');
 
 const create = async (req, res) => {
   const { name, ingredients, preparation } = req.body;
@@ -16,4 +17,9 @@ const create = async (req, res) => {
     { name, ingredients, preparation, userId: id, _id } });
 };
 
-module.exports = { create }; 
+const getAll = async (req, res) => {
+  const listRecipes = await recipesModel.getAll();
+  return res.status(statusCode.OK).json(listRecipes);
+};
+
+module.exports = { create, getAll }; 
