@@ -5,9 +5,11 @@ const create = async (req, res) => {
 
   const { createdUser, code, message } = await userService.create(user);
 
-  if (message) return res.status(code).json({
-    message
-  });
+  if (message) {
+ return res.status(code).json({
+    message,
+  }); 
+}
 
   delete createdUser.password;
 

@@ -1,24 +1,18 @@
-const connection = require('./connection');
 const { ObjectId } = require('mongodb');
+const connection = require('./connection');
 
-const create = async (recipe, userId) => {
-  return connection()
+const create = async (recipe, userId) => connection()
     .then((db) => db.collection('recipes').insertOne({ ...recipe, userId }))
-    .then(result => result.ops[0]);
-}
+    .then((result) => result.ops[0]);
 
-const getAll = async () => {
-  return connection()
+const getAll = async () => connection()
     .then((db) => db.collection('recipes').find().toArray())
-    .then(result => result);
-}
+    .then((result) => result);
 
-const find = async (id) => {
-  return connection()
-    .then((db) => db.collection('recipes').findOne({_id: ObjectId(id)}))
-    .then(result => result)
+const find = async (id) => connection()
+    .then((db) => db.collection('recipes').findOne({ _id: ObjectId(id) }))
+    .then((result) => result)
     .catch(() => null);
-}
 
 const edit = async (recipe, id) => {
   const { name, ingredients, preparation } = recipe;
@@ -26,17 +20,15 @@ const edit = async (recipe, id) => {
 
   return connection()
     .then((db) => db.collection('recipes').updateOne(
-      {_id: ObjectId(id)},
-      { $set: { name, ingredients, preparation } }
+      { _id: ObjectId(id) },
+      { $set: { name, ingredients, preparation } },
     ))
     .then(() => ({ ...oldRecipe, name, ingredients, preparation }));
-}
+};
 
-const remove = async (id) => {
-  return connection()
-    .then((db) => db.collection('recipes').deleteOne({_id: ObjectId(id)}))
+const remove = async (id) => connection()
+    .then((db) => db.collection('recipes').deleteOne({ _id: ObjectId(id) }))
     .catch(() => null);
-}
 
 const addImage = async (id, image) => {
   const recipe = await find(id);
@@ -44,11 +36,11 @@ const addImage = async (id, image) => {
 
   return connection()
     .then((db) => db.collection('recipes').updateOne(
-      {_id: ObjectId(id)},
-      { $set: { image: imageURL } }
+      { _id: ObjectId(id) },
+      { $set: { image: imageURL } },
     ))
     .then(() => ({ ...recipe, image: imageURL }));
-}
+};
 
 module.exports = {
   create,
@@ -57,4 +49,4 @@ module.exports = {
   edit,
   remove,
   addImage,
-}
+};

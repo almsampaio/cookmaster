@@ -5,7 +5,7 @@ const multer = require('multer');
 const UserController = require('../controllers/userController');
 const RecipeController = require('../controllers/recipeController');
 const Login = require('../controllers/login');
-const validateJWT = require('../api/auth/validateJWT');
+const validateJWT = require('./auth/validateJWT');
 
 const app = express();
 
@@ -17,7 +17,7 @@ const storage = multer.diskStorage({
   },
   filename: (req, _file, callback) => {
     callback(null, `${req.params.id}.jpeg`);
-  }});
+  } });
 
 const upload = multer({ storage });
 
