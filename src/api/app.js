@@ -20,5 +20,6 @@ app.post('/login', usersController.findByPersonalData);
 app.post('/recipes', authenticationMiddleware, recipeController.createRecipe);
 app.get('/recipes', recipeController.getAll);
 app.get('/recipes/:id', recipeController.getById);
+app.put('/recipes/:id', authenticationMiddleware, recipeController.editRecipe);
 
 module.exports = app;

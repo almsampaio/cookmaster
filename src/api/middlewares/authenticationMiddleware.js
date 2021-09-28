@@ -6,7 +6,7 @@ const KEY = 'privateKey';
 
 const STATUS_UNAUTHORIZED = 401;
 
-const authenticationMiddleware = (req, res, next) => {
+const authenticationMiddleware = async (req, res, next) => {
   const token = req.headers.authorization;
 
   if (!token) return res.status(STATUS_UNAUTHORIZED).json({ message: MISSING_TOKEN });

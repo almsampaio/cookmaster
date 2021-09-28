@@ -1,9 +1,13 @@
+const { ObjectId } = require('mongodb');
 const recipeModel = require('../models/recipeModel');
 
-const BAD_REQUEST = 400;
+const STATUS_OK = 200;
 const STATUS_CREATED = 201;
+const BAD_REQUEST = 400;
+const STATUS_NOT_FOUND = 404;
 
 const INVALID_ENTRIES = 'Invalid entries. Try again.';
+const RECIPE_NOT_FOUND = 'recipe not found';
 
 const createRecipe = async (recipeData, userId) => {
   const { name, ingredients, preparation } = recipeData;
@@ -26,8 +30,17 @@ const getById = async (id) => {
   return result;
 };
 
+const editRecipe = async (id, data, idUser) => {
+  const checked = ObjectId.isValid(id);
+  if (!checked) return { status: STATUS_NOT_FOUND, err: { message: RECIPE_NOT_FOUND } };
+
+  const recipe = await recipeModel.editRecipe(id, data, idUser);
+  return { status: STATUS_OK, data: recipe };
+};
+
 module.exports = {
   createRecipe,
   getAll,
   getById,
+  editRecipe,
 };
