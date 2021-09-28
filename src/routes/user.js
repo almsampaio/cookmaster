@@ -1,12 +1,9 @@
 const express = require('express');
-// const controller = require('./controller');
+const rescue = require('express-rescue');
+const controller = require('../controller/ctrlUser');
 
-const rotaSales = express.Router();
+const usersRouter = express.Router();
 
-/* rotaSales.get('/', controller.getAll);
-rotaSales.get('/:id', controller.getById);
-rotaSales.post('/', controller.create);
-rotaSales.put('/:id', controller.editById);
-rotaSales.delete('/:id', controller.deleteById); */
+usersRouter.post('/', rescue(controller.createUser));
 
-module.exports = rotaSales;
+module.exports = usersRouter;

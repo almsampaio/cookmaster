@@ -12,17 +12,13 @@ app.get('/', (_request, response) => {
   response.send();
 });
 
-// app.use('/products', rotaProducts);
-
-// app.use('/sales', rotaSales);
-
-/* app.post('/sales', rescue(rotaSales.createAllSales)); */
+/* const rescue = require('express-rescue');
 
 app.use((err, _req, res, _next) => {
   if (err.status) return res.status(err.status).json({ messege: err.message });
   return res.status(500).json({ messege: err.message });
 });
-
+ */
 app.listen(3000, () => {
   console.log('Online');
-});
+}); 
