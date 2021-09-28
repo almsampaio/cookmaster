@@ -25,5 +25,6 @@ app.get('/recipes/:id', userController.findByIdRecipes);
 app.get('/recipes', userController.findAllRecipes);
 
 app.put('/recipes/:id', middleware.authToken, userController.upDateRecipes);
+app.delete('/recipes/:id', middleware.authToken, userController.excludeRecipes);
 
 module.exports = app;

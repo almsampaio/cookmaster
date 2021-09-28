@@ -51,6 +51,11 @@ const upDateRecipes = async (data, userId, id) => {
   return recipe;
 };
 
+const excludeRecipes = async (id) => {
+  const db = await connect();
+  await db.collection('recipes').deleteOne({ _id: ObjectID(id) });
+};
+
 module.exports = {
   addUser,
   findAll,
@@ -59,4 +64,5 @@ module.exports = {
   findAllRecipes,
   findByIdRecipes,
   upDateRecipes,
+  excludeRecipes,
 };

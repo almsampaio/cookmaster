@@ -42,7 +42,6 @@ const findAllRecipes = async (_req, res) => {
 
 const findByIdRecipes = async (req, res) => {
   const { id } = req.params;
-  console.log(id);
   const recipe = await userService.findByIdRecipes(id);
   if (recipe.message) return res.status(recipe.status).json({ message: recipe.message });
 
@@ -61,6 +60,16 @@ const upDateRecipes = async (req, res) => {
   res.status(201).json(recipe);
 };
 
+const excludeRecipes = async (req, res) => {
+  const { id } = req.params;
+
+  const result = await userService.upDateRecipes(id);
+
+  if (result.message) return res.status(result.status).json({ message: result.message });
+
+  res.status(204).send();
+};
+
 module.exports = {
   addUser,
   findAll,
@@ -69,4 +78,5 @@ module.exports = {
   findAllRecipes,
   findByIdRecipes,
   upDateRecipes,
+  excludeRecipes,
 };

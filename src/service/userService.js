@@ -1,3 +1,4 @@
+const { ObjectID } = require('mongodb');
 const { sign } = require('jsonwebtoken');
 const userModel = require('../model/userModel');
 const { SECRET, jwtConfig } = require('../util/util');
@@ -66,6 +67,13 @@ const upDateRecipes = async (data, userId, id) => {
   return addedRecipe;
 };
 
+const excludeRecipes = async (id) => {
+  const checkedId = ObjectID.isValid(id);
+  if (!checkedId) return { status: 404, message: 'recipe not found' };
+  
+  await userModel.excludeRecipes(id);
+};
+
 module.exports = {
   addUser,
   findAll,
@@ -75,4 +83,5 @@ module.exports = {
   findAllRecipes,
   findByIdRecipes,
   upDateRecipes,
+  excludeRecipes,
 };
