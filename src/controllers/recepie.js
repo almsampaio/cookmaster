@@ -17,7 +17,7 @@ async function findRecepieById(req, res) {
   const { id } = req.params;
   const recepie = await recepiesModel.findRecepieById(id);
   if (!recepie) {
-    return res.status(404).json({ message: 'Recepie not found' });
+    return res.status(404).json({ message: 'recipe not found' });
   }
 
   return res.status(200).json(recepie);

@@ -1,4 +1,4 @@
-const { ObjectId } = require('mongodb');
+const { ObjectId } = require('bson');
 const getConnection = require('./connections');
 
 async function createRecepie(name, ingredients, preparation, userId) {
@@ -14,15 +14,15 @@ async function findRecepies() {
   return recepies;
 }
 
-async function findRecepiesById(id) {
+async function findRecepieById(id) {
   if (!ObjectId.isValid(id)) return null;
   const db = await getConnection();
-  const recepie = await db.collection('recipes').findOne({ id: ObjectId(id) });
+  const recepie = await db.collection('recipes').findOne({ _id: ObjectId(id) });
   return recepie;
 }
 
 module.exports = {
   createRecepie,
   findRecepies,
-  findRecepiesById,
+  findRecepieById,
 };
