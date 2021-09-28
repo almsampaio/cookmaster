@@ -14,6 +14,7 @@ const {
   findRecepies,
   findRecepieById,
   editRecepie,
+  deleteOneRecepie,
 } = require('../controllers/recepie');
 const { verifyName, verifyEmail, emailExists } = require('../middlewares/userValidation');
 const { verifyEmailPass, emailValid, passwordValid } = require('../middlewares/loginValidations');
@@ -45,5 +46,7 @@ app.get('/recipes', findRecepies);
 app.get('/recipes/:id', findRecepieById);
 
 app.put('/recipes/:id', tokenValidation, editRecepie);
+
+app.delete('/recipes/:id', tokenValidation, deleteOneRecepie);
 
 module.exports = app;

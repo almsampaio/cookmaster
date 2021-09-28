@@ -30,9 +30,16 @@ async function editRecepie(req, res) {
   return res.status(200).json(editedRecepie);
 }
 
+async function deleteOneRecepie(req, res) {
+  const { id } = req.params;
+  await recepiesModel.deleteOneRecepie(id);
+  return res.status(204).json({});
+}
+
 module.exports = {
   createRecepie,
   findRecepies,
   findRecepieById,
   editRecepie,
+  deleteOneRecepie,
 };

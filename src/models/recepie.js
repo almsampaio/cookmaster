@@ -30,9 +30,16 @@ async function editRecepie(id, name, ingredients, preparation) {
   return editedRecepie;
 }
 
+async function deleteOneRecepie(id) {
+  if (!ObjectId.isValid(id)) return null;
+  const db = await getConnection();
+  await db.collection('recipes').deleteOne({ _id: ObjectId(id) });
+}
+
 module.exports = {
   createRecepie,
   findRecepies,
   findRecepieById,
   editRecepie,
+  deleteOneRecepie,
 };
