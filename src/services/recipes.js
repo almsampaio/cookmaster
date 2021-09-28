@@ -38,16 +38,14 @@ const getRecipesById = async (id) => {
   };
 };
 
-const updateRecipe = async (id, token) => {
+const updateRecipe = async (id, token, bodyInfos) => {
 const validId = await validateRecipe.validateRecipeId(id);
 const validToken = await auth.validateToken(token);
-
+const { name, ingredients, preparation } = bodyInfos;
 if (validId.errorCode) return validId;
 if (validToken.errorCode) return validToken;
-console.log(id);
-const recipeUpt = await modelRecipes.updateRecipe(id);
 
-console.log('console do token', recipeUpt);
+await modelRecipes.updateRecipe(id, name, ingredients, preparation);
 
 const updatedRecipe = await modelRecipes.getRecipesById(id);
 

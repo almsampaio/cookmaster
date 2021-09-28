@@ -4,16 +4,17 @@ const usersAuth = require('../models/users');
 const SECRET = 'tryber';
 
 const jwtError = {
-  code: 401,
+  errorCode: 401,
   errorInfo: { message: 'jwt malformed' },
 };
 
 const missingToken = {
-  code: 401,
+  errorCode: 401,
   errorInfo: { message: 'missing auth token' },
 };
 
 const validateToken = async (token) => {
+  console.log('token aqui', token);
   if (!token || token === undefined) return missingToken;
   try {
     const jwtVerify = jwt.verify(token, SECRET);
