@@ -36,9 +36,17 @@ const update = async (userId, role, { id, name, ingredients, preparation }) => {
   return recipeUpdated;
 };
 
+const exclude = async (userId, role, { id, name, ingredients, preparation }) => {
+  const recipeUpdated = await recipesModel
+    .exclude(userId, role, { id, name, ingredients, preparation });
+  
+  return recipeUpdated;
+};
+
 module.exports = {
   create,
   getAll,
   getByid,
   update,
+  exclude,
 };

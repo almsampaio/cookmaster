@@ -43,9 +43,26 @@ const update = async (req, res) => {
   res.status(200).json(result);
 };
 
+const exclude = async (req, res) => {
+  const { _id: userId, role } = req.user;
+  const { id } = req.params;
+  const { name, ingredients, preparation } = req.body;
+  const user = {
+    id,
+    name,
+    ingredients,
+    preparation,
+  };
+
+  await recipeService.exclude(userId, role, user);
+
+  res.status(204).end();
+};
+
 module.exports = {
   create,
   getAll,
   getById,
   update,
+  exclude,
 };

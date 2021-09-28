@@ -16,9 +16,15 @@ const update = (userId, role, { id, name, ingredients, preparation }) => connect
     .updateOne({ _id: ObjectId(id), userId }, { $set: { name, ingredients, preparation } }) : null))
     .then(() => ({ _id: id, name, ingredients, preparation, userId }));
 
+const exclude = (userId, role, { id, name, ingredients, preparation }) => connection()
+  .then((db) => (ObjectId.isValid(id) || role === 'admin' ? db.collection('recipes')
+    .deleteOne({ _id: ObjectId(id), userId }) : null))
+    .then(() => ({ _id: id, name, ingredients, preparation, userId }));
+
 module.exports = {
   create,
   getAll,
   getById,
   update,
+  exclude,
 };
