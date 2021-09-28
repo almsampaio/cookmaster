@@ -4,6 +4,7 @@ const status = {
   OK: 200,
   CREATED: 201,
   BAD_REQUEST: 400,
+  UNAUTHORIZED: 401,
   NOT_FOUND: 404,
   CONFLICT: 409,
   UNPROCESSABLE_ENTITY: 422,
@@ -19,6 +20,16 @@ const createNewUser = async (req, res) => {
   return res.status(status.CREATED).json(newUser);
 };
 
+const userLogin = async (req, res) => {
+  const { body: { email, password } } = req;
+  const response = await service.userLogin(email, password);
+  if (response.err) {
+    return res.status(status[response.err.code]).json({ message: response.err.message });
+  }
+  return res.status(status.OK).json(response);
+};
+
 module.exports = {
   createNewUser,
+  userLogin,
 };
