@@ -12,6 +12,7 @@ const app = express();
 app.use(bodyParser.json());
 
 app.get('/recipes', recipesController.getAllRecipes);
+app.get('/recipes/:id', recipesController.getRecipesId);
 app.post('/users', validateUsers, usersController.create);
 app.post('/login', validateLogin, loginController.login);
 app.post('/recipes', validateToken, validateRecipes, recipesController.createdRecipes);

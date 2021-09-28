@@ -8,6 +8,7 @@ const invEntries = { message: 'Invalid entries. Try again.' };
 const alreadyEmail = { message: 'Email already registered' };
 const invLogin = { message: 'Incorrect username or password' };
 const allSpacesValidate = { message: 'All fields must be filled' };
+const recipeNotFound = { message: 'recipe not found' };
 
 module.exports = {
   HTTP_OK_STATUS,
@@ -19,4 +20,5 @@ module.exports = {
   alreadyEmail,
   invLogin,
   allSpacesValidate,
+  recipeNotFound,
 };
