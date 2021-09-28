@@ -43,10 +43,9 @@ const findById = async (id) => {
   return recipe;
 };
 
-const updateRecipeById = async (recipe) => {
-  const { id, name, ingredients, preparation } = recipe;
-  
+const updateRecipeById = async (id, name, ingredients, preparation) => {
   if (!ObjectId.isValid(id)) return { status: 404, message: 'recipe not found' };
+
   const upRecipe = await recipesModel.updateRecipeById(
     id,
     name,
@@ -57,7 +56,7 @@ const updateRecipeById = async (recipe) => {
   if (!upRecipe) {
     return { status: 404, message: 'recipe not found' };
   }
-
+  
   return upRecipe;
 };
 

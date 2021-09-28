@@ -53,7 +53,12 @@ const updateRecipeById = async (req, res) => {
       ingredients,
       preparation,
     );
-    if (recipe.message) return res.status(recipe.status).json({ message: recipe.message });
+    if (recipe.err) {
+ return res
+        .status(recipe.err.status)
+        .json({ message: recipe.err.message }); 
+}
+
     res.status(200).json(recipe);
   } catch (error) {
     console.error(error);
