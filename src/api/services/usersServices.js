@@ -15,13 +15,15 @@ const getByEmail = async (email) => {
   return testEmail;
 };
 
-const generateToken = async (email) => {
-  const user = getByEmail(email);
+const generateToken = async (Email) => {
+  const user = await getByEmail(Email);
+  console.log(user);
+  const { email, _id } = user;
   const secret = 'secret';
   const jwtConfig = {
     algorithm: 'HS256',
   };
-  const token = jwt.sign({ data: user }, secret, jwtConfig);
+  const token = jwt.sign({ email, _id }, secret, jwtConfig);
   return token;
 };
 
