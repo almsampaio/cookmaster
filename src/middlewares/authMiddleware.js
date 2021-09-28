@@ -5,11 +5,12 @@ const SECRET = 'palavrasecreta';
 module.exports = async (req, res, next) => {
   try {
     const token = req.headers.authorization;
-    // const payload = jwt.verify(token, SECRET); // verificação do token que retorna o payload 
-    const { id } = jwt.verify(token, SECRET);
-    req.userId = id;
+    const { userPayload: { _id } } = jwt.verify(token, SECRET);
+    req.userId = _id;
     next();
   } catch (_e) {
+    const token = req.headers.authorization;
+    if (!token) return res.status(401).json({ message: 'missing auth token' });
     res.status(401).json({ message: 'jwt malformed' });
   }
 };

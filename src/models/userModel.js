@@ -1,3 +1,4 @@
+const { ObjectID } = require('bson');
 const connection = require('./connection');
 
 const create = async (name, email, password) => {
@@ -16,7 +17,7 @@ const login = async (email, password) => {
   const db = await connection();
   const userLogin = await db.collection('users').findOne({ email, password });
   if (!userLogin) return null;
-  return { id: userLogin.id, email, role: userLogin.role };
+  return { _id: ObjectID(userLogin.id), email, role: userLogin.role };
 };
 
 module.exports = {

@@ -25,4 +25,6 @@ app.get('/recipes', recipeController.getAll);
 
 app.get('/recipes/:id', recipeController.getById);
 
+app.put('/recipes/:id', auth, recipeController.update);
+
 module.exports = app;

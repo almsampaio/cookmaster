@@ -12,12 +12,12 @@ const create = async (req, res) => {
 
 const login = async (req, res) => {
   const { email, password } = req.body;
-  const { err, token } = await userService.login(email, password);
+  const { err, token, userPayload } = await userService.login(email, password);
   if (err) {
     return res.status(err.code)
       .json({ message: err.message }); 
     }
-  res.status(200).json({ token });
+  res.status(200).json({ token, userPayload });
 };
 
 module.exports = {

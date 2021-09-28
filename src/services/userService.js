@@ -42,7 +42,7 @@ const login = async (email, password) => {
   const userPayload = await userModel.login(email, password);
   if (!userPayload) return invalidLogin;
   const token = jwt.sign({ userPayload }, SECRET);
-  return { token };
+  return { token, userPayload };
 };
 
 module.exports = {
