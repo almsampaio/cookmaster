@@ -1,6 +1,7 @@
+const { ObjectId } = require('mongodb');
 const recipesModel = require('../models/recipesModel');
 
-const existField = (name, ingredients, preparation) => {
+const validateEntry = (name, ingredients, preparation) => {
     if (!name || !ingredients || !preparation) {
       return false;
     }
@@ -8,7 +9,7 @@ const existField = (name, ingredients, preparation) => {
 };
 
 const create = async ({ name, ingredients, preparation }) => {
-    const existFields = existField(name, ingredients, preparation);
+    const existFields = validateEntry(name, ingredients, preparation);
     if (!existFields) {
       return { message: 'Invalid entries. Try again.' }; 
     }
@@ -16,4 +17,12 @@ const create = async ({ name, ingredients, preparation }) => {
     return { id, name, ingredients, preparation, _id };
 };
 
-module.exports = { create }; 
+const getId = async (id) => {
+  if (!ObjectId.isValid(id)) {
+    return { message: 'recipe not found' };
+  }
+  const idRecipe = await recipesModel.getId(id); 
+  return idRecipe;
+};
+
+module.exports = { create, getId }; 
