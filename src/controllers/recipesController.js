@@ -27,8 +27,25 @@ const getById = async (req, res) => {
   res.status(200).json(recipe);
 };
 
+const update = async (req, res) => {
+  const { _id: userId, role } = req.user;
+  const { id } = req.params;
+  const { name, ingredients, preparation } = req.body;
+  const user = {
+    id,
+    name,
+    ingredients,
+    preparation,
+  };
+
+  const result = await recipeService.update(userId, role, user);
+
+  res.status(200).json(result);
+};
+
 module.exports = {
   create,
   getAll,
   getById,
+  update,
 };
