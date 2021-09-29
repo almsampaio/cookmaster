@@ -48,10 +48,18 @@ const exclude = async (id) => {
     await recipeModel.exclude(id);
 };
 
+const imageAdded = async (id, urlImage) => {
+  await recipeModel.imageAdded(id, urlImage);
+  const recipeById = await recipeModel.getById(id);
+
+  return recipeById;
+};
+
 module.exports = {
     create,
     getAll,
     getById,
     update,
     exclude,
+    imageAdded,
 };

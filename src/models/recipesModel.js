@@ -54,7 +54,19 @@ const exclude = async (id) => {
     if (!ObjectId.isValid(id)) return null;
 
     const db = await connect();
-    await db.collection('users').deleteOne({ _id: ObjectId(id) });
+    await db.collection('recipes').deleteOne({ _id: ObjectId(id) });
+};
+
+const imageAdded = async (id, urlImage) => {
+    if (!ObjectId.isValid(id)) return null;
+
+    const db = await connect();
+    const image = db.collection('recipes').updateOne(
+        { _id: ObjectId(id) },
+        { $set: { image: `localhost:3000/src/uploads/${urlImage}` } },
+    );
+
+    return image;
 };
 
 module.exports = {
@@ -63,4 +75,5 @@ module.exports = {
     getById,
     update,
     exclude,
+    imageAdded,
 };
