@@ -87,7 +87,8 @@ const storage = multer.diskStorage({
   },
   filename: (req, file, callBack) => {
     const { id } = req.params;
-    const fileName = `${id}${path.extname(file.originalname)}`;
+    const fileName = `${id}.jpeg`;
+    // const fileName = `${id}${path.extname(file.originalname)}`; // retorna a extensão do arquivo original
     callBack(null, fileName);
   },
 });
