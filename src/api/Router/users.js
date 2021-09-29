@@ -1,6 +1,7 @@
 const Router = require('express').Router();
 const Controller = require('../Controller');
+const error = require('../Middlewares/error');
 
-Router.post('/', Controller.users.register);
+Router.post('/', Controller.users.register, error);
 
 module.exports = Router;
