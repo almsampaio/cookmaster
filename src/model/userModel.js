@@ -60,7 +60,6 @@ const upLoadFile = async (id, image) => {
   const db = await connect();
   const result = await db.collection('recipes')
     .findOneAndUpdate({ _id: ObjectID(id) }, { $set: { image } });
-    console.log(result);
   return { ...result.value, image };
 };
 

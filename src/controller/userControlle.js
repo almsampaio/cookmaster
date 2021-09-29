@@ -57,7 +57,7 @@ const upDateRecipes = async (req, res) => {
 
   if (recipe.message) return res.status(recipe.status).json({ message: recipe.message });
 
-  res.status(201).json(recipe);
+  res.status(200).json(recipe);
 };
 
 const excludeRecipes = async (req, res) => {
