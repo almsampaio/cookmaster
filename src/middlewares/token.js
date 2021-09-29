@@ -1,4 +1,4 @@
-const jwt = require('jsonwebtoken');
+/* const jwt = require('jsonwebtoken');
 
 // const userModel = require('../models/userModel');
 
@@ -32,5 +32,3 @@ module.exports = { newToken };
   } catch (_e) {
     res.status(401).json({ message: 'Invalid Token'});
   } */
-
-};
