@@ -16,9 +16,9 @@ async function register(userToRegister) {
     return { statusCode, error: { message: 'Email already registered' } };
   }
 
-  const insertedUser = await Model.users.insertOneUser(userToRegister);
-  const statusCode = StatusCodes.OK;
-  return { statusCode, payload: insertedUser };
+  const user = await Model.users.insertOneUser(userToRegister);
+  const statusCode = StatusCodes.CREATED;
+  return { statusCode, payload: { user } };
 }
 
 module.exports = {
