@@ -1,5 +1,16 @@
+require('dotenv').config();
+// const cors = require('cors');
+const bodyParser = require('body-parser');
+const route = require('./routes');
 const app = require('./app');
 
-const PORT = 3000;
+const { PORT } = process.env;
+app.use(bodyParser.json());
 
-app.listen(PORT, () => console.log(`conectado na porta ${PORT}`));
+app.post('/users', route.createUser);
+app.post('/login', route.login);
+
+app.listen(
+  PORT,
+  () => console.log(`conectado na porta ${PORT}`),
+);
