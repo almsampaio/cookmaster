@@ -50,8 +50,6 @@ const getRecipeByID = async (id) => {
 const isValidUser = async (userEmail, recipeID) => {
   const { _id: userID, role } = await findByEmail(userEmail);
   const { userId: recipeUserID } = await getRecipeByID(recipeID);
-  console.log(`role: ${role}\n userID: ${userID}\n recipeUserID: ${recipeUserID}`);
-  console.log(String(userID) === String(recipeUserID));
   if (String(userID) === String(recipeUserID) || role === 'admin') return true;
   return { err: { message: 'missing auth token', code: 'UNAUTHORIZED' } };
 };
@@ -74,10 +72,8 @@ const updateRecipesValidations = async (token, body, recipeID) => {
 const updateRecipeByID = async (body, authorization, id) => {
   const token = authorization;
   const recipeID = id;
-  console.log(`token: ${token}`);
   if (!token) return { err: { message: 'missing auth token', code: 'UNAUTHORIZED' } };
   const isValid = await updateRecipesValidations(token, body, recipeID);
-  console.log(isValid);
   if (isValid.err) return isValid; 
   const updatedRecipe = await db
     .updateRecipeByID(body.name, body.ingredients, body.preparation, recipeID);
