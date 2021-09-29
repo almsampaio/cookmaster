@@ -35,7 +35,6 @@ const createRecipes = async (req, res) => {
 
 // Middleware para acessar todas as receitas
 const getAllRecipes = async (_req, res) => {
-  console.log('passei aqui')
   const recipes = await recipesServices.getAll();
   return res.status(200).json(recipes);
 };
