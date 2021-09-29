@@ -5,7 +5,8 @@ const { HTTP_CREATED_STATUS, HTTP_OK_STATUS, recipeNotFound } = require('../help
 const createdRecipes = async (req, res) => {
  try {
   const { name, ingredients, preparation } = req.body;
-  const createRecipe = await recipesModel.createRecipes({ name, ingredients, preparation });
+  const { _id } = req.user;
+  const createRecipe = await recipesModel.createRecipes({ name, ingredients, preparation, _id });
   return res.status(HTTP_CREATED_STATUS).json({ recipe: { ...createRecipe } });
 } catch (e) {
   console.log(e);
@@ -15,7 +16,6 @@ const createdRecipes = async (req, res) => {
 const getAllRecipes = async (_req, res) => {
   try {
     const allRecipes = await recipesService.getAllRecipes();
-    console.log(allRecipes);
     return res.status(HTTP_OK_STATUS).json(allRecipes);
   } catch (e) {
     return res.status(500).json({ message: 'Ihhhh deu erro' });
@@ -26,7 +26,6 @@ const getRecipesId = async (req, res) => {
   try {
   const { id } = req.params;
   const validatedId = await recipesService.validateId(id);
-  console.log(validatedId);
   if (!validatedId) {
     return res.status(404).json(recipeNotFound);
   }
@@ -36,8 +35,24 @@ const getRecipesId = async (req, res) => {
   }
 };
 
+const updatedRecipes = async (req, res) => {
+  try {
+    const { name, ingredients, preparation } = req.body;
+    const { id } = req.params;
+    const updated = await recipesService.updatedRecipe({ name, ingredients, preparation }, id);
+    if (!updated) {
+      return res.status(401).json({ message: 'missing auth token' });
+    }
+
+  return res.status(HTTP_OK_STATUS).json(updated);
+  } catch (e) {
+    console.log(e, 'Ihhhhh deu erro');
+  }
+};
+
 module.exports = {
   createdRecipes,
   getAllRecipes,
   getRecipesId,
+  updatedRecipes,
 };

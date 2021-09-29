@@ -32,8 +32,17 @@ const validateId = async (id) => {
   return getRecipesId; 
 };
 
+const updatedRecipe = async (recipes, id, recipeId) => {
+  const updateValidate = await recipesModel.updateRecipes(recipes, id, recipeId);
+  if (!updateValidate) {
+    return false;
+  }
+  return updateValidate;
+};
+
 module.exports = {
   validateRecipes,
   getAllRecipes,
   validateId,
+  updatedRecipe,
 };

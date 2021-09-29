@@ -3,7 +3,6 @@ const getConnection = require('./connections');
 
 const createRecipes = async (recipe, id) => {
   const create = { ...recipe, userId: id };
-  console.log(create);
   const db = await getConnection();
   const newRecipe = await db.collection('recipes').insertOne(create);
   return ({ ...create, _id: newRecipe.insertedId });
@@ -22,8 +21,22 @@ const getRecipesId = async (id) => {
   return recipe;
 };
 
+const updateRecipes = async ({ name, ingredients, preparation }, _id, id) => {
+   if (!ObjectId.isValid(_id)) return false;
+  const updated = { name, ingredients, preparation };
+  console.log(updated);
+  const db = await getConnection();
+  const updateId = await db.collection('recipes')
+  .updateOne({ _id: ObjectId(id) }, { $set: { name, ingredients, preparation } });
+  if (!updateId) {
+    return false;
+  }
+  return { _id: ObjectId(id), name, ingredients, preparation, userId: _id };
+};
+
 module.exports = {
   createRecipes,
   getAllRecipes,
   getRecipesId,
+  updateRecipes,
 };
