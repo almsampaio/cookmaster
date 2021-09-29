@@ -74,6 +74,12 @@ const excludeRecipes = async (id) => {
   await userModel.excludeRecipes(id);
 };
 
+const upLoadFile = async (id, filename) => {
+  const image = `localhost:3000/src/uploads/${filename}`;
+  const result = await userModel.upLoadFile(id, image);
+  return result;
+};
+
 module.exports = {
   addUser,
   findAll,
@@ -84,4 +90,5 @@ module.exports = {
   findByIdRecipes,
   upDateRecipes,
   excludeRecipes,
+  upLoadFile,
 };

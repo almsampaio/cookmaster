@@ -70,6 +70,15 @@ const excludeRecipes = async (req, res) => {
   res.status(204).send();
 };
 
+const upLoadFile = async (req, res) => {
+  const { id } = req.params;
+  const { filename } = req.file;
+  const recipe = await userService.upLoadFile(id, filename);
+  if (recipe.message) return res.status(recipe.status).json({ message: recipe.message });
+
+  res.status(200).json(recipe);
+};
+
 module.exports = {
   addUser,
   findAll,
@@ -79,4 +88,5 @@ module.exports = {
   findByIdRecipes,
   upDateRecipes,
   excludeRecipes,
+  upLoadFile,
 };

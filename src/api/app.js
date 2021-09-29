@@ -3,6 +3,8 @@ const bodyParser = require('body-parser');
 const userController = require('../controller/userControlle');
 const middleware = require('../middleware/middleware');
 
+const util = require('../util/util');
+
 const app = express();
 app.use(bodyParser.json());
 
@@ -23,8 +25,9 @@ app.post('/login', userController.login);
 app.post('/recipes', middleware.authToken, userController.addRecipes);
 app.get('/recipes/:id', userController.findByIdRecipes);
 app.get('/recipes', userController.findAllRecipes);
-
 app.put('/recipes/:id', middleware.authToken, userController.upDateRecipes);
 app.delete('/recipes/:id', middleware.authToken, userController.excludeRecipes);
+app.put('/recipes/:id/image', util.upload.single('image'),
+  middleware.authToken, userController.upLoadFile);
 
 module.exports = app;

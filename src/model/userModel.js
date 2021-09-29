@@ -56,6 +56,14 @@ const excludeRecipes = async (id) => {
   await db.collection('recipes').deleteOne({ _id: ObjectID(id) });
 };
 
+const upLoadFile = async (id, image) => {
+  const db = await connect();
+  const result = await db.collection('recipes')
+    .findOneAndUpdate({ _id: ObjectID(id) }, { $set: { image } });
+    console.log(result);
+  return { ...result.value, image };
+};
+
 module.exports = {
   addUser,
   findAll,
@@ -65,4 +73,5 @@ module.exports = {
   findByIdRecipes,
   upDateRecipes,
   excludeRecipes,
+  upLoadFile,
 };
