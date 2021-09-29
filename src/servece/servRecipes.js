@@ -98,7 +98,7 @@ const deleteR = async (id, token) => {
 const addImage = async (id, token, filename) => {
   validateAuthentication(token);
   const path = `localhost:3000/src/uploads/${filename}`;
-  const response = await model.addRecipeImage(id, path);
+  const response = await model.addImage(id, path);
   return { status: 200, response };
 };
 
