@@ -36,10 +36,18 @@ async function deleteOneRecepie(req, res) {
   return res.status(204).json({});
 }
 
+async function addImage(req, res) {
+  const { id } = req.params;
+  const { path } = req.file;
+  const recepie = await recepieService.addImage(id, path);
+  return res.status(200).json(recepie);
+}
+
 module.exports = {
   createRecepie,
   findRecepies,
   findRecepieById,
   editRecepie,
   deleteOneRecepie,
+  addImage,
 };

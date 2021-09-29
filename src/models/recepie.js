@@ -5,7 +5,6 @@ async function createRecepie(name, ingredients, preparation, userId) {
   const db = await getConnection();
   const data = await db.collection('recipes').insertOne({ name, ingredients, preparation, userId });
   return { recipe: { name, ingredients, preparation, userId, _id: data.insertedId } };
-  // return { recipe: data.ops[0] };
 }
 
 async function findRecepies() {
@@ -36,10 +35,27 @@ async function deleteOneRecepie(id) {
   await db.collection('recipes').deleteOne({ _id: ObjectId(id) });
 }
 
+async function addImage(id, path) {
+  if (!ObjectId.isValid(id)) return null;
+  const db = await getConnection();
+  const recepie = await findRecepieById(id);
+  const { name, ingredients, preparation, userId } = recepie;
+  await db.collection('recipes').updateOne({ _id: ObjectId(id) }, { $set: {
+    name,
+    ingredients,
+    preparation,
+    userId,
+    image: `localhost:3000/${path}`,
+  } });
+  const updateRecepie = await findRecepieById(ObjectId(id));
+  return updateRecepie;
+}
+
 module.exports = {
   createRecepie,
   findRecepies,
   findRecepieById,
   editRecepie,
   deleteOneRecepie,
+  addImage,
 };

@@ -15,8 +15,13 @@ async function deleteOneRecepie(id) {
   return recepie;
 }
 
+async function addImage(id, path) {
+  const recepie = await recipieModel.addImage(id, path);
+  return recepie;
+}
 module.exports = {
   createRecepie,
   editRecepie,
   deleteOneRecepie,
+  addImage,
 };
