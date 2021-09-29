@@ -14,6 +14,9 @@ const loginControllers = require('../controllers/loginController');
 const recipesControllers = require('../controllers/recipesControllers');
 
 app.post('/recipes',
+recipes.nameValidate,
+recipes.ingredientsValidate,
+recipes.preparationValidate,
 token.token,
 recipesControllers.createRecipe);
 
