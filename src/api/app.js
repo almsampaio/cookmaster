@@ -7,7 +7,7 @@ const app = express();
 const path = require('path');
 const { create } = require('../controllers/users');
 const { tokenValidation } = require('../middlewares/tokenValidation');
-const { addRecipies } = require('../controllers/recipe');
+const { addRecipes, findRecipes } = require('../controllers/recipe');
 
 const { 
   nameValidation, 
@@ -41,6 +41,7 @@ app.get('/', (request, response) => {
 app.post('/users', nameValidation, emailValidation, emailExists, create);
 app.post('/login', emailRequired, passwordRequired, emailValid, passwordValid, userLogin);
 app.post('/recipes', 
-verifyName, verifyIngredients, verifyPreparation, tokenValidation, addRecipies);
+verifyName, verifyIngredients, verifyPreparation, tokenValidation, addRecipes);
+app.get('/recipes', findRecipes);
 
 module.exports = app;

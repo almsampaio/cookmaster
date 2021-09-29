@@ -1,8 +1,8 @@
-const recipieModels = require('../models/recipe');
+const recipeModels = require('../models/recipe');
 
-const addRecipies = async (name, ingredients, preparation, userId) => {
-    const data = recipieModels.addRecipies(name, ingredients, preparation, userId);
+const addRecipes = async (name, ingredients, preparation, userId) => {
+    const data = recipeModels.addRecipes(name, ingredients, preparation, userId);
     return data;
 };
 
-module.exports = { addRecipies };
+module.exports = { addRecipes };

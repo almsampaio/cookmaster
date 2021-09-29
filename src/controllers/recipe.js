@@ -1,27 +1,27 @@
-const recipieService = require('../services/recipe');
-const recipiesModel = require('../models/recipe');
+const recipeService = require('../services/recipe');
+const recipesModel = require('../models/recipe');
 
-const addRecipies = async (req, res) => { 
+const addRecipes = async (req, res) => { 
     const { name, ingredients, preparation } = req.body;
     const userId = req.user;
-    const data = await recipieService.addRecipies(name, ingredients, preparation, userId);
+    const data = await recipeService.addRecipes(name, ingredients, preparation, userId);
     return res.status(201).json(data);
 };
 
-async function findRecipies(_req, res) {
-    const recipe = await recipiesModel.findRecipies();
+async function findRecipes(_req, res) {
+    const recipe = await recipesModel.findRecipes();
     return res.status(200).json(recipe);
 }
 
 async function findRecipeById(req, res) {
     const { id } = req.params;
-    const recipe = await recipiesModel.findRecipeById(id);
+    const recipe = await recipesModel.findRecipeById(id);
 
     if (!recipe) {
-    return res.status(404).json({ message: 'Recepie not found' });
+    return res.status(404).json({ message: 'Recipe not found' });
     }
 
     return res.status(200).json(recipe);
 }
 
-module.exports = { addRecipies, findRecipies, findRecipeById };
+module.exports = { addRecipes, findRecipes, findRecipeById };
