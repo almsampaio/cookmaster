@@ -6,12 +6,7 @@ const createRecipe = async (name, ingredients, preparation, userID) => {
   if (validateRecipe) return validateRecipe;
 
   const create = await recipesModels.createRecipe(name, ingredients, preparation, userID);
-  console.log(create);
-  return {
-    recipe: {
-      ...create,
-    },
-  };
+  return create;
 };
 
 module.exports = {
