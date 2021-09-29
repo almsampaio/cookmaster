@@ -20,11 +20,9 @@ const gettingToken = (payload) => {
 const verifyToken = (token) => {
   try {
     const decode = jwt.verify(token, SECRET);
-    console.log(decode);
 
     return decode;
   } catch (error) {
-    // console.log(error);
     const errorResult = { errorFound: true, status: 401, message: wrongJWT };
 
     return errorResult;

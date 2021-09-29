@@ -26,10 +26,10 @@ const editingRecipe = async (id, name, ingredients, preparation) => {
     return recipe;
 };
 
-const registerRecipe = async (name, ingredients, preparation, userId) => {
+const registerRecipe = async (recipe) => {
     const db = await connect();
     const recipeAdded = await db.collection('recipes')
-    .insertOne(name, ingredients, preparation, userId);
+    .insertOne(recipe);
     return recipeAdded.ops[0];
 };
 
