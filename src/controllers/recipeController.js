@@ -10,6 +10,15 @@ const createRecipe = async (req, res) => {
   return res.status(201).json({ recipe });
 };
 
+const updateRecipe = async (req, res) => {
+  const recipe = req.body;
+  const { id } = req.params;
+  const userId = req.user;
+
+  const changedRecipe = await recipeService.updateRecipe(id, recipe, userId);
+  return res.status(200).json(changedRecipe);
+};
+
 const listRecipes = async (_req, res) => {
   const list = await recipeService.listRecipes();
   return res.status(200).json(list);
@@ -27,4 +36,5 @@ module.exports = {
   createRecipe,
   listRecipes,
   recipeId,
+  updateRecipe,
 };

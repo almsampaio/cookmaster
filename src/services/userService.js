@@ -14,7 +14,6 @@ const createUser = async (name, email, password, role) => {
 
 const authorizeLogin = async (email, password) => {
   const validations = await userValidations.validateLogin(email, password);
-  console.log(validations);
   if (validations.message) return validations;
 
   const user = await userModel.findUserEmail(email);

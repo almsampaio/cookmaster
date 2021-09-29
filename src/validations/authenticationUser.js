@@ -5,7 +5,8 @@ const SECRET = 'secretCookmaster';
 module.exports = (req, res, next) => {
   try {
   const token = req.headers.authorization;
-  
+  if (!token) return res.status(401).json({ message: 'missing auth token' });
+
   const payload = jwt.verify(token, SECRET);
 
   const { _id } = payload;

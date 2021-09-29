@@ -14,6 +14,14 @@ const createRecipe = async (name, ingredients, preparation, userId) => {
   };
 };
 
+const updateRecipe = async (id, recipe, userId) => {
+  const { name, preparation, ingredients } = recipe;
+  const db = await connect();
+  await db.collection('recipes')
+  .updateOne({ _id: ObjectId(id) }, { $set: { name, preparation, ingredients } });
+  return { _id: id, name, preparation, ingredients, userId };
+};
+
 const listRecipes = async () => {
   const db = await connect();
   const list = await db.collection('recipes').find().toArray();
@@ -31,4 +39,5 @@ module.exports = {
   createRecipe,
   listRecipes,
   recipeId,
+  updateRecipe,
 };
