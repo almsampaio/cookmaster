@@ -4,7 +4,7 @@ class UserValidation {
     static async execute(request, response, next) {
         const { name, email, password } = request.body;
 
-        if (!name || !email || !password || !/^[A-Za-z0-9+_.-]+@(.+)$/.test(email)) {
+        if (!UserValidation.fieldsIfExists(name, email, password)) {
             return response.status(400).json({ message: 'Invalid entries. Try again.' });
         }
 
@@ -15,6 +15,10 @@ class UserValidation {
 
         request.body.role = 'user';
         return next();
+    }
+
+    static fieldsIfExists(name, email, password) {
+        return name && email && password && /^[A-Za-z0-9+_.-]+@(.+)$/.test(email);
     }
 }
 

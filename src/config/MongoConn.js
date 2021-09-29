@@ -2,8 +2,8 @@ const MongoClient = require('mongodb');
 
 class MongoConn {
     constructor() {
-        this.URL = 'mongodb://localhost:27017/Cookmaster';
-        // this.URL = 'mongodb://mongodb:27017/Cookmaster';
+        // this.URL = 'mongodb://localhost:27017/Cookmaster';
+        this.URL = 'mongodb://mongodb:27017/Cookmaster';
         this.NAME = 'Cookmaster';
         this.OPTIONS = {
             useNewUrlParser: true,
