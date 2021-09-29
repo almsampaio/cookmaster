@@ -1,10 +1,14 @@
 const express = require('express');
 const bodyParse = require('body-parser');
+const path = require('path');
+const multerFile = require('../middlewares/multer');
 
 const usersControllers = require('../controllers/users');
 const recipesControllers = require('../controllers/recipes');
 
 const app = express();
+
+app.use(express.static(path.join(__dirname, '..', 'uploads')));
 
 app.use(bodyParse.json());
 
@@ -25,6 +29,9 @@ app.get('/recipes', recipesControllers.getRecipes);
 app.get('/recipes/:id', recipesControllers.getRecipesById);
 
 app.put('/recipes/:id', recipesControllers.updateRecipe);
+
+app.put('/recipes/:id/image/', multerFile.upload.single('image'), 
+  recipesControllers.addRecipeImage);
 
 app.delete('/recipes/:id', recipesControllers.removeRecipe);
 

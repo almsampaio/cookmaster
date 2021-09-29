@@ -37,6 +37,18 @@ if (updatedRecipe.errorCode) {
 return res.status(updatedRecipe.code).json(updatedRecipe.recipe);
 };
 
+const addRecipeImage = async (req, res) => {
+  const { id } = req.params;
+  const token = req.headers.authorization;
+  const imageData = req.file;
+
+  const recipeWithImage = await serviceRecipes.addRecipeImage(id, token, imageData);
+  if (recipeWithImage.errorCode) {
+    return res.status(recipeWithImage.errorCode).json(recipeWithImage.errorInfo);
+  }
+  return res.status(recipeWithImage.code).json(recipeWithImage.info);
+};
+
 const removeRecipe = async (req, res) => {
   const { id } = req.params;
   const token = req.headers.authorization;
@@ -55,4 +67,5 @@ module.exports = {
   getRecipesById,
   updateRecipe,
   removeRecipe,
+  addRecipeImage,
 };

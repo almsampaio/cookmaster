@@ -55,6 +55,23 @@ return {
 };
 };
 
+const addRecipeImage = async (id, token, imageData) => {
+  const validToken = await auth.validateToken(token);
+  const { path } = imageData;
+  const pathStrings = path.split('/');
+  console.log(pathStrings);
+  const newPath = `localhost:3000/${pathStrings[5]}/${pathStrings[6]}/${pathStrings[7]}`;
+  console.log(newPath);
+  if (validToken.errorCode) return validToken;
+
+  await modelRecipes.addRecipeImage(id, newPath, validToken);
+  const recipeWithImage = await modelRecipes.getRecipesById(id);
+  return {
+    code: 200,
+    info: recipeWithImage,
+  };
+};
+
 const removeRecipe = async (id, token) => {
 const validToken = await auth.validateToken(token);
 if (validToken.errorCode) return validToken;
@@ -69,4 +86,5 @@ module.exports = {
   getRecipesById,
   updateRecipe,
   removeRecipe,
+  addRecipeImage,
 };
