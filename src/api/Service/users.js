@@ -1,5 +1,8 @@
+const { StatusCodes } = require('http-status-codes');
+
 async function register() {
-  return { statusCode: 200, payload: { message: 'From Services' } };
+  const statusCode = StatusCodes.OK;
+  return { statusCode, payload: { message: 'From Services' } };
 }
 
 module.exports = {
