@@ -43,10 +43,24 @@ const exclude = async (userId, role, { id, name, ingredients, preparation }) => 
   return recipeUpdated;
 };
 
+const addImage = async (userId, role, { id }, newName) => {
+  const recipeUpdated = await recipesModel
+    .addImage(userId, role, { id }, newName);
+
+  if (recipeUpdated) {
+    const recipe = await recipesModel.getById(id);
+    const { name, ingredients, preparation } = recipe;
+    return { _id: id, name, ingredients, preparation, userId, image: `localhost:3000/${newName}` };
+  }
+  
+  return recipeUpdated;
+};
+
 module.exports = {
   create,
   getAll,
   getByid,
   update,
   exclude,
+  addImage,
 };

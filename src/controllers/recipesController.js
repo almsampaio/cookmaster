@@ -59,10 +59,28 @@ const exclude = async (req, res) => {
   res.status(204).end();
 };
 
+const addImage = async (req, res) => {
+  const { _id: userId, role } = req.user;
+  const { id } = req.params;
+  const newName = `${req.file.path}`;
+  const { name, ingredients, preparation } = req.body;
+  const user = {
+    id,
+    name,
+    ingredients,
+    preparation,
+  };
+
+  const result = await recipeService.addImage(userId, role, user, newName);
+
+  res.status(200).json(result);
+};
+
 module.exports = {
   create,
   getAll,
   getById,
   update,
   exclude,
+  addImage,
 };
