@@ -31,17 +31,15 @@ const verifyToken = (token) => {
 
 // Autorização vista no repositório do Felipe Flores
 //  https://github.com/tryber/sd-010-a-cookmaster/pull/80
-const tokenAuthorization = (req, _res, next) => {
+const tokenAuthorization = (req, res, next) => {
   const { authorization: token } = req.headers;
   if (!token) {
-    const errorResult = { errorFound: true, status: 401, message: missingToken };
-    // return res.status(401).json({ message: missingToken });
-    return next(errorResult);
+    return res.status(401).json({ message: missingToken });
   }
   
   const decodedToken = verifyToken(token);
-
-  if (decodedToken.errorResult) return next(decodedToken);
+  console.log(decodedToken);
+  if (decodedToken.errorFound) return res.status(401).json({ message: wrongJWT });
 
   req.token = decodedToken;
 

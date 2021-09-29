@@ -43,9 +43,16 @@ if (result.message) { return { status: result.status, message: result.message };
 return result;
 };
 
+const deletingRecipe = async (id) => {
+    const result = await recipeModel.deletingRecipe(id);
+    if (!result) { return { status: 401, message: recipeNotFound }; }
+    return result;
+};
+
 module.exports = {
     getRecipes,
     gettingOneRecipe,
     editingRecipe,
     registerRecipe,
+    deletingRecipe,
 };

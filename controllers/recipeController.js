@@ -25,6 +25,13 @@ const editingRecipe = async (req, res) => {
     return res.status(200).json(result);
 };
 
+const deletingRecipe = async (req, res) => {
+    const { id } = req.params;
+    const result = await recipeService.deletingRecipe(id);
+    if (result.message) return res.status(result.status).json({ message: result.message });
+    return res.status(204).json(result);
+};
+
 const registerRecipe = async (req, res) => {
     const { name, ingredients, preparation } = req.body;
     const { _id } = req.token;
@@ -32,7 +39,7 @@ const registerRecipe = async (req, res) => {
     const recipe = { name, ingredients, preparation, userId };
     const result = await recipeService.registerRecipe(recipe);
     if (result.message) return res.status(result.status).json({ message: result.message });
-    return res.status(201).send({ recipe: result });
+    return res.status(201).json({ recipe: result });
 };
 
 module.exports = {
@@ -40,4 +47,5 @@ module.exports = {
     gettingOneRecipe,
     editingRecipe,
     registerRecipe,
+    deletingRecipe,
 };
