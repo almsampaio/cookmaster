@@ -1,5 +1,10 @@
 const services = require('../servece/servRecipes');
 
+const getOne = async (_req, res) => {
+  const { status, response } = await services.getOne();
+  res.status(status).json(response);
+};
+
 const creatRecipe = async (req, res) => {
   const { authorization } = req.headers;
   const {
@@ -11,4 +16,5 @@ const creatRecipe = async (req, res) => {
 
 module.exports = {
   creatRecipe,
+  getOne,
 };

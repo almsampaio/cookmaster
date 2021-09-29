@@ -17,36 +17,42 @@ const jwtMalformed = {
   },
 };
 
-function validateName(name) {
+const validateName = (name) => {
   if (!name) throw invalidEntries;
-}
+};
 
-function validateIngredients(ingredients) {
+const validateIngredients = (ingredients) => {
   if (!ingredients) throw invalidEntries;
-}
+};
 
-function validatePreparation(preparation) {
+const validatePreparation = (preparation) => {
   if (!preparation) throw invalidEntries;
-}
+};
 
-function validateToken(token) {
+const validateToken = (token) => {
   try {
     const decoded = jwt.verify(token, myKey);
     return decoded;
   } catch (err) {
     throw jwtMalformed;
   }
-}
+};
 
-async function createRecipe(token, { name, ingredients, preparation }) {
+const getOne = async () => {
+  const response = await model.getOne();
+  return { status: 200, response };
+};
+
+const createRecipe = async (token, { name, ingredients, preparation }) => {
   validateName(name);
   validateIngredients(ingredients);
   validatePreparation(preparation);
   const decoded = validateToken(token);
   const response = await model.createRecipe(decoded.data, name, ingredients, preparation);
   return { status: 201, response };
-}
+};
 
 module.exports = {
+  getOne,
   createRecipe,
 };
