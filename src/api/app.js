@@ -1,9 +1,13 @@
+// projeto realizado com ajuda do estudante Nilson Ribeiro
+
 const express = require('express');
 const bodyParser = require('body-parser');
 
 const app = express();
 const path = require('path');
 const { create } = require('../controllers/users');
+const { tokenValidation } = require('../middlewares/tokenValidation');
+const { addRecipies } = require('../controllers/recipe');
 
 const { 
   nameValidation, 
@@ -18,10 +22,16 @@ const {
   passwordValid,
 } = require('../middlewares/validationLogin');
 
+const {
+  verifyName,
+  verifyIngredients,
+  verifyPreparation,
+} = require('../middlewares/recipeValidation');
+
 const { userLogin } = require('../controllers/login');
 
 app.use(bodyParser.json());
-app.use('/images', express.static(path.join(__dirname, '..', 'uploads')));
+// app.use('/images', express.static(path.join(__dirname, '..', 'uploads')));
 
 // Não remover esse end-point, ele é necessário para o avaliador
 app.get('/', (request, response) => {
@@ -30,5 +40,7 @@ app.get('/', (request, response) => {
 // Não remover esse end-point, ele é necessário para o avaliador
 app.post('/users', nameValidation, emailValidation, emailExists, create);
 app.post('/login', emailRequired, passwordRequired, emailValid, passwordValid, userLogin);
+app.post('/recipes', 
+verifyName, verifyIngredients, verifyPreparation, tokenValidation, addRecipies);
 
 module.exports = app;
