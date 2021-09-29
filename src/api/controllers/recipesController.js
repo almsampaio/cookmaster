@@ -20,13 +20,23 @@ const createRecipes = async (req, res) => {
   return res.status(status.CREATED).json(newUser);
 };
 
-const showRecipes = async (_req, res) => {
+const getRecipes = async (_req, res) => {
   const recipes = await service.getRecipes();
 
   return res.status(status.OK).json(recipes);
 };
 
+const getRecipesByID = async (req, res) => {
+  const { params: { id } } = req;
+  const recipeByID = await service.getRecipeByID(id);
+  if (recipeByID.err) {
+    return res.status(status[recipeByID.err.code]).json({ message: recipeByID.err.message });
+  }
+  return res.status(status.OK).json(recipeByID);
+};
+
 module.exports = {
   createRecipes,
-  showRecipes,
+  getRecipes,
+  getRecipesByID,
 };
