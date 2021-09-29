@@ -17,6 +17,13 @@ const jwtMalformed = {
   },
 };
 
+const missingAuth = {
+  status: 401,
+  error: {
+    message: 'missing auth token',
+  },
+};
+
 const recipeNot = {
   status: 404,
   error: {
@@ -38,6 +45,11 @@ const validateIngredients = (ingredients) => {
 
 const validatePreparation = (preparation) => {
   if (!preparation) throw invalidEntries;
+};
+
+const validateAuthentication = (token) => {
+  console.log('token', token);
+  if (!token) throw missingAuth;
 };
 
 const validateToken = (token) => {
@@ -70,8 +82,16 @@ const getRecipeById = async (id) => {
   return { status: 200, response };
 };
 
+const edit = async (id, token, { name, ingredients, preparation }) => {
+  validateAuthentication(token);
+  validateToken(token);
+  const response = await model.edit(id, name, ingredients, preparation);
+  return { status: 200, response };
+};
+
 module.exports = {
   getOne,
   createRecipe,
   getRecipeById,
+  edit,
 };
