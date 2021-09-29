@@ -27,6 +27,14 @@ const edit = async (req, res) => {
   return res.status(status).json(response);
 };
 
+const addImage = async (req, res) => {
+  const { id } = req.params;
+  const { authorization: token } = req.headers;
+  const { filename } = req.file;
+  const { status, response } = await services.addImage(id, token, filename);
+  return res.status(status).json(response);
+};
+
 const deleteR = async (req, res) => {
   const { id } = req.params;
   const { authorization: token } = req.headers;
@@ -39,5 +47,6 @@ module.exports = {
   getOne,
   edit,
   getRecipeById,
+  addImage,
   deleteR,
 };

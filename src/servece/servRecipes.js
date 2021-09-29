@@ -95,10 +95,18 @@ const deleteR = async (id, token) => {
   return { status: 204 };
 };
 
+const addImage = async (id, token, filename) => {
+  validateAuthentication(token);
+  const path = `localhost:3000/src/uploads/${filename}`;
+  const response = await model.addRecipeImage(id, path);
+  return { status: 200, response };
+};
+
 module.exports = {
   getOne,
   createRecipe,
   getRecipeById,
   edit,
   deleteR,
+  addImage,
 };
