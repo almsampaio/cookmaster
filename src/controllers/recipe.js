@@ -18,7 +18,7 @@ async function findRecipeById(req, res) {
     const recipe = await recipesModel.findRecipeById(id);
 
     if (!recipe) {
-    return res.status(404).json({ message: 'Recipe not found' });
+    return res.status(404).json({ message: 'recipe not found' });
     }
 
     return res.status(200).json(recipe);

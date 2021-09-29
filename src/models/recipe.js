@@ -14,11 +14,11 @@ async function findRecipes() {
     return recipes;
 }
 
-    async function findRecipesById(id) {
+    async function findRecipeById(id) {
     if (!ObjectId.isValid(id)) return null;
     const db = await connection();
-    const recipe = await db.collection('recipes').findOne({ id: ObjectId(id) });
+    const recipe = await db.collection('recipes').findOne({ _id: ObjectId(id) });
     return recipe;
 }
 
-module.exports = { addRecipes, findRecipes, findRecipesById };
+module.exports = { addRecipes, findRecipes, findRecipeById };
