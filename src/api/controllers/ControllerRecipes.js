@@ -37,8 +37,24 @@ const getById = async (req, res, next) => {
   }
 };
 
+const editRecipe = async (req, res, next) => {
+  try {
+    const { name, ingredients, preparation } = req.body;
+    const token = req.headers.authorization;
+    const { id } = req.params;
+
+    const editedRecipe = await ServiceRecipes
+      .editRecipe(id, token, { name, ingredients, preparation });
+
+    return res.status(SUCCESS).json(editedRecipe);
+  } catch (error) {
+    return next(error);
+  }
+};
+
 module.exports = {
   create,
   getAll,
   getById,
+  editRecipe,
 };
