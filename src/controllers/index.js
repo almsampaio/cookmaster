@@ -7,6 +7,14 @@ const registerUser = async (req, res, _next) => {
   return res.status(201).json({ user: createdUser });
 };
 
+const logUserIn = async (req, res, _next) => {
+  const { email, password } = req.body;
+  const token = await services.logUserIn({ email, password });
+
+  return res.status(200).json({ token });
+};
+
 module.exports = {
   registerUser,
+  logUserIn,
 };

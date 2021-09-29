@@ -10,6 +10,7 @@ const app = express();
 app.use(bodyParser.json());
 
 app.post('/users', rescue(controllers.registerUser));
+app.post('/login', rescue(controllers.logUserIn));
 
 app.use(errorMiddleware);
 // Não remover esse end-point, ele é necessário para o avaliador
