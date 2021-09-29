@@ -79,7 +79,7 @@ const removeRecipe = async (req, res) => {
   return res.status(204).json();
 };
 
-// Método do pacote multer para fazer o upload de arquivos
+// Método middlewareMuler do pacote multer para fazer o upload do arquivo
 const storage = multer.diskStorage({
   destination: (req, file, callBack) => {
     const destinationFolderPath = '../uploads/';
@@ -87,14 +87,41 @@ const storage = multer.diskStorage({
   },
   filename: (req, file, callBack) => {
     const { id } = req.params;
-    callBack(null, `${id}${path.extname(file.originalname)}`);
-    console.log(file);
+    const fileName = `${id}${path.extname(file.originalname)}`;
+    callBack(null, fileName);
   },
 });
+
 const upload = multer({ storage });
 const uploadFieldName = 'image';
+
 // Função exportada para o recipesControllers, para ser usada como middleware
 const uploadImageRecipes = upload.array(uploadFieldName);
+
+// Middleware para adicionar e editar a imagem da receita
+const addAndUpdateImage = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const recipeInfo = {
+      imagePath: `localhost:3000/src/uploads/${id}.jpeg`,
+      id,
+    };
+    req.recipeInfo = recipeInfo;
+    const { userInfo } = req;
+    const updatedRecipe = await recipesServices.addAndUpdateImage(recipeInfo, userInfo);
+    if (updatedRecipe === null) { throw new Error('missing auth token'); }
+    req.updatedRecipe = updatedRecipe;
+    // return res.status(200).json(updatedRecipe);
+  } catch (error) {
+    return res.status(401).json({ message: error.message });
+  }
+  next();
+};
+
+const successfulUpload = async (req, res) => {
+  const { updatedRecipe } = req;
+  return res.status(200).json(updatedRecipe);
+};
 
 module.exports = {
   emptyFildValidation,
@@ -104,4 +131,6 @@ module.exports = {
   updateRecipe,
   removeRecipe,
   uploadImageRecipes,
+  addAndUpdateImage,
+  successfulUpload,
 };

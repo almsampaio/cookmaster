@@ -21,14 +21,14 @@ const create = async (name, ingredients, preparation, userId) => {
   return recipe;
 };
 
-const update = async (id, userInfo) => {
+const update = async (recipeInfo, userInfo) => {
   const { role, userId } = userInfo;
   if (role === 'user') {
-    const recipe = await recipesModels.update(id, userId);
+    const recipe = await recipesModels.update(recipeInfo, userId);
     return recipe;
   }
   if (role === 'admin') {
-    const recipe = await recipesModels.updateAdmin(id);
+    const recipe = await recipesModels.updateAdmin(recipeInfo);
     return recipe;
   }
 };
@@ -45,16 +45,16 @@ const remove = async (id, userInfo) => {
   }
 };
 
-// const updateImage = async (id, userInfo) => {
-//   const { role, userId } = userInfo;
-//   if (role === 'user') {
-//     const recipe = await recipesModels.update(id, userId);
-//     return recipe;
-//   }
-//   if (role === 'admin') {
-//     const recipe = await recipesModels.updateAdmin(id);
-//     return recipe;
-//   }
-// };
+const addAndUpdateImage = async (recipeInfo, userInfo) => {
+  const { role, userId } = userInfo;
+  if (role === 'user') {
+    const recipe = await recipesModels.addAndUpdateImage(recipeInfo, userId);
+    return recipe;
+  }
+  if (role === 'admin') {
+    const recipe = await recipesModels.addAndUpdateImageAdmin(recipeInfo);
+    return recipe;
+  }
+};
 
-module.exports = { getAll, getById, getByProperty, create, update, remove };
+module.exports = { getAll, getById, getByProperty, create, update, remove, addAndUpdateImage };

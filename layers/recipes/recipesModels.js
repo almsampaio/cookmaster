@@ -94,6 +94,50 @@ const removeAdmin = async (id) => {
   return removedRecipe;
 };
 
+// Acrescenta ou edita a imagem e uma receita
+// Apenas o autor pode acrescentar e atualizar a imagem da receita
+const addAndUpdateImage = async (recipeInfo, userId) => {
+  const db = await connection();
+  const { id, imagePath } = recipeInfo;
+  const updatedRecipe = await db.collection(TABLE_NAME).findOneAndUpdate(
+    { _id: ObjectId(id), userId },
+    { $set: { image: imagePath } },
+    { returnOriginal: false },
+    );
+    if (!updatedRecipe.value) return null;
+  return updatedRecipe.value;
+};
+
+// Acrescenta ou edita a imagem e uma receita
+// O admin pode acrescentar e atualizar a imagem de qualquer receita
+const addAndUpdateImageAdmin = async (recipeInfo) => {
+  const db = await connection();
+  const { id, imagePath } = recipeInfo;
+  const updatedRecipe = await db.collection(TABLE_NAME).findOneAndUpdate(
+    { _id: ObjectId(id) },
+    { $set: { image: imagePath } },
+    { returnOriginal: false },
+    );
+    if (!updatedRecipe.value) return null;
+  return updatedRecipe.value;
+};
+
+/*
+// Acrescentar e editar campo e retornar o arquivo alterado
+db.recipes.findOneAndUpdate(
+  { _id: ObjectId("6154d5ddd074f3084b14d103") },
+  { $set: { image: 'localhost' } },
+  { returnOriginal: false },
+  );
+
+// Remover o campo arquivo alterado
+db.recipes.findOneAndUpdate(
+  { _id: ObjectId("6154d5ddd074f3084b14d103") },
+  { $unset: { image: true } },
+  { returnOriginal: false },
+  );
+*/
+
 module.exports = {
   getAll,
   getById,
@@ -103,4 +147,6 @@ module.exports = {
   remove,
   updateAdmin,
   removeAdmin,
+  addAndUpdateImage,
+  addAndUpdateImageAdmin,
 };
