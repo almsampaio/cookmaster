@@ -4,7 +4,7 @@ const recipesMiddlewares = require('./recipesMiddlewares');
 
 const router = Router();
 
-router.post('/:id/image',
+router.put('/:id/image',
 authMiddleware.tokenValidation,
 recipesMiddlewares.addAndUpdateImage,
 recipesMiddlewares.uploadImageRecipes,
