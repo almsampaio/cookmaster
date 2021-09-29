@@ -8,7 +8,6 @@ const SECRET = require('../utils/secret');
 
 function tokenValidation(req, res, next) {
     const { authorization } = req.headers;
-    console.log(req.headers);
 
     if (authorization === undefined) {
     return res.status(401).json({ message: 'missing auth token' });
