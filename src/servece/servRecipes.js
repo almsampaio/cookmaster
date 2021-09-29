@@ -77,7 +77,7 @@ const createRecipe = async (token, { name, ingredients, preparation }) => {
 
 const getRecipeById = async (id) => {
   const response = await model.getRecipeById(id);
-  console.log(response);
+  // console.log(response);
   validateRecipe(response);
   return { status: 200, response };
 };
@@ -89,9 +89,16 @@ const edit = async (id, token, { name, ingredients, preparation }) => {
   return { status: 200, response };
 };
 
+const deleteR = async (id, token) => {
+  validateAuthentication(token);
+  await model.deleteR(id);
+  return { status: 204 };
+};
+
 module.exports = {
   getOne,
   createRecipe,
   getRecipeById,
   edit,
+  deleteR,
 };

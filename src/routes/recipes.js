@@ -12,4 +12,6 @@ recipesRouter.get('/:id', rescue(controller.getRecipeById));
 
 recipesRouter.put('/:id', rescue(controller.edit));
 
+recipesRouter.delete('/:id', rescue(controller.deleteR));
+
 module.exports = recipesRouter;

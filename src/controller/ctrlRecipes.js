@@ -22,9 +22,16 @@ const getRecipeById = async (req, res) => {
 
 const edit = async (req, res) => {
   const { id } = req.params;
-  const { authorization } = req.headers;
-  const { status, response } = await services.edit(id, authorization, req.body);
+  const { authorization: token } = req.headers;
+  const { status, response } = await services.edit(id, token, req.body);
   return res.status(status).json(response);
+};
+
+const deleteR = async (req, res) => {
+  const { id } = req.params;
+  const { authorization: token } = req.headers;
+  const { status } = await services.deleteR(id, token);
+  return res.status(status).json();
 };
 
 module.exports = {
@@ -32,4 +39,5 @@ module.exports = {
   getOne,
   edit,
   getRecipeById,
+  deleteR,
 };
