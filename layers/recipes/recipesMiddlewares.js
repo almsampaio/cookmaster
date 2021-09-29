@@ -61,7 +61,7 @@ const updateRecipe = async (req, res) => {
     const { userInfo } = req;
     const recipeInfo = { id, name, ingredients, preparation };
     const updatedRecipe = await recipesServices.update(recipeInfo, userInfo);
-    if (updatedRecipe === null) { throw new Error('Invalid entries. Try again.'); }
+    if (updatedRecipe === null) { throw new Error('missing auth token'); }
     return res.status(200).json(updatedRecipe);
   } catch (error) {
     return res.status(401).json({ message: error.message });

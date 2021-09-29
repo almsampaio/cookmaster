@@ -5,10 +5,15 @@ const OPTIONS = {
   useUnifiedTopology: true,
 };
 
+// Conexão para o avaliador.
+const MONGO_DB_URL = 'mongodb://mongodb:27017/Cookmaster'; 
+
+// Conexão local
+/* const MONGO_DB_URL = 'mongodb://localhost:27017/Cookmaster'; */
+
+const DB_NAME = 'Cookmaster';
+
 const connection = async () => {
-  // const MONGO_DB_URL = 'mongodb://mongodb:27017/Cookmaster'; // Conexão para o avaliador.
-  const MONGO_DB_URL = 'mongodb://localhost:27017/Cookmaster'; // Conexão normal.
-  const DB_NAME = 'Cookmaster';
   try {
     const connectionMongodb = await mongoClient.connect(MONGO_DB_URL, OPTIONS);
     global.db = await connectionMongodb.db(DB_NAME);
