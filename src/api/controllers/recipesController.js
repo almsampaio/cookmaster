@@ -20,6 +20,13 @@ const createRecipes = async (req, res) => {
   return res.status(status.CREATED).json(newUser);
 };
 
+const showRecipes = async (_req, res) => {
+  const recipes = await service.getRecipes();
+
+  return res.status(status.OK).json(recipes);
+};
+
 module.exports = {
   createRecipes,
+  showRecipes,
 };

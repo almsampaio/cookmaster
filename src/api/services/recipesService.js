@@ -29,6 +29,13 @@ const createRecipes = async (body, authorization) => {
   return newRecipe;
 };
 
+const getRecipes = async () => {
+  const recipes = await db.getRecipes();
+
+  return recipes;
+};
+
 module.exports = {
   createRecipes,
+  getRecipes,
 };
