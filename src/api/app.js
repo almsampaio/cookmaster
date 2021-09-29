@@ -30,7 +30,7 @@ app.get('/recipes/:id', recipesControllers.getRecipesById);
 
 app.put('/recipes/:id', recipesControllers.updateRecipe);
 
-app.put('/recipes/:id/image/', multerFile.upload.single('image'), 
+app.put('/recipes/:id/image', multerFile.upload.single('image'), 
   recipesControllers.addRecipeImage);
 
 app.delete('/recipes/:id', recipesControllers.removeRecipe);
