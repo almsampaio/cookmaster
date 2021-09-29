@@ -9,6 +9,9 @@ const createRecipe = async (name, ingredients, preparation, userID) => {
   return create;
 };
 
+const getRecipes = async () => recipesModels.getRecipes();
+
 module.exports = {
   createRecipe,
+  getRecipes,
 };

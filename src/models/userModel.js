@@ -4,7 +4,6 @@ const getByEmail = async (email) => {
   const db = await connection();
 
   const search = await db.collection('users').findOne({ email });
-  console.log(search);
   return search;
 };
 
@@ -20,7 +19,6 @@ const create = async (name, email, password) => {
 
 const getByPassword = async (password) => {
   const db = await connection();
-
   const search = await db.collection('users').findOne({ password });
   return search;
 };

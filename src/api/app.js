@@ -33,6 +33,8 @@ recipes.preparationValidate,
 token.tokenValidate,
 recipesControllers.createRecipe);
 
+app.get('/recipes', recipesControllers.getRecipes);
+
 // Não remover esse end-point, ele é necessário para o avaliador
 app.get('/', (request, response) => {
   response.send();
