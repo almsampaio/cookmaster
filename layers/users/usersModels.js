@@ -2,7 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const { ObjectId } = require('mongodb');
 
-const connection = require('./connection');
+const connection = require('../connection/connection');
 
 const app = express();
 app.use(bodyParser.json());

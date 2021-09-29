@@ -1,4 +1,3 @@
-/*
 const mongoClient = require('mongodb').MongoClient;
 
 const OPTIONS = {
@@ -7,7 +6,7 @@ const OPTIONS = {
 };
 
 const connection = async () => {
-  // const MONGO_DB_URL = 'mongodb://mongodb:27017/Cookmaster'; // Conexão para o avaliador.
+  const MONGO_DB_URL = 'mongodb://mongodb:27017/Cookmaster'; // Conexão para o avaliador.
   // const MONGO_DB_URL = 'mongodb://localhost:27017/Cookmaster'; // Conexão normal.
   const DB_NAME = 'Cookmaster';
   try {
@@ -22,8 +21,8 @@ const connection = async () => {
 };
 
 module.exports = connection;
-*/
 
+/* 
 const { MongoClient } = require('mongodb');
 
 const OPTIONS = {
@@ -44,4 +43,4 @@ const connection = () => (db
         return db;
       }));
 
-module.exports = connection;
+module.exports = connection; */

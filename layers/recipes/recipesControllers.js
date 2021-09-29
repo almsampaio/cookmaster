@@ -1,23 +1,14 @@
 const { Router } = require('express');
 
-const { tokenValidation } = require('../middlewares/authentication/tokenValidation');
-const { emptyFildValidation } = require('../middlewares/recipes/emptyFildValidation');
-
-const { getAllRecipes } = require('../middlewares/recipes/getAllRecipes');
-const { getRecipeById } = require('../middlewares/recipes/getRecipeById');
-const { createRecipes } = require('../middlewares/recipes/createRecipes');
-const { updateRecipe } = require('../middlewares/recipes/updateRecipe');
-const { removeRecipe } = require('../middlewares/recipes/removeRecipe');
-
-// const { recipesServices } = require('../middlewares/authentication/recipesServices');
-// const { updateRecipe } = require('../middlewares/authentication/updateRecipe');
+const authMiddleware = require('../authentication/authMiddleware');
+const recipesMiddlewares = require('./recipesMiddlewares');
 
 const router = Router();
 
 router.post('/',
-tokenValidation,
-emptyFildValidation,
-createRecipes,
+authMiddleware.tokenValidation,
+recipesMiddlewares.emptyFildValidation,
+recipesMiddlewares.createRecipes,
 async () => {});
 /* REQUISIÇÃO:
 // erick
@@ -28,23 +19,23 @@ http POST :3000/recipes/ name='miojo do lucas' ingredients='macarrão, tempero' 
 */
 
 router.get('/',
-getAllRecipes,
+recipesMiddlewares.getAllRecipes,
 async () => {});
 /* REQUISIÇÃO:
 http GET :3000/recipes/
 */
 
 router.get('/:id',
-getRecipeById,
+recipesMiddlewares.getRecipeById,
 async () => {});
 /* REQUISIÇÃO:
 http GET :3000/recipes/614f93e9731b88de6cfb03e7
 */
 
 router.put('/:id',
-tokenValidation,
-emptyFildValidation,
-updateRecipe,
+authMiddleware.tokenValidation,
+recipesMiddlewares.emptyFildValidation,
+recipesMiddlewares.updateRecipe,
 async () => {});
 /* REQUISIÇÃO:
 // GOOD REQUEST
@@ -56,8 +47,8 @@ http PUT :3000/recipes/61538414085f8bc5067a9f4b name='ovo' ingredients='ovo' pre
 */
 
 router.delete('/:id',
-tokenValidation,
-removeRecipe,
+authMiddleware.tokenValidation,
+recipesMiddlewares.removeRecipe,
 async () => {});
 /* REQUISIÇÃO:
 // GOOD REQUEST

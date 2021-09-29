@@ -1,6 +1,7 @@
-const recipesModels = require('../models/recipesModels');
+const recipesModels = require('./recipesModels');
 
 const getAll = async () => {
+  console.log('passei aqui');
   const recipes = await recipesModels.getAll();
   return recipes;
 };
