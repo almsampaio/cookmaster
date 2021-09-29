@@ -61,10 +61,12 @@ const findByIdRecipes = async (id) => {
   return result;
 };
 
-const upDateRecipes = async (data, userId, id) => {
-  const addedRecipe = await userModel.addRecipe(data, userId, id);
+const upDateRecipes = async (id, data, userId) => {
+  const checkedId = ObjectID.isValid(id);
+  if (!checkedId) return { status: 404, err: { message: 'recipe not found' } };
 
-  return addedRecipe;
+  const recipe = await userModel.upDateRecipes(id, data, userId);
+  return { status: 200, data: recipe };
 };
 
 const excludeRecipes = async (id) => {

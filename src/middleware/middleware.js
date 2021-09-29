@@ -18,7 +18,7 @@ const authToken = async (req, res, next) => {
   try {
     const { user: { _id } } = verify(token, SECRET);
 
-    req.user = _id;
+    req.user = { _id };
 
     next();
   } catch (_e) {

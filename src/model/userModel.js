@@ -42,11 +42,9 @@ const findByIdRecipes = async (id) => {
   return result;
 };
 
-const upDateRecipes = async (data, userId, id) => {
+const upDateRecipes = async (id, data, userId) => {
   const db = await connect();
-  const { name, ingredients, preparation } = data;
-  await db.collection('recipes')
-    .updateOne({ _id: ObjectID(id) }, { $set: { name, ingredients, preparation, userId } });
+  await db.collection('recipes').updateOne({ _id: ObjectID(id) }, { $set: { ...data, userId } });
   const recipe = await findByIdRecipes(id);
   return recipe;
 };

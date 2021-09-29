@@ -50,14 +50,12 @@ const findByIdRecipes = async (req, res) => {
 
 const upDateRecipes = async (req, res) => {
   const { id } = req.params;
-  const userId = req.user;
-  const { name, ingredients, preparation } = req.body;
-  const data = { name, ingredients, preparation };
-  const recipe = await userService.upDateRecipes(data, userId, id);
+  const { _id } = req.user;
+  console.log(req.user);
+  const { status, data, err } = await userService.upDateRecipes(id, req.body, _id);
+  if (err) return res.status(status).json(err);
 
-  if (recipe.message) return res.status(recipe.status).json({ message: recipe.message });
-
-  res.status(200).json(recipe);
+  res.status(status).json(data);
 };
 
 const excludeRecipes = async (req, res) => {
