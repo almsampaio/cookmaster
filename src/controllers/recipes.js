@@ -21,7 +21,7 @@ const getRecipes = async (_req, res, _next) => {
 const getRecipeById = async (req, res, next) => {
   const { id } = req.params;
 
-  // Adelino Júnior
+  // Adelino Júnior help me here, I forgot the return on line 28
   // https://github.com/AdelinoJnr
 
   if (!ObjectId.isValid(id)) {
