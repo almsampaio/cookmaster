@@ -40,9 +40,18 @@ const updatedRecipe = async (recipes, id, recipeId) => {
   return updateValidate;
 };
 
+const updateImg = async (id, image) => {
+  const addImg = await recipesModel.updateImg(id, image);
+  if (!addImg) {
+    return false;
+  }
+  return addImg;
+};
+
 module.exports = {
   validateRecipes,
   getAllRecipes,
   validateId,
   updatedRecipe,
+  updateImg,
 };

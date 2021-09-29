@@ -1,3 +1,4 @@
+const path = require('path');
 const recipesModel = require('../Models/recipesModel');
 const recipesService = require('../Services/recipesService');
 const { HTTP_CREATED_STATUS, HTTP_OK_STATUS, recipeNotFound } = require('../helpers');
@@ -50,9 +51,34 @@ const updatedRecipes = async (req, res) => {
   }
 };
 
+const deletedRecipes = async (req, res) => {
+  const { id } = req.params;
+  const validatedId = await recipesService.validateId(id);
+
+  if (!validatedId) {
+    return res.status(401).json({ err: { code: 'invalid_data', message: 'Wrong ID format' } });
+  }
+
+  await recipesModel.deleteRecipes(id);
+  res.status(204).send();
+};
+
+const updateImg = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const image = path.join('localhost:3000', 'src', 'uploads', `${id}.jpeg`);
+    const recipeImg = await recipesService.updateImg(id, image);
+    return res.status(200).json(recipeImg);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 module.exports = {
   createdRecipes,
   getAllRecipes,
   getRecipesId,
   updatedRecipes,
+  deletedRecipes,
+  updateImg,
 };
