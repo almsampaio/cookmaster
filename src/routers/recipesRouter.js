@@ -7,5 +7,6 @@ const recipesRouter = express.Router();
 
 recipesRouter.post('/', rescue(recipesController.addRecipes));
 recipesRouter.get('/', rescue(recipesController.getRecipes));
+recipesRouter.get('/:id', rescue(recipesController.getRecipesId));
 
 module.exports = recipesRouter;

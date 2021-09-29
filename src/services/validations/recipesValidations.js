@@ -16,6 +16,13 @@ const errorValidateToken = {
   },
 };
 
+const errorRecipesNotFound = {
+  status: 404,
+  error: {
+    message: 'recipe not found',
+  },
+};
+
 const validateRequire = (name, ingredients, preparation) => {
   if (!name || !ingredients || !preparation) throw errorValidateRequire;
 };
@@ -29,7 +36,12 @@ const validateToken = (token) => {
   }
 };
 
+const validateRecipes = (recipes) => {
+  if (!recipes) throw errorRecipesNotFound;
+};
+
 module.exports = {
   validateRequire,
   validateToken,
+  validateRecipes,
 };
