@@ -63,12 +63,12 @@ const createRecipe = async (token, { name, ingredients, preparation }) => {
   return { status: 201, response };
 };
 
-async function getRecipeById(id) {
+const getRecipeById = async (id) => {
   const response = await model.getRecipeById(id);
   console.log(response);
   validateRecipe(response);
   return { status: 200, response };
-}
+};
 
 module.exports = {
   getOne,
