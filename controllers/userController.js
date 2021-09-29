@@ -10,10 +10,7 @@ const registerUser = async (req, res) => {
 
 const checkLogin = async (req, res) => {
     const { email, password } = req.body;
-    console.log('email, password -  - - - CONTROLLER', email, password);
-    console.log('req.body -  - - - CONTROLLER', req.body);
-    const result = await userService.checkLogin({ email, password });
-    console.log('result -  - - - CONTROLLER', result);
+    const result = await userService.checkLogin(email, password);
     if (result.message) return res.status(result.status).json({ message: result.message });
     return res.status(200).send(result);
 };

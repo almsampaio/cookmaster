@@ -1,31 +1,21 @@
 const userModel = require('../models/userModel');
-
-// const jwt = require('jsonwebtoken');
-
-// const secret = 'tokensecreto';
-
-// const jwtConfig = {
-//     expiresIn: '7d',
-//     algorithm: 'HS256',
-//   };
-
-//   const token = jwt.sign({ user }, secret, jwtConfig);
-
-//   res.status(200).json({ token });
+// const { gettingToken } = require('./tokenAuthorization');
 
 const {
     emailRegistered,
-invalidEntries,
-allFieldsFilled,
-incorrectFieldData, /*
-wrongJWT,
-recipeNotFound,
-missingToken */ } = require('../utils/errorMessages');
+    invalidEntries,
+    allFieldsFilled,
+    incorrectFieldData, /*
+    wrongJWT,
+    recipeNotFound,
+    missingToken */ } = require('../utils/errorMessages');
 
 const checkEmail = async (email) => {
     if (!email) return false;
+    console.log(email);
     const regex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
     const validEmail = regex.test(String(email).toLowerCase());
+    console.log('RESULTADO VALIDEMAIL - -', validEmail);
     return validEmail;
 };
 
@@ -57,12 +47,13 @@ const checkLogin = async (email, password) => {
     if (!email || !password) {
         return { status: 401, message: allFieldsFilled };
     }
-    // const validEmail = checkEmail(email);
-    if (checkEmail(email)) {
+    const emailChecked = await checkEmail(email);
+    console.log(email, emailChecked);
+    const result = await userModel.checkLogin(email, password);
+    if (result) return result;
+    if (emailChecked) {
         return { status: 401, message: incorrectFieldData };
     }
-    const result = await userModel.checkLogin(email, password);
-    return result;
 };
 
 module.exports = {
