@@ -10,6 +10,12 @@ const addRecipes = async (name, ingredients, preparation, token) => {
   return { status: 201, response };
 };
 
+const getRecipes = async () => {
+  const response = await recipesModels.getRecipes();
+  return { status: 200, response };
+};
+
 module.exports = {
   addRecipes,
+  getRecipes,
 };
