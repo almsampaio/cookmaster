@@ -11,7 +11,10 @@ const createRecipe = async (name, ingredients, preparation, userID) => {
 
 const getRecipes = async () => recipesModels.getRecipes();
 
+const getRecipeById = async (id) => recipesModels.getRecipeById(id);
+
 module.exports = {
   createRecipe,
   getRecipes,
+  getRecipeById,
 };
