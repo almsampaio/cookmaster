@@ -12,7 +12,15 @@ const login = Joi.object({
   password: Joi.string().required(),
 });
 
+const recipe = Joi.object({
+  name: Joi.string().required(),
+  ingredients: Joi.string().required(),
+  preparation: Joi.string().required(),
+  userId: Joi.string(),
+});
+
 module.exports = {
   user,
   login,
+  recipe,
 };

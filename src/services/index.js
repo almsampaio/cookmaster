@@ -66,7 +66,25 @@ const logUserIn = async (loginData) => {
   }
 };
 
+const validateRecipeSchema = (recipeData) => {
+  const { error } = schema.recipe.validate(recipeData);
+  console.log(error);
+  if (error) throw newError(400, 'Invalid entries. Try again.');
+};
+
+const createRecipe = async (recipeData) => {
+  try {
+    validateRecipeSchema(recipeData);
+    const recipeCreated = await models.create('recipes', recipeData);
+
+    return recipeCreated;
+  } catch (e) {
+    throw newError(e.status, e.message);
+  }
+};
+
 module.exports = {
   registerUser,
   logUserIn,
+  createRecipe,
 };
