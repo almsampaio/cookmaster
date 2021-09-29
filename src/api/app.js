@@ -21,5 +21,6 @@ app.post('/login', valideUser.loginValitation, valideUser.checkUser, usersContro
 
 app.post('/recipes', tokenValidation, valideRecipe.usersVAlidations, recipesControllers.create);
 app.get('/recipes', recipesControllers.get);
+app.get('/recipes/:id', valideRecipe.validId, recipesControllers.getById);
 
 module.exports = app;

@@ -10,4 +10,10 @@ const get = async (_req, res) => {
   return res.status(recipes.status).json(recipes.message);
 };
 
-module.exports = { create, get };
+const getById = async (req, res) => {
+  const { id } = req.params;
+  const recipe = await recipesServices.getById(id);
+  return res.status(recipe.status).json(recipe.message);
+};
+
+module.exports = { create, get, getById };
