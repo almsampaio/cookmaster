@@ -60,7 +60,7 @@ const addRecipeImage = async (id, token, imageData) => {
   const { path } = imageData;
   const pathStrings = path.split('/');
   console.log(pathStrings);
-  const newPath = `localhost:3000/${pathStrings[5]}/${pathStrings[6]}/${pathStrings[7]}`;
+  const newPath = `localhost:3000/src/uploads/${id}.jpeg`;
   console.log(newPath);
   if (validToken.errorCode) return validToken;
 
