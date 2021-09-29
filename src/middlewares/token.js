@@ -1,7 +1,6 @@
 const jwt = require('jsonwebtoken');
-require('dotenv').config();
 
-const password = 'mySuperMegaSecretToken';
+const password = 'secret';
 
 const jwtconfig = {
   expiresIn: '10d',
@@ -9,7 +8,11 @@ const jwtconfig = {
 };
 
 const getToken = (user) => {
-  const token = jwt.sign({ data: user }, password, jwtconfig);
+  const userWithoutPassword = {
+    email: user.email,
+  };
+
+  const token = jwt.sign({ data: userWithoutPassword }, password, jwtconfig);
   return token;
 };
 
