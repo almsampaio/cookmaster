@@ -3,6 +3,7 @@ const invalidData = require('../utils/invalidData');
 const { verifyToken } = require('../middlewares');
 
 const UNAUTHORIZED = 401;
+const NOT_FOUND = 404;
 
 const create = async (token, { name, ingredients, preparation }) => {
   const validVerifyToken = await verifyToken(token);
@@ -21,7 +22,16 @@ const getAll = async () => {
   return getAllRecipes;
 };
 
+const getById = async (id) => {
+  const findRecipe = await ModelRecipes.getById(id);
+
+  if (!findRecipe) throw invalidData('recipe not found', NOT_FOUND);
+
+  return findRecipe;
+};
+
 module.exports = {
   create,
   getAll,
+  getById,
 };

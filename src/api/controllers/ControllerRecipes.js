@@ -12,7 +12,7 @@ const create = async (req, res, next) => {
 
     return res.status(CREATED).json(createdRecipe);
   } catch (error) {
-    next(error);
+    return next(error);
   }
 };
 
@@ -22,11 +22,23 @@ const getAll = async (_req, res, next) => {
 
     return res.status(SUCCESS).json(getAllRecipes);    
   } catch (error) {
-    next(error);
+    return next(error);
+  }
+};
+
+const getById = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const findRecipe = await ServiceRecipes.getById(id);
+
+    return res.status(SUCCESS).json(findRecipe);
+  } catch (error) {
+    return next(error);    
   }
 };
 
 module.exports = {
   create,
   getAll,
+  getById,
 };

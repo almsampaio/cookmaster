@@ -7,5 +7,6 @@ const Middlewares = require('../middlewares');
 
 router.post('/', Middlewares.validRecipe, ControllerRecipes.create);
 router.get('/', ControllerRecipes.getAll);
+router.get('/:id', ControllerRecipes.getById);
 
 module.exports = router;
