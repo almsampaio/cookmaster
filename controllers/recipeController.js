@@ -32,7 +32,7 @@ const registerRecipe = async (req, res) => {
     const recipe = { name, ingredients, preparation, userId };
     const result = await recipeService.registerRecipe(recipe);
     if (result.message) return res.status(result.status).json({ message: result.message });
-    return res.status(201).send(result);
+    return res.status(201).send({ recipe: result });
 };
 
 module.exports = {

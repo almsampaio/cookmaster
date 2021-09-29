@@ -36,11 +36,9 @@ const checkId = async (name, ingredients, preparation, userId) => {
 const registerRecipe = async (recipe) => {
 const { name, ingredients, preparation, userId } = recipe;
 const checkedData = await checkId(name, ingredients, preparation, userId);
-console.log('checkedData', checkedData);
 
 if (checkedData !== true) return checkedData;
 const result = await recipeModel.registerRecipe(recipe);
-// console.log('result', result);
 if (result.message) { return { status: result.status, message: result.message }; }
 return result;
 };
