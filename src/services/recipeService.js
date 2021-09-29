@@ -14,6 +14,11 @@ const updateRecipe = async (id, recipe, userId) => {
   return changedRecipe;
 };
 
+const deleteRecipe = async (id) => {
+  const recipe = await recipeModel.deleteRecipe(id);
+  return recipe;
+};
+
 const listRecipes = async () => {
   const list = await recipeModel.listRecipes();
   return list;
@@ -32,4 +37,5 @@ module.exports = {
   listRecipes,
   recipeId,
   updateRecipe,
+  deleteRecipe,
 };

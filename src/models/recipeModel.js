@@ -22,6 +22,11 @@ const updateRecipe = async (id, recipe, userId) => {
   return { _id: id, name, preparation, ingredients, userId };
 };
 
+const deleteRecipe = async (id) => {
+  const db = await connect();
+  await db.collection('recipes').deleteOne({ _id: ObjectId(id) });
+};
+
 const listRecipes = async () => {
   const db = await connect();
   const list = await db.collection('recipes').find().toArray();
@@ -40,4 +45,5 @@ module.exports = {
   listRecipes,
   recipeId,
   updateRecipe,
+  deleteRecipe,
 };
