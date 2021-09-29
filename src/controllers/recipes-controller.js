@@ -54,10 +54,10 @@ const updateRecipeById = async (req, res) => {
       preparation,
     );
     if (recipe.err) {
- return res
+      return res
         .status(recipe.err.status)
-        .json({ message: recipe.err.message }); 
-}
+        .json({ message: recipe.err.message });
+    }
 
     res.status(200).json(recipe);
   } catch (error) {
@@ -73,4 +73,27 @@ const deleteRecipeById = async (req, res) => {
   res.status(204).send();
 };
 
-module.exports = { createRecipe, findRecipes, findById, updateRecipeById, deleteRecipeById };
+const uploadImageRecipe = async (req, res) => {
+  const { id } = req.params;
+  const { filename } = req.file;
+
+  // const image = 'localhost:3000/src/uploads/';
+
+  const recipeImg = await recipesService.uploadImageRecipe(id, filename);
+
+  if (recipeImg.err) {
+    return res
+      .status(recipeImg.err.status)
+      .json({ message: recipeImg.err.message });
+  }
+  res.status(200).json(recipeImg);
+};
+
+module.exports = {
+  createRecipe,
+  findRecipes,
+  findById,
+  updateRecipeById,
+  deleteRecipeById,
+  uploadImageRecipe,
+};

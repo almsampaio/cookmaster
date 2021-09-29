@@ -40,11 +40,28 @@ const updateRecipeById = async (id, name, ingredients, preparation) => {
 };
 
 const deleteRecipeById = async (id) => {
-   await connect().then((db) => {
-    db
-      .collection('recipes')
-      .deleteOne({ _id: ObjectId(id) });
+  await connect().then((db) => {
+    db.collection('recipes').deleteOne({ _id: ObjectId(id) });
   });
 };
 
-module.exports = { create, findRecipes, findById, updateRecipeById, deleteRecipeById };
+const uploadImageRecipe = async (id, image) => {
+  await connect().then((db) => {
+    db.collection('recipes').updateOne(
+      { _id: ObjectId(id) },
+      { $set: { image: `localhost:3000/src/uploads/${image}` } },
+    );
+  });
+  const findRecipe = await findById(id);
+
+  return findRecipe;
+};
+
+module.exports = {
+  create,
+  findRecipes,
+  findById,
+  updateRecipeById,
+  deleteRecipeById,
+  uploadImageRecipe,
+};
