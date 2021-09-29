@@ -29,9 +29,16 @@ const editRecipesId = async (id, { name, ingredients, preparation }, token) => {
   return { status: 200, response };
 };
 
+const deleteRecipesId = async (id, token) => {
+  recipesValidations.validateTokenExist(token);
+  await recipesModels.deleteRecipesId(id);
+  return { status: 204 };
+};
+
 module.exports = {
   addRecipes,
   getRecipes,
   getRecipesId,
   editRecipesId,
+  deleteRecipesId,
 };
