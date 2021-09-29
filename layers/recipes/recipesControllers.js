@@ -1,5 +1,4 @@
 const { Router } = require('express');
-
 const authMiddleware = require('../authentication/authMiddleware');
 const recipesMiddlewares = require('./recipesMiddlewares');
 
@@ -27,6 +26,34 @@ http GET :3000/recipes/
 
 // Consultar todas as receitas com autenticação do usuário Erick
 http GET :3000/recipes/ authorization:"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTRmOTNkNDczMWI4OGRlNmNmYjAzZTYiLCJuYW1lIjoiRXJpY2sgSmFjcXVpbiIsImVtYWlsIjoiZXJpY2tqYWNxdWluQGdtYWlsLmNvbSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNjMyOTIyNzUwLCJleHAiOjE2MzMwOTU1NTB9.-aeIAX4uXPbPSbzmW7pSDCZD44FoND7qlTKzWMxmOso"
+*/
+
+// const storage = multer.diskStorage({
+//   destination: (req, file, cb) => {
+//       cb(null, '../uploads/');
+//   },
+//   filename: (req, file, cb) => {
+//       cb(null, `${Date.now()}${path.extname(file.originalname)}`);
+//   },
+// });
+// const upload = multer({ storage });
+
+router.post('/:id/image',
+authMiddleware.tokenValidation,
+recipesMiddlewares.uploadImageRecipes,
+async (req, res) => {
+  // console.log(req.files);
+  res.status(200).json({ message: 'carregado' });
+});
+/* REQUISIÇÃO:
+Carega o arquivo
+http -f POST :3000/recipes/1/image image@/home/lucas/uploadTest.txt
+http -f POST :3000/recipes/1/image image@/home/lucas/uploadTest.txt authorization:"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTUzOTFiZjdiMmJjY2UxOTU0N2Y4ODQiLCJuYW1lIjoiTHVjYXMiLCJlbWFpbCI6Imx1Y2FzQGdtYWlsLmNvbSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNjMyOTIyNzI2LCJleHAiOjE2MzMwOTU1MjZ9.lh5SZGE159Yc79EBp5H7K-8fABh1MRHorGlQPdLKBi4"
+// Criar uma receita com o usuário lucas
+http POST :3000/recipes/ name='miojo do lucas' ingredients='macarrão' preparation='cozer' authorization:"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTUzOTFiZjdiMmJjY2UxOTU0N2Y4ODQiLCJuYW1lIjoiTHVjYXMiLCJlbWFpbCI6Imx1Y2FzQGdtYWlsLmNvbSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNjMyOTIyNzI2LCJleHAiOjE2MzMwOTU1MjZ9.lh5SZGE159Yc79EBp5H7K-8fABh1MRHorGlQPdLKBi4"
+
+// Criar uma receita com o usuário erick
+http POST :3000/recipes/ name='miojo do erick' ingredients='macarrão' preparation='cozer' authorization:"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTRmOTNkNDczMWI4OGRlNmNmYjAzZTYiLCJuYW1lIjoiRXJpY2sgSmFjcXVpbiIsImVtYWlsIjoiZXJpY2tqYWNxdWluQGdtYWlsLmNvbSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNjMyOTIyNzUwLCJleHAiOjE2MzMwOTU1NTB9.-aeIAX4uXPbPSbzmW7pSDCZD44FoND7qlTKzWMxmOso"
 */
 
 router.get('/:id',

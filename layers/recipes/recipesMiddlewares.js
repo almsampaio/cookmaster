@@ -1,4 +1,7 @@
 const { ObjectId } = require('mongodb');
+const multer = require('multer');
+const path = require('path');
+
 const recipesServices = require('./recipesServices');
 
 // Validação de campo vazio
@@ -76,6 +79,23 @@ const removeRecipe = async (req, res) => {
   return res.status(204).json();
 };
 
+// Método do pacote multer para fazer o upload de arquivos
+const storage = multer.diskStorage({
+  destination: (req, file, callBack) => {
+    const destinationFolderPath = '../uploads/';
+    callBack(null, destinationFolderPath);
+  },
+  filename: (req, file, callBack) => {
+    const { id } = req.params;
+    callBack(null, `${id}${path.extname(file.originalname)}`);
+    console.log(file);
+  },
+});
+const upload = multer({ storage });
+const uploadFieldName = 'image';
+// Função exportada para o recipesControllers, para ser usada como middleware
+const uploadImageRecipes = upload.array(uploadFieldName);
+
 module.exports = {
   emptyFildValidation,
   createRecipes,
@@ -83,4 +103,5 @@ module.exports = {
   getRecipeById,
   updateRecipe,
   removeRecipe,
+  uploadImageRecipes,
 };

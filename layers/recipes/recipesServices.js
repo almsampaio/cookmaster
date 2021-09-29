@@ -45,4 +45,16 @@ const remove = async (id, userInfo) => {
   }
 };
 
+// const updateImage = async (id, userInfo) => {
+//   const { role, userId } = userInfo;
+//   if (role === 'user') {
+//     const recipe = await recipesModels.update(id, userId);
+//     return recipe;
+//   }
+//   if (role === 'admin') {
+//     const recipe = await recipesModels.updateAdmin(id);
+//     return recipe;
+//   }
+// };
+
 module.exports = { getAll, getById, getByProperty, create, update, remove };
