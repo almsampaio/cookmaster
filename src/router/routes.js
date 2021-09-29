@@ -9,7 +9,7 @@ const recipes = require('../controllers/recipes-controller');
 const istoken = require('../middlewares/authorization');
 const { upload } = require('../utils/upload');
 
-router.use('image', express.static(path.join(__dirname, '..', 'uploads')));
+router.use('/images', express.static(path.join(__dirname, '..', 'uploads')));
 
 router.post('/users', userController.createUser);
 router.post('/login', login.loginController);
