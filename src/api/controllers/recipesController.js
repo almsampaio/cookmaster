@@ -26,7 +26,7 @@ const getRecipes = async (_req, res) => {
   return res.status(status.OK).json(recipes);
 };
 
-const getRecipesByID = async (req, res) => {
+const getRecipeByID = async (req, res) => {
   const { params: { id } } = req;
   const recipeByID = await service.getRecipeByID(id);
   if (recipeByID.err) {
@@ -35,8 +35,18 @@ const getRecipesByID = async (req, res) => {
   return res.status(status.OK).json(recipeByID);
 };
 
+const updateRecipeByID = async (req, res) => {
+  const { body, headers: { authorization }, params: { id } } = req;
+  const updatedUser = await service.updateRecipeByID(body, authorization, id);
+  if (updatedUser.err) {
+    return res.status(status[updatedUser.err.code]).json({ message: updatedUser.err.message });
+  }
+  return res.status(status.OK).json(updatedUser);
+};
+
 module.exports = {
   createRecipes,
   getRecipes,
-  getRecipesByID,
+  getRecipeByID,
+  updateRecipeByID,
 };

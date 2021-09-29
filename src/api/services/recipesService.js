@@ -47,8 +47,46 @@ const getRecipeByID = async (id) => {
   return recipeByID;
 };
 
+const isValidUser = async (userEmail, recipeID) => {
+  const { _id: userID, role } = await findByEmail(userEmail);
+  const { userId: recipeUserID } = await getRecipeByID(recipeID);
+  console.log(`role: ${role}\n userID: ${userID}\n recipeUserID: ${recipeUserID}`);
+  console.log(String(userID) === String(recipeUserID));
+  if (String(userID) === String(recipeUserID) || role === 'admin') return true;
+  return { err: { message: 'missing auth token', code: 'UNAUTHORIZED' } };
+};
+
+const updateRecipesValidations = async (token, body, recipeID) => {
+  const { name, ingredients, preparation } = body;
+
+  try {
+    const validToken = jwt.verify(token, secret);
+    if (!name || !ingredients || !preparation) {
+      return { err: { message: 'Invalid entries. Try again.', code: 'BAD_REQUEST' } };
+    }
+    const userValid = await isValidUser(validToken.payload.userEmail, recipeID);
+    return userValid;
+  } catch (_err0r) {
+    return { err: { message: 'jwt malformed', code: 'UNAUTHORIZED' } };
+  }  
+};
+
+const updateRecipeByID = async (body, authorization, id) => {
+  const token = authorization;
+  const recipeID = id;
+  console.log(`token: ${token}`);
+  if (!token) return { err: { message: 'missing auth token', code: 'UNAUTHORIZED' } };
+  const isValid = await updateRecipesValidations(token, body, recipeID);
+  console.log(isValid);
+  if (isValid.err) return isValid; 
+  const updatedRecipe = await db
+    .updateRecipeByID(body.name, body.ingredients, body.preparation, recipeID);
+  return updatedRecipe;
+};
+
 module.exports = {
   createRecipes,
   getRecipes,
   getRecipeByID,
+  updateRecipeByID,
 };
