@@ -1,0 +1,49 @@
+use('Cookmaster');
+db.users.insertMany([
+  { 'name': "Erick Jacquin", 'email': 'erickjacquin@gmail.com', 'password': "12345678", "role" : "user" },
+  { 'name': "Joao Jacquin", 'email': 'joaojacquin@gmail.com', 'password': "12345678", "role" : "user" },
+  { 'name': "Mateus Jacquin", 'email': 'mateusjacquin@gmail.com', 'password': "12345678", "role" : "user" },
+  { 'name': "Felipe Jacquin", 'email': 'felipejacquin@gmail.com', 'password': "12345678", "role" : "user" },
+  { 'name': "Cezar Jacquin", 'email': 'cezarjacquin@gmail.com', 'password': "12345678", "role" : "user" },
+  { 'name': "Fred Jacquin", 'email': 'fredjacquin@gmail.com', 'password': "12345678", "role" : "user" },
+  { 'name': "Henrique Jacquin", 'email': 'henriquejacquin@gmail.com', 'password': "12345678", "role" : "user" },
+  { 'name': "Tiago Jacquin", 'email': 'tiagojacquin@gmail.com', 'password': "12345678", "role" : "user" },
+]);
+
+//------------------------------
+use('Cookmaster');
+db.users.find({});
+
+//------------------------------
+use('Cookmaster');
+db.users.insertOne({ 'name': "Welderson Jacquin", 'email': 'weldersonjacquin@gmail.com', 'password': "12345678", "role" : "user" });
+
+// response: 
+// {
+//   "acknowledged": true,
+//   "insertedId": {
+//     "$oid": "614a3a6276d1585f84a2edfe"
+//   }
+// }
+
+//------------------------------
+use('Cookmaster');
+db.users.drop();
+
+//-----------------------------
+use('Cookmaster');
+db.recipes.insertMany([
+  { "name" : "Receita do Jacquin", "ingredients" : "Frango", "preparation" : "10 minutos no forno" },
+  { "name" : "Receita do Eric", "ingredients" : "Leite", "preparation" : "20 minutos no forno" },
+  { "name" : "Receita do Joao", "ingredients" : "Morando", "preparation" : "30 minutos no forno" },
+  { "name" : "Receita do Mateus", "ingredients" : "Feijao", "preparation" : "40 minutos no forno" },
+]);
+
+//------------------------------
+use('Cookmaster');
+db.recipes.find({});
+
+//------------------------------
+use('Cookmaster');
+db.recipes.findOne({ email: 'jonas@3.com'});
+
