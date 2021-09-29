@@ -19,8 +19,9 @@ const gettingOneRecipe = async (req, res) => {
 };
 
 const editingRecipe = async (req, res) => {
+    const { name, ingredients, preparation } = req.body;
     const { id } = req.params;
-    const result = await recipeService.editingRecipe(id);
+    const result = await recipeService.editingRecipe(id, name, ingredients, preparation);
     if (result.message) return res.status(result.status).json({ message: result.message });
     return res.status(200).json(result);
 };

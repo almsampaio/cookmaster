@@ -24,7 +24,7 @@ const gettingOneRecipe = async (id) => {
 const editingRecipe = async (id, name, ingredients, preparation) => {
     const updateResult = await recipeModel
     .editingRecipe(id, name, ingredients, preparation);
-    return updateResult;
+    return updateResult; 
 };
 
 const checkId = async (name, ingredients, preparation, userId) => {

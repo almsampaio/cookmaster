@@ -20,10 +20,11 @@ const gettingOneRecipe = async (id) => {
 const editingRecipe = async (id, name, ingredients, preparation) => {
     if (!ObjectId.isValid(id)) return false;
     const db = await connect();
+    const object = { id, name, ingredients, preparation };
     const recipe = await db.collection('recipes')
     .findOneAndUpdate({ _id: ObjectId(id) }, { $set: { name, ingredients, preparation } });
     if (!recipe) return false;
-    return recipe;
+    return { ...recipe.value, ...object };
 };
 
 const registerRecipe = async (recipe) => {

@@ -38,7 +38,6 @@ const tokenAuthorization = (req, res, next) => {
   }
   
   const decodedToken = verifyToken(token);
-  console.log(decodedToken);
   if (decodedToken.errorFound) return res.status(401).json({ message: wrongJWT });
 
   req.token = decodedToken;
