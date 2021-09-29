@@ -2,10 +2,10 @@ const recipeModel = require('../models/recipeModel');
 
 const {
 //     // emailRegistered,
-// // invalidEntries,
+invalidEntries,
 // // allFieldsFilled,
 // // incorrectFieldData, /*
-// wrongJWT,
+wrongJWT,
 recipeNotFound,
 // missingToken,
 } = require('../utils/errorMessages');
@@ -27,8 +27,24 @@ const editingRecipe = async (id, name, ingredients, preparation) => {
     return updateResult;
 };
 
+const checkId = async (name, ingredients, preparation, userId) => {
+    if (!name || !ingredients || !preparation) { return { status: 400, message: invalidEntries }; }
+    if (!userId) return { status: 401, message: wrongJWT };
+    return true; 
+};
+
+const registerRecipe = async (recipe) => {
+const { name, ingredients, preparation, userId } = recipe;
+const checkedData = checkId(name, ingredients, preparation, userId);
+if (checkedData !== true) return checkedData;
+const result = await recipeModel.registerRecipe(name, ingredients, preparation, userId);
+if (result.message) { return { status: result.status, message: result.message }; }
+return result;
+};
+
 module.exports = {
     getRecipes,
     gettingOneRecipe,
     editingRecipe,
+    registerRecipe,
 };

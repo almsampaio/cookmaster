@@ -5,8 +5,8 @@ const bodyParser = require('body-parser');
 // const multer = require('multer');
 
 const userController = require('../../controllers/userController');
-// const recipeController = require('../../controllers/recipeController');
-// const tokenAuthorization = require('../../services/tokenAuthorization');
+const recipeController = require('../../controllers/recipeController');
+const { tokenAuthorization } = require('../../services/tokenAuthorization');
 
 const app = express();
 
@@ -16,9 +16,11 @@ app.post('/users', userController.registerUser);
 
 app.post('/login', userController.checkLogin);
 
-// app.get('/recipes', recipeController.getRecipes);
+app.post('/recipes', tokenAuthorization, recipeController.registerRecipe);
 
-// app.get('/recipes/:id', recipeController.gettingOneRecipe);
+app.get('/recipes', recipeController.getRecipes);
+
+app.get('/recipes/:id', recipeController.gettingOneRecipe);
 
 // app.put('/recipes/:id', tokenAuthorization, recipeController.editingRecipe);
 

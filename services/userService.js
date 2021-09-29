@@ -1,5 +1,5 @@
 const userModel = require('../models/userModel');
-// const { gettingToken } = require('./tokenAuthorization');
+const { gettingToken } = require('./tokenAuthorization');
 
 const {
     emailRegistered,
@@ -12,10 +12,8 @@ const {
 
 const checkEmail = async (email) => {
     if (!email) return false;
-    console.log(email);
     const regex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
     const validEmail = regex.test(String(email).toLowerCase());
-    console.log('RESULTADO VALIDEMAIL - -', validEmail);
     return validEmail;
 };
 
@@ -48,9 +46,16 @@ const checkLogin = async (email, password) => {
         return { status: 401, message: allFieldsFilled };
     }
     const emailChecked = await checkEmail(email);
-    console.log(email, emailChecked);
     const result = await userModel.checkLogin(email, password);
-    if (result) return result;
+    const { _id, role } = result;
+  const payload = {
+    _id,
+    email,
+    role,
+  };
+
+  const token = gettingToken(payload);
+  if (result) return token;
     if (emailChecked) {
         return { status: 401, message: incorrectFieldData };
     }
