@@ -12,8 +12,8 @@ const addRecipes = async (name, ingredients, preparation, token) => {
 
 const getRecipes = async () => {
   const db = await connection();
-  const result = await db.collection('recipes').find().toArray();
-  return result;
+  const response = await db.collection('recipes').find().toArray();
+  return response;
 };
 
 const getRecipesId = async (id) => {
@@ -23,8 +23,19 @@ const getRecipesId = async (id) => {
   return response;
 };
 
+const editRecipesId = async (id, name, ingredients, preparation) => {
+  const db = await connection();
+  const response = await db.collection('recipes').findOneAndUpdate(
+    { _id: ObjectId(id) }, 
+    { $set: { name, ingredients, preparation } },
+    { returnOriginal: false },
+    );
+  return response.value;
+};
+
 module.exports = {
   addRecipes,
   getRecipes,
   getRecipesId,
+  editRecipesId,
 };

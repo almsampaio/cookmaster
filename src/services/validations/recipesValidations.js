@@ -23,6 +23,13 @@ const errorRecipesNotFound = {
   },
 };
 
+const errorValidateTokenExist = {
+  status: 401,
+  error: {
+    message: 'missing auth token',
+  },
+};
+
 const validateRequire = (name, ingredients, preparation) => {
   if (!name || !ingredients || !preparation) throw errorValidateRequire;
 };
@@ -40,8 +47,13 @@ const validateRecipes = (recipes) => {
   if (!recipes) throw errorRecipesNotFound;
 };
 
+const validateTokenExist = (token) => {
+  if (!token) throw errorValidateTokenExist;
+};
+
 module.exports = {
   validateRequire,
   validateToken,
   validateRecipes,
+  validateTokenExist,
 };

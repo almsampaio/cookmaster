@@ -20,8 +20,18 @@ const getRecipesId = async (req, res) => {
   return res.status(status).json(response);
 };
 
+const editRecipesId = async (req, res) => {
+  const { id } = req.params;
+  const token = req.headers.authorization;
+  const { status, response } = await recipesService.editRecipesId(
+    id, req.body, token,
+    );
+  return res.status(status).json(response);
+};
+
 module.exports = {
   addRecipes,
   getRecipes,
   getRecipesId,
+  editRecipesId,
 };
