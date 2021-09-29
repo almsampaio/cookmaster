@@ -17,6 +17,17 @@ const jwtMalformed = {
   },
 };
 
+const recipeNot = {
+  status: 404,
+  error: {
+    message: 'recipe not found',
+  },
+};
+
+const validateRecipe = (recipe) => {
+  if (!recipe) throw recipeNot;
+};
+
 const validateName = (name) => {
   if (!name) throw invalidEntries;
 };
@@ -52,7 +63,15 @@ const createRecipe = async (token, { name, ingredients, preparation }) => {
   return { status: 201, response };
 };
 
+async function getRecipeById(id) {
+  const response = await model.getRecipeById(id);
+  console.log(response);
+  validateRecipe(response);
+  return { status: 200, response };
+}
+
 module.exports = {
   getOne,
   createRecipe,
+  getRecipeById,
 };

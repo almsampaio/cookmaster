@@ -2,7 +2,7 @@ const services = require('../servece/servRecipes');
 
 const getOne = async (_req, res) => {
   const { status, response } = await services.getOne();
-  res.status(status).json(response);
+  return res.status(status).json(response);
 };
 
 const creatRecipe = async (req, res) => {
@@ -11,10 +11,17 @@ const creatRecipe = async (req, res) => {
     status,
     response,
   } = await services.createRecipe(authorization, req.body);
-  res.status(status).json(response);
+  return res.status(status).json(response);
+};
+
+const getRecipeById = async (req, res) => {
+  const { id } = req.params;
+  const { status, response } = await services.getRecipeById(id);
+  return res.status(status).json(response);
 };
 
 module.exports = {
   creatRecipe,
   getOne,
+  getRecipeById,
 };

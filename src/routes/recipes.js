@@ -8,4 +8,6 @@ recipesRouter.get('/', rescue(controller.getOne));
 
 recipesRouter.post('/', rescue(controller.creatRecipe));
 
+recipesRouter.get('/:id', rescue(controller.getRecipeById));
+
 module.exports = recipesRouter;
