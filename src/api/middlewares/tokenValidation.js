@@ -10,7 +10,7 @@ const tokenValidation = (req, res, next) => {
   const token = req.headers.authorization;
 
   if (!token) {
-    return res.status(401).json(textMessages.malformed);
+    return res.status(401).json(textMessages.deleted);
   }
 
   try {
@@ -23,20 +23,20 @@ const tokenValidation = (req, res, next) => {
   next();
 };
 
-const tokenValidationDelete = (req, res, next) => {
-  const token = req.headers.authorization;
+// const tokenValidationDelete = (req, res, next) => {
+//   const token = req.headers.authorization;
 
-  if (!token) {
-    return res.status(401).json(textMessages.deleted);
-  }
+//   if (!token) {
+//     return res.status(401).json(textMessages.deleted);
+//   }
 
-  try {
-    const { _id } = jwt.verify(token, SECRET);
-    req.user = _id;
-  } catch (_e) {
-    return res.status(401).json(textMessages.deleted);
-  }
-  next();
-};
+//   // try {
+//   //   const { _id } = jwt.verify(token, SECRET);
+//   //   req.user = _id;
+//   // } catch (_e) {
+//   //   return res.status(401).json(textMessages.deleted);
+//   // }
+//   next();
+// };
 
-module.exports = { tokenValidation, tokenValidationDelete };
+module.exports = tokenValidation;

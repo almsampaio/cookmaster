@@ -23,6 +23,16 @@ const getById = async (id) => {
   return recipe;
 };
 
+const put = async (id, body, userId) => {
+  const dbConn = await conn().then((db) => db.collection(COLLECTION));
+  const { name, ingredients, preparation } = body;
+  await dbConn.findOneAndUpdate(
+    { _id: ObjectId(id) },
+    { $set: { name, ingredients, preparation, userId } },
+  );
+  return { _id: id, name, ingredients, preparation, userId };
+};
+
 const destroy = async (id) => {
   const dbConn = await conn().then((db) => db.collection(COLLECTION));
   const shouldDelete = await getById(id);
@@ -30,4 +40,4 @@ const destroy = async (id) => {
   return shouldDelete;
 };
 
-module.exports = { create, get, getById, destroy };
+module.exports = { create, get, getById, put, destroy };

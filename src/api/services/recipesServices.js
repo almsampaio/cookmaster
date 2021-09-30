@@ -33,6 +33,14 @@ const getById = async (id) => {
   };
 };
 
+const put = async (id, body, userId) => {
+  const recipe = await recipesModel.put(id, body, userId);
+  return {
+    status: OK,
+    message: recipe,
+  };
+};
+
 const destroy = async (id) => {
   await recipesModel.destroy(id);
   return {
@@ -40,4 +48,4 @@ const destroy = async (id) => {
   };
 };
 
-module.exports = { create, get, getById, destroy };
+module.exports = { create, get, getById, put, destroy };

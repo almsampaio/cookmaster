@@ -1,3 +1,5 @@
+const SECRET = 'secret';
+const jwt = require('jsonwebtoken');
 const recipesServices = require('../services/recipesServices');
 
 const create = async (req, res) => {
@@ -16,10 +18,18 @@ const getById = async (req, res) => {
   return res.status(recipe.status).json(recipe.message);
 };
 
+const put = async (req, res) => {
+  const { id } = req.params;
+  const token = req.headers.authorization;
+  const { _id } = jwt.verify(token, SECRET);
+  const recipe = await recipesServices.put(id, req.body, _id);
+  return res.status(recipe.status).json(recipe.message);
+};
+
 const destroy = async (req, res) => {
   const { id } = req.params;
   const deleted = await recipesServices.destroy(id);
   return res.status(deleted.status).json();
 };
 
-module.exports = { create, get, getById, destroy };
+module.exports = { create, get, getById, put, destroy };
