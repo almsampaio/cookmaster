@@ -7,7 +7,7 @@ router
   .post('/', authMiddleware, validateRecipe, Recipes.create)
   .put('/:id', authMiddleware, Recipes.update)
   .delete('/:id', authMiddleware, Recipes.exclude)
-  .get('/:id', authMiddleware, Recipes.getById)
+  .get('/:id', Recipes.getById)
   .get('/', Recipes.getAll);
 
 module.exports = router;
