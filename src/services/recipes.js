@@ -37,10 +37,13 @@ const exclude = async (id, userId, role) => {
   return result;
 };
 
+const updateImage = (id, path) => Recipes.updateImage(id, path).then((res) => res); 
+
 module.exports = {
   create,
   getAll,
   getById,
   update,
   exclude,
+  updateImage,
 };

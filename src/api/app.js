@@ -1,4 +1,6 @@
 const express = require('express');
+// const path = require('path');
+
 const bodyParser = require('body-parser');
 
 const routes = require('../routes');
@@ -13,7 +15,7 @@ app.use('/', routes);
 app.get('/', (request, response) => {
   response.send();
 });
-
+// app.use('/uploads', express.static(path.join(__dirname, '..', 'uploads')));
 app.use(errorMiddleware);
 
 module.exports = app;

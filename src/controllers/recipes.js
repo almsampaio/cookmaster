@@ -1,5 +1,6 @@
 const { Recipes } = require('../services');
-const { SUCCESS_CREATED, SUCCESS_OK, SUCCESS_NO_CONTENT } = require('../utils/statusCodes');
+const { SUCCESS_CREATED, SUCCESS_OK, 
+  SUCCESS_NO_CONTENT, NOT_FOUND } = require('../utils/statusCodes');
 
 const create = (req, res, next) => {
   const { name, ingredients, preparation } = req.body;
@@ -39,10 +40,21 @@ const exclude = (req, res, next) => {
   .catch((err) => next(err));
 };
 
+const updateImage = async (req, res, next) => {
+  const { id } = req.params;
+  const recipe = await Recipes.getById(id);
+  if (recipe === null) return res.status(NOT_FOUND).json({ messege: 'recipe not found' });
+  const path = `localhost:3000/src/uploads/${id}.jpeg`;
+  Recipes.updateImage(id, path)
+    .then(() => res.status(SUCCESS_OK).json({ ...recipe, image: path }))
+    .catch((err) => next(err));
+};
+
 module.exports = {
   create,
   getAll,
   getById,
   update,
   exclude,
+  updateImage,
 };
