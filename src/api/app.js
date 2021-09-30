@@ -1,6 +1,5 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const { validateJWT } = require('../middlewares/validateJWT');
 const { validateLogin } = require('../middlewares/userValidations');
 const Users = require('../controllers/Users');
 const userRouter = require('../routes/Users');
@@ -19,6 +18,6 @@ app.use('/users', userRouter);
 
 app.post('/login', validateLogin, Users.login);
 
-app.use('/recipes', validateJWT, recipesRouter);
+app.use('/recipes', recipesRouter);
 
 module.exports = app;
