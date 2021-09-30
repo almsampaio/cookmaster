@@ -42,7 +42,7 @@ async function insertOneRecipe(recipeToInsert) {
     return { statusCode, error: { message: getReasonPhrase(statusCode) } };
   }
 }
-// https://stackoverflow.com/questions/24747189/update-and-return-document-in-mongodb
+
 async function updateOneRecipe(id, recipeToInsert) {
   try {
     const db = await connection();
@@ -50,9 +50,22 @@ async function updateOneRecipe(id, recipeToInsert) {
       .findOneAndUpdate(
         { _id: ObjectId(id) },
         { $set: { ...recipeToInsert } },
-        { returnOriginal: false },
+        { returnOriginal: false }, // https://stackoverflow.com/questions/24747189/update-and-return-document-in-mongodb
       );  
     return queryResponse.value;
+  } catch (err) {
+    console.log(err);
+    const statusCode = StatusCodes.INTERNAL_SERVER_ERROR;
+    return { statusCode, error: { message: getReasonPhrase(statusCode) } };
+  }
+}
+
+async function deleteOneRecipe(id) {
+  try {
+    const db = await connection();
+    const queryResponse = await db.collection('recipes')
+      .findOneAndDelete({ _id: ObjectId(id) });
+    return queryResponse;
   } catch (err) {
     console.log(err);
     const statusCode = StatusCodes.INTERNAL_SERVER_ERROR;
@@ -65,4 +78,5 @@ module.exports = {
   findOneRecipeById,
   insertOneRecipe,
   updateOneRecipe,
+  deleteOneRecipe,
 };

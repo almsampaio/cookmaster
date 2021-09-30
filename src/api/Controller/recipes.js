@@ -46,9 +46,22 @@ async function putRecipeById(req, res, next) {
   return res.status(statusCode).json(payload);
 }
 
+async function deleteRecipeById(req, res, next) {
+  const { id } = req.params;
+  const { email, role } = req.validated;
+  const responseFromEmail = await Service.users.findUserEmail(email);
+  const { payload: { _id: userId } } = responseFromEmail;
+  const user = { id: userId, role };
+  const serviceResponse = await Service.recipes.deleteRecipeById(user, id);
+  const { statusCode, payload } = serviceResponse;
+  if (payload.error) return next({ statusCode, error: payload.error });
+  return res.status(statusCode).json(payload);
+}
+
 module.exports = {
   getRecipes,
   getRecipeById,
   postRecipe,
   putRecipeById,
+  deleteRecipeById,
 };
