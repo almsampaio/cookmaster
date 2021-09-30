@@ -23,4 +23,7 @@ app.use('/login', loginControllers);
 // Todas as rotas a partir de /recipes serão tratadas no loginControllers;
 app.use('/recipes', recipesControllers);
 
+// Todas as rotas a partir de /recipes serão tratadas no loginControllers;
+// app.use('/images', imagesControllers);
+
 module.exports = app;
