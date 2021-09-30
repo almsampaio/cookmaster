@@ -1,6 +1,5 @@
 // const { Router } = require('express');
 
-// const loginMiddleware = require('./loginMiddleware');
 // const authMiddleware = require('../authentication/authMiddleware');
 
 // const router = Router();

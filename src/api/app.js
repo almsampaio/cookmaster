@@ -1,5 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const path = require('path');
 const usersControllers = require('../../layers/users/usersControllers');
 const loginControllers = require('../../layers/login/loginControllers');
 const recipesControllers = require('../../layers/recipes/recipesControllers');
@@ -24,6 +25,6 @@ app.use('/login', loginControllers);
 app.use('/recipes', recipesControllers);
 
 // Todas as rotas a partir de /recipes serão tratadas no loginControllers;
-// app.use('/images', imagesControllers);
+app.use('/images', express.static(path.join(__dirname, '..', 'uploads')));
 
 module.exports = app;

@@ -1,5 +1,6 @@
 const { Router } = require('express');
 const multer = require('multer');
+const path = require('path');
 const authMiddleware = require('../authentication/authMiddleware');
 const recipesMiddlewares = require('./recipesMiddlewares');
 
@@ -19,9 +20,10 @@ http POST :3000/recipes/ name='miojo do erick' ingredients='macarrão' preparati
 */
 
 // Método middlewareMuler do pacote multer para fazer o upload do arquivo
+
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, '../uploads/');
+    cb(null, path.join(__dirname, '..', '..', 'src', 'uploads'));
   },
   filename: (req, file, cb) => {
     const { id } = req.params;
@@ -32,9 +34,9 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 router.put('/:id/image',
+upload.single('image'),
 authMiddleware.tokenValidation,
 recipesMiddlewares.addAndUpdateImage,
-upload.single('image'),
 // recipesMiddlewares.uploadImageRecipes,
 recipesMiddlewares.successfulUpload,
 async (_req, _res) => {
