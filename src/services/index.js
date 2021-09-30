@@ -83,8 +83,27 @@ const createRecipe = async (recipeData) => {
   }
 };
 
+const getRecipes = async () => {
+  const recipes = await models.getAll('recipes');
+
+  return recipes;
+};
+
+const getRecipeById = async (id) => {
+  try {
+    const recipe = await models.getById('recipes', id);
+    
+    return recipe;
+  } catch (error) {
+    console.log(error);
+    throw newError(404, 'recipe not found');
+  }
+};
+
 module.exports = {
   registerUser,
   logUserIn,
   createRecipe,
+  getRecipes,
+  getRecipeById,
 };
