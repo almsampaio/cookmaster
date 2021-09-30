@@ -1,10 +1,15 @@
 const Joi = require('joi');
 
+function emailField(email) {
+  const emailSchema = Joi.string().email().required();
+  return emailSchema.validate(email);
+}
+
 function loginFields(user) {
   const userSchema = Joi.object({
     password: Joi.string().required(),
     email: Joi.string()
-      .email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } }).required(),
+      .email().required(),
   });
 
   return userSchema.validate(user);
@@ -32,6 +37,7 @@ function userFields(user) {
 }
 
 module.exports = {
+  emailField,
   loginFields,
   recipeFields,
   userFields,

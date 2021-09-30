@@ -14,6 +14,18 @@ async function checkEmailExistence(emailToFind) {
   }
 }
 
+async function findOneUserByEmail(emailToFind) {
+  try {
+    const db = await connection();
+    const queryResponse = await db.collection('users').findOne({ email: emailToFind });
+    return queryResponse;
+  } catch (err) {
+    console.log(err);
+    const statusCode = StatusCodes.INTERNAL_SERVER_ERROR;
+    return { statusCode, error: { message: getReasonPhrase(statusCode) } };
+  }
+}
+
 async function insertOneUser(userToInsert) {
   try {
     const db = await connection();
@@ -30,5 +42,6 @@ async function insertOneUser(userToInsert) {
 
 module.exports = {
   checkEmailExistence,
+  findOneUserByEmail,
   insertOneUser,
 };

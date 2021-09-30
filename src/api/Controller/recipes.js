@@ -21,11 +21,27 @@ async function getRecipeById(req, res, next) {
 
 async function postRecipe(req, res, next) {
   const { name, ingredients, preparation } = req.body;
+  const { email } = req.validated;
+  const responseFromEmail = await Service.users.findUserEmail(email);
+  const { payload: { _id: userId } } = responseFromEmail;
   const recipe = { name, ingredients, preparation };
-
-  const serviceResponse = await Service.recipes.postRecipe(recipe);
+  const serviceResponse = await Service.recipes.postRecipe(recipe, userId);
   const { statusCode, payload } = serviceResponse;
 
+  if (payload.error) return next({ statusCode, error: payload.error });
+  return res.status(statusCode).json(payload);
+}
+
+async function putRecipeById(req, res, next) {
+  const { id } = req.params;
+  const { name, ingredients, preparation } = req.body;
+  const { email, role } = req.validated;
+  const recipeToEdit = { name, ingredients, preparation };
+  const responseFromEmail = await Service.users.findUserEmail(email);
+  const { payload: { _id: userId } } = responseFromEmail;
+  const user = { id: userId, role };
+  const serviceResponse = await Service.recipes.putRecipeById(user, id, recipeToEdit);
+  const { statusCode, payload } = serviceResponse;
   if (payload.error) return next({ statusCode, error: payload.error });
   return res.status(statusCode).json(payload);
 }
@@ -34,4 +50,5 @@ module.exports = {
   getRecipes,
   getRecipeById,
   postRecipe,
+  putRecipeById,
 };

@@ -6,7 +6,7 @@ function validateJWT(req, _res, next) {
   const { authorization } = req.headers;
   const statusCode = StatusCodes.UNAUTHORIZED;
 
-  if (!authorization) return next({ statusCode, error: { message: 'jwt malformed' } });
+  if (!authorization) return next({ statusCode, error: { message: 'missing auth token' } });
 
   try {
     const decoded = jwt.verify(authorization, SECRET);
