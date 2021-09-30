@@ -2,6 +2,9 @@ const bodyParser = require('body-parser');
 const express = require('express');
 const Users = require('../controllers/userController');
 const userValidation = require('../middlewares/uservalidation');
+// const tokenValidation = require('../middlewares/tokenValidation');
+const loginValidation = require('../middlewares/loginValidation');
+const Login = require('../controllers/loginController');
 
 const app = express();
 
@@ -17,5 +20,12 @@ userValidation.emailExists,
 userValidation.emailValidation, 
 userValidation.nameValidation, 
 Users.createUser);
+
+app.post('/login', 
+loginValidation.emailRequired, 
+loginValidation.passwordRequired, 
+loginValidation.emailValid, 
+loginValidation.passwordValid, 
+Login.userLogin);
 
 module.exports = app;
