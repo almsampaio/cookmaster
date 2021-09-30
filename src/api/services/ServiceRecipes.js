@@ -56,7 +56,6 @@ const editRecipe = async (id, token, { name, ingredients, preparation }) => {
 
 const deleteRecipe = async (id, role, userId) => {
   const findRecipe = await ModelRecipes.getById(id);
-  // const user = await ModelUsers.getById(userId);
 
  if (role !== 'admin' && findRecipe.userId !== userId) {
    throw invalidData('missing auth token', UNAUTHORIZED);
@@ -67,10 +66,25 @@ const deleteRecipe = async (id, role, userId) => {
  return deletedRecipe;
 };
 
+const updateRecipeWithImage = async (id, role, userId) => {
+  const findRecipe = await ModelRecipes.getById(id);
+
+ if (role !== 'admin' && findRecipe.userId !== userId) {
+   throw invalidData('missing auth token', UNAUTHORIZED);
+ }
+
+ await ModelRecipes.updateRecipeWithImage(id);
+
+ const findRecipeWithImage = await ModelRecipes.getById(id);
+
+ return findRecipeWithImage;
+};
+
 module.exports = {
   create,
   getAll,
   getById,
   editRecipe,
   deleteRecipe,
+  updateRecipeWithImage,
 };

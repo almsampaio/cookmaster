@@ -66,10 +66,24 @@ const deleteRecipe = async (req, res, next) => {
   }
 };
 
+const updateRecipeWithImage = async (req, res, next) => {
+  try {
+    const { id: userId, role } = req.user;
+    const { id } = req.params;
+
+    const updatedRecipe = await ServiceRecipes.updateRecipeWithImage(id, role, userId);
+
+    return res.status(SUCCESS).json(updatedRecipe);
+  } catch (error) {
+    return next(error);
+  }
+};
+
 module.exports = {
   create,
   getAll,
   getById,
   editRecipe,
   deleteRecipe,
+  updateRecipeWithImage,
 };

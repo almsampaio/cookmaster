@@ -71,10 +71,21 @@ const deleteRecipe = async (id) => {
   return deletedRecipe.value;
 };
 
+const updateRecipeWithImage = async (id) => {
+  if (!ObjectId.isValid(id)) {
+    return null;
+  }
+  const imagePath = `localhost:3000/src/uploads/${id}.jpeg`;
+  const connect = await connection();
+  await connect.collection('recipes')
+    .updateOne({ _id: ObjectId(id) }, { $set: { image: imagePath } });
+};
+
 module.exports = {
   create,
   getAll,
   getById,
   editRecipe,
   deleteRecipe,
+  updateRecipeWithImage,
 };
