@@ -1,4 +1,5 @@
 const services = require('../services');
+const models = require('../models');
 
 const registerUser = async (req, res, _next) => {
   const { name, email, password, role } = req.body;
@@ -46,10 +47,11 @@ const updateRecipe = async (req, res, _next) => {
   return res.status(200).json(updatedRecipe);
 };
 
-const deleteRecipe = (req, res, _next) => {
+const deleteRecipe = async (req, res, _next) => {
   const { id } = req.params;
+  await models.deleteById('recipes', id);
 
-  return res.status(200).json({ delete: id });
+  return res.status(204).send();
 };
 
 module.exports = {
