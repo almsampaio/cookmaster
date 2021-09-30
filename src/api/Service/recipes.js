@@ -14,6 +14,21 @@ async function getRecipes() {
   return { statusCode, payload: { recipe } };
 }
 
+async function getRecipeById(id) {
+  const recipe = await Model.recipes.findOneRecipeById(id);
+  if (!recipe) {
+    const statusCode = StatusCodes.NOT_FOUND;
+    return { statusCode, payload: { error: { message: 'recipe not found' } } };
+  }
+  if (recipe.error) {
+    const { statusCode, error } = recipe;
+    return { statusCode, payload: { error } };
+  }
+
+  const statusCode = StatusCodes.OK;
+  return { statusCode, payload: { recipe } };
+}
+
 async function postRecipe(recipeToInsert) {
   const invalidRecipe = validations.recipeFields(recipeToInsert).error;
   if (invalidRecipe) {
@@ -22,7 +37,7 @@ async function postRecipe(recipeToInsert) {
   }
 
   const recipe = await Model.recipes.insertOneRecipe(recipeToInsert);
-  
+
   if (recipe.error) {
     const { statusCode, error } = recipe;
     return { statusCode, payload: { error } };
@@ -34,5 +49,6 @@ async function postRecipe(recipeToInsert) {
 
 module.exports = {
   getRecipes,
+  getRecipeById,
   postRecipe,
 };

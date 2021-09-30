@@ -9,6 +9,16 @@ async function getRecipes(_req, res, next) {
   return res.status(statusCode).json(recipe);
 }
 
+async function getRecipeById(req, res, next) {
+  const { id } = req.params;
+  const serviceResponse = await Service.recipes.getRecipeById(id);
+  const { statusCode, payload } = serviceResponse;
+
+  if (payload.error) return next({ statusCode, error: payload.error });
+  const { recipe } = payload;
+  return res.status(statusCode).json(recipe);
+}
+
 async function postRecipe(req, res, next) {
   const { name, ingredients, preparation } = req.body;
   const recipe = { name, ingredients, preparation };
@@ -22,5 +32,6 @@ async function postRecipe(req, res, next) {
 
 module.exports = {
   getRecipes,
+  getRecipeById,
   postRecipe,
 };
