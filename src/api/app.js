@@ -2,6 +2,9 @@ const express = require('express');
 const bodyParser = require('body-parser');
 
 const users = require('../controllers/usersController');
+const recipes = require('../controllers/recipesController');
+
+const jwt = require('../middlewares/jwtValidate');
 
 const app = express();
 app.use(bodyParser.json());
@@ -14,5 +17,6 @@ app.get('/', (request, response) => {
 
 app.use('/users', users.addUser);
 app.post('/login', users.login);
+app.post('/recipes', jwt, recipes.addRecipe);
 
 module.exports = app;
