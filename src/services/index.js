@@ -100,10 +100,27 @@ const getRecipeById = async (id) => {
   }
 };
 
+const updateRecipe = async (id, updatePayload) => {
+  try {
+    const { name, ingredients, preparation } = updatePayload;
+
+    validateRecipeSchema({ name, ingredients, preparation });
+
+    await models.updateById('recipes', id, updatePayload);
+    const updatedRecipe = await models.getById('recipes', id);
+    console.log(updatedRecipe);
+
+    return updatedRecipe;
+  } catch (e) {
+    throw newError(e.status, e.message);
+  }
+};
+
 module.exports = {
   registerUser,
   logUserIn,
   createRecipe,
   getRecipes,
   getRecipeById,
+  updateRecipe,
 };

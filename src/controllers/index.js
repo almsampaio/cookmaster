@@ -36,10 +36,14 @@ const getRecipesById = async (req, res, _next) => {
   return res.status(200).json(recipe);
 };
 
-const updateRecipe = (req, res, _next) => {
+const updateRecipe = async (req, res, _next) => {
   const { id } = req.params;
+  const { name, preparation, ingredients } = req.body;
+  const { userId } = req.authInfo;
+  const recipeData = { name, ingredients, preparation, userId };
+  const updatedRecipe = await services.updateRecipe(id, recipeData);
 
-  return res.status(200).json({ update: id });
+  return res.status(200).json(updatedRecipe);
 };
 
 const deleteRecipe = (req, res, _next) => {

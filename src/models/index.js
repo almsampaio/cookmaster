@@ -31,9 +31,27 @@ const getById = async (collection, id) => {
   return searchResult;
 };
 
+const updateById = async (collection, id, payload) => {
+  const cnt = await dbConnection();
+  const updateResult = cnt.collection(collection)
+    .updateOne({ _id: { $eq: ObjectId(id) } }, { $set: { ...payload } });
+
+  return updateResult;
+};
+
+const deleteById = async (collection, id) => {
+  const cnt = await dbConnection();
+  const updateResult = cnt.collection(collection)
+    .deleteOne({ _id: { $eq: ObjectId(id) } });
+
+  return updateResult;
+};
+
 module.exports = {
   create,
   searchEmails,
   getAll,
   getById,
+  updateById,
+  deleteById,
 };
