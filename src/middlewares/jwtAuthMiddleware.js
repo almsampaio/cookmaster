@@ -1,12 +1,12 @@
 const jwt = require('jsonwebtoken');
 
-const { secret, newError } = require('../utils');
+const { secret } = require('../utils');
 
 const authMiddleware = (req, res, next) => {
   try {
     const authToken = req.headers.authorization;
     if (!authToken) {
-      next(newError(401, 'missing auth token'));
+      return res.status(401).json({ message: 'missing auth token' });
     }
 
     const { data: { email, role, _id } } = jwt.verify(authToken, secret);

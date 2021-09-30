@@ -17,11 +17,11 @@ app.post('/login', rescue(controllers.logUserIn));
 app.post('/recipes', authMiddleware, rescue(controllers.createRecipe));
 app.get('/recipes/:id', rescue(controllers.getRecipesById));
 app.get('/recipes', rescue(controllers.getAllRecipes));
-app.put('/recipes/:id', rescue(authMiddleware), rescue(controllers.updateRecipe));
-app.delete('/recipes/:id', rescue(authMiddleware), rescue(controllers.deleteRecipe));
+app.put('/recipes/:id', authMiddleware, rescue(controllers.updateRecipe));
+app.delete('/recipes/:id', authMiddleware, rescue(controllers.deleteRecipe));
 
 app.put('/recipes/:id/image',
-  rescue(authMiddleware),
+  authMiddleware,
   upload.single('image'),
   rescue(controllers.updateRecipeWithImage));
 
