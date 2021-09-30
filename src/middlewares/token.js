@@ -10,6 +10,7 @@ const jwtconfig = {
 const getToken = (user) => {
   const userWithoutPassword = {
     email: user.email,
+    id: user.id,
   };
 
   const token = jwt.sign({ data: userWithoutPassword }, password, jwtconfig);
