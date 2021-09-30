@@ -1,4 +1,6 @@
+const { StatusCodes } = require('http-status-codes');
 const Service = require('../Service');
+const Model = require('../Model');
 
 async function getRecipes(_req, res, next) {
   const serviceResponse = await Service.recipes.getRecipes();
@@ -64,7 +66,12 @@ async function putImage(req, res, next) {
   const responseFromEmail = await Service.users.findUserEmail(email);
   const { payload: { _id: userId } } = responseFromEmail;
   const user = { id: userId, role };
-  const serviceResponse = await Service.recipes.putImage(user, id);
+  const recipeToEdit = await Model.recipes.findOneRecipeById(id);
+  if (user.role !== 'admin' && user.id.toString() !== recipeToEdit.userId.toString()) {
+    const statusCode = StatusCodes.UNAUTHORIZED;
+    return res.status(statusCode).json({ payload: { error: { message: 'jwt malformed' } } });
+  }
+  const serviceResponse = await Service.recipes.putImage(id);
   const { statusCode, payload } = serviceResponse;
   if (payload.error) return next({ statusCode, error: payload.error });
   return res.status(statusCode).json(payload);
