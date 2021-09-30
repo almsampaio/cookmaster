@@ -29,9 +29,21 @@ const update = async (id, updatedRecipe) => {
   return { status: StatusCodes.OK, data: updateRecipe };
 };
 
+const remove = async (id) => {
+  const checkId = await Recipes.getById(id);
+
+  if (!checkId) {
+    return { status: StatusCodes.NOT_FOUND, message: 'Recipe ID not found' };
+  }
+
+  await Recipes.remove(id);
+  return { status: StatusCodes.NO_CONTENT };
+};
+
 module.exports = {
   create,
   getAll,
   getById,
   update,
+  remove,
 };

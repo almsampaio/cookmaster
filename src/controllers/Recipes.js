@@ -33,9 +33,22 @@ const update = async (req, res) => {
   res.status(status).json(data);
 };
 
+const remove = async (req, res) => {
+  const { id } = req.params;
+  const { status, message } = await Recipes.remove(id);
+
+  if (message) {
+    return res.status(status).json(message);
+  }
+
+  // To get to the following response, I used the Adelino Junior T10-A code as a reference! Before that, I wasn't using the send(), so my local test was pointing a timeout error.
+  res.status(status).send();
+};
+
 module.exports = {
   create,
   getAll,
   getById,
   update,
+  remove,
 };
