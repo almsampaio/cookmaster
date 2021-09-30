@@ -1,7 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const multer = require('multer');
-const path = require('path');
 const usersController = require('../controllers/usersController');
 const loginController = require('../controllers/loginController');
 const recipeController = require('../controllers/recipesController');
@@ -10,8 +9,7 @@ const validateWebToken = require('./auth/validateToken');
 const app = express();
 app.use(bodyParser.json());
 
-// https://nodejs.dev/learn/the-nodejs-path-module
-app.use('/uploads', express.static(path.join(__dirname, '..', '/uploads')));
+app.use('/images', express.static('src/uploads/'));
 
 // Não remover esse end-point, ele é necessário para o avaliador
 app.get('/', (request, response) => {
@@ -28,7 +26,7 @@ const storage = multer.diskStorage({
   },
   
 });
-
+// multer recebe o objeto q contem o destino do arquivo enviado
 const upload = multer({ storage });
 
 app.get('/recipes', recipeController.getAll);

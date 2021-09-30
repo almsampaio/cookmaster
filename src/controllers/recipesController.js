@@ -52,7 +52,7 @@ const exclude = (rescue(async (req, res) => {
 const imageAdded = (rescue(async (req, res) => {
     const { id } = req.params;
     const urlImage = `${id}.jpeg`;
-                                  
+
     const recipes = await recipeService.imageAdded(id, urlImage);
     res.status(200).json(recipes);
 }));
