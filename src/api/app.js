@@ -4,7 +4,7 @@ const usersControllers = require('./controllers/usersControllers');
 const recipesControllers = require('./controllers/recipesControllers');
 const valideUser = require('./middlewares/usersValidations');
 const valideRecipe = require('./middlewares/recipesValidations');
-const tokenValidation = require('./middlewares/tokenValidation');
+const { tokenValidation, tokenValidationDelete } = require('./middlewares/tokenValidation');
 
 const app = express();
 
@@ -22,5 +22,6 @@ app.post('/login', valideUser.loginValitation, valideUser.checkUser, usersContro
 app.post('/recipes', tokenValidation, valideRecipe.usersVAlidations, recipesControllers.create);
 app.get('/recipes', recipesControllers.get);
 app.get('/recipes/:id', valideRecipe.validId, recipesControllers.getById);
+app.delete('/recipes/:id', tokenValidationDelete, recipesControllers.destroy);
 
 module.exports = app;

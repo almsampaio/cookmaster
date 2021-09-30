@@ -1,5 +1,5 @@
 const recipesModel = require('../model/recipesModel');
-const { CREATED, OK, NOT_FOUND } = require('../utils/status');
+const { CREATED, OK, NOT_FOUND, NO_CONTENT } = require('../utils/status');
 
 const create = async (recipe) => {
   const createRecipe = await recipesModel.create(recipe);
@@ -33,4 +33,11 @@ const getById = async (id) => {
   };
 };
 
-module.exports = { create, get, getById };
+const destroy = async (id) => {
+  await recipesModel.destroy(id);
+  return {
+    status: NO_CONTENT,
+  };
+};
+
+module.exports = { create, get, getById, destroy };

@@ -23,4 +23,11 @@ const getById = async (id) => {
   return recipe;
 };
 
-module.exports = { create, get, getById };
+const destroy = async (id) => {
+  const dbConn = await conn().then((db) => db.collection(COLLECTION));
+  const shouldDelete = await getById(id);
+  await dbConn.deleteOne({ _id: ObjectId(id) });
+  return shouldDelete;
+};
+
+module.exports = { create, get, getById, destroy };

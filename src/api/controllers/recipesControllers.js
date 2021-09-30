@@ -16,4 +16,10 @@ const getById = async (req, res) => {
   return res.status(recipe.status).json(recipe.message);
 };
 
-module.exports = { create, get, getById };
+const destroy = async (req, res) => {
+  const { id } = req.params;
+  const deleted = await recipesServices.destroy(id);
+  return res.status(deleted.status).json();
+};
+
+module.exports = { create, get, getById, destroy };
