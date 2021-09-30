@@ -5,7 +5,6 @@ const app = express();
 app.use(bodyParser.json());
 
 const userControlers = require('../Controllers/userControllers');
-
 // Não remover esse end-point, ele é necessário para o avaliador
 app.get('/', (_request, response) => {
   response.send();
@@ -15,4 +14,7 @@ app.get('/', (_request, response) => {
 // Onde vão ficar as rotas
 
 app.post('/users', userControlers.create);
+
+app.post('/login', userControlers.login);
+
 module.exports = app;
