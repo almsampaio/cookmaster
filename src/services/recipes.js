@@ -31,9 +31,16 @@ const update = async (data) => {
   Recipes.update(data).then((res) => res);
 };
 
+const exclude = async (id, userId, role) => {
+  await verifyAuthUser(id, userId, role);
+  const result = await Recipes.exclude(id);
+  return result;
+};
+
 module.exports = {
   create,
   getAll,
   getById,
   update,
+  exclude,
 };

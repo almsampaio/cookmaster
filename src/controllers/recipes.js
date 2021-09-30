@@ -1,5 +1,5 @@
 const { Recipes } = require('../services');
-const { SUCCESS_CREATED, SUCCESS_OK } = require('../utils/statusCodes');
+const { SUCCESS_CREATED, SUCCESS_OK, SUCCESS_NO_CONTENT } = require('../utils/statusCodes');
 
 const create = (req, res, next) => {
   const { name, ingredients, preparation } = req.body;
@@ -31,9 +31,18 @@ const update = (req, res, next) => {
     .catch((err) => next(err));
 };
 
+const exclude = (req, res, next) => {
+ const { id } = req.params;
+ const { userId, role } = req;
+ Recipes.exclude(id, userId, role)
+  .then(() => res.status(SUCCESS_NO_CONTENT).json())
+  .catch((err) => next(err));
+};
+
 module.exports = {
   create,
   getAll,
   getById,
   update,
+  exclude,
 };

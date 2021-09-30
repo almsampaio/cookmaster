@@ -6,7 +6,8 @@ const { authMiddleware, validateRecipe } = require('../middlewares');
 router
   .post('/', authMiddleware, validateRecipe, Recipes.create)
   .put('/:id', authMiddleware, Recipes.update)
-  .get('/:id', Recipes.getById)
+  .delete('/:id', authMiddleware, Recipes.exclude)
+  .get('/:id', authMiddleware, Recipes.getById)
   .get('/', Recipes.getAll);
 
 module.exports = router;
