@@ -10,6 +10,15 @@ function loginFields(user) {
   return userSchema.validate(user);
 }
 
+function recipeFields(recipe) {
+  const userSchema = Joi.object({
+    name: Joi.string().required(),
+    ingredients: Joi.string().required(),
+    preparation: Joi.string().required(),
+  });
+  return userSchema.validate(recipe);
+}
+
 function userFields(user) {
   const userSchema = Joi.object({
     name: Joi.string().required(),
@@ -24,5 +33,6 @@ function userFields(user) {
 
 module.exports = {
   loginFields,
+  recipeFields,
   userFields,
 };

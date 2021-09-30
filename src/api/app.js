@@ -13,5 +13,6 @@ app.get('/ping', (_req, res) => res.status(200).json({ message: 'ok' }));
 
 app.use('/users', Router.users);
 app.use('/login', Router.login);
+app.use('/recipes', Router.recipes);
 
 module.exports = app;
