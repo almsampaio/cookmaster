@@ -1,6 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const { validateLogin } = require('../middlewares/validations');
+const { validateLogin } = require('../middlewares/userValidations');
 const Users = require('../controllers/Users');
 const userRouter = require('../routes/Users');
 
