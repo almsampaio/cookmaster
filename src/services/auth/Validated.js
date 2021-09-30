@@ -16,6 +16,14 @@ const loginValid = (body) => (
   }).validate(body)
 );
 
+const recipesValid = (body) => (
+  Joi.object({
+    name: Joi.string().required(),
+    ingredients: Joi.string().required(),
+    preparation: Joi.string().required(),
+  }).validate(body)
+);
+
 const emailExists = async (email, password) => {
   const getUser = await model.findUser(email);
   if ((getUser && getUser.email) !== email
@@ -32,4 +40,5 @@ module.exports = {
   createValid,
   loginValid,
   emailExists,
+  recipesValid,
 };
