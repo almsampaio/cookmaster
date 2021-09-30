@@ -10,6 +10,7 @@ app.use(bodyParser.json());
 app.post('/login', route.login);
 app.post('/users', route.createUser);
 app.post('/recipes', Validated, route.createRecipes);
+app.get('/recipes', route.allRecipes);
 
 app.listen(
   PORT,
