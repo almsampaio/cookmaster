@@ -1,5 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const multer = require('multer');
 
 const user = require('../controllers/userController');
 const login = require('../controllers/loginController');
@@ -40,6 +41,23 @@ app.put('/recipes/:id',
 app.delete('/recipes/:id',
   token.validateToken,
   recipes.remove);
+
+// upload img requsito 9 
+// storage e upload foram pegos do course trybe bloco 28
+const storage = multer.diskStorage({
+  destination: (_req, _file, callback) => {
+    callback(null, 'uploads');
+  },
+  filename: (_req, file, callback) => {
+    callback(null, file.originalname);
+} });
+
+const upload = multer({ storage });
+
+app.put('/recipes/:id/image/',
+  token.validateToken,
+  upload.single('image'),
+  recipes.upload);
 
 // Não remover esse end-point, ele é necessário para o avaliador
 app.get('/', (request, response) => {

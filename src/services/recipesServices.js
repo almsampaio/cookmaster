@@ -24,9 +24,23 @@ const remove = async (user, recipeId) => {
       return updatedRecipe;
     }
     return { message: 'missing auth token' };
-  };
+};
+
+const upload = async (user, recipeId, img) => {
+    const { _id: userId, role } = user;
+    
+    const recipe = await model.getById(recipeId); // busco a receita que quero atualizar
+  
+    if (userId === recipe.userId || role === 'admin') { // estou validado se o usuraio é admin
+      const uploadImg = await model.upload(userId, recipeId, img, recipe);
+      return uploadImg;
+    }
+
+    return { message: 'missing auth token' };
+};
 
 module.exports = {
   update,
   remove,
+  upload,
 };
