@@ -3,6 +3,7 @@ const service = require('../services/recipesService');
 const status = {
   OK: 200,
   CREATED: 201,
+  NO_CONTENT: 204,
   BAD_REQUEST: 400,
   UNAUTHORIZED: 401,
   NOT_FOUND: 404,
@@ -44,9 +45,19 @@ const updateRecipeByID = async (req, res) => {
   return res.status(status.OK).json(updatedUser);
 };
 
+const deleteRecipeByID = async (req, res) => {
+  const { headers: { authorization }, params: { id } } = req;
+  const deletedUser = await service.deleteRecipeByID(authorization, id);
+  if (deletedUser.err) {
+    return res.status(status[deletedUser.err.code]).json({ message: deletedUser.err.message });
+  }
+  return res.status(status.NO_CONTENT).json();
+};
+
 module.exports = {
   createRecipes,
   getRecipes,
   getRecipeByID,
   updateRecipeByID,
+  deleteRecipeByID,
 };

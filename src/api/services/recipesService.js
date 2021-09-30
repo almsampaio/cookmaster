@@ -80,9 +80,31 @@ const updateRecipeByID = async (body, authorization, id) => {
   return updatedRecipe;
 };
 
+const deleteRecipesValidations = async (token, recipeID) => {
+  try {
+    const validToken = jwt.verify(token, secret);
+    const userValid = await isValidUser(validToken.payload.userEmail, recipeID);
+    return userValid;
+  } catch (_err0r) {
+    return { err: { message: 'jwt malformed', code: 'UNAUTHORIZED' } };
+  }  
+};
+
+const deleteRecipeByID = async (authorization, id) => {
+  const token = authorization;
+  const recipeID = id;
+  if (!token) return { err: { message: 'missing auth token', code: 'UNAUTHORIZED' } };
+  const isValid = await deleteRecipesValidations(token, recipeID);
+  if (isValid.err) return isValid; 
+  const deletedUser = await db
+    .deleteRecipeByID(recipeID);
+  return deletedUser;
+  };
+
 module.exports = {
   createRecipes,
   getRecipes,
   getRecipeByID,
   updateRecipeByID,
+  deleteRecipeByID,
 };
