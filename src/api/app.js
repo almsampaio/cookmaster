@@ -39,5 +39,6 @@ createRecipe.addRecipes);
 
 app.get('/recipes', createRecipe.findRecipes);
 app.get('/recipes/:id', createRecipe.findRecipeById);
+app.put('/recipes/:id', tokenValidation, createRecipe.editRecipe);
 
 module.exports = app;
