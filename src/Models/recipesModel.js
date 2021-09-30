@@ -15,9 +15,11 @@ const getAllRecipes = async () => {
 };
 
 const getRecipesId = async (id) => {
-  if (!ObjectId.isValid(id)) return false;
+  console.log(id);
   const db = await getConnection();
   const recipe = await db.collection('recipes').findOne({ _id: ObjectId(id) });
+  console.log(recipe);
+  if (!recipe) return false;
   return recipe;
 };
 
@@ -33,6 +35,7 @@ const updateRecipes = async ({ name, ingredients, preparation }, _id, id) => {
   }
   return { _id: ObjectId(id), name, ingredients, preparation, userId: _id };
 };
+
 const deleteRecipes = async (id) => {
   const db = await getConnection();
   const deleteId = await db.collection('recipes')

@@ -7,7 +7,7 @@ const createdRecipes = async (req, res) => {
  try {
   const { name, ingredients, preparation } = req.body;
   const { _id } = req.user;
-  const createRecipe = await recipesModel.createRecipes({ name, ingredients, preparation, _id });
+  const createRecipe = await recipesModel.createRecipes({ name, ingredients, preparation }, _id);
   return res.status(HTTP_CREATED_STATUS).json({ recipe: { ...createRecipe } });
 } catch (e) {
   console.log(e);
@@ -27,7 +27,8 @@ const getRecipesId = async (req, res) => {
   try {
   const { id } = req.params;
   const validatedId = await recipesService.validateId(id);
-  if (!validatedId) {
+  console.log(validatedId);
+  if (validatedId === false) {
     return res.status(404).json(recipeNotFound);
   }
   return res.status(HTTP_OK_STATUS).json(validatedId);
@@ -40,7 +41,8 @@ const updatedRecipes = async (req, res) => {
   try {
     const { name, ingredients, preparation } = req.body;
     const { id } = req.params;
-    const updated = await recipesService.updatedRecipe({ name, ingredients, preparation }, id);
+    const { _id } = req.user;
+    const updated = await recipesService.updatedRecipe({ name, ingredients, preparation }, _id, id);
     if (!updated) {
       return res.status(401).json({ message: 'missing auth token' });
     }
