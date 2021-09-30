@@ -3,7 +3,7 @@ const route = require('./routes');
 const app = require('./app');
 const Validated = require('../services/auth/ValidateJWT');
 
-const { PORT } = process.env || 3000;
+const PORT = process.env || 3000;
 app.use(bodyParser.json());
 
 app.post('/login', route.login);
