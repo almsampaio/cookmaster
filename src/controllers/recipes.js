@@ -1,5 +1,5 @@
 const { Recipes } = require('../services');
-const { SUCCESS_CREATED } = require('../utils/statusCodes');
+const { SUCCESS_CREATED, SUCCESS_OK } = require('../utils/statusCodes');
 
 const create = (req, res, next) => {
   const { name, ingredients, preparation } = req.body;
@@ -9,6 +9,13 @@ const create = (req, res, next) => {
     .catch((err) => next(err));
 };
 
+const getAll = (_req, res, next) => {
+  Recipes.getAll()
+    .then((result) => res.status(SUCCESS_OK).json(result))
+    .catch((err) => next(err));
+};
+
 module.exports = {
   create,
+  getAll,
 };

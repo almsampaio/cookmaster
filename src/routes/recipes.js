@@ -4,6 +4,7 @@ const { Recipes } = require('../controllers');
 const { authMiddleware, validateRecipe } = require('../middlewares');
 
 router
-  .post('/', authMiddleware, validateRecipe, Recipes.create);
+  .post('/', authMiddleware, validateRecipe, Recipes.create)
+  .get('/', Recipes.getAll);
 
 module.exports = router;

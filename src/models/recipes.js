@@ -6,6 +6,11 @@ const create = async (name, ingredients, preparation, userId) => connection()
       recipe: { name, ingredients, preparation, userId, _id: result.insertedId },
     }));
 
+const getAll = () => connection()
+  .then((db) => db.collection('recipes').find().toArray())
+  .then((result) => result);
+
 module.exports = { 
   create,
+  getAll,
 };
