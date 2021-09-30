@@ -37,4 +37,7 @@ Recipes.verifyPreparation,
 tokenValidation, 
 createRecipe.addRecipes);
 
+app.get('/recipes', createRecipe.findRecipes);
+app.get('/recipes/:id', createRecipe.findRecipeById);
+
 module.exports = app;
