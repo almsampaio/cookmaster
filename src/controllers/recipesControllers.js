@@ -31,13 +31,23 @@ const updateRecipe = async (req, res) => {
   return res.status(200).json(recipe);
 };
 
-const removeRecipe = async (request, response) => {
-  const { id } = request.params;
-  const { _id, role } = request.user;
+const removeRecipe = async (req, res) => {
+  const { id } = req.params;
+  const { _id, role } = req.user;
   const recipe = await recipesModel.removeRecipe(id, role, _id);
-  if (recipe === null) return response.status(404).json({ message: 'recipe not found' });
-  if (recipe === false) return response.status(401).json({ message: 'missing auth token' });
-  return response.status(204).json(recipe);
+  if (recipe === null) return res.status(404).json({ message: 'recipe not found' });
+  if (recipe === false) return res.status(401).json({ message: 'missing auth token' });
+  return res.status(204).json(recipe);
+};
+
+const imgInsert = async (req, res) => {
+  const { id } = req.params;
+  const { _id: userId, role } = req.user;
+  const { path: image } = req.file;
+  const imageRecipe = await recipesModel.imgInsert(id, userId, role, image);
+  if (imageRecipe === null) return res.status(404).json({ message: 'recipe not found' });
+  if (imageRecipe === false) return res.status(401).json({ message: 'missing auth token' });
+  return res.status(200).json(imageRecipe);
 };
 
 module.exports = {
@@ -46,4 +56,5 @@ module.exports = {
   getRecipeById,
   updateRecipe,
   removeRecipe,
+  imgInsert,
 };
