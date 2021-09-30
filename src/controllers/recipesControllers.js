@@ -26,11 +26,28 @@ const create = async (req, res) => {
   const createRecepie = await model.createRecepie(name, ingredients, preparation, userId);
   console.log(createRecepie);
 
-  return res.status(201).json(createRecepie);
+  return res.status(201).json({});
+};
+
+const update = async (req, res) => {
+  const { id } = req.params;
+  const { _id: userId, role } = req.user;
+
+  const recipe = await model.update(id, req.body, role, userId);
+  if (recipe === null) {
+    return res.status(404).json({ message: 'recipe not found' });
+  } 
+
+  if (recipe === false) {
+    return res.status(401).json({ message: 'missing auth token' });
+  } 
+
+  return res.status(200).json(recipe);
 };
 
 module.exports = {
   getAll,
   getById,
   create,
+  update,
 };

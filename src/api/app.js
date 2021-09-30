@@ -1,9 +1,9 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 
-const userController = require('../controllers/userController');
-const loginController = require('../controllers/loginController');
-const recipesController = require('../controllers/recipesControllers');
+const user = require('../controllers/userController');
+const login = require('../controllers/loginController');
+const recipes = require('../controllers/recipesControllers');
 const userValidations = require('../middlewares/userValidations');
 const loginValidations = require('../middlewares/loginValidations');
 const recipesValidations = require('../middlewares/recipesValidations');
@@ -16,22 +16,26 @@ app.post('/users',
   userValidations.validateName, 
   userValidations.validateEmail,
   userValidations.validatePassword, 
-  userController.create);
+  user.create);
 
 app.post('/login',
   loginValidations.validateEmail,
   loginValidations.validatePassword,
-  loginController.login);
+  login.login);
 
 app.post('/recipes',
   recipesValidations.validateName,
   recipesValidations.validateIngredients,
   recipesValidations.validatePreparation,
   token.validateToken,
-  recipesController.create);
+  recipes.create);
 
-app.get('/recipes', recipesController.getAll);
-app.get('/recipes/:id', recipesController.getById);
+app.get('/recipes', recipes.getAll);
+app.get('/recipes/:id', recipes.getById);
+
+app.put('/recipes/:id',
+  token.validateToken,
+  recipes.update);
 
 // Não remover esse end-point, ele é necessário para o avaliador
 app.get('/', (request, response) => {

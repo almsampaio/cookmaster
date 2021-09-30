@@ -1,5 +1,4 @@
 const jwt = require('jsonwebtoken');
-require('dotenv').config();
 
 const userModel = require('../models/userModel');
 
@@ -28,6 +27,7 @@ const validateToken = async (req, res, next) => {
     const payload = jwt.verify(userToken, secretPassword); // verifico o token e recebo payload
 
     const user = await userModel.searchByEmail(payload.email); // pego o user a partir do email
+    console.log(user);
 
     if (!user || user === undefined) {
       return res.status(401).json({ message: 'jwt malformed' });
