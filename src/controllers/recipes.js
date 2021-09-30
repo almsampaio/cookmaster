@@ -15,7 +15,15 @@ const getAll = (_req, res, next) => {
     .catch((err) => next(err));
 };
 
+const getById = (req, res, next) => {
+  const { id } = req.params; 
+  Recipes.getById(id)
+    .then((result) => res.status(SUCCESS_OK).json(result))
+    .catch((err) => next(err));
+};
+
 module.exports = {
   create,
   getAll,
+  getById,
 };
