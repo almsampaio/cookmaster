@@ -1,7 +1,7 @@
 const Router = require('express').Router();
 const Controller = require('../Controller');
-const error = require('../Middlewares/error');
+const Middlewares = require('../Middlewares');
 
-Router.post('/', Controller.login.logIN, error);
+Router.post('/', Controller.login.logIN, Middlewares.generateJWT, Middlewares.error);
 
 module.exports = Router;

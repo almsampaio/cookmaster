@@ -1,7 +1,7 @@
 const Router = require('express').Router();
 const Controller = require('../Controller');
-const error = require('../Middlewares/error');
+const Middlewares = require('../Middlewares');
 
-Router.post('/', Controller.users.register, error);
+Router.post('/', Controller.users.register, Middlewares.error);
 
 module.exports = Router;
