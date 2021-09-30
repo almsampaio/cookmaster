@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const multer = require('multer');
+const path = require('path');
 const userController = require('../controllers/userController');
 const loginController = require('../controllers/loginController');
 const recipeController = require('../controllers/recipeController');
@@ -8,6 +9,8 @@ const authenticationUser = require('../validations/authenticationUser');
 
 const app = express();
 app.use(bodyParser.json());
+
+app.use('/images', express.static(path.join(__dirname, '..', 'uploads')));
 
 const storage = multer.diskStorage({
   destination: (req, file, callback) => {
@@ -20,7 +23,6 @@ const storage = multer.diskStorage({
 });
 
 const upload = multer({ storage });
-console.log(upload);
 
 app.post('/users', userController.createUser);
 app.post('/login', loginController);
@@ -38,3 +40,5 @@ app.get('/', (request, response) => {
 // Não remover esse end-point, ele é necessário para o avaliador
 
 module.exports = app;
+
+// Recebi ajuda do colega Rafael Ribeiro no requisito do Multer. 
