@@ -16,6 +16,8 @@ app.post('/login', rescue(controllers.logUserIn));
 app.post('/recipes', authMiddleware, rescue(controllers.createRecipe));
 app.get('/recipes/:id', rescue(controllers.getRecipesById));
 app.get('/recipes', rescue(controllers.getAllRecipes));
+app.put('/recipes/:id', rescue(authMiddleware), rescue(controllers.updateRecipe));
+app.delete('/recipes/:id', rescue(authMiddleware), rescue(controllers.deleteRecipe));
 
 app.use(errorMiddleware);
 // Não remover esse end-point, ele é necessário para o avaliador

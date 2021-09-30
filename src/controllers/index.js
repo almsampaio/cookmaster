@@ -36,10 +36,24 @@ const getRecipesById = async (req, res, _next) => {
   return res.status(200).json(recipe);
 };
 
+const updateRecipe = (req, res, _next) => {
+  const { id } = req.params;
+
+  return res.status(200).json({ update: id });
+};
+
+const deleteRecipe = (req, res, _next) => {
+  const { id } = req.params;
+
+  return res.status(200).json({ delete: id });
+};
+
 module.exports = {
   registerUser,
   logUserIn,
   createRecipe,
   getAllRecipes,
   getRecipesById,
+  updateRecipe,
+  deleteRecipe,
 };
