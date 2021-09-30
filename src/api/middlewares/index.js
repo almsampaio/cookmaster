@@ -4,6 +4,7 @@ const createToken = require('./createToken');
 const validLogin = require('./validLogin');
 const verifyToken = require('./verifyToken');
 const validRecipe = require('./validRecipe');
+const validJWT = require('./validJWT');
 
 module.exports = {
   errorMiddlewares,
@@ -12,4 +13,5 @@ module.exports = {
   validLogin,
   verifyToken,
   validRecipe,
+  validJWT,
 };

@@ -54,9 +54,23 @@ const editRecipe = async (id, token, { name, ingredients, preparation }) => {
   return editedRecipe;
 };
 
+const deleteRecipe = async (id, role, userId) => {
+  const findRecipe = await ModelRecipes.getById(id);
+  // const user = await ModelUsers.getById(userId);
+
+ if (role !== 'admin' && findRecipe.userId !== userId) {
+   throw invalidData('missing auth token', UNAUTHORIZED);
+ }
+
+ const deletedRecipe = await ModelRecipes.deleteRecipe(id);
+
+ return deletedRecipe;
+};
+
 module.exports = {
   create,
   getAll,
   getById,
   editRecipe,
+  deleteRecipe,
 };

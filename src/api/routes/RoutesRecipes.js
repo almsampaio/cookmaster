@@ -9,5 +9,6 @@ router.post('/', Middlewares.validRecipe, ControllerRecipes.create);
 router.get('/', ControllerRecipes.getAll);
 router.get('/:id', ControllerRecipes.getById);
 router.put('/:id', ControllerRecipes.editRecipe);
+router.delete('/:id', Middlewares.validJWT, ControllerRecipes.deleteRecipe);
 
 module.exports = router;

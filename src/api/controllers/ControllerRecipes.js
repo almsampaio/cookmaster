@@ -2,6 +2,7 @@ const ServiceRecipes = require('../services/ServiceRecipes');
 
 const SUCCESS = 200;
 const CREATED = 201;
+const NO_CONTENT = 204;
 
 const create = async (req, res, next) => {
   try {
@@ -52,9 +53,23 @@ const editRecipe = async (req, res, next) => {
   }
 };
 
+const deleteRecipe = async (req, res, next) => {
+  try {
+    const { id: userId, role } = req.user;
+    const { id } = req.params;
+
+    await ServiceRecipes.deleteRecipe(id, role, userId);
+
+    return res.status(NO_CONTENT).json();
+  } catch (error) {
+    return next(error);
+  }
+};
+
 module.exports = {
   create,
   getAll,
   getById,
   editRecipe,
+  deleteRecipe,
 };
