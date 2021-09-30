@@ -40,10 +40,17 @@ const remove = async (id) => {
   return { status: StatusCodes.NO_CONTENT };
 };
 
+const uploadFile = async (id, fileName) => {
+  const imageName = `localhost:3000/src/uploads/${fileName}`;
+  const uploadedFile = await Recipes.uploadFile(id, imageName);
+  return { status: StatusCodes.OK, data: uploadedFile };
+};
+
 module.exports = {
   create,
   getAll,
   getById,
   update,
   remove,
+  uploadFile,
 };

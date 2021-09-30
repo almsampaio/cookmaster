@@ -44,10 +44,22 @@ const remove = async (id) => {
   return null;
 };
 
+const uploadFile = async (id, imageName) => {
+  if (!ObjectId.isValid(id)) return null;
+
+  const db = await connection();
+  await db.collection('recipes').updateOne(
+    { _id: ObjectId(id) }, { $set: { image: imageName } },
+  );
+
+  return getById(id);
+};
+
 module.exports = {
   create,
   getAll,
   getById,
   update,
   remove,
+  uploadFile,
 };
