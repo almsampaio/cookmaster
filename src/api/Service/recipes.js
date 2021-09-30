@@ -86,8 +86,8 @@ async function deleteRecipeById(user, recipeId) {
   return { statusCode, payload: mongoReturn };
 }
 
-async function putImage(recipeId) {
-  const imageName = `localhost:3000/src/uploads/${recipeId}`;
+async function putImage(recipeId, fileName) {
+  const imageName = `localhost:3000/src/uploads/${fileName}`;
   const mongoReturn = await Model.recipes.updateImage(recipeId, imageName);
   if (mongoReturn.error) {
     const { statusCode, error } = mongoReturn;

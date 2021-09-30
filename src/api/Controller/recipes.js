@@ -62,6 +62,7 @@ async function deleteRecipeById(req, res, next) {
 
 async function putImage(req, res, next) {
   const { id } = req.params;
+  const { filename } = req.file;
   const { email, role } = req.validated;
   const responseFromEmail = await Service.users.findUserEmail(email);
   const { payload: { _id: userId } } = responseFromEmail;
@@ -71,7 +72,7 @@ async function putImage(req, res, next) {
     const statusCode = StatusCodes.UNAUTHORIZED;
     return res.status(statusCode).json({ payload: { error: { message: 'jwt malformed' } } });
   }
-  const serviceResponse = await Service.recipes.putImage(id);
+  const serviceResponse = await Service.recipes.putImage(id, filename);
   const { statusCode, payload } = serviceResponse;
   if (payload.error) return next({ statusCode, error: payload.error });
   return res.status(statusCode).json(payload);

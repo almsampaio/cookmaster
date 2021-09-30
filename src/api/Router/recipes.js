@@ -6,6 +6,7 @@ Router.get('/', Controller.recipes.getRecipes, Middlewares.error);
 
 Router.put('/:id/image',
   Middlewares.validateJWT,
+  Middlewares.upload.single('image'),
   Controller.recipes.putImage,
   Middlewares.error);
 
