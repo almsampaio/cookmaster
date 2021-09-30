@@ -1,4 +1,4 @@
-// const services = require('../services/recipesServices');
+const service = require('../services/recipesServices');
 const model = require('../models/recipesModel');
 
 const getAll = async (_req, res) => {
@@ -30,19 +30,15 @@ const create = async (req, res) => {
 };
 
 const update = async (req, res) => {
-  const { id } = req.params;
-  const { _id: userId, role } = req.user;
+  const { id } = req.params; // id da receita
+  const { user } = req.user;
 
-  const recipe = await model.update(id, req.body, role, userId);
-  if (recipe === null) {
-    return res.status(404).json({ message: 'recipe not found' });
-  } 
+  const updateRecipe = await service.update(req.body, user, id);
 
-  if (recipe === false) {
-    return res.status(401).json({ message: 'missing auth token' });
-  } 
+  if (updateRecipe.message) return res.status(409).json(updateRecipe);
+  // se createUser tiver um atributo/Chave com o valor message, quer dizer que deu erro, então retornamos res.status de erro
 
-  return res.status(200).json(recipe);
+  return res.status(201).json(updateRecipe);
 };
 
 module.exports = {

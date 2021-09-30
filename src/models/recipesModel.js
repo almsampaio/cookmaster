@@ -24,20 +24,21 @@ const create = async (name, ingredients, preparation, userId) => {
   return { recipe: { name, ingredients, preparation, userId, _id: createRecepie.insertedId } };
 };
 
-// const update = async () => {
-//   if (!ObjectId.isValid(id)) return null;
+const update = async (id, upadaterecipe, userId) => {
+  if (!ObjectId.isValid(id)) return null;
+  const { name, ingredients, preparation } = upadaterecipe;
 
-//   const db = await getConnection();
-//   const updateRecipe = await db.collection('recipes')
-//     .updateOne();
-//     console.log(updateRecipe);
+  const db = await getConnection();
+  const updateRecipe = await db.collection('recipes')
+    .updateOne({ _id: ObjectId(id) }, { $set: { name, ingredients, preparation } });
+    console.log(updateRecipe);
   
-//     return {  };
-// };
+    return { _id: updateRecipe.insertedId, name, ingredients, preparation, userId };
+};
 
 module.exports = {
   getAll,
   getById,
   create,
-  // update,
+  update,
 };
