@@ -112,6 +112,7 @@ const addAndUpdateImage = async (req, res, next) => {
     const updatedRecipe = await recipesServices.addAndUpdateImage(recipeInfo, userInfo);
     if (updatedRecipe === null) { throw new Error('missing auth token'); }
     req.updatedRecipe = updatedRecipe;
+    console.log(`addAndUpdateImage:${updatedRecipe}`);
     // return res.status(200).json(updatedRecipe);
   } catch (error) {
     return res.status(401).json({ message: error.message });

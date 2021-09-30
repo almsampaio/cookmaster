@@ -1,13 +1,45 @@
 const { Router } = require('express');
+const multer = require('multer');
 const authMiddleware = require('../authentication/authMiddleware');
 const recipesMiddlewares = require('./recipesMiddlewares');
 
 const router = Router();
 
+router.post('/',
+authMiddleware.tokenValidation,
+recipesMiddlewares.emptyFildValidation,
+recipesMiddlewares.createRecipes,
+async () => {});
+/* REQUISIÇÃO:
+// Criar uma receita com o usuário lucas
+http POST :3000/recipes/ name='miojo do lucas' ingredients='macarrão' preparation='cozer' authorization:"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTUzOTFiZjdiMmJjY2UxOTU0N2Y4ODQiLCJuYW1lIjoiTHVjYXMiLCJlbWFpbCI6Imx1Y2FzQGdtYWlsLmNvbSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNjMyOTIyNzI2LCJleHAiOjE2MzMwOTU1MjZ9.lh5SZGE159Yc79EBp5H7K-8fABh1MRHorGlQPdLKBi4"
+
+// Criar uma receita com o usuário erick
+http POST :3000/recipes/ name='miojo do erick' ingredients='macarrão' preparation='cozer' authorization:"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTRmOTNkNDczMWI4OGRlNmNmYjAzZTYiLCJuYW1lIjoiRXJpY2sgSmFjcXVpbiIsImVtYWlsIjoiZXJpY2tqYWNxdWluQGdtYWlsLmNvbSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNjMyOTIyNzUwLCJleHAiOjE2MzMwOTU1NTB9.-aeIAX4uXPbPSbzmW7pSDCZD44FoND7qlTKzWMxmOso"
+*/
+
+// Método middlewareMuler do pacote multer para fazer o upload do arquivo
+const storage = multer.diskStorage({
+  destination: (req, file, callBack) => {
+    const destinationFolderPath = '../uploads/';
+    callBack(null, destinationFolderPath);
+  },
+  filename: (req, file, callBack) => {
+    const { id } = req.params;
+    const fileName = `${id}.jpeg`;
+    // const fileName = `${id}${path.extname(file.originalname)}`; // retorna a extensão do arquivo original
+    callBack(null, fileName);
+  },
+});
+
+const upload = multer({ storage });
+const uploadFieldName = 'image';
+
 router.put('/:id/image',
 authMiddleware.tokenValidation,
 recipesMiddlewares.addAndUpdateImage,
-recipesMiddlewares.uploadImageRecipes,
+upload.array(uploadFieldName),
+// recipesMiddlewares.uploadImageRecipes,
 recipesMiddlewares.successfulUpload,
 async (_req, _res) => {
   // console.log(req.files);
@@ -22,19 +54,6 @@ http -f POST :3000/recipes/6154d5d4d074f3084b14d100/image/ image@/home/lucas/upl
 
 Carega o arquivo da imagem pelo usuário admin
 http -f POST :3000/recipes/6154d5d4d074f3084b14d100/image/ image@/home/lucas/uploadTest.txt authorization:"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTUyOWM1Y2I1YmMyOWVhZGZjMDRjMTQiLCJuYW1lIjoiYWRtaW4iLCJlbWFpbCI6InJvb3RAZW1haWwuY29tIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNjMyOTIyODEyLCJleHAiOjE2MzMwOTU2MTJ9.FbqGgDfjk58hXseaiNTE5Q3HJiM2z02SUHJwJPNn3dU"
-*/
-
-router.post('/',
-authMiddleware.tokenValidation,
-recipesMiddlewares.emptyFildValidation,
-recipesMiddlewares.createRecipes,
-async () => {});
-/* REQUISIÇÃO:
-// Criar uma receita com o usuário lucas
-http POST :3000/recipes/ name='miojo do lucas' ingredients='macarrão' preparation='cozer' authorization:"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTUzOTFiZjdiMmJjY2UxOTU0N2Y4ODQiLCJuYW1lIjoiTHVjYXMiLCJlbWFpbCI6Imx1Y2FzQGdtYWlsLmNvbSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNjMyOTIyNzI2LCJleHAiOjE2MzMwOTU1MjZ9.lh5SZGE159Yc79EBp5H7K-8fABh1MRHorGlQPdLKBi4"
-
-// Criar uma receita com o usuário erick
-http POST :3000/recipes/ name='miojo do erick' ingredients='macarrão' preparation='cozer' authorization:"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTRmOTNkNDczMWI4OGRlNmNmYjAzZTYiLCJuYW1lIjoiRXJpY2sgSmFjcXVpbiIsImVtYWlsIjoiZXJpY2tqYWNxdWluQGdtYWlsLmNvbSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNjMyOTIyNzUwLCJleHAiOjE2MzMwOTU1NTB9.-aeIAX4uXPbPSbzmW7pSDCZD44FoND7qlTKzWMxmOso"
 */
 
 router.get('/',
