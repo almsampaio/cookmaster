@@ -48,4 +48,12 @@ const destroy = async (id) => {
   };
 };
 
-module.exports = { create, get, getById, put, destroy };
+const upload = async (id, filename, userId) => {
+  const uploadFile = await recipesModel.upload(id, filename, userId);
+  return {
+    status: OK,
+    message: uploadFile,
+  };
+};
+
+module.exports = { create, get, getById, put, destroy, upload };

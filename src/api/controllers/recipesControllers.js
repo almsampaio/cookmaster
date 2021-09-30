@@ -32,4 +32,13 @@ const destroy = async (req, res) => {
   return res.status(deleted.status).json();
 };
 
-module.exports = { create, get, getById, put, destroy };
+const upload = async (req, res) => {
+  const { id } = req.params;
+  const { filename } = req.file;
+  const token = req.headers.authorization;
+  const { _id } = jwt.verify(token, SECRET);
+  const uploadFile = await recipesServices.upload(id, filename, _id);
+  return res.status(uploadFile.status).json(uploadFile.message);
+};
+
+module.exports = { create, get, getById, put, destroy, upload };

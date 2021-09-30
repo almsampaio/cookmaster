@@ -40,4 +40,18 @@ const destroy = async (id) => {
   return shouldDelete;
 };
 
-module.exports = { create, get, getById, put, destroy };
+const upload = async (id, fileName, userId) => {
+  const dbConn = await conn().then((db) => db.collection(COLLECTION));
+  const recipe = await getById(id);
+  await dbConn.findOneAndUpdate(
+    { _id: ObjectId(id) },
+    { $set: { ...recipe, userId, image: `localhost:3000/src/uploads/${fileName}` } },
+  );
+  return {
+    ...recipe,
+    userId,
+    image: `localhost:3000/src/uploads/${fileName}`,
+  };
+};
+
+module.exports = { create, get, getById, put, destroy, upload };

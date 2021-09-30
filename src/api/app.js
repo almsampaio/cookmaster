@@ -1,10 +1,23 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const path = require('path');
+const multer = require('multer');
 const usersControllers = require('./controllers/usersControllers');
 const recipesControllers = require('./controllers/recipesControllers');
 const valideUser = require('./middlewares/usersValidations');
 const valideRecipe = require('./middlewares/recipesValidations');
 const tokenValidation = require('./middlewares/tokenValidation');
+
+const PATH_JOIN = path.join(__dirname, '..', 'uploads');
+
+const storage = multer.diskStorage({
+  destination: PATH_JOIN,
+  filename: (req, _file, callback) => {
+    callback(null, `${req.params.id}.jpeg`);
+  },
+});
+
+const upload = multer({ storage });
 
 const app = express();
 
@@ -24,5 +37,6 @@ app.get('/recipes', recipesControllers.get);
 app.get('/recipes/:id', valideRecipe.validId, recipesControllers.getById);
 app.put('/recipes/:id', tokenValidation, recipesControllers.put);
 app.delete('/recipes/:id', tokenValidation, recipesControllers.destroy);
+app.put('/recipes/:id/image', tokenValidation, upload.single('image'), recipesControllers.upload);
 
 module.exports = app;
