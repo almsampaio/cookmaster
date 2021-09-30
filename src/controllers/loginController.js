@@ -1,6 +1,6 @@
 // const services = require('../services/loginServices');
 const userModel = require('../models/userModel');
-const getToken = require('../middlewares/token');
+const token = require('../middlewares/token');
 
 const login = async (req, res) => {
   const { email, password } = req.body;
@@ -13,9 +13,9 @@ const login = async (req, res) => {
     return res.status(401).json({ message: 'Incorrect username or password' });
   }
 
-  const token = getToken(user);
+  const newtoken = token.getToken(user);
 
-  return res.status(200).json({ token });
+  return res.status(200).json({ newtoken });
 };
 
 module.exports = {
