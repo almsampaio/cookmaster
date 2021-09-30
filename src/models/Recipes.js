@@ -22,8 +22,27 @@ const allRecipes = async () => {
   return recipes;
 };
 
+const updateRecipe = async (id, name, ingredients, preparation) => {
+  const db = await connection();
+  if (!ObjectId.isValid(id)) return null;
+  await db.collection('recipes')
+    .updateOne({ _id: ObjectId(id) }, { $set: { name, ingredients, preparation } });
+  const newRecipes = await findRecipe(id);
+  return newRecipes;
+};
+
+const removeRecipes = async (id) => {
+  const db = await connection();
+  const recipes = await findRecipe(id);
+  if (!recipes) return false;
+  await db.collection('recipes').deleteOne({ _id: ObjectId(id) });
+  return recipes;
+};
+
 module.exports = {
   addRecipe,
   findRecipe,
   allRecipes,
+  updateRecipe,
+  removeRecipes,
 };

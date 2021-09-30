@@ -11,6 +11,8 @@ app.post('/users', route.createUser);
 app.post('/recipes', Validated, route.createRecipes);
 app.get('/recipes', route.allRecipes);
 app.get('/recipes/:id', route.recipById);
+app.put('/recipes/:id', Validated, route.updateRecipe);
+app.delete('/recipes/:id', Validated, route.removeRecipe);
 
 app.listen(
   PORT,
