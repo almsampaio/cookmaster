@@ -37,6 +37,8 @@ app.get('/recipes', recipesControllers.getRecipes);
 
 app.get('/recipes/:id', recipesControllers.getRecipeById);
 
+app.put('/recipes/:id', token.tokenValidate, recipesControllers.updateRecipe);
+
 // Não remover esse end-point, ele é necessário para o avaliador
 app.get('/', (request, response) => {
   response.send();

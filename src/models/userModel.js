@@ -22,9 +22,15 @@ const getByPassword = async (password) => {
   const search = await db.collection('users').findOne({ password });
   return search;
 };
+const getUserByID = async (_id) => {
+  const db = await connection();
+  const search = await db.collection('users').findOne({ _id });
+  return search;
+};
 
 module.exports = {
   getByEmail,
   create,
   getByPassword,
+  getUserByID,
 };

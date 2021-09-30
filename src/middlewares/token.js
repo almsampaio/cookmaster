@@ -17,7 +17,7 @@ const token = (dataWithoutPassword) => {
 const tokenValidate = async (req, res, next) => {
   const userToken = req.headers.authorization;
   if (!userToken) {
-    res.status(401).json({ message: 'missing auth token' });
+  return res.status(401).json({ message: 'missing auth token' });
   }
 
   try {
@@ -30,7 +30,9 @@ const tokenValidate = async (req, res, next) => {
       return res.status(401).json({ message: 'jwt malformed' });
     }
 
-    req.user = payload;
+    const { password, ...dataWithoutPassword } = userValidate;
+
+    req.user = dataWithoutPassword;
     next();
 } catch (err) {
     return res.status(401).json({ message: 'jwt malformed' });

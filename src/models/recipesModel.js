@@ -1,4 +1,6 @@
 const { ObjectID } = require('bson');
+const userModel = require('./userModel');
+
 const connection = require('./connection');
 
 const createRecipe = async (name, ingredients, preparation, userID) => {
@@ -23,8 +25,21 @@ const getRecipeById = async (id) => {
   return recipe;
 };
 
+const updateRecipe = async (id, update, role, _id) => {
+  if (!ObjectID.isValid(id)) return null;
+  const { name, ingredients, preparation } = update;
+  const dataUser = await userModel.getUserByID(_id);
+    
+  if (dataUser.role === role || role === 'admin') {
+    const db = await connection();
+    await db.collection('recipes')
+    .updateOne({ _id: ObjectID(id) }, { $set: { name, ingredients, preparation } });
+    return { _id, name, ingredients, preparation, userId: _id };
+  }
+};
 module.exports = {
   createRecipe,
   getRecipes,
   getRecipeById,
+  updateRecipe,
 };
