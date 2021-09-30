@@ -1,21 +1,20 @@
 // Services do usuário
 const userModel = require('../Model/userModel');
 
-const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-const emailExists = { status: 409, message: 'Email already registered' };
+const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const invalidEntries = { status: 400, message: 'Invalid entries. Try again.' };
+const emailExists = { status: 409, message: 'Email already registered' };
 
-const createUser = async (ame, email, password, role) => {
-  const newUser = await userModel.create(ame, email, password, role);
-  if (newUser.statusCode === 409) return emailExists;
-    return { user: newUser };
+const createUser = async (name, email, password, role) => {
+  const createdUser = await userModel.create(name, email, password, role);
+  if (createdUser.statusCode === 409) return emailExists;
+  return { status: 201, user: createdUser };
 };
 
-const create = async (name, email, password, role) => {
+const create = (name, email, password, role) => {
   if (!name || !email || !password) return invalidEntries;
-  if (!emailRegex.test(email)) return invalidEntries;
-  const result = await createUser(name, email, password, role);
-  return result;
+  if (!emailPattern.test(email)) return invalidEntries;
+  return createUser(name, email, password, role);
 };
 
 module.exports = {
