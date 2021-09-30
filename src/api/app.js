@@ -1,7 +1,5 @@
 const express = require('express');
 
-// const multer = require('multer');
-
 const bodyParser = require('body-parser').json;
 
 const usersController = require('./controllers/usersController');

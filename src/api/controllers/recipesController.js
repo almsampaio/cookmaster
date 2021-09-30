@@ -58,7 +58,7 @@ const deleteRecipeByID = async (req, res) => {
 
 const storage = multer.diskStorage({
   destination: (_req, _file, callback) => {
-    callback(null, 'uploads');
+    callback(null, 'src/uploads');
   },
   filename: (req, _file, callback) => {
     callback(null, `${req.params.id}.jpeg`);

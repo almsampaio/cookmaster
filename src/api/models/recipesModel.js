@@ -36,7 +36,7 @@ const deleteRecipeByID = async (id) => {
 };
 
 const insertImageInRecipeByID = async (recipeID, path) => {
-  const imgURL = `localhost:3000/src/${path}`;
+  const imgURL = `localhost:3000/${path}`;
   const db = await connection();
   await db.collection('recipes').updateOne({ _id: ObjectId(recipeID) },
   { $set: { image: imgURL } });
