@@ -5,6 +5,7 @@ const { authMiddleware, validateRecipe } = require('../middlewares');
 
 router
   .post('/', authMiddleware, validateRecipe, Recipes.create)
+  .put('/:id', authMiddleware, Recipes.update)
   .get('/:id', Recipes.getById)
   .get('/', Recipes.getAll);
 

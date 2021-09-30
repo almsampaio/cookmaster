@@ -1,5 +1,5 @@
 const { Recipes } = require('../models');
-const { NOT_FOUND } = require('../utils/statusCodes');
+const { NOT_FOUND, UNAUTHORIZED } = require('../utils/statusCodes');
 
 const validateError = (status, message) => ({
   status,
@@ -18,8 +18,22 @@ const getById = async (id) => {
   return recipe;
 };
 
+const verifyAuthUser = async (id, userId, role) => {
+  const recipe = await getById(id);
+  if (recipe.userId !== userId && role !== 'admin') {
+    throw validateError(UNAUTHORIZED, 'user unauthorized');
+  }
+};
+
+const update = async (data) => {
+  const { id, userId, role } = data;
+  await verifyAuthUser(id, userId, role);
+  Recipes.update(data).then((res) => res);
+};
+
 module.exports = {
   create,
   getAll,
   getById,
+  update,
 };

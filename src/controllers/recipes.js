@@ -22,8 +22,18 @@ const getById = (req, res, next) => {
     .catch((err) => next(err));
 };
 
+const update = (req, res, next) => {
+  const { id } = req.params;
+  const { name, ingredients, preparation } = req.body;
+  const { userId, role } = req;
+  Recipes.update({ id, name, ingredients, preparation, userId, role })
+    .then(() => res.status(SUCCESS_OK).json({ _id: id, name, ingredients, preparation, userId }))
+    .catch((err) => next(err));
+};
+
 module.exports = {
   create,
   getAll,
   getById,
+  update,
 };
