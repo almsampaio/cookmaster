@@ -33,12 +33,11 @@ const storage = multer.diskStorage({
 });
 
 const upload = multer({ storage });
-const uploadFieldName = 'image';
 
 router.put('/:id/image',
 authMiddleware.tokenValidation,
 recipesMiddlewares.addAndUpdateImage,
-upload.array(uploadFieldName),
+upload.array('image'),
 // recipesMiddlewares.uploadImageRecipes,
 recipesMiddlewares.successfulUpload,
 async (_req, _res) => {
