@@ -1,3 +1,5 @@
+const multer = require('multer');
+
 const service = require('../services/recipesService');
 
 const status = {
@@ -54,10 +56,33 @@ const deleteRecipeByID = async (req, res) => {
   return res.status(status.NO_CONTENT).json();
 };
 
+const storage = multer.diskStorage({
+  destination: (_req, _file, callback) => {
+    callback(null, 'uploads');
+  },
+  filename: (req, _file, callback) => {
+    callback(null, `${req.params.id}.jpeg`);
+  },
+});
+
+const upload = multer({ storage });
+
+const insertImageInRecipeByID = async (req, res) => {
+  const { headers: { authorization }, params: { id }, file: { path } } = req;
+  const recipeWithInsertedImage = await service.insertImageInRecipeByID(authorization, id, path);
+  if (recipeWithInsertedImage.err) {
+    return res.status(status[recipeWithInsertedImage.err.code])
+      .json({ message: recipeWithInsertedImage.err.message });
+  }
+  return res.status(status.OK).json(recipeWithInsertedImage);
+};
+
 module.exports = {
   createRecipes,
   getRecipes,
   getRecipeByID,
   updateRecipeByID,
   deleteRecipeByID,
+  upload,
+  insertImageInRecipeByID,
 };

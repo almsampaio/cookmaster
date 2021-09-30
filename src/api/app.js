@@ -1,5 +1,7 @@
 const express = require('express');
 
+// const multer = require('multer');
+
 const bodyParser = require('body-parser').json;
 
 const usersController = require('./controllers/usersController');
@@ -24,6 +26,10 @@ app.post('/recipes', recipesController.createRecipes);
 app.get('/recipes', recipesController.getRecipes);
 
 app.get('/recipes/:id', recipesController.getRecipeByID);
+
+app
+  .put('/recipes/:id/image', recipesController.upload.single('image'),
+  recipesController.insertImageInRecipeByID);
 
 app.put('/recipes/:id', recipesController.updateRecipeByID);
 

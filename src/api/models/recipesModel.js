@@ -35,10 +35,20 @@ const deleteRecipeByID = async (id) => {
   return deletedUser;
 };
 
+const insertImageInRecipeByID = async (recipeID, path) => {
+  const imgURL = `localhost:3000/src/${path}`;
+  const db = await connection();
+  await db.collection('recipes').updateOne({ _id: ObjectId(recipeID) },
+  { $set: { image: imgURL } });
+  const recipeWithImg = await db.collection('recipes').findOne({ _id: ObjectId(recipeID) });
+  return recipeWithImg;
+};
+
 module.exports = {
   createRecipes,
   getRecipes,
   getRecipeByID,
   updateRecipeByID,
   deleteRecipeByID,
+  insertImageInRecipeByID,
 };

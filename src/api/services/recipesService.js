@@ -80,7 +80,7 @@ const updateRecipeByID = async (body, authorization, id) => {
   return updatedRecipe;
 };
 
-const deleteRecipesValidations = async (token, recipeID) => {
+const tokenAndUserValidations = async (token, recipeID) => {
   try {
     const validToken = jwt.verify(token, secret);
     const userValid = await isValidUser(validToken.payload.userEmail, recipeID);
@@ -94,12 +94,23 @@ const deleteRecipeByID = async (authorization, id) => {
   const token = authorization;
   const recipeID = id;
   if (!token) return { err: { message: 'missing auth token', code: 'UNAUTHORIZED' } };
-  const isValid = await deleteRecipesValidations(token, recipeID);
+  const isValid = await tokenAndUserValidations(token, recipeID);
   if (isValid.err) return isValid; 
   const deletedUser = await db
     .deleteRecipeByID(recipeID);
   return deletedUser;
   };
+
+  const insertImageInRecipeByID = async (authorization, id, path) => {
+    const token = authorization;
+    const recipeID = id;
+    if (!token) return { err: { message: 'missing auth token', code: 'UNAUTHORIZED' } };
+    const isValid = await tokenAndUserValidations(token, recipeID);
+    if (isValid.err) return isValid; 
+    const recipeWithInsertedImage = await db
+      .insertImageInRecipeByID(recipeID, path);
+    return recipeWithInsertedImage;
+    };
 
 module.exports = {
   createRecipes,
@@ -107,4 +118,5 @@ module.exports = {
   getRecipeByID,
   updateRecipeByID,
   deleteRecipeByID,
+  insertImageInRecipeByID,
 };
