@@ -10,7 +10,7 @@ const create = async (name, email, password) => {
   }
 
   const newUser = await Users.create(name, email, password);
-  return { status: StatusCodes.CREATED, data: newUser };
+  return { status: StatusCodes.CREATED, data: { user: newUser } };
 };
 
 const login = async (email, password) => {
@@ -20,8 +20,8 @@ const login = async (email, password) => {
     expiresIn: '1d',
     algorithm: 'HS256',
   };
-
-  if (!getUser || getUser.user.password !== password) {
+  
+  if (!getUser || getUser.password !== password) {
     return { status: StatusCodes.UNAUTHORIZED, message: 'Incorrect username or password' };
   }
 
