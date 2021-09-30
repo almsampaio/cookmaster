@@ -11,6 +11,7 @@ app.post('/login', route.login);
 app.post('/users', route.createUser);
 app.post('/recipes', Validated, route.createRecipes);
 app.get('/recipes', route.allRecipes);
+app.get('/recipes/:id', route.recipById);
 
 app.listen(
   PORT,

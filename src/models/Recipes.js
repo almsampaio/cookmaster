@@ -4,13 +4,15 @@ const connection = require('./Connection');
 const addRecipe = async (name, ingredients, preparation, userID) => {
   const db = await connection();
   const userCreated = await db
-    .collection('users').insertOne({ name, ingredients, preparation, userId: ObjectId(userID.id) });
+    .collection('recipes')
+    .insertOne({ name, ingredients, preparation, userId: ObjectId(userID.id) });
   return userCreated.ops[0];
 };
 
-const findRecipe = async () => {
+const findRecipe = async (id) => {
   const db = await connection();
-  const userData = await db.collection('users').findOne({ });
+  if (!ObjectId.isValid(id)) return null;
+  const userData = await db.collection('recipes').findOne({ _id: ObjectId(id) });
   return userData;
 };
 
