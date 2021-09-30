@@ -20,15 +20,13 @@ http POST :3000/recipes/ name='miojo do erick' ingredients='macarrão' preparati
 
 // Método middlewareMuler do pacote multer para fazer o upload do arquivo
 const storage = multer.diskStorage({
-  destination: (req, file, callBack) => {
-    const destinationFolderPath = '../uploads/';
-    callBack(null, destinationFolderPath);
+  destination: (req, file, cb) => {
+    cb(null, '../uploads/');
   },
-  filename: (req, file, callBack) => {
+  filename: (req, file, cb) => {
     const { id } = req.params;
     const fileName = `${id}.jpeg`;
-    // const fileName = `${id}${path.extname(file.originalname)}`; // retorna a extensão do arquivo original
-    callBack(null, fileName);
+    cb(null, fileName);
   },
 });
 
