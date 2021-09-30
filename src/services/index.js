@@ -43,8 +43,6 @@ const validateLogin = async (userData) => {
   const user = await models.searchEmails(userData.email);
   if (!user) throw newError(401, 'Incorrect username or password');
 
-  console.log(user);
-
   const passMatch = String(userData.password) === String(user.password);
   if (!passMatch) throw newError(401, 'Incorrect username or password');
 
@@ -108,12 +106,24 @@ const updateRecipe = async (id, updatePayload) => {
 
     await models.updateById('recipes', id, updatePayload);
     const updatedRecipe = await models.getById('recipes', id);
-    console.log(updatedRecipe);
 
     return updatedRecipe;
   } catch (e) {
     throw newError(e.status, e.message);
   }
+};
+
+const updateRecipeWithImage = async (id) => {
+  const recipe = await models.getById(id);
+
+  const updatedRecipe = {
+    ...recipe,
+    image: `localhost:3000/src/uploads/${id}.jpeg`,
+  };
+
+  await models.updateById('recipes', id, updatedRecipe);
+
+  return updatedRecipe;
 };
 
 module.exports = {
@@ -123,4 +133,5 @@ module.exports = {
   getRecipes,
   getRecipeById,
   updateRecipe,
+  updateRecipeWithImage,
 };
