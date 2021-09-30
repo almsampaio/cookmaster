@@ -57,10 +57,11 @@ const remove = async (req, res) => {
 };
 
 const upload = async (req, res) => {
-  const { id } = req.params; // id da receita
-  const { path: img } = req.file; // pego a imagem
+  const { id } = req.params; 
+  const { filename: img } = req.file; // pego a imagem
+  console.log(req.file);
 
-  const uploadImg = await service.remove(req.user, id, img);
+  const uploadImg = await service.upload(req.user, id, img);
 
   if (uploadImg === null) return res.status(404).json({ message: 'recipe not found' });
   
@@ -68,7 +69,7 @@ const upload = async (req, res) => {
 
   // if (uploadImg.message) return res.status(409).json(uploadImg);
 
-  return res.status(201).json(uploadImg);
+  return res.status(200).json(uploadImg);
 };
 
 module.exports = {

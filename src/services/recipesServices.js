@@ -34,15 +34,21 @@ const remove = async (user, recipeId) => {
 
 const upload = async (user, recipeId, img) => {
     const { _id: userId, role } = user;
+    const image = `localhost:3000/src/uploads/${img}`;
     
     const recipe = await model.getById(recipeId); // busco a receita que quero atualizar
+    const { name, ingredients, preparation } = recipe;
+
+    const userIdC = ObjectId(userId);
+    const recipeIdC = ObjectId(recipe.userId);
   
-    if (userId === recipe.userId || role === 'admin') { // estou validado se o usuraio é admin
-      const uploadImg = await model.upload(userId, recipeId, img, recipe);
-      return uploadImg;
+    if (userIdC === recipeIdC || role === 'admin') { // estou validado se o usuraio é admin
+      await model.upload(recipeId, image);
+      return { _id: recipeId, name, ingredients, preparation, userId, image };
     }
 
-    return { message: 'missing auth token' };
+    await model.upload(recipeId, image);
+    return { _id: recipeId, name, ingredients, preparation, userId, image };
 };
 
 module.exports = {

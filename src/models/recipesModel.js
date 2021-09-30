@@ -42,22 +42,11 @@ const remove = async (id) => {
   await db.collection('recipes').deleteOne({ _id: ObjectId(id) });
 };
 
-const upload = async (userId, id, img, recipe) => {
+const upload = async (id, img) => {
   if (!ObjectId.isValid(id)) return null;
-  const { name, ingredients, preparation } = recipe;
-
-  const db = await getConnection();
-  const uploadImg = await db.collection('recipes')
-      .updateOne({ _id: ObjectId(id) }, { $set: { img } });
   
-  return { 
-    _id: uploadImg.insertedId, 
-    name, 
-    ingredients, 
-    preparation, 
-    userId, 
-    image: `localhost:3000/${img}`,
-  };
+  const db = await getConnection();
+  await db.collection('recipes').updateOne({ _id: ObjectId(id) }, { $set: { img } });
 };
 
 module.exports = {
