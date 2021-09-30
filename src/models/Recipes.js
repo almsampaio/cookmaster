@@ -44,7 +44,7 @@ const addImageInRecipe = async (id, image) => {
   const db = await connection();
   if (!ObjectId.isValid(id)) return null;
 
-  const newRecipes = await db.collection('recipes')
+  await db.collection('recipes')
     .updateOne({ _id: ObjectId(id) }, { $set: { image } });
 
   const newRecipe = await findRecipe(id);
