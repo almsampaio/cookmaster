@@ -1,10 +1,8 @@
 const router = require('express').Router();
-// const controller = require('../controller/products');
-// const validation = require('../middleware/validations');
+// const controlLogin = require('../controller/login');
+const loginValidation = require('../middlewares/login');
 
-// const productValidation = [validation.nameValidation, validation.quantityValidation];
-
-// router.post('/', productValidation, controller.controllerCreate);
+router.post('/', loginValidation.loginValidation, loginValidation.tokenValidation);
 // router.get('/', controller.controllerGetAll);
 // router.get('/:id', controller.controllerGetById);
 // router.put('/:id', productValidation, controller.controllerUpdate);
