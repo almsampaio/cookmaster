@@ -16,9 +16,10 @@ const loginValidation = async (req, res, next) => {
 };
 
 const tokenValidation = async (req, res) => {
-  const { password, email } = req.body;
+  const segredo = 'seusecretdetoken';
+  const { email, password } = req.body;
   const check = await modelLogin.modelPasswordCompare(password, email);
-  const token = jwt.sign({ data: email }, password, jwtConfig);
+  const token = jwt.sign({ data: email }, segredo, jwtConfig);
   if (!check) {
     return res.status(status.HTTP_UNAUTHORIZED).json({ message: 'Incorrect username or password' });
   }
