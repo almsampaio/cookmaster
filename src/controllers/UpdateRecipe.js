@@ -1,5 +1,5 @@
 const model = require('../models/Recipes');
-const { OK } = require('./Status');
+const { OK, INTERNAL_ERROR_SERVER } = require('./Status');
 
 const updateRecipe = async (req, res) => {
   try {
@@ -10,7 +10,7 @@ const updateRecipe = async (req, res) => {
 
     res.status(OK).json(newRecipe);
   } catch (e) {
-    return res.status(500).json({ message: 'Erro interno', error: e });
+    return res.status(INTERNAL_ERROR_SERVER).json({ message: 'Erro interno', error: e });
   }
 };
 

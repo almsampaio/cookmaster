@@ -1,6 +1,6 @@
 const model = require('../models/Recipes');
 const isValid = require('../services/auth/Validated');
-const { BAD_REQUEST, CREATED } = require('./Status');
+const { BAD_REQUEST, CREATED, INTERNAL_ERROR_SERVER } = require('./Status');
 
 const createRecipes = async (req, res) => {
   try {
@@ -14,7 +14,7 @@ const createRecipes = async (req, res) => {
 
     res.status(CREATED).json({ recipe });
   } catch (e) {
-    return res.status(500).json({ message: 'Erro interno', error: e });
+    return res.status(INTERNAL_ERROR_SERVER).json({ message: 'Erro interno', error: e });
   }
 };
 

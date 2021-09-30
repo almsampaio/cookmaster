@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 const model = require('../models/Usuarios');
 const isValid = require('../services/auth/Validated');
-const { OK, UNAUTHORIZATED } = require('./Status');
+const { OK, UNAUTHORIZATED, INTERNAL_ERROR_SERVER } = require('./Status');
 
 const JWT_SECRET = 'segredaonosso';
 
@@ -21,7 +21,7 @@ const login = async (req, res) => {
 
     res.status(OK).json({ token });
   } catch (e) {
-    return res.status(500).json({ message: 'Erro interno', error: e });
+    return res.status(INTERNAL_ERROR_SERVER).json({ message: 'Erro interno', error: e });
   }
 };
 
