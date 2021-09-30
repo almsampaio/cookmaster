@@ -37,6 +37,10 @@ app.put('/recipes/:id',
   token.validateToken,
   recipes.update);
 
+app.delete('/recipes/:id',
+  token.validateToken,
+  recipes.remove);
+
 // Não remover esse end-point, ele é necessário para o avaliador
 app.get('/', (request, response) => {
   response.send();

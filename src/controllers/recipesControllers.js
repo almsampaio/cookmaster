@@ -31,14 +31,31 @@ const create = async (req, res) => {
 
 const update = async (req, res) => {
   const { id } = req.params; // id da receita
-  const { user } = req.user;
+  const { user } = req.user; // pego user do token
 
   const updateRecipe = await service.update(req.body, user, id);
 
-  if (updateRecipe.message) return res.status(409).json(updateRecipe);
+  if (updateRecipe === null) return res.status(404).json({ message: 'recipe not found' });
+  
+  if (updateRecipe === false) return res.status(401).json({ message: 'missing auth token' });
+
+  // if (updateRecipe.message) return res.status(409).json(updateRecipe);
   // se createUser tiver um atributo/Chave com o valor message, quer dizer que deu erro, então retornamos res.status de erro
 
   return res.status(201).json(updateRecipe);
+};
+
+const remove = async (req, res) => {
+  const { id } = req.params; // id da receita
+  const { user } = req.user; // pego o user do token
+
+  const removeRecipe = await service.remove(user, id);
+
+  if (removeRecipe === null) return res.status(404).json({ message: 'recipe not found' });
+  
+  if (removeRecipe === false) return res.status(401).json({ message: 'missing auth token' });
+
+  return res.status(201).json(removeRecipe);
 };
 
 module.exports = {
@@ -46,4 +63,5 @@ module.exports = {
   getById,
   create,
   update,
+  remove,
 };
