@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const userRoute = require('../routes/users');
 const loginRoute = require('../routes/login');
-// const recipeRoute = require('../routes/recipes');
+const recipeRoute = require('../routes/recipes');
 
 const app = express();
 
@@ -17,7 +17,7 @@ app.get('/', (request, response) => {
 
 app.use('/users', userRoute);
 app.use('/login', loginRoute);
-// app.use('/recipes', recipeRoute);
+app.use('/recipes', recipeRoute);
 app.use('/images', express.static(path.join(__dirname, '..', 'uploads')));
 
 module.exports = app;
