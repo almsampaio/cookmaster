@@ -25,7 +25,6 @@ const editRecipesId = async (id, { name, ingredients, preparation }, token) => {
   recipesValidations.validateTokenExist(token);
   recipesValidations.validateToken(token);
   const response = await recipesModels.editRecipesId(id, name, ingredients, preparation);
-  console.log('response', response);
   return { status: 200, response };
 };
 
@@ -35,10 +34,18 @@ const deleteRecipesId = async (id, token) => {
   return { status: 204 };
 };
 
+const addRecipesImageId = async (id, token, filename) => {
+  recipesValidations.validateTokenExist(token);
+  const path = `localhost:3000/src/uploads/${filename}`;
+  const response = await recipesModels.addRecipesImageId(id, path);
+  return { status: 200, response };
+};
+
 module.exports = {
   addRecipes,
   getRecipes,
   getRecipesId,
   editRecipesId,
   deleteRecipesId,
+  addRecipesImageId,
 };
