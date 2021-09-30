@@ -1,4 +1,3 @@
-require('dotenv').config();
 const bodyParser = require('body-parser');
 const route = require('./routes');
 const app = require('./app');
