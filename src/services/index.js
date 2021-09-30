@@ -92,7 +92,7 @@ const getRecipes = async () => {
 const getRecipeById = async (id) => {
   try {
     const recipe = await models.getById('recipes', id);
-    
+
     return recipe;
   } catch (error) {
     console.log(error);
