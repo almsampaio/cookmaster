@@ -23,12 +23,13 @@ const remove = async (user, recipeId) => {
     const { _id: userId, role } = user;
     
     const recipe = await model.getById(recipeId); // busco a receita que quero atualizar
+
+    const userIdC = ObjectId(userId);
+    const recipeIdC = ObjectId(recipe.userId);
   
-    if (userId === recipe.userId || role === 'admin') { // estou validado se o usuraio é admin
-      const updatedRecipe = await model.update(recipeId);
-      return updatedRecipe;
+    if (userIdC === recipeIdC || role === 'admin') { // estou validado se o usuraio é admin
+        await model.remove(recipeId);
     }
-    return { message: 'missing auth token' };
 };
 
 const upload = async (user, recipeId, img) => {

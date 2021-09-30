@@ -39,8 +39,7 @@ const remove = async (id) => {
   if (!ObjectId.isValid(id)) return null;
 
   const db = await getConnection();
-  const recipe = await db.collection('recipes').findOneAndDelete({ _id: ObjectId(id) });
-  return recipe;
+  await db.collection('recipes').deleteOne({ _id: ObjectId(id) });
 };
 
 const upload = async (userId, id, img, recipe) => {

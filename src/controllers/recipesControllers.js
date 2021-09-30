@@ -51,9 +51,9 @@ const remove = async (req, res) => {
   
   if (removeRecipe === false) return res.status(401).json({ message: 'missing auth token' });
 
-  if (removeRecipe.message) return res.status(409).json(removeRecipe);
+  // if (removeRecipe.message) return res.status(409).json(removeRecipe);
 
-  return res.status(201).json(removeRecipe);
+  return res.status(204).send();
 };
 
 const upload = async (req, res) => {
@@ -66,7 +66,7 @@ const upload = async (req, res) => {
   
   if (uploadImg === false) return res.status(401).json({ message: 'missing auth token' });
 
-  if (uploadImg.message) return res.status(409).json(uploadImg);
+  // if (uploadImg.message) return res.status(409).json(uploadImg);
 
   return res.status(201).json(uploadImg);
 };
