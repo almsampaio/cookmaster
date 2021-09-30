@@ -12,5 +12,6 @@ app.get('/', (_req, res) => res.send());
 app.get('/ping', (_req, res) => res.status(200).json({ message: 'ok' }));
 
 app.use('/users', Router.users);
+app.use('/login', Router.login);
 
 module.exports = app;

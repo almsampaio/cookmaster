@@ -7,13 +7,13 @@ async function register(userToRegister) {
   const invalidUser = validations.userFields(userToRegister).error;
   if (invalidUser) {
     const statusCode = StatusCodes.BAD_REQUEST;
-    return { statusCode, error: { message: 'Invalid entries. Try again.' } };
+    return { statusCode, payload: { error: { message: 'Invalid entries. Try again.' } } };
   }
-  
+
   const emailExists = await Model.users.checkEmailExistence(userToRegister.email);
   if (emailExists) {
     const statusCode = StatusCodes.CONFLICT;
-    return { statusCode, error: { message: 'Email already registered' } };
+    return { statusCode, payload: { error: { message: 'Email already registered' } } };
   }
 
   const user = await Model.users.insertOneUser(userToRegister);
