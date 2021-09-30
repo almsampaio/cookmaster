@@ -12,6 +12,17 @@ const validateUser = (req, res, next) => {
   next();
 };
 
+const validateLogin = (req, res, next) => {
+  const { email, password } = req.body;
+  
+  if (Object.keys(req.body).length <= 1 && (!email || !password)) {
+    return res.status(StatusCodes.UNAUTHORIZED).json({ message: 'All fields must be filled' });
+  }
+
+  next();
+};
+
 module.exports = {
   validateUser,
+  validateLogin,
 };
