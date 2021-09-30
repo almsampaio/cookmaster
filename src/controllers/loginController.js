@@ -15,7 +15,7 @@ const login = async (req, res) => {
 
   const newtoken = token.getToken(user);
 
-  return res.status(200).json({ newtoken });
+  return res.status(200).json({ token: newtoken });
 };
 
 module.exports = {

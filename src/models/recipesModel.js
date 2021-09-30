@@ -21,7 +21,7 @@ const create = async (name, ingredients, preparation, userId) => {
   const createRecepie = await db.collection('recipes')
     .insertOne({ name, ingredients, preparation, userId });
 
-  return { recipe: { name, ingredients, preparation, userId, _id: createRecepie.insertedId } };
+  return { recipe: createRecepie.ops[0] };
 };
 
 const update = async (id, upadaterecipe, userId) => {
@@ -29,11 +29,10 @@ const update = async (id, upadaterecipe, userId) => {
   const { name, ingredients, preparation } = upadaterecipe;
 
   const db = await getConnection();
-  const updateRecipe = await db.collection('recipes')
+  await db.collection('recipes')
     .updateOne({ _id: ObjectId(id) }, { $set: { name, ingredients, preparation } });
-    console.log(updateRecipe);
   
-    return { _id: updateRecipe.insertedId, name, ingredients, preparation, userId };
+    return { _id: id, name, ingredients, preparation, userId };
 };
 
 const remove = async (id) => {

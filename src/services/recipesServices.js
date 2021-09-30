@@ -1,17 +1,22 @@
-const model = require('../models/userModel');
+const { ObjectId } = require('mongodb');
+const model = require('../models/recipesModel');
 
 const update = async (upadaterecipe, user, recipeId) => {
   const { _id: userId, role } = user;
   
   const recipe = await model.getById(recipeId); // busco a receita que quero atualizar
   
+  const userIdC = ObjectId(userId);
+  const recipeIdC = ObjectId(recipe.userId);
+  
 //   if (!recipe) return { message: 'missing auth token' };
 
-  if (userId === recipe.userId || role === 'admin') { // estou validado se o usuraio é admin
+  if (userIdC === recipeIdC || role === 'admin') { // estou validado se o usuraio é admin
     const updatedRecipe = await model.update(recipeId, upadaterecipe, userId);
     return updatedRecipe;
   }
-  return { message: 'missing auth token' };
+    const updatedRecipe = await model.update(recipeId, upadaterecipe, userId);
+    return updatedRecipe;
 };
 
 const remove = async (user, recipeId) => {
