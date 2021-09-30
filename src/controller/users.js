@@ -1,14 +1,12 @@
-const services = require('../services/products');
+const services = require('../services/users');
 
 const controlCreate = async (req, res) => {
-  const { name, quantity } = req.body;
-  const { status, info, message } = await services.servicesCreate(name, quantity);
+  const infoUser = req.body;
+  const { status, info, message } = await services.servicesCreate(infoUser);
 
-  if (message) {
-    return res.status(status).json({ err: { code: 'invalid_data', message } });
-  }
+  if (message) { return res.status(status).json(message); }
 
-  res.status(status).json(info);
+  res.status(status).json({ user: info });
 };
 
 module.exports = {
