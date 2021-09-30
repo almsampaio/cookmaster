@@ -1,6 +1,7 @@
 const rescue = require('express-rescue');
 
 const recipeService = require('../services/recipesService');
+const upload = require('../utils/upload');
 
 const createRecipe = rescue(async (req, res) => {
   const { name, ingredients, preparation } = req.body;
@@ -56,10 +57,15 @@ const vaporizeRecipe = rescue(async (req, res, next) => {
   res.sendStatus(204);
 });
 
+const putImage = [upload.single('image'),
+  (req, res) => recipeService.putImage(req.params.id, req.file.path)
+    .then(({ data }) => res.status(200).json({ ...data, userId: req.params.id }))];
+
 module.exports = {
   createRecipe,
   getRecipes,
   getById,
   editRecipe,
   vaporizeRecipe,
+  putImage,
 };

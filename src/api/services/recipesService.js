@@ -39,10 +39,20 @@ const vaporizeRecipe = async (id) => {
   return deleted;
 };
 
+// const addImage = async () => {
+
+// };
+
+const putImage = (id, path) => 
+  recipeModel.putImage(id, `localhost:3000/${path}`)
+    .then(() => recipeModel.getById(id)
+    .then((data) => ({ data })));
+
 module.exports = {
   createRecipe,
   getRecipes,
   getById,
   editRecipe,
   vaporizeRecipe,
+  putImage,
 };

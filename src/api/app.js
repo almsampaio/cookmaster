@@ -1,5 +1,6 @@
 const express = require('express');
 const bodyPaarser = require('body-parser');
+const path = require('path');
 
 const Routes = require('./routes');
 const error = require('./middlewares/error');
@@ -7,6 +8,8 @@ const error = require('./middlewares/error');
 const app = express();
 
 app.use(bodyPaarser.json());
+
+app.use('/uploads', express.static(path.join(__dirname, '..', 'uploads')));
 
 // Não remover esse end-point, ele é necessário para o avaliador
 app.get('/', (request, response) => {

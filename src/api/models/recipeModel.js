@@ -62,10 +62,17 @@ const vaporizeRecipe = async (id) => {
   return deleted;
 };
 
+const putImage = (id, image) => 
+  connection()
+    .then((db) => db
+      .collection('recipes')
+        .updateOne({ _id: ObjectID(id) }, { $set: { image } }));
+
 module.exports = {
   createRecipe,
   getRecipes,
   getById,
   editRecipe,
   vaporizeRecipe,
+  putImage,
 };
