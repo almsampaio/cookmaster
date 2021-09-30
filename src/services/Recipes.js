@@ -13,7 +13,19 @@ const getAll = async () => {
   return { status: StatusCodes.OK, data: recipes };
 };
 
+const getById = async (id) => {
+  const recipe = await Recipes.getById(id);
+
+  console.log(recipe);
+  if (!recipe) {
+    return { status: StatusCodes.NOT_FOUND, message: 'recipe not found' };
+  }
+
+  return { status: StatusCodes.OK, data: recipe };
+};
+
 module.exports = {
   create,
   getAll,
+  getById,
 };
