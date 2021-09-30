@@ -6,7 +6,7 @@ const validateJWT = (req, res, next) => {
   const secret = 'topsecrettoken';
 
   if (!token) {
-    return res.status(StatusCodes.UNAUTHORIZED).json({ message: 'jwt malformed' });
+    return res.status(StatusCodes.UNAUTHORIZED).json({ message: 'missing auth token' });
   }
 
   try {
@@ -15,7 +15,7 @@ const validateJWT = (req, res, next) => {
     req.user = data;
     next();
   } catch (err) {
-    return res.status(StatusCodes.UNAUTHORIZED).json({ message: err.message });
+    return res.status(StatusCodes.UNAUTHORIZED).json({ message: 'jwt malformed' });
   }
 };
 

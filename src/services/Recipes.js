@@ -16,7 +16,6 @@ const getAll = async () => {
 const getById = async (id) => {
   const recipe = await Recipes.getById(id);
 
-  console.log(recipe);
   if (!recipe) {
     return { status: StatusCodes.NOT_FOUND, message: 'recipe not found' };
   }
@@ -24,8 +23,15 @@ const getById = async (id) => {
   return { status: StatusCodes.OK, data: recipe };
 };
 
+const update = async (id, updatedRecipe) => {
+  const updateRecipe = await Recipes.update(id, updatedRecipe);
+
+  return { status: StatusCodes.OK, data: updateRecipe };
+};
+
 module.exports = {
   create,
   getAll,
   getById,
+  update,
 };
