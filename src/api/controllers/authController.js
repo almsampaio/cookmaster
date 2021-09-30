@@ -33,3 +33,13 @@ exports.verify = async (req, _res, next) => {
     next(err);
   }
 };
+
+exports.verifyAdmin = (req, _res, next) => {
+  const { user } = req;
+
+  if (user.role !== 'admin') {
+    next(new AppError(403, 'Only admins can register new admins'));
+  }
+
+  next();
+};

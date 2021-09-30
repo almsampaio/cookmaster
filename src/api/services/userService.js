@@ -30,7 +30,7 @@ const verifyEmailIsUnique = async (email) => {
   return user; // se não existir retorna null
 };
 
-exports.create = async ({ name, email, password }) => {
+exports.create = async ({ name, email, password, admin = false }) => {
   if (!verifyData({ name, email, password })) {
     throw new AppError(400, 'Invalid entries. Try again.');
   }
@@ -41,7 +41,7 @@ exports.create = async ({ name, email, password }) => {
     throw new AppError(409, 'Email already registered');
   }
 
-  const user = await User.create({ name, email, password });
+  const user = await User.create({ name, email, password, admin });
 
   return user;
 };

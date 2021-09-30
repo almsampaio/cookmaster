@@ -2,11 +2,11 @@ const connection = require('./connection');
 
 const COLLECTION = 'users';
 
-exports.create = async ({ name, email, password }) => {
+exports.create = async ({ name, email, password, admin }) => {
   try {
     const db = await connection();
 
-    const role = 'user';
+    const role = !admin ? 'user' : 'admin';
 
     const user = await db.collection(COLLECTION).insertOne({ name, email, password, role });
 
