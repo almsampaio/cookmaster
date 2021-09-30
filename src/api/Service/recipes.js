@@ -86,10 +86,27 @@ async function deleteRecipeById(user, recipeId) {
   return { statusCode, payload: mongoReturn };
 }
 
+async function putImage(user, recipeId) {
+  const recipeToEdit = await Model.recipes.findOneRecipeById(recipeId);
+  if (user.role !== 'admin' && user.id.toString() !== recipeToEdit.userId.toString()) {
+    const statusCode = StatusCodes.UNAUTHORIZED;
+    return { statusCode, payload: { error: { message: 'jwt malformed' } } };
+  }
+  const image = 0;
+  const mongoReturn = await Model.recipes.updateImage(recipeId, image);
+  if (mongoReturn.error) {
+    const { statusCode, error } = mongoReturn;
+    return { statusCode, payload: { error } };
+  }
+  const statusCode = StatusCodes.OK;
+  return { statusCode, payload: mongoReturn };
+}
+
 module.exports = {
   getRecipes,
   getRecipeById,
   postRecipe,
   putRecipeById,
   deleteRecipeById,
+  putImage,
 };
