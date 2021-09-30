@@ -43,10 +43,20 @@ const registerRecipe = async (req, res) => {
     return res.status(201).json({ recipe: result });
 };
 
+const addingImage = async (req, res) => {
+    const { id } = req.params;
+  
+    const Url = `localhost:3000/src/uploads/${id}.jpeg`;
+  
+    const imageAdded = await recipeService.addingImage(id, Url);
+    res.status(200).json(imageAdded);
+};
+
 module.exports = {
     getRecipes,
     gettingOneRecipe,
     editingRecipe,
     registerRecipe,
     deletingRecipe,
+    addingImage,
 };
