@@ -7,6 +7,6 @@ router.post('/', validateTWD, validation.recipeCreateValidation, controlRecipes.
 router.get('/', controlRecipes.controlGetAll);
 router.get('/:id', controlRecipes.controlGetById);
 router.put('/:id', validateTWD, controlRecipes.controlUpdate);
-// router.delete('/:id', controller.controllerDelete);
+router.delete('/:id', validateTWD, controlRecipes.controlDelete);
 
 module.exports = router;

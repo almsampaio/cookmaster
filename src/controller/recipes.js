@@ -27,9 +27,16 @@ const controlUpdate = async (req, res) => {
   res.status(status).json(info);
 };
 
+const controlDelete = async (req, res) => {
+  const { id } = req.params;
+  const { status, info } = await services.servicesDelete(id);
+  res.status(status).json(info);
+};
+
 module.exports = {
   controlCreate,
   controlGetAll,
   controlGetById,
   controlUpdate,
+  controlDelete,
 };
