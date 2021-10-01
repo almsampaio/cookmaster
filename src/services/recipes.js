@@ -8,7 +8,7 @@ const servicesCreate = async (infoRecipe, userId) => {
 
 const servicesGetAll = async () => {
   const recipes = await modelUser.modelGetAll();
-  return { status: status.HTTP_CREATED, info: recipes };
+  return { status: status.HTTP_OK_STATUS, info: recipes };
 };
 
 module.exports = {
