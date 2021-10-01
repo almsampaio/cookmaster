@@ -33,10 +33,18 @@ const controlDelete = async (req, res) => {
   res.status(status).json(info);
 };
 
+const controlUpload = async (req, res) => {
+  const { id } = req.params;
+  const { filename } = req.file;
+  const { status, info } = await services.servicesUpload(filename, id);
+  res.status(status).json(info);
+};
+
 module.exports = {
   controlCreate,
   controlGetAll,
   controlGetById,
   controlUpdate,
   controlDelete,
+  controlUpload,
 };

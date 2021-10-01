@@ -27,10 +27,17 @@ const servicesDelete = async (id) => {
   return { status: status.HTTP_NO_CONTENT, info: model }; 
 };
 
+const servicesUpload = async (fileName, id) => {
+  const fileDir = `localhost:3000/src/uploads/${fileName}`; 
+  const model = await modelUser.modelUpload(fileDir, id);
+  return { status: status.HTTP_OK_STATUS, info: model }; 
+};
+
 module.exports = {
   servicesCreate,
   servicesGetAll,
   servicesGetById,
   servicesUpdate,
   servicesDelete,
+  servicesUpload,
 };

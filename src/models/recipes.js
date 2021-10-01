@@ -37,10 +37,18 @@ const modelDelete = async (id) => {
   await db.collection('recipes').deleteOne({ _id: ObjectId(id) });
 };
 
+const modelUpload = async (file, id) => {
+  if (!ObjectId.isValid(id)) return null;
+  const db = await connection();
+  await db.collection('recipes').updateOne({ _id: ObjectId(id) }, { $set: { image: file } });
+  return modelGetById(id);
+};
+
 module.exports = {
   modelCreate,
   modelGetAll,
   modelGetById,
   modelUpdate,
   modelDelete,
+  modelUpload,
 };
