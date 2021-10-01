@@ -11,7 +11,14 @@ const servicesGetAll = async () => {
   return { status: status.HTTP_OK_STATUS, info: recipes };
 };
 
+const servicesGetById = async (id) => {
+  const model = await modelUser.modelGetById(id);
+  if (!model) { return { status: status.HTTP_NOT_FOUND, message: 'recipe not found' }; }
+  return { status: status.HTTP_OK_STATUS, info: model }; 
+};
+
 module.exports = {
   servicesCreate,
   servicesGetAll,
+  servicesGetById,
 };

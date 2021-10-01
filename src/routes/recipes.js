@@ -5,7 +5,7 @@ const controlRecipes = require('../controller/recipes');
 
 router.post('/', validateTWD, validation.recipeCreateValidation, controlRecipes.controlCreate);
 router.get('/', controlRecipes.controlGetAll);
-// router.get('/:id', controller.controllerGetById);
+router.get('/:id', controlRecipes.controlGetById);
 // router.put('/:id', productValidation, controller.controllerUpdate);
 // router.delete('/:id', controller.controllerDelete);
 
