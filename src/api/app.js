@@ -15,9 +15,10 @@ app.get('/', (request, response) => {
 });
 // Não remover esse end-point, ele é necessário para o avaliador
 
-app.use('/users', users.addUser);
+app.post('/users', users.addUser);
 app.post('/login', users.login);
 app.post('/recipes', jwt, recipes.addRecipe);
 app.get('/recipes', recipes.getAllRecipes);
+app.get('/recipes/:id', recipes.getRecipeById);
 
 module.exports = app;
