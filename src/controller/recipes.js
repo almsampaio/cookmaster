@@ -8,6 +8,12 @@ const controlCreate = async (req, res) => {
   res.status(status).json({ recipe: info });
 };
 
+const controlGetAll = async (_req, res) => {
+  const { status, info } = await services.servicesGetAll();
+  res.status(status).json(info);
+};
+
 module.exports = {
   controlCreate,
+  controlGetAll,
 };
