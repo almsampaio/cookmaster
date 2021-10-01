@@ -18,12 +18,22 @@ const modelGetAll = async () => {
 const modelGetById = async (id) => {
   if (!ObjectId.isValid(id)) return null;
   const db = await connection();
-  const info = db.collection('recipes').findOne(ObjectId(id));
+  const info = await db.collection('recipes').findOne(ObjectId(id));
   return info;
+};
+
+const modelUpdate = async (recipeInfo, id) => {
+  if (!ObjectId.isValid(id)) return null;
+  const { name, ingredients, preparation } = recipeInfo;
+  const db = await connection();
+  await db.collection('recipes')
+  .updateOne({ _id: ObjectId(id) }, { $set: { name, ingredients, preparation } });
+  return modelGetById(id);
 };
 
 module.exports = {
   modelCreate,
   modelGetAll,
   modelGetById,
+  modelUpdate,
 };

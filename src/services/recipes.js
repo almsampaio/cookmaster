@@ -17,8 +17,14 @@ const servicesGetById = async (id) => {
   return { status: status.HTTP_OK_STATUS, info: model }; 
 };
 
+const servicesUpdate = async (recipeData, id) => {
+  const model = await modelUser.modelUpdate(recipeData, id);
+  return { status: status.HTTP_OK_STATUS, info: model }; 
+};
+
 module.exports = {
   servicesCreate,
   servicesGetAll,
   servicesGetById,
+  servicesUpdate,
 };

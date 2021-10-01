@@ -10,9 +10,7 @@ module.exports = async (req, res, next) => {
 
   try {
     const { data } = jwt.verify(authorization, segredo);
-
     req.user = data;
-
     next();
   } catch (err) {
     return res.status(401).json({ message: 'jwt malformed' });
