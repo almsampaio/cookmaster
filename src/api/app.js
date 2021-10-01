@@ -18,5 +18,6 @@ app.get('/', (request, response) => {
 app.use('/users', users.addUser);
 app.post('/login', users.login);
 app.post('/recipes', jwt, recipes.addRecipe);
+app.get('/recipes', recipes.getAllRecipes);
 
 module.exports = app;
