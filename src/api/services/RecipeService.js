@@ -5,8 +5,8 @@ class RecipeService {
         this.model = new RecipeModel();
     }
 
-    async findByEmail(email) {
-        return this.model.findByEmail(email);
+    async list() {
+        return this.model.list();
     }
 
     async create(recipe) {

@@ -16,5 +16,6 @@ router.post(
     (request, response, next) => new Auth().validateToken(request, response, next),
     RecipeController.register,
 );
+router.get('/recipes', RecipeController.list);
 
 module.exports = { router };

@@ -5,6 +5,11 @@ class RecipeModel {
         this.connection = new MongoConn().connection();
     }
 
+    async list() {
+        const mongo = await this.connection;
+        return mongo.collection('recipes').find({}).toArray();
+    }
+
     async save(recipe) {
         const mongo = await this.connection;
         const recipeCreated = await mongo.collection('recipes').insertOne(recipe);
