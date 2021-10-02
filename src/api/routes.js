@@ -23,5 +23,10 @@ router.put(
     (request, response, next) => new Auth().validateToken(request, response, next),
     RecipeController.update,
 );
+router.delete(
+    '/recipes/:id',
+    (request, response, next) => new Auth().validateToken(request, response, next),
+    RecipeController.delete,
+);
 
 module.exports = { router };

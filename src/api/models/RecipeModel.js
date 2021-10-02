@@ -32,6 +32,11 @@ class RecipeModel {
         );
         return this.getById(ObjectId(_id));
     }
+
+    async delete(id) {
+        const mongo = await this.connection;
+        await mongo.collection('recipes').deleteOne({ _id: id });
+    }
 }
 
 module.exports = RecipeModel;

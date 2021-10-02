@@ -20,6 +20,10 @@ class RecipeService {
     async update(recipe) {
         return this.model.update(recipe);
     }
+
+    async delete(id) {
+        return this.model.delete(id);
+    }
 }
 
 module.exports = RecipeService;
