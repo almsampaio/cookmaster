@@ -18,5 +18,10 @@ router.post(
 );
 router.get('/recipes', RecipeController.list);
 router.get('/recipes/:id', RecipeController.getById);
+router.put(
+    '/recipes/:id',
+    (request, response, next) => new Auth().validateToken(request, response, next),
+    RecipeController.update,
+);
 
 module.exports = { router };

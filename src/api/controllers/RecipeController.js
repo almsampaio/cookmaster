@@ -4,8 +4,16 @@ class RecipeController {
     static async register(request, response) {
         const recipe = request.body;
         const { credentials: { _id } } = request.headers;
-        const recipeCreated = await new RecipeService().create({ ...recipe, _id });
+        const recipeCreated = await new RecipeService().create({ ...recipe, userId: _id });
         return response.status(201).json({ recipe: recipeCreated });
+    }
+
+    static async update(request, response) {
+        const recipe = request.body;
+        const { credentials: { _id } } = request.headers;
+        const { id } = request.params;
+        const recipeUpdated = await new RecipeService().update({ ...recipe, _id: id, userId: _id });
+        return response.status(200).json(recipeUpdated);
     }
 
     static async list(request, response) {

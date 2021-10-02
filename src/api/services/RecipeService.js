@@ -14,10 +14,11 @@ class RecipeService {
     }
 
     async create(recipe) {
-        const { _id } = recipe;
-        const recipeMounted = { ...recipe, userId: _id };
-        const recipeCreated = await this.model.save(recipeMounted);
-        return { ...recipeCreated };
+        return this.model.save(recipe);
+    }
+
+    async update(recipe) {
+        return this.model.update(recipe);
     }
 }
 

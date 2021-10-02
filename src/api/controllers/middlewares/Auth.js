@@ -7,6 +7,7 @@ class Auth {
 
     validateToken(request, response, next) {
         const { authorization } = request.headers;
+        if (!authorization) return response.status(401).json({ message: 'missing auth token' });
         try {
             const tokenIsValid = jwt.verify(authorization, this.SECRET);
             if (!tokenIsValid) throw new Error('jwt malformed');
