@@ -24,6 +24,11 @@ class RecipeService {
     async delete(id) {
         return this.model.delete(id);
     }
+
+    async upload(id, name) {
+        const path = `localhost:3000/src/uploads/${name}`;
+        return this.model.upload(id, path);
+    }
 }
 
 module.exports = RecipeService;

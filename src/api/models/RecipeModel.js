@@ -37,6 +37,15 @@ class RecipeModel {
         const mongo = await this.connection;
         await mongo.collection('recipes').deleteOne({ _id: id });
     }
+
+    async upload(id, path) {
+        const mongo = await this.connection;
+        await mongo.collection('recipes').findOneAndUpdate(
+            { _id: ObjectId(id) },
+            { $set: { image: path } },
+        );
+        return this.getById(id);
+    }
 }
 
 module.exports = RecipeModel;

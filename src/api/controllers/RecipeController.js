@@ -33,6 +33,13 @@ class RecipeController {
         await new RecipeService().delete(id);
         response.status(204).send();
     }
+
+    static async upload(request, response) {
+        const { id } = request.params;
+        const { filename } = request.file;
+        const recipeUpdated = await new RecipeService().upload(id, filename);
+        return response.status(200).json(recipeUpdated);
+    }
 }
 
 module.exports = RecipeController;
