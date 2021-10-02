@@ -9,6 +9,10 @@ class RecipeService {
         return this.model.list();
     }
 
+    async getById(id) {
+        return this.model.getById(id);
+    }
+
     async create(recipe) {
         const { _id } = recipe;
         const recipeMounted = { ...recipe, userId: _id };

@@ -12,6 +12,13 @@ class RecipeController {
         const recipes = await new RecipeService().list();
         return response.status(200).json(recipes);
     }
+
+    static async getById(request, response) {
+        const { id } = request.params;
+        const recipe = await new RecipeService().getById(id);
+        if (!recipe) return response.status(404).json({ message: 'recipe not found' });
+        return response.status(200).json(recipe);
+    }
 }
 
 module.exports = RecipeController;
