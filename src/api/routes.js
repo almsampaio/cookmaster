@@ -22,6 +22,12 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 router.post('/users', UserValidation.execute, UserController.register);
+router.post(
+    '/users/admin',
+    (request, response, next) => new Auth().validateToken(request, response, next),
+    UserValidation.execute,
+    UserController.registerAdmin,
+);
 router.post('/login', LoginValidation.execute, UserController.login);
 router.post(
     '/recipes',
