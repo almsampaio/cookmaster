@@ -27,7 +27,6 @@ const getRecipeById = async (id) => {
   if (!ObjectId.isValid(id)) return { err: { message: 'recipe not found', status: 404 } }; 
 
   const recipeById = await recipes.getRecipeById(id);
-  
 if (!recipeById) return { err: { message: 'recipe not found', status: 404 } }; 
 
   return recipeById;
