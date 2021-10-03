@@ -1,6 +1,5 @@
 const express = require('express');
 const multer = require('multer');
-const path = require('path');
 const UserValidation = require('./controllers/middlewares/validations/UserValidation');
 const UserController = require('./controllers/UserController');
 const LoginValidation = require('./controllers/middlewares/validations/LoginValidation');
