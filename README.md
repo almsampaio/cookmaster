@@ -301,7 +301,7 @@ Você pode também instalar o plugin do `ESLint` no `VSCode`, bastar ir em exten
 
 Todos os requisitos do projeto serão testados **automaticamente**. Cada `endpoint` possui vários requisitos e os testes para cada requisito de um `endpoint` estão no arquivo de teste correspondente.
 
-_**Por exemplo**: Os requisitos relacionados ao `endpoint` `/users` estão no arquivo `users.test.js`._
+_**Por exemplo**: Os requisitos relacionados ao `endpoint` `/users` estão no arquivo `users.spec.js`._
 
 Para executar os testes localmente, digite no terminal o comando `npm test`.
 
@@ -337,7 +337,7 @@ Uma estratégia é pular todos os testes no início e ir implementando um teste 
 Você também pode rodar apenas um arquivo de teste, por exemplo:
 
 ```bash
-npm test users.test.js
+npm test users.spec.js
 ```
 
 ![Testando um arquivo específico](./public/running-one-test-file.jpeg)
