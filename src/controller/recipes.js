@@ -32,6 +32,11 @@ const controlDelete = async (req, res) => {
   const { status, info } = await services.servicesDelete(id);
   res.status(status).json(info);
 };
+const controlGetImg = async (req, res) => {
+  const { id } = req.params;
+  const { status, info } = await services.servicesGetImg(id);
+  res.status(status).send(info);
+};
 
 const controlUpload = async (req, res) => {
   const { id } = req.params;
@@ -47,4 +52,5 @@ module.exports = {
   controlUpdate,
   controlDelete,
   controlUpload,
+  controlGetImg,
 };
