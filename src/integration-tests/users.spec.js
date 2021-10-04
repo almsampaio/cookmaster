@@ -2,7 +2,7 @@ const chai = require('chai');
 const chaiHttp = require('chai-http');
 const sinon = require('sinon');
 const { MongoClient } = require('mongodb');
-const { MongoMemoryServer } = require('mongodb-memory-server');
+const { getConnection } = require('./connectionMock');
 const app = require('../api/app');
 
 chai.use(chaiHttp);
@@ -10,20 +10,16 @@ chai.use(chaiHttp);
 const { expect } = chai;
 
 describe('POST /login', () => {
-    const DBServer = new MongoMemoryServer();
     let connectionMock;
 
     before(async () => {
-        const URLMock = await DBServer.getUri();
-        connectionMock = await MongoClient.connect(URLMock, { useNewUrlParser: true, useUnifiedTopology: true });
-
+        connectionMock = await getConnection();
         sinon.stub(MongoClient, 'connect').resolves(connectionMock);
     });
 
-    after(async () => {
+    after(() => {
         MongoClient.connect.restore();
-        await DBServer.stop();
-    });
+    })
 
     describe('Email e Password vazios', () => {
         let response;
@@ -53,18 +49,10 @@ describe('POST /login', () => {
         let response;
 
         before(async () => {
-            await connectionMock.db('Cookmaster').collection('users')
-                .insertOne({ name: "invalid", email: "test@invalid.com", password: "invalid" });
+            const usersCollection = connectionMock.db('Cookmaster').collection('users')
 
-            response = await chai.request(app).post('/login').send({
-                email: "test@invalid.com",
-                password: "invalid",
-            });
-        });
-
-        after(async () => {
-            await connectionMock.db('Cookmaster').collection('users')
-                .deleteMany({ email: 'test@invalid.com' })
+            await usersCollection.insertOne({ name: "Willian", email: "willian@gmail.com", password: "123456789" });
+            response = await chai.request(app).post('/login').send({ email: "invalid@email.com", password: "123456789" });
         });
 
         it('retorna o código de status 401', () => {
@@ -88,18 +76,18 @@ describe('POST /login', () => {
         let response;
 
         before(async () => {
-            await connectionMock.db('Cookmaster').collection('users')
-                .insertOne({ name: "Name valid", email: "test@valid.com", password: "valid" });
+            const usersCollection = connectionMock.db('Cookmaster').collection('users')
 
-            response = await chai.request(app).post('/login').send({
-                email: "test@valid.com",
-                password: "valid",
-            });
-        });
+            await usersCollection.insertOne({
+                name: 'Willian',
+                email: 'willian@gmail.com',
+                password: '123456789',
+                role: 'user',
+            })
 
-        after(async () => {
-            await connectionMock.db('Cookmaster').collection('users')
-                .deleteMany({ email: 'test@valid.com' })
+            response = await chai.request(app)
+                .post('/login')
+                .send({email: 'willian@gmail.com', password: '123456789'});
         });
 
         it('retorna o código de status 200', () => {
@@ -121,25 +109,22 @@ describe('POST /login', () => {
 });
 
 describe('POST /users', () => {
-    const DBServer = new MongoMemoryServer();
+    let connectionMock;
 
     before(async () => {
-        const URLMock = await DBServer.getUri();
-        connectionMock = await MongoClient.connect(URLMock, { useNewUrlParser: true, useUnifiedTopology: true });
-
+        connectionMock = await getConnection();
         sinon.stub(MongoClient, 'connect').resolves(connectionMock);
     });
 
-    after(async () => {
+    after(() => {
         MongoClient.connect.restore();
-        await DBServer.stop();
-    });
+    })
 
     describe('Name, Email e Password vazios', () => {
         let response;
 
         before(async () => {
-            response = await chai.request(app).post('/users').send({})
+            response = await chai.request(app).post('/users').send({});
         });
 
         it('retorna o código de status 400', () => {
@@ -160,23 +145,26 @@ describe('POST /users', () => {
     });
 
     describe('Email já cadastrado', () => {
-        let connectionMock;
         let response;
 
         before(async () => {
-            await connectionMock.db('Cookmaster').collection('users')
-                .insertOne({ name: "test", email: "test@invalid.com", password: "invalid" });
+            const usersCollection = connectionMock.db('Cookmaster').collection('users');
 
-            response = await chai.request(app).post('/users').send({
-                name: "test",
-                email: "test@invalid.com",
-                password: "invalid",
-            });
-        });
+            await usersCollection.insertOne({
+                name: 'Willian',
+                email: 'willian@gmail.com',
+                password: '123456789',
+                role: 'user',
+            })
 
-        after(async () => {
-            await connectionMock.db('Cookmaster').collection('users')
-                .deleteMany({ email: 'test@invalid.com' })
+            response = await chai.request(app)
+                .post('/users')
+                .send({
+                    name: "Willian",
+                    email: "willian@gmail.com",
+                    password: "123456789",
+                    role: 'user',
+                });
         });
 
         it('retorna o código de status 409', () => {
@@ -200,16 +188,16 @@ describe('POST /users', () => {
         let response;
 
         before(async () => {
-            response = await chai.request(app).post('/users').send({
-                name: "Name valid",
-                email: "test@valid.com",
-                password: "valid",
-            });
-        });
+            const usersCollection = connectionMock.db('Cookmaster').collection('users');
 
-        after(async () => {
-            await connectionMock.db('Cookmaster').collection('users')
-                .deleteMany({ email: 'test@invalid.com' })
+            response = await chai.request(app)
+                .post('/users')
+                .send({
+                    name: "Willian",
+                    email: "willian3@gmail.com",
+                    password: "123456789",
+                    role: 'user',
+                });
         });
 
         it('retorna o código de status 201', () => {
@@ -223,13 +211,13 @@ describe('POST /users', () => {
         it('o objeto possui a propriedade "user"', () => {
             expect(response.body.user).to.have.property("name");
             expect(response.body.user).to.have.property("email");
-            expect(response.body.user).to.have.property("password");
+            expect(response.body.user).to.have.property("role");
         });
 
         it('a propriedade "token" possui o texto "Incorrect username or password"',() => {
-            expect(response.body.user.name).to.be.equal("Name valid");
-            expect(response.body.user.email).to.be.equal("test@valid.com");
-            expect(response.body.user.password).to.be.equal("valid");
+            expect(response.body.user.name).to.be.equal("Willian");
+            expect(response.body.user.email).to.be.equal("willian3@gmail.com");
+            expect(response.body.user.role).to.be.equal("user");
         });
     });
 });
