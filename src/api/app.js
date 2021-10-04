@@ -27,4 +27,6 @@ app.get('/recipes/:id', recipesControlers.getRecipeById);
 
 app.put('/recipes/:id', middleware.create, recipesControlers.updateRecipe);
 
+app.delete('/recipes/:id', middleware.create, recipesControlers.removeRecipe);
+
 module.exports = app;
