@@ -23,4 +23,6 @@ app.post('/recipes', middleware.create, recipesControlers.createRecipe);
 
 app.get('/recipes', recipesControlers.getAllRecipe);
 
+app.get('/recipes/:id', recipesControlers.getRecipeById);
+
 module.exports = app;
