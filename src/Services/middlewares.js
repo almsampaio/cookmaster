@@ -8,12 +8,14 @@ const create = async (req, res, next) => {
   try {
     const token = req.headers.authorization;
     if (!token) {
-      res.status(401).json({ message: 'missing auth token' });
+      return res.status(401).json({ message: 'missing auth token' });
     }
     const { email } = jwt.verify(token, SECRET);
 
     const user = await usersModel.verifyEmail(email);
-
+    if (!user) {
+      return res.status(404).json({ message: 'user not found' });
+    }
     req.user = user;
 
     next();
