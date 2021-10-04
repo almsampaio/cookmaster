@@ -5,7 +5,6 @@ const path = require('path');
 const userRoute = require('./routes/users');
 const loginRoute = require('./routes/login');
 const recipeRoute = require('./routes/recipes');
-const imageRoute = require('./routes/images');
 
 const app = express();
 

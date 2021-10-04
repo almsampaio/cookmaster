@@ -6,6 +6,7 @@ const HTTP_CONFLICT = 409;
 const HTTP_BAD_REQUEST = 400;
 const HTTP_UNAUTHORIZED = 401;
 const HTTP_NO_CONTENT = 204;
+const HTTP_FORBIDDEN = 403;
 
 module.exports = {
   HTTP_NOT_FOUND,
@@ -16,4 +17,5 @@ module.exports = {
   HTTP_BAD_REQUEST,
   HTTP_UNAUTHORIZED,
   HTTP_NO_CONTENT,
+  HTTP_FORBIDDEN,
 };

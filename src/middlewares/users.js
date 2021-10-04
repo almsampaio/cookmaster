@@ -10,6 +10,16 @@ const userValidation = async (req, res, next) => {
   next();
 };
 
+const adminValidation = async (req, res, next) => {
+  const { role } = req.user;
+  if (role !== 'admin') {
+    return res.status(status.HTTP_FORBIDDEN)
+    .json({ message: 'Only admins can register new admins' });
+  }
+  next();
+};
+
 module.exports = {
   userValidation,
+  adminValidation,
 };

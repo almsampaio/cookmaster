@@ -19,10 +19,10 @@ const tokenValidation = async (req, res) => {
   const segredo = 'seusecretdetoken';
   const { email, password } = req.body;
   const check = await modelLogin.modelPasswordCompare(password, email);
-  const token = jwt.sign({ data: email }, segredo, jwtConfig);
   if (!check) {
     return res.status(status.HTTP_UNAUTHORIZED).json({ message: 'Incorrect username or password' });
   }
+  const token = jwt.sign({ data: { email, role: check.role } }, segredo, jwtConfig);
   return res.status(status.HTTP_OK_STATUS).json({ token });
 };
 
