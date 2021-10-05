@@ -7,7 +7,7 @@
     "test": "jest --runInBand --detectOpenHandles --forceExit",
     "start": "node .",
     "dev": "nodemon .",
-    "dev:test": "mocha ./src/integration-tests/**/*$NAME*.{test,spec}.js --exit",
+    "dev:test": "mocha ./src/integration-tests/**/*.{test,spec}.js --exit",
     "dev:test:coverage": "nyc --all npm run dev:test",
     "dev:test:coverage:json": "nyc --all --reporter=json-summary npm run dev:test",
     "lint": "eslint --no-inline-config --ext .js,.jsx --no-error-on-unmatched-pattern -c .eslintrc.json ."
