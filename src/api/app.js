@@ -21,6 +21,8 @@ app.get('/', (request, response) => {
 
 app.post('/users', userController.createUser);
 
+app.post('/users/admin', validateToken, userController.createAdmin);
+
 app.post('/login', userController.login);
 
 app.route('/recipes')

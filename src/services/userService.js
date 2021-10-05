@@ -26,13 +26,13 @@ const createUser = async ({ name, password, email, role }) => {
     return ({ err: true, status: 409, message: 'Email already registered' });
   }
 
-  let creatRole = 'admin';
+  let createRole = 'admin';
 
   if (!role) {
-    creatRole = 'user';
+    createRole = 'user';
   }
 
-  const newUser = await model.createUser(name, password, email, creatRole);
+  const newUser = await model.createUser(name, password, email, createRole);
 
   return newUser;
 };
@@ -53,7 +53,18 @@ const login = async ({ email, password }) => {
   return token;
 };
 
+const createAdmin = async ({ name, password, email }, { role }) => {
+  if (role !== 'admin') {
+    return ({ err: true, status: 403, message: 'Only admins can register new admins' });
+  }
+
+  const newAdmin = await model.createUser(name, password, email, role);
+
+  return newAdmin;
+};
+
 module.exports = {
   createUser,
   login,
+  createAdmin,
 };
