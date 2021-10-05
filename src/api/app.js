@@ -2,6 +2,11 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const multer = require('multer');
 const path = require('path');
+const { validateRecipe,
+  validateIdFormat,
+  validateExistingRecipe,
+  validateUserRole,
+  validateFile } = require('../middlewares/validateData');
 
 const storage = multer.diskStorage({
   destination: (_req, _file, callback) => callback(null, 'src/uploads'),
@@ -28,14 +33,29 @@ app.get('/', (request, response) => {
 
 app.post('/users', usersControllers.create);
 app.post('/login', usersControllers.login);
-app.post('/recipes', validateJWT, recipesControllers.create);
+app.post('/recipes', validateJWT, validateRecipe, recipesControllers.create);
 app.get('/recipes', recipesControllers.getAll);
 app.put('/recipes/:_id/image',
-  validateJWT, upload.single('image'),
+  validateJWT,
+  upload.single('image'),
+  validateIdFormat,
+  validateExistingRecipe,
+  validateUserRole,
+  validateFile,
   recipesControllers.uploadPicture);
-app.get('/recipes/:_id', recipesControllers.getById);
-app.put('/recipes/:_id', validateJWT, recipesControllers.update);
-app.delete('/recipes/:_id', validateJWT, recipesControllers.deleteOne);
+app.get('/recipes/:_id', validateIdFormat, validateExistingRecipe, recipesControllers.getById);
+app.put('/recipes/:_id',
+validateJWT,
+validateIdFormat,
+validateRecipe,
+validateUserRole,
+recipesControllers.update);
+app.delete('/recipes/:_id',
+validateJWT,
+validateIdFormat,
+validateExistingRecipe,
+validateUserRole,
+recipesControllers.deleteOne);
 app.get('/recipes/images/:_id');
 // Não remover esse end-point, ele é necessário para o avaliador
 
