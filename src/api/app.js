@@ -36,13 +36,13 @@ app.post('/login', usersControllers.login);
 app.post('/recipes', validateJWT, validateRecipe, recipesControllers.create);
 app.get('/recipes', recipesControllers.getAll);
 app.put('/recipes/:_id/image',
-  validateJWT,
-  upload.single('image'),
-  validateIdFormat,
-  validateExistingRecipe,
-  validateUserRole,
-  validateFile,
-  recipesControllers.uploadPicture);
+validateJWT,
+upload.single('image'),
+validateIdFormat,
+validateExistingRecipe,
+validateUserRole,
+validateFile,
+recipesControllers.uploadPicture);
 app.get('/recipes/:_id', validateIdFormat, validateExistingRecipe, recipesControllers.getById);
 app.put('/recipes/:_id',
 validateJWT,
@@ -56,7 +56,7 @@ validateIdFormat,
 validateExistingRecipe,
 validateUserRole,
 recipesControllers.deleteOne);
-app.get('/recipes/images/:_id');
+app.use('/images', express.static(path.join(__dirname, '..', 'uploads')));
 // Não remover esse end-point, ele é necessário para o avaliador
 
 module.exports = app;
