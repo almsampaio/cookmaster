@@ -37,6 +37,14 @@ const validateUserRole = async (req, res, next) => {
   next();
 };
 
+const validateAdminRole = async (req, res, next) => {
+  const { role } = req;
+  if (role !== 'admin') {
+    return res.status(403).json({ message: 'Only admins can register new admins' });
+  }
+  next();
+};
+
 const validateFile = (req, res, next) => {
   const { file } = req;
   if (!file) return res.status(404).json({ message: 'file not found' });
@@ -49,4 +57,5 @@ module.exports = {
   validateExistingRecipe,
   validateUserRole,
   validateFile,
+  validateAdminRole,
 };

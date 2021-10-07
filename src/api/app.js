@@ -6,7 +6,8 @@ const { validateRecipe,
   validateIdFormat,
   validateExistingRecipe,
   validateUserRole,
-  validateFile } = require('../middlewares/validateData');
+  validateFile,
+  validateAdminRole } = require('../middlewares/validateData');
 
 const storage = multer.diskStorage({
   destination: (_req, _file, callback) => callback(null, 'src/uploads'),
@@ -32,6 +33,7 @@ app.get('/', (request, response) => {
 });
 
 app.post('/users', usersControllers.create);
+app.post('/users/admin', validateJWT, validateAdminRole, usersControllers.createAdmin);
 app.post('/login', usersControllers.login);
 app.post('/recipes', validateJWT, validateRecipe, recipesControllers.create);
 app.get('/recipes', recipesControllers.getAll);

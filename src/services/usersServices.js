@@ -31,6 +31,15 @@ const create = async (name, email, password) => {
   return { status: 201, message };
 };
 
+const createAdmin = async (name, email, password) => {
+  const returnObject = { status: 400, message: { message: 'Invalid entries. Try again.' } };
+  if (checkData(name) || checkData(password) || checkData(email)) return returnObject;
+  const emailCheck = await checkEmail(email);
+  if (emailCheck) return emailCheck;
+  const message = await usersModel.createAdmin(name, email, password);
+  return { status: 201, message };
+};
+
 const login = async (email, pwd) => {
   const returnObject = { status: 401, message: { message: 'All fields must be filled' } };
   if (checkData(pwd)) return returnObject;
@@ -47,4 +56,5 @@ const login = async (email, pwd) => {
 module.exports = {
   create,
   login,
+  createAdmin,
 };

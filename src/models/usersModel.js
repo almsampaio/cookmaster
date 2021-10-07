@@ -12,6 +12,19 @@ const create = async (name, email, password) => {
   };
 };
 
+const createAdmin = async (name, email, password) => {
+  const role = 'admin';
+  const usersCollection = await mongoConnection.getConnection()
+  .then((db) => db.collection('users'));
+  const { insertedId: _id } = await usersCollection
+    .insertOne({ name, email, password, role });
+  const user = { _id, name, email, role };
+  console.log(user);
+  return {
+    user,
+  };
+};
+
 const getByEmail = async (email) => {
   const usersCollection = await mongoConnection.getConnection()
   .then((db) => db.collection('users'));
@@ -32,4 +45,5 @@ module.exports = {
   create,
   getByEmail,
   login,
+  createAdmin,
 };
