@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const multer = require('multer');
+const path = require('path');
 
 const app = express();
 app.use(bodyParser.json());
@@ -19,6 +20,8 @@ const upload = multer({ storage });
 const userControlers = require('../Controllers/userControllers');
 const middleware = require('../Services/middlewares');
 const recipesControlers = require('../Controllers/recipesController');
+
+app.use('/images', express.static(path.join(__dirname, '..', 'uploads')));
 
 // Não remover esse end-point, ele é necessário para o avaliador
 app.get('/', (_request, response) => {
@@ -48,3 +51,4 @@ recipesControlers.updateImage);
 module.exports = app;
 
 // ref https://app.betrybe.com/course/back-end/autenticacao-e-upload-de-arquivos/nodejs-upload-de-arquivos-com-%60multer%60/4619ea0e-6322-4165-b33f-64cef49676af/conteudo/83e8d41b-499b-4de7-b088-8a1c8ec40013/multipartform-data/c388062c-028a-452e-b2fa-bd58c4c5c321?use_case=side_bar
+// https://qastack.com.br/programming/5924072/express-js-cant-get-my-static-files-why

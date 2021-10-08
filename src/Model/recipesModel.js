@@ -51,6 +51,15 @@ const updateImage = async (id, imagePath, userId) => {
   return { _id: id, name, ingredients, preparation, userId, image: imagePath };
 };
 
+const getImage = async (id, imagePath) => {
+  if (!ObjectId.isValid(id)) return null;
+
+  const db = await connect();
+  const findRecipe = await db.collection('recipes')
+  .findOneAndUpdate({ _id: ObjectId(id) }, { $set: { image: imagePath } });
+  return findRecipe.value;
+};
+
 module.exports = {
   createRecipe,
   getAllRecipe,
@@ -58,6 +67,7 @@ module.exports = {
   update,
   remove,
   updateImage,
+  getImage,
 };
 
 // ref: https://github.com/tryber/sd-010-a-cookmaster/pull/25/commits/2e4bcc8dd9fedeb3b001e6860bddecdcb998980b
