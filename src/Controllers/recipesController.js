@@ -41,10 +41,20 @@ const removeRecipe = async (req, res) => {
   res.status(status).json(findRecipe);
 };
 
+const updateImage = async (req, res) => {
+  const { id } = req.params;
+  const { path: image } = req.file;
+  const imagePath = `localhost:3000/${image}`;
+  const { _id: userId } = req.user;
+  const { status, recipe } = await recipeService.updateImage({ id, imagePath, userId });
+  res.status(status).json(recipe);
+};
+
 module.exports = {
   createRecipe,
   getAllRecipe,
   getRecipeById,
   updateRecipe,
   removeRecipe,
+  updateImage,
 };
