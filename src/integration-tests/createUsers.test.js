@@ -5,20 +5,17 @@ const { MongoClient } = require('mongodb');
 const { MongoMemoryServer } = require('mongodb-memory-server');
 
 const server = require('../api/app');
+const { getConnection } = require('./connectionMock');
 
 chai.use(chaiHTTP);
 
 const { expect } = chai;
 
 describe('POST /users', () => {
-  const DBServer = new MongoMemoryServer();
   let db;
 
   before(async () => {
-    const URLMock = await DBServer.getUri();
-    const connectionMock = await MongoClient.connect(URLMock,
-      { useNewUrlParser: true, useUnifiedTopology: true }
-    );
+    const connectionMock = await getConnection();
 
     db = connectionMock.db('Cookmaster');
 
@@ -27,7 +24,6 @@ describe('POST /users', () => {
 
   after(async () => {
     MongoClient.connect.restore();
-    await DBServer.stop();
   });
 
   describe('Casos de falha', () => {  
