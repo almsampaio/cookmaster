@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 
 const users = require('../controllers/usersController');
 const recipes = require('../controllers/recipesController');
+// const validUser = require('../middlewares/validUser');
 
 const jwt = require('../middlewares/jwtValidate');
 
@@ -20,5 +21,6 @@ app.post('/login', users.login);
 app.post('/recipes', jwt, recipes.addRecipe);
 app.get('/recipes', recipes.getAllRecipes);
 app.get('/recipes/:id', recipes.getRecipeById);
+app.put('/recipes/:id', jwt, recipes.updateRecipe);
 
 module.exports = app;

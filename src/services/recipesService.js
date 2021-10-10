@@ -33,8 +33,17 @@ if (!recipeById) return { err: { message: 'recipe not found', status: 404 } };
   return recipeById; 
 };
 
+const updateRecipe = async (id, newRecipeInfo, userId) => {
+  await recipes.updateRecipe(id, newRecipeInfo, userId);
+
+  const updatedRecipe = { _id: id, ...newRecipeInfo, userId };
+
+  return updatedRecipe;
+};
+
 module.exports = {
   addRecipe,
   getAllRecipes,
   getRecipeById,
+  updateRecipe,
 };

@@ -8,7 +8,7 @@ const BAD_REQUEST = 401;
 const jwtValid = async (req, res, next) => {
   const token = req.headers.authorization;
   if (!token) {
-    return res.status(BAD_REQUEST).json({ message: 'Token not found' });
+    return res.status(BAD_REQUEST).json({ message: 'missing auth token' });
   }
   try {
     const decoded = jwt.verify(token, secret);
