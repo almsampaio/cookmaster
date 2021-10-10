@@ -19,7 +19,6 @@ const createAdmin = async (name, email, password) => {
   const { insertedId: _id } = await usersCollection
     .insertOne({ name, email, password, role });
   const user = { _id, name, email, role };
-  console.log(user);
   return {
     user,
   };

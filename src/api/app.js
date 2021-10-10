@@ -35,6 +35,7 @@ app.get('/', (request, response) => {
 app.post('/users', usersControllers.create);
 app.post('/users/admin', validateJWT, validateAdminRole, usersControllers.createAdmin);
 app.post('/login', usersControllers.login);
+
 app.post('/recipes', validateJWT, validateRecipe, recipesControllers.create);
 app.get('/recipes', recipesControllers.getAll);
 app.put('/recipes/:_id/image',
