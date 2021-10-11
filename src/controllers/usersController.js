@@ -5,7 +5,6 @@ const STATUS_OK = 200;
 
 const addUser = async (req, res) => {
   const userInfo = req.body;
-  // console.log(userInfo);
   const newUser = await users.addUser(userInfo);
 
   if (newUser.err) {
@@ -31,7 +30,23 @@ const login = async (req, res) => {
   return res.status(STATUS_OK).json({ token });
 };
 
+const addAdmin = async (req, res) => {
+  const newAdminInfo = req.body;
+  const { user } = req;
+
+  const newAdmin = await users.addAdmin(newAdminInfo, user);
+
+  if (newAdmin.err) {
+    return res
+      .status(newAdmin.err.status)
+      .json({ message: newAdmin.err.message });
+  }
+
+  return res.status(CREATED).json({ user: newAdmin });
+};
+
 module.exports = {
   addUser,
   login,
+  addAdmin,
 };

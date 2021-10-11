@@ -29,6 +29,7 @@ app.get('/', (request, response) => {
 // Não remover esse end-point, ele é necessário para o avaliador
 
 app.post('/users', users.addUser);
+app.post('/users/admin', jwt, users.addAdmin);
 app.post('/login', users.login);
 app.post('/recipes', jwt, recipes.addRecipe);
 app.get('/recipes', recipes.getAllRecipes);

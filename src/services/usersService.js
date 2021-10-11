@@ -40,7 +40,24 @@ const login = async (userInfo) => {
   return token;
 };
 
+const addAdmin = async (newAdminInfo, userAdmin) => {
+  const { error } = userSchema.validate(newAdminInfo);
+  console.log(error);
+
+  if (error) return { err: { message: 'Invalid entries. Try again.', status: 400 } };
+
+  if (userAdmin.role !== 'admin') {
+    return { err: { message: 'Only admins can register new admins', status: 403 } };
+  }
+
+  const admInfo = { ...newAdminInfo, role: 'admin' };
+  const newAdmin = await users.addUser(admInfo);
+  const { password, ...adminInfo } = newAdmin;
+  return adminInfo;
+};
+
 module.exports = {
   addUser,
   login,
+  addAdmin,
 };
