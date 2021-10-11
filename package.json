@@ -10,7 +10,9 @@
     "dev:test": "mocha ./src/integration-tests/**/*$NAME*.{test,spec}.js --exit",
     "dev:test:coverage": "nyc --all npm run dev:test",
     "dev:test:coverage:json": "nyc --all --reporter=json-summary npm run dev:test",
-    "lint": "eslint --no-inline-config --ext .js,.jsx --no-error-on-unmatched-pattern -c .eslintrc.json ."
+    "lint": "eslint --no-inline-config --ext .js,.jsx --no-error-on-unmatched-pattern -c .eslintrc.json .",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "repository": {
     "type": "git",
@@ -22,13 +24,14 @@
   "bugs": {
     "url": "https://github.com/tryber/sd-0x-cookmaster-v2/issues"
   },
-  "homepage": "https://github.com/tryber/sd-0x-cookmaster-v2#readme",
+  "homepage": "https:\/\/hannibal1207.github.io/cookmaster",
   "dependencies": {
     "body-parser": "1.19.0",
     "dotenv": "8.2.0",
     "express": "4.17.1",
     "express-rescue": "1.1.30",
     "frisby": "2.1.2",
+    "gh-pages": "^3.2.3",
     "jest": "26.4.1",
     "jsonwebtoken": "8.5.1",
     "mongodb": "3.5.9",
