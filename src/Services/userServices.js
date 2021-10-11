@@ -35,6 +35,7 @@ const login = async (email, password) => {
 
   return ({ status: 200, token });
 };
+
 module.exports = {
   create,
   login,
