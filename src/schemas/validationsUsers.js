@@ -8,7 +8,8 @@ const validateName = (name) => {
 };
 
 const validateEmail = (email) => {
-  if (!email) return { message: err.fielRequired };
+  const regexEmail = /[^@]+@[^.]+\..+/g;
+  if (!email || !regexEmail.test(email)) return { message: err.fielRequired };
 };
 
 module.exports = {
