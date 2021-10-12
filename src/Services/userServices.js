@@ -8,6 +8,7 @@ const invalidEntries = { status: 400, message: 'Invalid entries. Try again.' };
 const emailExists = { status: 409, message: 'Email already registered' };
 const incorrectData = { status: 401, message: 'Incorrect username or password' };
 const emptyField = { status: 401, message: 'All fields must be filled' };
+const onlyAdm = { status: 403, meaage: 'Only admins can register new admins' };
 
 const createUser = async (name, email, password, role) => {
   const createdUser = await userModel.create(name, email, password, role);
@@ -36,9 +37,16 @@ const login = async (email, password) => {
   return ({ status: 200, token });
 };
 
+const createUserAdm = async (name, email, password, role) => {
+  const createdUser = await userModel.createAdm(name, email, password, role);
+  if (createdUser.statusCode === 403) return onlyAdm;
+  return { status: 201, user: createdUser };
+};
+
 module.exports = {
   create,
   login,
+  createUserAdm,
 };
 
 // Ref requisito 2 - https://github.com/tryber/sd-010-a-cookmaster/pull/25/files

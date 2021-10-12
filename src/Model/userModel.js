@@ -24,8 +24,17 @@ const verifyEmail = async (email) => {
   return userData;
 };
 
+const createAdm = async (name, email, password, role) => {
+  const db = await connect();
+  const findUser = await db.collection('users').findOne({ email });
+  if (findUser) return { statusCode: 403 };
+  const userCreated = await db.collection('users').insertOne({ name, email, password, role });
+  return { _id: userCreated.insertedId, name, email, role: 'admin' };
+};
+
 module.exports = {
   create,
   login,
   verifyEmail,
+  createAdm,
 };

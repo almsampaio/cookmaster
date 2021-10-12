@@ -15,7 +15,14 @@ const login = async (req, res) => {
   return res.status(status).json({ token });
 };
 
+const createAdm = async (req, res) => {
+  const { name, email, password } = req.body;
+  const { status, message, user } = await userService.createUserAdm(name, email, password);
+  if (message) return res.status(status).json({ message });
+  return res.status(status).json({ user });
+};
 module.exports = {
   create,
   login,
+  createAdm,
 };

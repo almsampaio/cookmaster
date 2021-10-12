@@ -48,6 +48,8 @@ app.delete('/recipes/:id', middleware.create, recipesControlers.removeRecipe);
 app.put('/recipes/:id/image', middleware.create, upload.single('image'),
 recipesControlers.updateImage);
 
+app.post('/users/admin', middleware.create, userControlers.createAdm);
+
 module.exports = app;
 
 // ref https://app.betrybe.com/course/back-end/autenticacao-e-upload-de-arquivos/nodejs-upload-de-arquivos-com-%60multer%60/4619ea0e-6322-4165-b33f-64cef49676af/conteudo/83e8d41b-499b-4de7-b088-8a1c8ec40013/multipartform-data/c388062c-028a-452e-b2fa-bd58c4c5c321?use_case=side_bar
