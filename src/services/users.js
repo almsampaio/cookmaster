@@ -11,6 +11,9 @@ const create = async (name, email, password) => {
   const validatePassword = validations.validatePassword(password);
   if (validatePassword) return { status: 400, data: validatePassword };
 
+  const verifyEmail = await validations.verifyEmail(email);
+  if (verifyEmail) return { status: 409, data: verifyEmail };
+
   const [newUser] = await modelUsers.create(name, email, password);
 
   const { password: _, ...user } = newUser;
