@@ -13,6 +13,6 @@ app.get('/', (request, response) => {
 });
 // Não remover esse end-point, ele é necessário para o avaliador
 
-app.post('/users', controllerUsers.usersList);
+app.post('/users', controllerUsers.create);
 
 module.exports = app;
