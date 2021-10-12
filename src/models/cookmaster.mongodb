@@ -1,4 +1,4 @@
-use('cookmaster');
+use('Cookmaster');
 
 db.createCollection('users');
 db.createCollection('recipes');
