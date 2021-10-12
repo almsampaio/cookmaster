@@ -7,6 +7,11 @@ const validateName = (name) => {
   if (!name) return { message: err.fielRequired };
 };
 
+const validateEmail = (email) => {
+  if (!email) return { message: err.fielRequired };
+};
+
 module.exports = {
   validateName,
+  validateEmail,
 };
