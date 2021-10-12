@@ -8,6 +8,9 @@ const create = async (name, email, password) => {
   const validateEmail = validations.validateEmail(email);
   if (validateEmail) return { status: 400, data: validateEmail };
 
+  const validatePassword = validations.validatePassword(password);
+  if (validatePassword) return { status: 400, data: validatePassword };
+
   const [newUser] = await modelUsers.create(name, email, password);
 
   const { password: _, ...user } = newUser;
