@@ -1,25 +1,25 @@
 const { MongoClient } = require('mongodb');
 
-const MONGO_DB_URL = 'mongodb://127.0.0.1:27017';
+const MONGO_DB_URL = 'mongodb://127.0.0.1:27017/cookmaster';
 
-let cookmaster = null;
+let Cookmaster = null;
 
 async function getConnection() {
-  if (cookmaster) return Promise.resolve(cookmaster);
+  if (Cookmaster) return Promise.resolve(Cookmaster);
   return MongoClient.connect(MONGO_DB_URL, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
     .then((conn) => conn.db('model_example'))
     .then((dbCookMaster) => {
-      cookmaster = dbCookMaster;
-      return cookmaster;
+      Cookmaster = dbCookMaster;
+      return Cookmaster;
     })
     .catch((err) => {
       console.error(err);
     });
-};
+}
 
 module.exports = {
   getConnection,
-}
+};
