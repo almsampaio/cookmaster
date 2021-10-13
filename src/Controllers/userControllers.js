@@ -29,3 +29,5 @@ module.exports = {
   login,
   createAdm,
 };
+
+// req 12 feito com auxílio do colega Giovanni 
