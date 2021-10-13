@@ -61,9 +61,29 @@ const authMiddleware = async (req, res, next) => {
   } 
 };
 
+const validateUser = async (req, res, next) => {
+  const { authorization } = req.headers;
+  const token = authorization;
+
+  if (!token) {
+    return res.status(401).json({ message: 'missing auth token' });
+  }
+
+  try {
+    const payload = jwt.verify(token, SECRET);
+    req.user = payload;
+    // next();
+    // console.log(payload);
+  } catch (_e) {
+    return res.status(401).json({ message: 'jwt malformed' });
+  }
+  next();
+};
+
 module.exports = {
   authMiddleware,
   validateName,
   validateIngredients,
   validatePreparation,
+  validateUser,
 };

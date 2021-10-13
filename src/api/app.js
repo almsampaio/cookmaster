@@ -6,7 +6,7 @@ const recipesController = require('../controllers/recipesController');
 
 const {
   authMiddleware, validateName, validateIngredients,
-  validatePreparation } = require('../middlewares/authMiddleware');
+  validatePreparation, validateUser } = require('../middlewares/authMiddleware');
 
 const app = express();
 app.use(bodyParser.json());
@@ -26,5 +26,6 @@ app.post('/recipes', validateName, validateIngredients, validatePreparation,
 authMiddleware, recipesController.create);
 app.get('/recipes', recipesController.getRecipes);
 app.get('/recipes/:id', recipesController.getRecipeById);
+app.put('/recipes/:id', validateUser, recipesController.updateRecipe);
 
 module.exports = app;
