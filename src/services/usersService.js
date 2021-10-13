@@ -1,4 +1,7 @@
+const jwt = require('jsonwebtoken');
 const usersModel = require('../models/usersModel');
+
+const SECRET = 'mySecret';
 
 const nameValidation = (name) => {
   if (!name) return null;
@@ -36,7 +39,22 @@ const getUsers = async () => {
   return users;
 };
 
+const userLogin = async (email, password) => {
+  if (!email || !password) return { message: 'All fields must be filled' };
+
+  const users = await usersModel.getByEmailAndPassword(email, password);
+
+  if (!users || users.password !== password) return { message: 'Incorrect username or password' };
+
+  const { password: _, ...usersPayload } = users;
+
+  const token = jwt.sign(usersPayload, SECRET);
+
+  return { token };
+};
+
 module.exports = {
   create,
   getUsers,
+  userLogin,
 };
