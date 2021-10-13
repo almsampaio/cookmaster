@@ -1,4 +1,4 @@
-const jwt = require('jsonwebtoken');
+/* const jwt = require('jsonwebtoken');
 
 const SECRET = 'meu segredo';
 
@@ -12,7 +12,7 @@ const middToken = (req, res, next ) => {
     } catch (err) {
         res.status(401).json({message: 'invalide token'}
     };
-};
+}; */
 
 const validateEmail = async (email) => {
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -21,5 +21,4 @@ const validateEmail = async (email) => {
 
 module.exports = {
     validateEmail,
-    middToken,
 };
