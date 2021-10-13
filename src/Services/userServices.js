@@ -25,10 +25,10 @@ const create = (name, email, password, role) => {
 const login = async (email, password) => {
   if (!email || !password) return emptyField;
   const signIn = await userModel.login(email, password);
+  const { ...userPayload } = signIn;
+  // console.log(userPayload);
+  // id, name, email, role = userPayload
   if (signIn.err) return incorrectData;
-
-  const { password: _, ...userPayload } = signIn;
-
   const token = jwt.sign(userPayload, SECRET, {
     algorithm: 'HS256',
     expiresIn: '10d',
@@ -38,6 +38,7 @@ const login = async (email, password) => {
 };
 
 const createUserAdm = async (name, email, password, role) => {
+  console.log(role);
   if (role !== 'admin') return onlyAdm;
   const createdUser = await userModel.createAdm(name, email, password, role);
   return { status: 201, user: createdUser };

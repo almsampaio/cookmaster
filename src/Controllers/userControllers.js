@@ -18,7 +18,9 @@ const login = async (req, res) => {
 const createAdm = async (req, res) => {
   const { name, email, password } = req.body;
   const { role } = req.user;
-  const { status, user } = await userService.createUserAdm(name, email, password, role);
+  // console.log(role);
+  const { status, message, user } = await userService.createUserAdm(name, email, password, role);
+  if (message) return res.status(status).json({ message });
   return res.status(status).json({ user });
 };
 

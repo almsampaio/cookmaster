@@ -10,14 +10,15 @@ const create = async (req, res, next) => {
     if (!token) {
       return res.status(401).json({ message: 'missing auth token' });
     }
-    const { email } = jwt.verify(token, SECRET);
-
-    const user = await usersModel.verifyEmail(email);
+    const user2 = jwt.verify(token, SECRET);
+    // console.log(user2);
+    const user = await usersModel.verifyEmail(user2.email);    
     if (!user) {
       return res.status(404).json({ message: 'user not found' });
     }
-    req.user = user;
+    req.user = user2;
 
+    // role por aqui
     next();
   } catch (_e) {
     res.status(401).json({ message: 'jwt malformed' });

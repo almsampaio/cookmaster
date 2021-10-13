@@ -15,7 +15,7 @@ const login = async (email, password) => {
   const findEmail = await db.collection('users').findOne({ email });
   if (!findEmail) return ({ err });
   if (findEmail.password !== password) return ({ err });
-  return ({ email, password });
+  return (findEmail);
 };
 
 const verifyEmail = async (email) => {
