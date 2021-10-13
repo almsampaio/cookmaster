@@ -1,18 +1,18 @@
-/* const users = require('../models/users');
+const jwt = require('jsonwebtoken');
 
-const userValidate = async (req,res, next) => {
-    const {email,name, password} = req.body;
+const SECRET = 'meu segredo';
+
+const middToken = (req, res, next ) => {
+    try {
+        const token = req.headers.authorization;
     
-    const validateEmail = users.getEmail();
-
- if (!regex.test(email) || !email || !name || !password) {
-     return res.status(400).json({ message: 'Invalid entries. Try again.'});
-    }
- if (validateEmail === email) {
-     return res.status(409).json({ message: 'Email already registered' });
-    }
- next();
-}; */
+        const payload = jwt.verify(token, SECRET);
+     
+        next();
+    } catch (err) {
+        res.status(401).json({message: 'invalide token'}
+    };
+};
 
 const validateEmail = async (email) => {
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -21,4 +21,5 @@ const validateEmail = async (email) => {
 
 module.exports = {
     validateEmail,
+    middToken,
 };
