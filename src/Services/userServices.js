@@ -38,8 +38,8 @@ const login = async (email, password) => {
 };
 
 const createUserAdm = async (name, email, password, role) => {
+  if (role !== 'admin') return onlyAdm;
   const createdUser = await userModel.createAdm(name, email, password, role);
-  if (createdUser.statusCode === 403) return onlyAdm;
   return { status: 201, user: createdUser };
 };
 
