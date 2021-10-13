@@ -27,5 +27,6 @@ authMiddleware, recipesController.create);
 app.get('/recipes', recipesController.getRecipes);
 app.get('/recipes/:id', recipesController.getRecipeById);
 app.put('/recipes/:id', validateUser, recipesController.updateRecipe);
+app.delete('/recipes/:id', validateUser, recipesController.deleteRecipe);
 
 module.exports = app;
