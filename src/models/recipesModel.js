@@ -39,10 +39,22 @@ const deleteRecipe = async (id) => {
   return {};
 };
 
+const uploadImage = async (id, image) => {
+  const db = await connection();
+  await db.collection('recipes').updateOne(
+    { _id: ObjectId(id) },
+    { $set: { image } },
+  );
+  const recipe = await db.collection('recipes').findOne({ _id: ObjectId(id) });
+  // console.log(recipe);
+  return recipe;
+};
+
 module.exports = { 
   create,
   getRecipes,
   getRecipeById,
   updateRecipe,
   deleteRecipe,
+  uploadImage,
 };

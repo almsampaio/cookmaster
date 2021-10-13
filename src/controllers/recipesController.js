@@ -51,10 +51,21 @@ const deleteRecipe = async (req, res) => {
   return res.status(204).json();
 };
 
+const uploadImage = async (req, res, _next) => {
+  const { id } = req.params;
+  const { filename } = req.file; // filename é que diz o nome é a extensão do arquivo
+  // console.log(req.params);
+  const image = `localhost:3000/src/uploads/${filename}`;
+  const { result } = await recipesService.uploadImage(id, image);
+  // console.log(result);
+  return res.status(200).json(result);
+};
+
 module.exports = {
   create,
   getRecipes,
   getRecipeById,
   updateRecipe,
   deleteRecipe,
+  uploadImage,
 };
