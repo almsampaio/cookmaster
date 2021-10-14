@@ -8,7 +8,7 @@ const recipesController = require('../controllers/recipesController');
 
 const {
   authMiddleware, validateName, validateIngredients,
-  validatePreparation, validateUser } = require('../middlewares/authMiddleware');
+  validatePreparation, validateUser, validateAdmin } = require('../middlewares/authMiddleware');
 
 const app = express();
 app.use(bodyParser.json());
@@ -45,6 +45,8 @@ app.delete('/recipes/:id', validateUser, recipesController.deleteRecipe);
 
 app.put('/recipes/:id/image', validateUser,
 uploadImage.single('image'), recipesController.uploadImage);
+
+app.post('/users/admin', validateAdmin, usersController.createAdmin);
 
 app.use('/images', express.static(path.join(__dirname, '..', 'uploads')));
 

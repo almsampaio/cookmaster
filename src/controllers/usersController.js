@@ -30,8 +30,20 @@ const userLogin = async (req, res) => {
   return res.status(200).json({ token: result.token });
 };
 
+const createAdmin = async (req, res) => {
+  const { name, email, password } = req.body;
+  const { role } = req.userAdmin;
+
+  const { message, createdUser } = await usersService.create(name, email, password, role);
+
+  if (!createdUser) return res.status(409).json({ message });
+
+  return res.status(201).json({ user: createdUser });
+};
+
 module.exports = {
   create,
   getUsers,
   userLogin,
+  createAdmin,
 };

@@ -388,3 +388,70 @@ describe('POST /recipes', () => {
     });
   });
 });
+
+describe('POST /users/admin', () => {
+  let connectionMock;
+
+  before(async () => {
+    connectionMock = await getConnection();
+    sinon.stub(MongoClient, 'connect').resolves(connectionMock);
+  });
+
+  after(() => {
+    MongoClient.connect.restore();
+  })
+
+  describe('name is required', () => {
+    let response;
+
+    before(async () => {
+      response = await chai.request(server)
+      .post('/users/admin')
+      .send({
+        email: 'root@email.com', // não passei o name para dar erro
+        password: 'admin',
+      });
+    });
+
+    after(async () => {});
+
+    it('verify Forbidden http status', () => {
+      expect(response).to.have.status(403);
+    });
+
+    it('verify if that is a object on the body', () => {
+      expect(response.body).to.be.an('object');
+    });
+
+    it('verify if that is a message on the object', () => {
+      expect(response.body).to.have.property('message');
+    });
+
+    it('verify message text', () => {
+      expect(response.body.message).to.be.equals('Only admins can register new admins');
+    });
+  });
+
+  describe('verify if it is possible to create a admin', () => {
+    let response;
+
+    before(async () => {
+      const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTY3ODQwZmU4MmU0NDU3YTJlMjJjZmQiLCJuYW1lIjoiYWRtaW4iLCJlbWFpbCI6InJvb3RAZW1haWwuY29tIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNjM0MTc2Mzc1fQ.pVxhHMb96z1chK30xuKKbKri86WDP9gIN3fSk3TU-Vk';
+      // const token = '';
+      response = await chai.request(server)
+        .post('/users/admin')
+        .set('authorization', token)
+        .send({
+          name: 'Renan',
+          email: 'renanTeste@gmail.com',
+          password: '123456'
+        })
+    });
+
+    it('verify Created http status', () => {
+      expect(response).to.have.status(201);
+    });
+  });
+
+});
+

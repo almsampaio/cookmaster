@@ -80,10 +80,33 @@ const validateUser = async (req, res, next) => {
   next();
 };
 
+const validateAdmin = (req, res, next) => {
+  const { authorization } = req.headers;
+  const token = authorization;
+
+  // if (!token) return res.status(401).json({ message: 'missing auth token' });
+
+  try {
+    const payload = jwt.verify(token, SECRET);
+    // console.log(payload);
+
+    if (payload.role !== 'admin') {
+      return res.status(403).json({ message: 'Only admins can register new admins' });
+    }
+
+    req.userAdmin = payload;
+  } catch (_e) {
+    return res.status(403).json({ message: 'Only admins can register new admins' });
+  }
+
+  next();
+};
+
 module.exports = {
   authMiddleware,
   validateName,
   validateIngredients,
   validatePreparation,
   validateUser,
+  validateAdmin,
 };
