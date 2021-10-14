@@ -15,6 +15,20 @@ const create = async (name, email, password) => {
     return { status: 201, data: { user: createUser } };
 };
 
+const findUser = async (body) => {
+ const validBory = util.checkData(body);
+  if (validBory) return validBory;
+  const result = await modelsUsers.getEmail(body.email);
+  if (!result || result.email !== body.email || result.password !== body.password) {
+ return { 
+    status: 401, data: { message: 'Incorrect username or password' },
+   }; 
+}
+  const validToken = util.createToken(body.email, body.password);
+  return { status: 200, data: { token: validToken } };
+};
+
 module.exports = {
     create,
+    findUser,
 };

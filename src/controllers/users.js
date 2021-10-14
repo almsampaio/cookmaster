@@ -7,8 +7,7 @@ const create = async (req, res) => {
 }; 
 
 const findUser = async (req, res) => {
-    const { email, password } = req.body;
-    const { status, data } = await serviceUser.findUser(email, password);
+    const { status, data } = await serviceUser.findUser(req.body);
     res.status(status).json(data);
   };
 
