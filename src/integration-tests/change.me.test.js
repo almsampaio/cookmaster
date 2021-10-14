@@ -440,7 +440,7 @@ describe('POST /users/admin', () => {
       // const token = '';
       response = await chai.request(server)
         .post('/users/admin')
-        .set('authorization', token)
+        .set('authorization', token) // https://stackoverflow.com/questions/36961197/add-custom-http-headers-to-chai-requests; .set para setar http headers
         .send({
           name: 'Renan',
           email: 'renanTeste@gmail.com',
