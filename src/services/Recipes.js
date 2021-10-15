@@ -19,9 +19,21 @@ const updateRecipe = async (id, name, ingredients, preparation) => {
   return result;
 };
 
+const deleteRecipe = async (id) => {
+  if (isValidId(id)) return;
+  recipesModel.deleteRecipe(id);
+};
+
+const insertImageUrl = async (id, imagePath) => {
+  const result = await recipesModel.insertImageUrl(id, imagePath);
+  return result;
+};
+
 module.exports = {
   createRecipe,
   getAll,
   getById,
   updateRecipe,
+  deleteRecipe,
+  insertImageUrl,
 };

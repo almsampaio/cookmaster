@@ -31,7 +31,7 @@ const createToken = (user) => {
   return token;
 };
 
-const validateToken = async (req, _res, next) => {
+const validateToken = (req, _res, next) => {
   const token = req.headers.authorization;
   checkIfTokenExists(token);
   isTokenValid(token);
