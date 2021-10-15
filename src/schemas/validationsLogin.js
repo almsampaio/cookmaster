@@ -7,6 +7,12 @@ const validateEmail = (email) => {
   return false;
 };
 
+const validatePassword = (password) => {
+  if (!password) return { message: err.fieldRequired };
+  return false;
+};
+
 module.exports = {
   validateEmail,
+  validatePassword,
 };

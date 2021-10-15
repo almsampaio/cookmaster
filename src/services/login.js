@@ -4,9 +4,12 @@ const validations = require('../schemas/validationsLogin');
 
 const SECRET = 'mypassword';
 
-const loginUser = async (email, _password) => {
+const loginUser = async (email, password) => {
   const validateEmail = await validations.validateEmail(email);
   if (validateEmail) return { status: 401, data: validateEmail };
+
+  const validatePassword = await validations.validatePassword(password);
+  if (validatePassword) return { status: 401, data: validatePassword };
 
   const searchUser = await modelUsers.getAll();
   const { password: _, ...userPayload } = searchUser;
