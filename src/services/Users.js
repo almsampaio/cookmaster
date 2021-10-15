@@ -19,7 +19,13 @@ const login = async (email, password) => {
   return token;
 };
 
+const insertNewAdmin = async (name, email, password, role) => {
+  const { password: _, ...result } = await usersModel.createUser(name, email, password, role);
+  return result;
+};
+
 module.exports = {
   createUser,
   login,
+  insertNewAdmin,
 };

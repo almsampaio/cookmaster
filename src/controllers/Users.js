@@ -1,5 +1,5 @@
 const usersService = require('../services/Users');
-const { newUserValidation, loginBodyValidation } = require('../middlewares/Users');
+const { newUserValidation, loginBodyValidation, isAdmin } = require('../middlewares/Users');
 
 const createUser = async (req, res) => {
   const { name, email, password } = req.body;
@@ -26,7 +26,19 @@ const login = async (req, res) => {
   });
 };
 
+const insertNewAdmin = async (req, res) => {
+  const { name, email, password } = req.body;
+  const { role } = req.user;
+  isAdmin(role);
+
+  const result = await usersService.insertNewAdmin(name, email, password, role);
+  return res.status(201).json({
+    user: result,
+  });
+};
+
 module.exports = {
   createUser,
   login,
+  insertNewAdmin,
 };

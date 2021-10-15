@@ -26,8 +26,17 @@ const userLoginValidation = (user) => {
   }
 };
 
+const isAdmin = (role) => {
+  if (role !== 'admin') {
+    const error = new Error('Only admins can register new admins');
+    error.code = 403;
+    throw error;
+  }
+};
+
 module.exports = {
   newUserValidation,
   loginBodyValidation,
   userLoginValidation,
+  isAdmin,
 };
