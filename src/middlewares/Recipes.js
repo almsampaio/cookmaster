@@ -23,8 +23,18 @@ const isValidId = (id) => {
   if (!ObjectId.isValid(id)) return true;
 };
 
+const validateRecipeOwner = async (userID, userRole, recipe) => {
+  isValidRecipe(recipe);
+  if (recipe.userId !== userID && userRole !== 'admin') {
+    const error = new Error('unauthorized');
+    error.code = 401;
+    throw error;
+  }
+};
+
 module.exports = {
   validateRecipeBody,
   isValidRecipe,
   isValidId,
+  validateRecipeOwner,
 };

@@ -7,6 +7,14 @@ const jwtConfig = {
   expiresIn: '60m',
 };
 
+const checkIfTokenExists = (token) => {
+  if (!token) {
+    const error = new Error('missing auth token');
+    error.code = 401;
+    throw error;
+  }
+};
+
 const isTokenValid = (token) => {
   try {
     Jwt.verify(token, SECRET);
@@ -25,6 +33,7 @@ const createToken = (user) => {
 
 const validateToken = async (req, _res, next) => {
   const token = req.headers.authorization;
+  checkIfTokenExists(token);
   isTokenValid(token);
   const payload = Jwt.verify(token, SECRET);
   req.user = payload;
