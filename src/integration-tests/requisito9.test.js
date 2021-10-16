@@ -6,7 +6,7 @@ const fs = require('fs');
 const path = require('path');
 const multer = require('multer');
 
-const server = require('../api/app');
+const server = require('../api/server');
 
 const { MongoClient, ObjectId } = require('mongodb');
 const { getConnection } = require('./mockDatabaseConnection');
