@@ -1,10 +1,10 @@
 // const { ObjectID } = require('mongodb');
 const connection = require('./connection');
 
-const createUser = async (name, email, password) => {
+const createUser = async (name, email, password, role) => {
   const db = await connection();
-  const newUser = await db.collection('users').insertOne({ name, email, password, role: 'user' })
-    .then((res) => ({ _id: res.insertedId, name, email }));
+  const newUser = await db.collection('users').insertOne({ name, email, password, role })
+    .then((res) => ({ _id: res.insertedId, name, email, role }));
 
   return newUser;
 };
