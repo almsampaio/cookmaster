@@ -1,7 +1,7 @@
 const Joi = require('joi');
 const { filledFields, incorrectLogin } = require('../utils/messages');
 
-const verifyPassword = (obj, password) => {
+const verifyPasswordLogin = (obj, password) => {
   const schema = Joi.string().not().empty().required();
 
   const { error } = schema.validate(password);
@@ -11,4 +11,4 @@ const verifyPassword = (obj, password) => {
   if (obj.password !== password) throw incorrectLogin;
 };
 
-module.exports = verifyPassword;
+module.exports = verifyPasswordLogin;

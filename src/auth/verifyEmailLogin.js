@@ -2,7 +2,7 @@ const Joi = require('joi');
 const { findEmail } = require('../models/usersModel');
 const { filledFields, incorrectLogin } = require('../utils/messages');
 
-const verifyEmail = async (email) => {
+const verifyEmailLogin = async (email) => {
   const schema = Joi.string().not().empty().email()
     .required();
 
@@ -14,7 +14,7 @@ const verifyEmail = async (email) => {
 
   if (!existsEmail) throw incorrectLogin;
 
-  return email;
+  return existsEmail;
 };
 
-module.exports = verifyEmail;
+module.exports = verifyEmailLogin;
