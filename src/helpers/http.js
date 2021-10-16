@@ -1,5 +1,15 @@
+const AppError = require('./appError');
+
 const success = (res, data) => res.status(200).json(data);
 
 const created = (res, data) => res.status(201).json(data);
 
-module.exports = { success, created };
+const badRequest = (msg) => {
+  throw new AppError(msg);
+};
+
+const conflict = (msg) => {
+  throw new AppError(msg, 409);
+};
+
+module.exports = { success, created, badRequest, conflict };
