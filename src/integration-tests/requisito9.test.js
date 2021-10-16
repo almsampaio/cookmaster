@@ -4,11 +4,10 @@ const sinon = require('sinon');
 
 const fs = require('fs');
 const path = require('path');
-const multer = require('multer');
 
-const server = require('../api/server');
+const server = require('../api/app');
 
-const { MongoClient, ObjectId } = require('mongodb');
+const { MongoClient } = require('mongodb');
 const { getConnection } = require('./mockDatabaseConnection');
 
 const { expect } = chai;
