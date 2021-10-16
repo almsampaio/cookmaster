@@ -1,9 +1,10 @@
+const { created } = require('../helpers/http');
 const { addUserService } = require('../service/users');
 
 async function create(request, response) {
   try {
     const createProduct = await addUserService(request.body);
-    return response.status(201).json(createProduct);
+    return created(response, createProduct);
   } catch (error) {
     return response.status(409).json({ message: error.message });
   }
