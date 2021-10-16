@@ -1,6 +1,6 @@
-const verifyEmail = require('../auth/verifyEmail');
-const verifyName = require('../auth/verifyName');
-const verifyPassword = require('../auth/verifyPassword');
+const verifyEmail = require('../auth/verifyEmailUsers');
+const verifyName = require('../auth/verifyNameUsers');
+const verifyPassword = require('../auth/verifyPasswordUsers');
 const { createUser } = require('../models/usersModel');
 const { CREATED } = require('../utils/statusSuccess');
 
