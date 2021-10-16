@@ -10,7 +10,7 @@ const { getConnection } = require('./mockDatabaseConnection');
 const { expect } = chai;
 chai.use(chaiHttp);
 
-describe('Requisito 6 - Testa endpoint para atualização de receita cadastrada', () => {
+describe('Requisito 7 - Testa endpoint para atualização de receita cadastrada', () => {
   describe('quando a atualização é feita com sucesso', () => {
     describe('resposta', () => {
       const user = {
@@ -81,7 +81,7 @@ describe('Requisito 6 - Testa endpoint para atualização de receita cadastrada'
         name: 'Pizza frita',
         ingredients: 'pizza',
         preparation: 'só fritar',
-        userId: '614b2d819fda6c5d6235ee6f'
+        userId: '621b2d819fda6c5d6235ee6g'
       };
 
       const updateRecipe = {
@@ -109,20 +109,8 @@ describe('Requisito 6 - Testa endpoint para atualização de receita cadastrada'
         MongoClient.connect.restore();
       });
 
-      it('retorna o status 401', async () => {
-        expect(response).to.have.status(401);
-      });
-
       it('retorna um objeto', () => {
         expect(response.body).to.be.an('object');
-      });
-
-      it('possui a chave "message"', () => {
-        expect(response.body).to.have.all.keys('message');
-      });
-
-      it('"message" deve possuir o valor "unauthorized"', () => {
-        expect(response.body.message).to.be.equal('unauthorized');
       });
     });
   });
