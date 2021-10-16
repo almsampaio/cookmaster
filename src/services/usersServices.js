@@ -10,7 +10,8 @@ const create = async (name, email, password, role) => {
     const resEmail = await verifyEmail(email);
     const resPassword = await verifyPassword(password);
     const createU = await createUser(resName, resEmail, resPassword, role);
-    return { status: CREATED, message: createU };
+    const response = { user: { ...createU } };
+    return { status: CREATED, message: response };
   } catch (err) {
     return err;
   }

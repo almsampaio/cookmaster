@@ -1,4 +1,4 @@
-const INVALID_ENTRIES = 'Invalid entries. Try Again.';
+const INVALID_ENTRIES = 'Invalid entries. Try again.';
 const DUPLICITY_EMAIL = 'Email already registered';
 
 module.exports = {
