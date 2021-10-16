@@ -3,8 +3,8 @@ const { addUserService } = require('../service/users');
 
 async function create(request, response, next) {
   try {
-    const createProduct = await addUserService(request.body);
-    return created(response, createProduct);
+    const addUser = await addUserService(request.body);
+    return created(response, addUser);
   } catch (err) {
     next(err);
   }

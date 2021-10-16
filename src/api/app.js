@@ -1,6 +1,6 @@
 const express = require('express');
-const routes = require('../routes');
-const globalErrorHandler = require('../middlewares/globalErrorHandler');
+const routes = require('./routes');
+const globalErrorHandler = require('./middlewares/globalErrorHandler');
 
 const app = express();
 app.use(express.json());

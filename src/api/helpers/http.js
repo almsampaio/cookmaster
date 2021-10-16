@@ -12,4 +12,8 @@ const conflict = (msg) => {
   throw new AppError(msg, 409);
 };
 
-module.exports = { success, created, badRequest, conflict };
+const unauthorized = (msg) => {
+  throw new AppError(msg, 401);
+};
+
+module.exports = { success, created, badRequest, conflict, unauthorized };
