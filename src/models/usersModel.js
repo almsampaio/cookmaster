@@ -9,6 +9,15 @@ const createUser = async (name, email, password) => {
   return newUser;
 };
 
+const findEmail = async (email) => {
+  const db = await connection();
+  const searchEmail = await db.collection('users').findOne({ email });
+
+  if (!searchEmail) return null;
+  return searchEmail;
+};
+
 module.exports = {
   createUser,
+  findEmail,
 };
