@@ -1,5 +1,5 @@
 const AppError = require('../helpers/appError');
-const { createRecipe, getAll, getRecipe } = require('../models/recipes');
+const { createRecipe, getAll, getRecipe, updateRecipe } = require('../models/recipes');
 const recipeSchema = require('../validators/recipeSchemaJOI');
 
 const createRecipeService = async (user, data) => {
@@ -23,4 +23,12 @@ const getRecipeService = async (id) => {
   }
 };
 
-module.exports = { createRecipeService, getRecipesService, getRecipeService };
+async function updateRecipeService(id, data) {
+  const recipe = await getRecipe(id);
+  if (!recipe) throw new AppError('Recipe not found', 404);
+
+  await updateRecipe(id, data);
+  return { _id: id, ...data };
+}
+
+module.exports = { createRecipeService, getRecipesService, getRecipeService, updateRecipeService };
