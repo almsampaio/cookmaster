@@ -33,10 +33,17 @@ const validateEntriesRecipes = (name, ingredients, preparation) => {
   if (!name || !ingredients || !preparation) return errObj;
 };
 
+const validateRecipeFound = (recipe) => {
+  const errObj = { code: 404, message: 'recipe not found' };
+
+  if (!recipe) return errObj;
+};
+
 module.exports = {
   validateEntries,
   validateEntriesRecipes,
   verifyEmail,
   validateLoginFields,
   verifyLogin,
+  validateRecipeFound,
 };
