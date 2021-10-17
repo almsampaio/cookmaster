@@ -5,7 +5,7 @@ const globalErrorHandler = require('./middlewares/globalErrorHandler');
 
 const app = express();
 app.use(express.json());
-app.use(express.static(path.join(__dirname, 'uploads')));
+app.use('/images', express.static(path.join(__dirname, '..', 'uploads')));
 app.use(routes);
 app.use(globalErrorHandler);
 
