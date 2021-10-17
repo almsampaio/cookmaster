@@ -1,13 +1,22 @@
-const { created } = require('../helpers/http');
-const { createRecipeService } = require('../service/recipe');
+const { created, success } = require('../helpers/http');
+const { createRecipeService, getRecipesService } = require('../service/recipe');
 
 async function create(request, response, next) {
   try {
-    const addUser = await createRecipeService(request.user, request.body);
-    return created(response, addUser);
+    const recipe = await createRecipeService(request.user, request.body);
+    return created(response, recipe);
   } catch (err) {
     next(err);
   }
 }
 
-module.exports = { create };
+async function index(request, response, next) {
+  try {
+    const recipes = await getRecipesService();
+    return success(response, recipes);
+  } catch (err) {
+    next(err);
+  }
+}
+
+module.exports = { create, index };

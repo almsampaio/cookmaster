@@ -1,5 +1,5 @@
 const AppError = require('../helpers/appError');
-const { createRecipe } = require('../models/recipes');
+const { createRecipe, getAll } = require('../models/recipes');
 const recipeSchema = require('../validators/recipeSchemaJOI');
 
 const createRecipeService = async (user, data) => {
@@ -9,4 +9,9 @@ const createRecipeService = async (user, data) => {
   return recipe;
 };
 
-module.exports = { createRecipeService };
+const getRecipesService = async () => {
+  const recipes = await getAll();
+  return recipes;
+};
+
+module.exports = { createRecipeService, getRecipesService };
