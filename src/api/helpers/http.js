@@ -4,6 +4,8 @@ const success = (res, data) => res.status(200).json(data);
 
 const created = (res, data) => res.status(201).json(data);
 
+const noContent = (res) => res.status(204).end();
+
 const badRequest = (msg) => {
   throw new AppError(msg);
 };
@@ -16,4 +18,4 @@ const unauthorized = (msg) => {
   throw new AppError(msg, 401);
 };
 
-module.exports = { success, created, badRequest, conflict, unauthorized };
+module.exports = { success, created, badRequest, conflict, unauthorized, noContent };

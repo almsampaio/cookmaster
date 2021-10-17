@@ -1,9 +1,10 @@
-const { created, success } = require('../helpers/http');
+const { created, success, noContent } = require('../helpers/http');
 const { 
   createRecipeService, 
   getRecipesService, 
   getRecipeService, 
   updateRecipeService, 
+  deleteRecipeService,
 } = require('../service/recipe');
 
 async function create(request, response, next) {
@@ -44,4 +45,13 @@ async function update(request, response, next) {
   }
 }
 
-module.exports = { create, index, show, update };
+async function remove(request, response, next) {
+  try {
+    await deleteRecipeService(request.params.id);
+    return noContent(response);
+  } catch (err) {
+    next(err);
+  }
+}
+
+module.exports = { create, index, show, update, remove };
