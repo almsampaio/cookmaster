@@ -10,4 +10,13 @@ async function create(request, response, next) {
   }
 }
 
-module.exports = { create };
+async function createAdm(request, response, next) {
+  try {
+    const addUser = await addUserService(request.body, 'admin');
+    return created(response, addUser);
+  } catch (err) {
+    next(err);
+  }
+}
+
+module.exports = { create, createAdm };

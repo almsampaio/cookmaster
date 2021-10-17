@@ -1,11 +1,11 @@
 const { conflict } = require('../helpers/http');
 const { addUser, findEmail } = require('../models/users');
 
-const addUserService = async (data) => {
+const addUserService = async (data, role) => {
   const emailExists = await findEmail(data.email);
   if (emailExists) return conflict('Email already registered');
 
-  const user = await addUser(Object.assign(data, { role: 'user' }));
+  const user = await addUser(Object.assign(data, { role: role || 'user' }));
   return user;
 };
 
