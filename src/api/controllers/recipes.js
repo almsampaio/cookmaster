@@ -1,5 +1,5 @@
 const { created, success } = require('../helpers/http');
-const { createRecipeService, getRecipesService } = require('../service/recipe');
+const { createRecipeService, getRecipesService, getRecipeService } = require('../service/recipe');
 
 async function create(request, response, next) {
   try {
@@ -19,4 +19,13 @@ async function index(request, response, next) {
   }
 }
 
-module.exports = { create, index };
+async function show(request, response, next) {
+  try {
+    const recipe = await getRecipeService(request.params.id);
+    return success(response, recipe);
+  } catch (err) {
+    next(err);
+  }
+}
+
+module.exports = { create, index, show };
