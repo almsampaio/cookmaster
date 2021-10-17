@@ -27,8 +27,15 @@ const verifyLogin = async (email, password) => {
   if (!user || user.password !== password) return errObj;
 };
 
+const validateEntriesRecipes = (name, ingredients, preparation) => {
+  const errObj = { code: 400, message: 'Invalid entries. Try again.' };
+
+  if (!name || !ingredients || !preparation) return errObj;
+};
+
 module.exports = {
   validateEntries,
+  validateEntriesRecipes,
   verifyEmail,
   validateLoginFields,
   verifyLogin,

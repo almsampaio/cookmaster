@@ -27,7 +27,6 @@ const login = async (userEmail, password) => {
   if (verifyLogin) return verifyLogin;
 
   const logged = await getByEmail(userEmail);
-  console.log(logged);
   return logged;
 };
 
