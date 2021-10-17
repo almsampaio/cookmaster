@@ -5,6 +5,7 @@ const {
   getRecipeService, 
   updateRecipeService, 
   deleteRecipeService,
+  addImageRecipe,
 } = require('../service/recipe');
 
 async function create(request, response, next) {
@@ -54,4 +55,14 @@ async function remove(request, response, next) {
   }
 }
 
-module.exports = { create, index, show, update, remove };
+async function addImage(request, response, next) {
+  try {
+    const imagePath = `localhost:3000/src/uploads/${request.params.id}.jpeg`;
+    const recipe = await addImageRecipe(request.params.id, imagePath);
+    return success(response, recipe);
+  } catch (err) {
+    next(err);
+  }
+}
+
+module.exports = { create, index, show, update, remove, addImage };

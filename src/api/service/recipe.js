@@ -44,10 +44,23 @@ async function deleteRecipeService(id) {
   }
 }
 
+const addImageRecipe = async (recipeId, imageUrl) => {
+  try {
+    const recipe = await getRecipe(recipeId);
+    const newData = recipe;
+    newData.image = imageUrl;
+    await updateRecipe(recipeId, newData);
+    return newData;
+  } catch (error) {
+    throw new AppError('recipe not found', 404);
+  }
+};
+
 module.exports = { 
   createRecipeService, 
   getRecipesService, 
   getRecipeService, 
   updateRecipeService, 
   deleteRecipeService,
+  addImageRecipe,
 };
