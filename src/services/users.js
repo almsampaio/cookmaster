@@ -1,5 +1,5 @@
 const UserModels = require('../models/users');
-const validation = require('./validation');
+const validation = require('../utils/validation');
 
 const create = async (userName, userEmail, password) => {
   const validate = validation.validateEntries(userName, userEmail, password);
@@ -19,7 +19,20 @@ const getByEmail = async (email) => {
   return user;
 };
 
+const login = async (userEmail, password) => {
+  const validateFields = validation.validateLoginFields(userEmail, password);
+  if (validateFields) return validateFields;
+
+  const verifyLogin = await validation.verifyLogin(userEmail, password);
+  if (verifyLogin) return verifyLogin;
+
+  const logged = await getByEmail(userEmail);
+  console.log(logged);
+  return logged;
+};
+
 module.exports = {
   create,
   getByEmail,
+  login,
 };

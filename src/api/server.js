@@ -4,8 +4,9 @@ const app = require('./app');
 const User = require('../controllers/users');
 
 app.use(bodyParser.json());
+
 app.post('/users', User.create);
-// app.get('/users', User.getByEmail);
+app.post('/login', User.login);
 
 const PORT = 3000;
 
