@@ -1,5 +1,6 @@
 const err = {
   fieldRequired: 'Invalid entries. Try again.',
+  notFoundRecipe: 'recipe not found',
 };
 
 const validateName = (nome) => {
@@ -14,8 +15,14 @@ const validatePreparation = (preparation) => {
   if (!preparation) return { message: err.fieldRequired };
 };
 
+const validateId = (id) => {
+  if (!id) return { message: err.notFoundRecipe };
+  return false;
+};
+
 module.exports = {
   validateName,
   validateIngredients,
   validatePreparation,
+  validateId,
 };
