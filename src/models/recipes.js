@@ -35,10 +35,23 @@ const deleteRecipe = async (id) => {
   await db.collection('recipes').deleteOne({ _id: ObjectId(id) });
 };
 
+const addImage = async (id, image) => {
+  const recipe = await getById(id);
+  const imageURL = `localhost:3000/${image}`;
+
+  return connection()
+    .then((db) => db.collection('recipes').updateOne(
+      { _id: ObjectId(id) },
+      { $set: { image: imageURL } },
+    ))
+    .then(() => ({ ...recipe, image: imageURL }));
+};
+
 module.exports = {
   create,
   getAll,
   getById,
   updateRecipe,
   deleteRecipe,
+  addImage,
 };
