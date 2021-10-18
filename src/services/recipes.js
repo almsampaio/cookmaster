@@ -27,7 +27,7 @@ const getAll = async () => {
 
 const getById = async (id) => {
   const recipe = await modelRecipes.getById(id);
-    
+  
   const validateId = validations.validateId(recipe);
   if (validateId) return { status: 404, data: validateId };
 

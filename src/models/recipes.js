@@ -26,15 +26,15 @@ const getById = async (id) => {
 };
 
 const update = async (id, dataBody, userId) => {
-  const { name, ingredients, preparations } = dataBody;
+  const { name, ingredients, preparation } = dataBody;
   if (!ObjectId.isValid(id)) return null;
   const connectDb = await getConnection();
   await connectDb.collection('recipes')
     .findOneAndUpdate(
       { _id: ObjectId(userId) },
-      { $set: { name, ingredients, preparations, userId } },
+      { $set: { name, ingredients, preparation, userId } },
     );
-  return { _id: id, name, ingredients, preparations, userId };
+  return { _id: id, name, ingredients, preparation, userId };
 };
 
 module.exports = {
