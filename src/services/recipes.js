@@ -26,7 +26,13 @@ const getAll = async () => {
   return { status: 200, data: [...allRecipes] };
 };
 
+const getById = async (id) => {
+  const recipe = await modelRecipes.getById(id);
+  return { status: 200, data: { ...recipe } };
+};
+
 module.exports = {
   create,
   getAll,
+  getById,
 };
