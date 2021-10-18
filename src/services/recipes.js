@@ -4,7 +4,6 @@ const validations = require('../schemas/validationsRecipes');
 const authVerify = require('../auth/authBasic');
 
 const create = async (name, ingredients, preparation, token) => {
-  
   const validateName = validations.validateName(name);
   if (validateName) return { status: 400, data: validateName };
   
