@@ -11,7 +11,7 @@ const create = async (novoUsuario) => {
 
 const getEmail = async (email) => {
     const db = await connection();
-    const checkEmail = db.collection('users').findOne({ email });
+    const checkEmail = await db.collection('users').findOne({ email });
     return checkEmail;
 };
 

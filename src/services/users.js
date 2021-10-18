@@ -2,7 +2,6 @@ const modelsUsers = require('../models/users');
 const util = require('../util/users');
 
 const create = async (name, email, password) => {
-   console.log(email);
     if (!name || !password || !util.validateEmail(email)) {
       return { status: 400, data: { message: 'Invalid entries. Try again.' } };
     }
@@ -24,7 +23,7 @@ const findUser = async (body) => {
     status: 401, data: { message: 'Incorrect username or password' },
    }; 
 }
-  const validToken = util.createToken(body.email, body.password);
+  const validToken = util.createToken(result);
   return { status: 200, data: { token: validToken } };
 };
 

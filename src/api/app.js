@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const userControllers = require('../controllers/users');
 const recipesController = require('../controllers/recipes');
+const middleware = require('../middleware/validateToken');
 
 const app = express();
 
@@ -15,6 +16,8 @@ app.get('/', (request, response) => {
 
 app.post('/users', userControllers.create);
 app.post('/login', userControllers.findUser);
-app.post('/recipes', recipesController.createRecipes);
+app.post('/recipes', middleware.checkToken, recipesController.createRecipes);
+app.get('/recipes/:id', recipesController.getById);
+app.get('/recipes', recipesController.getAll);
 
 module.exports = app;
