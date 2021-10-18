@@ -46,9 +46,21 @@ const update = async (id, dataBody, token) => {
   return { status: 200, data: { ...result } };
 };
 
+const deleteOne = async (id, token) => {
+  const validateToken = await validations.validateToken(token);
+  if (validateToken) return { status: 401, data: validateToken };
+
+  const checkToken = await authVerify.validToken(token);
+  if (checkToken.message) return { status: 401, data: checkToken };
+  
+  await modelRecipes.deleteOne(id);
+  return { status: 204 };
+};
+
 module.exports = {
   create,
   getAll,
   getById,
   update,
+  deleteOne,
 };
