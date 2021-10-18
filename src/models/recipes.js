@@ -20,7 +20,8 @@ const getById = async (id) => {
   if (!ObjectId.isValid(id)) return null;
   const connectDb = await getConnection();
   const recipe = await connectDb.collection('recipes')
-    .findOnde({ _id: ObjectId(id) });
+    .findOne({ _id: ObjectId(id) });
+  if (!recipe) return null;
   return recipe;
 };
 
