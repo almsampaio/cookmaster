@@ -9,6 +9,8 @@ const verifyPasswordLogin = (obj, password) => {
   if (error) throw filledFields;
 
   if (obj.password !== password) throw incorrectLogin;
+
+  return obj;
 };
 
 module.exports = verifyPasswordLogin;
