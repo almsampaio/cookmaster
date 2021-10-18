@@ -4,17 +4,17 @@ const validations = require('../schemas/validationsRecipes');
 const authVerify = require('../auth/authBasic');
 
 const create = async (name, ingredients, preparation, token) => {
-  const checkToken = await authVerify.validToken(token);
   
   const validateName = validations.validateName(name);
   if (validateName) return { status: 400, data: validateName };
-
+  
   const validateIngredients = validations.validateIngredients(ingredients);
   if (validateIngredients) return { status: 400, data: validateIngredients };
-
+  
   const validatePreparation = validations.validatePreparation(preparation);
   if (validatePreparation) return { status: 400, data: validatePreparation };
   
+  const checkToken = await authVerify.validToken(token);
   if (checkToken.message) return { status: 401, data: checkToken };
 
   const [newRecipe] = await modelRecipes.create(name, ingredients, preparation, checkToken.id);

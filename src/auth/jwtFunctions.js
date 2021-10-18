@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 const SECRET = 'mysecretultrasecret';
 
 const create = (user) => {
-  const { password_, ...payload } = user;
+  const { password: _, ...payload } = user;
   const token = jwt.sign(payload, SECRET);
   return token;
 };

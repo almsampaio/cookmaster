@@ -11,7 +11,7 @@ const validToken = async (token) => {
     const user = await modelLogin.searchEmailUser(checkToken.email);
     if (!user) return { message: err.jwtMalformed };
     const { _id } = user;
-    return _id;
+    return { id: _id };
   } catch (e) {
     return { message: e.message };
   }
