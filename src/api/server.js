@@ -8,6 +8,7 @@ const Recipe = require('../controllers/recipes');
 app.use(bodyParser.json());
 
 app.post('/users', User.create);
+app.post('/users/admin', validateJWT, User.createAdmin);
 app.post('/login', User.login);
 app.post('/recipes', validateJWT, Recipe.create);
 app.get('/recipes', Recipe.getAll);
