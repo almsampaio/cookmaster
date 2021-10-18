@@ -18,8 +18,16 @@ const getById = async (req, res) => {
   return res.status(status).json(data);
 };
 
+const update = async (req, res) => {
+  const { id } = req.params;
+  const token = req.headers.authorization;
+  const { status, data } = await serviceRecipes.update(id, req.body, token);
+  return res.status(status).json(data);
+};
+
 module.exports = {
   create,
   getAll,
   getById,
+  update,
 };
