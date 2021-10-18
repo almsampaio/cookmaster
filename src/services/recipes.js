@@ -8,9 +8,12 @@ const create = async (name, ingredients, preparation, token) => {
   
   const validateName = validations.validateName(name);
   if (validateName) return { status: 400, data: validateName };
+
+  const validateIngredients = validations.validateIngredients(ingredients);
+  if (validateIngredients) return { status: 400, data: validateIngredients };
   
   if (checkToken.message) return { status: 401, data: checkToken };
-  
+
   const [newRecipe] = await modelRecipes.create(name, ingredients, preparation, checkToken.id);
   return { status: 201, data: { recipe: { ...newRecipe } } };
 };
