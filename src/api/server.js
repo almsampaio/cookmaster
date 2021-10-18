@@ -1,3 +1,5 @@
+const express = require('express');
+const path = require('path');
 const bodyParser = require('body-parser');
 const multer = require('multer');
 
@@ -28,6 +30,8 @@ app.get('/recipes/:id', Recipe.getById);
 app.put('/recipes/:id', validateJWT, Recipe.updateRecipe);
 app.delete('/recipes/:id', validateJWT, Recipe.deleteRecipe);
 app.put('/recipes/:id/image', validateJWT, upload.single('image'), Recipe.addImage);
+
+app.use('/images', express.static(path.join(__dirname, '..', 'uploads')));
 
 const PORT = 3000;
 
