@@ -32,10 +32,23 @@ const deleteOne = async (req, res) => {
   return res.status(status).json(data);
 };
 
+const updateFile = async (req, res) => {
+  const { id } = req.params;
+
+  const { filename } = req.file;
+
+  const token = req.headers.authorization;
+
+  const { status, data } = await serviceRecipes.updateFile(id, req.body, filename, token);
+  
+  return res.status(status).json(data);
+  };
+
 module.exports = {
   create,
   getAll,
   getById,
   update,
   deleteOne,
+  updateFile,
 };
