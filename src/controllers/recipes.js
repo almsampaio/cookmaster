@@ -19,16 +19,18 @@ const createRecipes = async (req, res) => {
     res.status(status).json(data);
 };
 
-/* const update = async (req, res) => {
+const update = async (req, res) => {
     const { id } = req.params;
     const { name, ingredients, preparation } = req.body;
-    const result = await serviceRecipes.update(name, ingredients, preparation);
-    res.status(200).json(result);
-}; */
+    const { _id: userId } = req.user;
+    const { status, data } = await serviceRecipes
+    .update({ id, name, ingredients, preparation, userId });
+    res.status(status).json(data);
+}; 
 
 module.exports = {
     createRecipes,
     getAll,
     getById,
-    // update,
+    update,
 };

@@ -19,5 +19,6 @@ app.post('/login', userControllers.findUser);
 app.post('/recipes', middleware.checkToken, recipesController.createRecipes);
 app.get('/recipes/:id', recipesController.getById);
 app.get('/recipes', recipesController.getAll);
+app.put('/recipes/:id', middleware.checkToken, recipesController.update);
 
 module.exports = app;
