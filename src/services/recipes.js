@@ -21,6 +21,12 @@ const create = async (name, ingredients, preparation, token) => {
   return { status: 201, data: { recipe: { ...newRecipe } } };
 };
 
+const getAll = async () => {
+  const allRecipes = await modelRecipes.getAll();
+  return { status: 200, data: [...allRecipes] };
+};
+
 module.exports = {
   create,
+  getAll,
 };
