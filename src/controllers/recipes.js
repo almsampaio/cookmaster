@@ -24,8 +24,15 @@ const updateRecipe = async (req, res) => {
   const { name, ingredients, preparation } = req.body;
   const { id } = req.params;
   const recipeObj = { name, ingredients, preparation, _id: id };
+  
   const updatedRecipe = await RecipesServices.updateRecipe(recipeObj);
   res.status(updatedRecipe.code).json(updatedRecipe.recipe);
+};
+
+const deleteRecipe = async (req, res) => {
+  const { id } = req.params;
+  await RecipesServices.deleteRecipe(id);
+  res.status(204).send();
 };
 
 module.exports = {
@@ -33,4 +40,5 @@ module.exports = {
   getAll,
   getById,
   updateRecipe,
+  deleteRecipe,
 };

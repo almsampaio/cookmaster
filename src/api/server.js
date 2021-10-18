@@ -13,6 +13,7 @@ app.post('/recipes', validateJWT, Recipe.create);
 app.get('/recipes', Recipe.getAll);
 app.get('/recipes/:id', Recipe.getById);
 app.put('/recipes/:id', validateJWT, Recipe.updateRecipe);
+app.delete('/recipes/:id', validateJWT, Recipe.deleteRecipe);
 
 const PORT = 3000;
 

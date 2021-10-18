@@ -28,8 +28,11 @@ const updateRecipe = async (recipe) => {
   return { code: 200, recipe: getRecipe };
 };
 
+const deleteRecipe = async (id) => RecipesModels.deleteRecipe(id);
+
 module.exports = {
   create,
   getById,
   updateRecipe,
+  deleteRecipe,
 };
