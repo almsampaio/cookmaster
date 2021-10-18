@@ -33,8 +33,21 @@ const getById = async (id) => {
   return { status: 200, data: { ...recipe } };
 };
 
+const update = async (id, dataBody, token) => {
+  const validateToken = await validations.validateToken(token);
+  if (validateToken) return { status: 401, data: validateToken };
+
+  const checkToken = await authVerify.validToken(token);
+  if (checkToken.message) return { status: 401, data: checkToken };
+
+  const result = await modelRecipes.update(id, dataBody, checkToken.id);
+
+  return { status: 200, data: { ...result } };
+};
+
 module.exports = {
   create,
   getAll,
   getById,
+  update,
 };

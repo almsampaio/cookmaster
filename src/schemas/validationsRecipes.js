@@ -1,6 +1,7 @@
 const err = {
   fieldRequired: 'Invalid entries. Try again.',
   notFoundRecipe: 'recipe not found',
+  notFoundToken: 'missing auth token',
 };
 
 const validateName = (nome) => {
@@ -20,9 +21,14 @@ const validateId = (id) => {
   return false;
 };
 
+const validateToken = (token) => {
+  if (!token) return { message: err.notFoundToken };
+};
+
 module.exports = {
   validateName,
   validateIngredients,
   validatePreparation,
   validateId,
+  validateToken,
 };
