@@ -46,10 +46,31 @@ const deleteOne = async (id) => {
   return foundRecipe;
 };
 
+const updateFile = async (id, dataBody, userId, image) => {
+  if (!ObjectId.isValid(id)) return null;
+
+  const connectDb = await getConnection();
+
+  const { value } = await connectDb.collection('recipes')
+    .findOneAndUpdate(
+      { _id: ObjectId(id) },
+      { $set: {
+        ...dataBody,
+        userId,
+        image,
+      } },
+      {
+        returnOriginal: false,
+      },
+    );
+  return { ...value };
+};
+
 module.exports = {
   create,
   getAll,
   getById,
   update,
   deleteOne,
+  updateFile,
 };
