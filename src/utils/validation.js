@@ -23,7 +23,7 @@ const verifyLogin = async (email, password) => {
   const errObj = { code: 401, message: 'Incorrect username or password' };
   const user = await UserModel.getByEmail(email);
 
-  if (!regex.test(email) || password.length < 8) return errObj;
+  if (!regex.test(email)) return errObj;
   if (!user || user.password !== password) return errObj;
 };
 
