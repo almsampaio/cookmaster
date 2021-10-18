@@ -52,9 +52,23 @@ const deleteOne = async (id, token) => {
 
   const checkToken = await authVerify.validToken(token);
   if (checkToken.message) return { status: 401, data: checkToken };
-  
+
   await modelRecipes.deleteOne(id);
   return { status: 204 };
+};
+
+const updateFile = async (id, dataBody, filename, token) => {
+  const validateToken = await validations.validateToken(token);
+  if (validateToken) return { status: 401, data: validateToken };
+  
+  const checkToken = await authVerify.validToken(token);
+  if (checkToken.message) return { status: 401, data: checkToken };
+  
+  const image = `localhost:3000/src/uploads/${filename}`;
+  
+  const result = await modelRecipes.updateFile(id, dataBody, checkToken.id, image);
+  
+  return { status: 200, data: { ...result } };
 };
 
 module.exports = {
@@ -63,4 +77,5 @@ module.exports = {
   getById,
   update,
   deleteOne,
+  updateFile,
 };
