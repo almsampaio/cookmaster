@@ -11,6 +11,9 @@ const create = async (name, ingredients, preparation, token) => {
 
   const validateIngredients = validations.validateIngredients(ingredients);
   if (validateIngredients) return { status: 400, data: validateIngredients };
+
+  const validatePreparation = validations.validatePreparation(preparation);
+  if (validatePreparation) return { status: 400, data: validatePreparation };
   
   if (checkToken.message) return { status: 401, data: checkToken };
 
