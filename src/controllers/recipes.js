@@ -35,10 +35,25 @@ const remove = async (req, res) => {
     res.status(204).end();
 };
 
+const uploadImage = async (req, res) => {
+    const { id } = req.params;
+    const { file } = req;
+    const result = await serviceRecipes.uploadImage(id, file);
+    res.status(200).json(result);
+};
+
+const getImage = async (req, res) => {
+    const { id } = req.params;
+    const url = `./uploads/${id}`;
+    res.status(200).send(url);
+  };
+
 module.exports = {
     createRecipes,
     getAll,
     getById,
     update,
     remove,
+    uploadImage,
+    getImage,
 };
