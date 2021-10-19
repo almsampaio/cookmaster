@@ -6,11 +6,11 @@ const {
   validatePreparation,
   validateToken,
   validateUserOrAdminToken,
-} = require('../../middlewares/validations/recipes/validates');
+} = require('../middlewares/validateRecipes');
 
 const {
   upload,
-} = require('../../middlewares/validations/recipes/uploadMulter');
+} = require('../middlewares/multer');
 
 const {
   createController,
@@ -19,7 +19,7 @@ const {
   updateController,
   updateImageController,
   deleteController,
-} = require('../../controllers/recipes/recipesController');
+} = require('../controller/recipes');
 
 const router = Router();
 

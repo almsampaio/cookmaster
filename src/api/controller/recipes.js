@@ -1,19 +1,11 @@
 const {
-    HTTP_NOT_FOUND,
-    HTTP_UNAUTHORIZED,
-    HTTP_CREATED,
-    HTTP_OK_STATUS,
-    HTTP_NO_CONTENT,
-  } = require('../../schemas/status');
-  
-  const {
     createServices,
     readAllServices,
     readByIdServices,
     updateServices,
     updateImageServices,
     deleteServices,
-  } = require('../services/recipes/recipesService');
+  } = require('../services/recipes');
   
   const createController = async (req, res) => {
     const { name, ingredients, preparation } = req.body;
@@ -21,7 +13,7 @@ const {
   
     const { data } = await createServices(name, ingredients, preparation, userId);
   
-    return res.status(HTTP_CREATED).json({
+    return res.status(201).json({
       recipe: data,
     });
   };
@@ -29,7 +21,7 @@ const {
   const readAllController = async (_req, res) => {
     const { data } = await readAllServices();
   
-    return res.status(HTTP_OK_STATUS).json(data);
+    return res.status(200).json(data);
   };
   
   const readByIdController = async (req, res) => {
@@ -37,10 +29,10 @@ const {
     const { message, data } = await readByIdServices(id);
   
     if (!data) {
-      return res.status(HTTP_NOT_FOUND).json({ message });
+      return res.status(404).json({ message });
     }
   
-    return res.status(HTTP_OK_STATUS).json(data);
+    return res.status(200).json(data);
   };
   
   const readImageController = async (req, res) => {
@@ -58,10 +50,10 @@ const {
     const { message, data } = await updateServices(id, userId, role, updatedData);
   
     if (!data) {
-      return res.status(HTTP_UNAUTHORIZED).json({ message });
+      return res.status(401).json({ message });
     }
     
-    return res.status(HTTP_OK_STATUS).json(data);
+    return res.status(200).json(data);
   };
   
   const updateImageController = async (req, res) => {
@@ -73,15 +65,15 @@ const {
     const { isEmpty, data, message, notEqual } = await updateImageServices(id, image, userId, role);
   
     if (isEmpty) {
-      return res.status(HTTP_UNAUTHORIZED).json({ message: 'recipe not found' });
+      return res.status(401).json({ message: 'recipe not found' });
     }
   
     if (data) {
-      return res.status(HTTP_OK_STATUS).json(data);
+      return res.status(200).json(data);
     }
   
     if (notEqual) {
-      return res.status(HTTP_UNAUTHORIZED).json({ message });
+      return res.status(401).json({ message });
     }
   };
   
@@ -92,15 +84,15 @@ const {
     const { isEmpty, deleted, notEqual, message } = await deleteServices(id, userId, role);
   
     if (isEmpty) {
-      return res.status(HTTP_NOT_FOUND).json({ message: 'recipe not found' });
+      return res.status(404).json({ message: 'recipe not found' });
     }
   
     if (deleted) {
-      return res.status(HTTP_NO_CONTENT).json();
+      return res.status(204).json();
     }
   
     if (notEqual) {
-      return res.status(HTTP_UNAUTHORIZED).json({ message });
+      return res.status(401).json({ message });
     }
   };
   

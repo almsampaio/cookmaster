@@ -2,7 +2,7 @@ const { Router } = require('express');
 
 const {
   readImageController,
-} = require('../../controllers/recipes/recipesController');
+} = require('../controller/recipes');
 
 const router = Router();
 

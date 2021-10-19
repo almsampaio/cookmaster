@@ -6,7 +6,7 @@ const {
   createModel,
   readByEmailModel,
   readByEmailAndPasswordModel,
-} = require('../../models/users/usersModel');
+} = require('../models/user');
 
 const createServices = async (name, email, password, role) => {
   const emailFound = await readByEmailModel(email);

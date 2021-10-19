@@ -5,7 +5,7 @@ const {
     updateModel,
     updateImageModel,
     deleteModel,
-  } = require('../../models/recipes/recipesModel');
+  } = require('../models/recipes');
   
   const createServices = async (name, ingredients, preparation, userId) => {
     const data = await createModel(name, ingredients, preparation, userId);

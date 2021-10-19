@@ -2,11 +2,11 @@ const { Router } = require('express');
 
 const {
   validateLogin,
-} = require('../../middlewares/validations/users/validates');
+} = require('../middlewares/validateUsers');
 
 const {
   createTokenController,
-} = require('../../controllers/users/usersController');
+} = require('../controller/users');
 
 const router = Router();
 

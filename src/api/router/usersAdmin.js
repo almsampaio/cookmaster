@@ -5,11 +5,11 @@ const {
   validateEmail,
   validatePassword,
   validateAdminToken,
-} = require('../../middlewares/validations/users/validates');
+} = require('../middlewares/validateUsers');
 
 const {
   createAdminController,
-} = require('../../controllers/users/usersController');
+} = require('../controller/users');
 
 const router = Router();
 

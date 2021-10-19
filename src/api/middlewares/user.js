@@ -1,19 +1,14 @@
 const jwt = require('jsonwebtoken');
 
 const {
-  HTTP_BAD_REQUEST,
-  HTTP_UNAUTHORIZED,
-} = require('../../../schemas/status');
-
-const {
   Secret,
-} = require('../../../services/users/jwt');
+} = require('../services/jwt');
 
 const validateName = (req, res, next) => {
   const { name } = req.body;
 
   if (!name || name === '') {
-    return res.status(HTTP_BAD_REQUEST).json({
+    return res.status(400).json({
       message: 'Invalid entries. Try again.',
     });
   }
@@ -25,7 +20,7 @@ const validateIngredients = (req, res, next) => {
   const { ingredients } = req.body;
 
   if (!ingredients || ingredients === '') {
-    return res.status(HTTP_BAD_REQUEST).json({
+    return res.status(400).json({
       message: 'Invalid entries. Try again.',
     });
   }
@@ -37,7 +32,7 @@ const validatePreparation = (req, res, next) => {
   const { preparation } = req.body;
 
   if (!preparation || preparation === '') {
-    return res.status(HTTP_BAD_REQUEST).json({
+    return res.status(400).json({
       message: 'Invalid entries. Try again.',
     });
   }
@@ -56,7 +51,7 @@ const validateToken = (req, res, next) => {
 
     next();
   } catch (error) {
-    return res.status(HTTP_UNAUTHORIZED).json({
+    return res.status(401).json({
       message: error.message,
     });
 }
@@ -67,7 +62,7 @@ const validateUserOrAdminToken = (req, res, next) => {
   const token = authorization;
 
   if (!token) {
-    return res.status(HTTP_UNAUTHORIZED).json({ message: 'missing auth token' });
+    return res.status(401).json({ message: 'missing auth token' });
   }
 
   try {
@@ -75,7 +70,7 @@ const validateUserOrAdminToken = (req, res, next) => {
     req.userRecipes = payload;
     next();
   } catch (error) {
-    return res.status(HTTP_UNAUTHORIZED).json({ message: error.message });
+    return res.status(401).json({ message: error.message });
   }
 };
 

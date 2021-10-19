@@ -1,11 +1,11 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
-const usersRouter = require('./router/users/usersRouter');
-const usersAdminRouter = require('./router/users/usersAdminRouter');
-const loginRouter = require('./router/users/loginRouter');
-const recipesRouter = require('./router/recipes/recipesRouter');
-const imageRouter = require('./router/images/imageRouter');
+const usersRouter = require('./router/users');
+const usersAdminRouter = require('./router/usersAdmin');
+const loginRouter = require('./router/login');
+const recipesRouter = require('./router/recipes');
+const imageRouter = require('./router/image');
 
 const app = express();
 app.use(bodyParser.json());

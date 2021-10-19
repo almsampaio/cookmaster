@@ -4,11 +4,11 @@ const {
   validateName,
   validateEmail,
   validatePassword,
-} = require('../../middlewares/validations/users/validates');
+} = require('../middlewares/validateUsers');
 
 const {
   createController,
-} = require('../../controllers/users/usersController');
+} = require('../controller/users');
 
 const router = Router();
 
