@@ -2,7 +2,7 @@ const { ObjectId } = require('mongodb');
 
 const connection = require('./connect');
 
-const create = async (name, ingredients, preparation, userId) => {
+const createModel = async (name, ingredients, preparation, userId) => {
   const db = await connection();
   const insertUsers = await db.collection('recipes')
     .insertOne({ name, ingredients, preparation, userId });
@@ -17,13 +17,13 @@ const create = async (name, ingredients, preparation, userId) => {
   return result;
 };
 
-const read = async () => {
+const readAllModel = async () => {
   const db = await connection();
   const result = await db.collection('recipes').find({}).toArray();
   return result;
 };
 
-const readById = async (id) => {
+const readByIdModel = async (id) => {
   if (!ObjectId.isValid(id)) {
     return null;
   }
@@ -33,7 +33,7 @@ const readById = async (id) => {
   return result;
 };
 
-const update = async ({ id, name, ingredients, preparation }) => {
+const updateModel = async ({ id, name, ingredients, preparation }) => {
   const db = await connection();
   const result = await db.collection('recipes')
     .updateOne(
@@ -49,7 +49,7 @@ const update = async ({ id, name, ingredients, preparation }) => {
   return result;
 };
 
-const imageModel = async (id, image) => {
+const updateImageModel = async (id, image) => {
   const db = await connection();
   await db.collection('recipes')
     .updateOne(
@@ -68,10 +68,10 @@ const deleteModel = async (id) => {
 };
 
 module.exports = {
-  create,
-  read,
-  readById,
-  update,
-  imageModel,
+  createModel,
+  readAllModel,
+  readByIdModel,
+  updateModel,
+  updateImageModel,
   deleteModel,
 };

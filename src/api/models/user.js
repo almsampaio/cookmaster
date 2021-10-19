@@ -1,6 +1,6 @@
 const connection = require('./connect');
 
-const create = async (name, email, password, role) => {
+const createModel = async (name, email, password, role) => {
   const db = await connection();
   const insertUsers = await db.collection('users')
     .insertOne({ name, email, password, role });
@@ -8,20 +8,20 @@ const create = async (name, email, password, role) => {
   return result;
 };
 
-const readEmail = async (email) => {
+const readByEmailModel = async (email) => {
   const db = await connection();
   const result = await db.collection('users').findOne({ email });
   return result;
 };
 
-const readEmailPassword = async (email, password) => {
+const readByEmailAndPasswordModel = async (email, password) => {
   const db = await connection();
   const result = await db.collection('users').findOne({ email, password });
   return result;
 };
 
 module.exports = {
-  create,
-  readEmail,
-  readEmailPassword,
+  createModel,
+  readByEmailModel,
+  readByEmailAndPasswordModel,
 };
