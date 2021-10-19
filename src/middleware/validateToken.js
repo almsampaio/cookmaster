@@ -12,7 +12,7 @@ const checkToken = async (req, res, next) => {
         const user = await userModel.getEmail(payload.email);
         if (!user) return res.status(401).json({ message: 'jwt malformed' });
         req.user = user;
-        console.log(req.user);
+        // console.log(req.user);
         next();
     } catch (e) {
         res.status(401).json({ message: e.message });
