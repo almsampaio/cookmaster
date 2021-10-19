@@ -8,7 +8,7 @@ const { expect } = chai;
 const server = require('../api/app');
 
 const { MongoClient } = require('mongodb');
-const { getConnection } = require('./mockConnection');
+const { getConnection } = require('./connectionMock');
 
 describe('POST /users', () => {
   let connectionMock;

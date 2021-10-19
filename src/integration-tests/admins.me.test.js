@@ -8,7 +8,7 @@ const { expect } = chai;
 const server = require('../api/app');
 
 const { MongoClient } = require('mongodb');
-const { getConnection } = require('./mockConnection');
+const { getConnection } = require('./connectionMock');
 
 describe('POST /users/admin', () => {
   let connectionMock;
@@ -190,6 +190,22 @@ describe('POST /users/admin', () => {
     let response;
 
     before(async () => {
+      // const usersCollection = connectionMock.db('Cookmaster').collection('users')
+
+      // await usersCollection.insertOne({
+      //   name: 'Gabriel Pereira',
+      //   email: 'gabriel_pereira@gmail.com',
+      //   password: 'xablau@97',
+      //   role: 'admin'
+      // });
+
+      // const token = await chai.request(server)
+      //   .post('/login')
+      //   .send({
+      //     email: 'gabriel_pereira@gmail.com', 
+      //     password: 'xablau@97'
+      //   })
+      //   .then((res) => res.body.token);
 
       const token = '';
       
