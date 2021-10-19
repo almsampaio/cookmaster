@@ -38,5 +38,6 @@ app.get('/recipes/:id', controllerRecipes.getById);
 app.put('/recipes/:id', controllerRecipes.update);
 app.delete('/recipes/:id', controllerRecipes.deleteOne);
 app.put('/recipes/:id/image', upload.single('image'), controllerRecipes.updateFile);
+app.use('/images', express.static(pathJoin));
 
 module.exports = app;
