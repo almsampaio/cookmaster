@@ -28,9 +28,17 @@ const update = async (req, res) => {
     res.status(status).json(data);
 }; 
 
+const remove = async (req, res) => {
+    const { id } = req.params;
+    const result = await serviceRecipes.remove(id);
+    if (result) return res.status(result.status).json(result.msg);
+    res.status(204).end();
+};
+
 module.exports = {
     createRecipes,
     getAll,
     getById,
     update,
+    remove,
 };

@@ -32,9 +32,16 @@ if (!getId) return { status: 404, data: { menssage: 'recipes not existe' } };
 const result = await modelsRecipe.update({ id, name, ingredients, preparation, userId });
 return { status: 200, data: result };
 };
+
+const remove = async (id) => {
+    const result = await modelsRecipe.remove(id);
+    if (!result) return { status: 404, message: 'recipe not found' };
+};
+
 module.exports = {
     createRecipe,
     getAll,
     getById,
     update,
+    remove,
 };
