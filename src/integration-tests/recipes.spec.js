@@ -10,6 +10,13 @@ const app = require('../api/app');
 chai.use(chaiHttp);
 
 describe('test recipes endpoint', () => {
+  
+  const mockRecipe = {
+    name: 'string',
+    ingredients: 'string',
+    preparation: 'string'
+  }
+
   before( async () => {
     const bdVirtual = await mockConnection();
     sinon.stub(MongoClient, 'connect').resolves(bdVirtual);
@@ -26,4 +33,9 @@ describe('test recipes endpoint', () => {
     expect(response).to.have.status(200)
   });
 
+  it('test get all recipes', async () => {
+    const response = await chai.request(app).post('/recipes').send(mockRecipe);
+
+    expect(response).to.have.status(401)
+  });
 });
