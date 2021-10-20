@@ -84,6 +84,10 @@ describe('Test user create', () => {
       expect(res.body).to.have.property('user')
     })
 
+    it('the object has the property "user"', () => {
+      expect(res.body.user).to.be.an('object')
+    })
+
     it('user have the correct keys', () => {
       expect(res.body.user).to.have.all.keys('name', 'email', 'role', '_id');
     })
@@ -140,4 +144,5 @@ describe('Test user login', () => {
       expect(res.body.message).to.be.equal('All fields must be filled')
     })
   });
+
 });
