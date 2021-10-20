@@ -29,7 +29,7 @@ app.get('/', (request, response) => {
   response.send();
 });
 // Não remover esse end-point, ele é necessário para o avaliador
-
+app.post('/users/admin', middleware.checkToken, userControllers.creatAdm);
 app.post('/users', userControllers.create);
 app.post('/login', userControllers.findUser);
 app.post('/recipes', middleware.checkToken, recipesController.createRecipes);

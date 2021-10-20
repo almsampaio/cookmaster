@@ -15,7 +15,17 @@ const getEmail = async (email) => {
     return checkEmail;
 };
 
+const createAdm = async (admin) => {
+    const { name, email, password } = admin;
+    const role = 'admin';
+ const db = await connection();
+  const { ops } = await db.collection('users').insertOne({ name, email, password, role });
+  const { _id: id } = ops[0];
+  return { name: ops[0].name, email: ops[0].email, role: ops[0].role, _id: id }; 
+};
+
 module.exports = {
     create,
     getEmail,
+    createAdm,
 };

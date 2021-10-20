@@ -27,7 +27,18 @@ const findUser = async (body) => {
   return { status: 200, data: { token: validToken } };
 };
 
+const createAdm = async (name, email, password, role) => {
+  if (role !== 'admin') {
+    return { status: 403, data: { message: 'Only admins can register new admins' } };
+  }
+  const userAdm = await modelsUsers.createAdm(
+    { name, email, password },
+  );
+  return { status: 201, data: { user: userAdm } };
+};
+
 module.exports = {
     create,
     findUser,
+  createAdm,
 };

@@ -11,7 +11,15 @@ const findUser = async (req, res) => {
     res.status(status).json(data);
   };
 
+const creatAdm = async (req, res) => {
+  const { name, email, password } = req.body;
+  const { role } = req.user;
+  const { status, data } = await serviceUser.createAdm(name, email, password, role);
+  res.status(status).json(data);
+ }; 
+
 module.exports = {
     create,
     findUser,
+    creatAdm, 
 };
