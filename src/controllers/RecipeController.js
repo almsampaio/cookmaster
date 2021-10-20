@@ -1,4 +1,4 @@
-// const UserModel = require('../models/Users');
+const RecipeModel = require('../models/Recipes');
 const RecipeService = require('../services/Recipes');
 
 const create = async (req, res) => {
@@ -11,6 +11,12 @@ const create = async (req, res) => {
   return res.status(status).json(json);
 };
 
+const getAll = async (req, res) => {
+  const recipes = await RecipeModel.getAll();
+  return res.status(200).json(recipes);
+};
+
 module.exports = {
   create,
+  getAll,
 };
