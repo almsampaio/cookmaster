@@ -21,6 +21,14 @@ const create = async (name, email, password) => {
   return { status: 201, data: { user } };
 };
 
+const createAdmin = async (dataBody, role) => {
+  const { name, email, password } = dataBody;
+  
+  const { password: _, ...result } = await modelUsers.createAdmin(name, email, password, role);
+  return result;
+};
+
 module.exports = {
   create,
+  createAdmin,
 };
