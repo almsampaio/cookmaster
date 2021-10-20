@@ -53,10 +53,23 @@ const deleteById = async (req, res) => {
   return res.status(204).json();
 };
 
+const addImage = async (req, res) => {
+  const { id } = req.params;
+  const image = `localhost:3000/src/uploads/${id}.jpeg`;
+  const recipe = await RecipeModel.update({ id, image });
+
+  if (!recipe) {
+    return res.status(500).json({ message: 'couldnt update the recipe' });
+  }
+
+  return res.status(200).json(recipe);
+};
+
 module.exports = {
   create,
   getAll,
   getById,
   update,
   deleteById,
+  addImage,
 };
