@@ -2,7 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const UserController = require('../controllers/UserController');
 const RecipeController = require('../controllers/RecipeController');
-const validateJWT = require('./auth/validateJWT');
+const { validateJWT, validatePermission } = require('./auth');
 
 const app = express();
 
@@ -16,6 +16,7 @@ app.post('/login', UserController.login);
 app.get('/recipes/:id', RecipeController.getById);
 app.get('/recipes', RecipeController.getAll);
 app.post('/recipes', validateJWT, RecipeController.create);
+app.put('/recipes/:id', validateJWT, validatePermission, RecipeController.update);
 
 // Não remover esse end-point, ele é necessário para o avaliador
 app.get('/', (request, response) => {

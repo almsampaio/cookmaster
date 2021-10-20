@@ -46,10 +46,10 @@ const create = async ({ name, ingredients, preparation, userId }) => {
   };
 };
 
-const update = async ({ id, name, ingredients, preparation, userId }) => {
+const update = async ({ id, name, ingredients, preparation }) => {
   await connection.getConnection()
   .then((db) => db.collection(COLLECTION_NAME)
-  .updateOne({ _id: ObjectId(id) }, { $set: { name, ingredients, preparation, userId } }));
+  .updateOne({ _id: ObjectId(id) }, { $set: { name, ingredients, preparation } }));
 
   const recipe = await getById(id);
 

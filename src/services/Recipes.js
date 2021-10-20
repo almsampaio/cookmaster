@@ -72,7 +72,22 @@ const create = async ({ name, ingredients, preparation, userId }) => {
   };
 };
 
+const update = async ({ id, name, ingredients, preparation, userId }) => {
+  const isValidObj = isValid(name, ingredients, preparation, userId);
+  if (!isValidObj.isValid) {
+    return isValidObj;
+  }
+
+  const recipe = await RecipeModel.update({ id, name, ingredients, preparation });
+
+  return {
+    status: 200,
+    json: recipe,
+  };
+};
+
 module.exports = {
   create,
   isValid,
+  update,
 };
