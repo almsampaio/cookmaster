@@ -16,8 +16,7 @@ app.post('/users', UserController.create);
 
 app.post('/login', UserController.login);
 
-app.get('/recipes/:id', RecipeController.getById);
-app.get('/recipes', RecipeController.getAll);
+app.get('/images/:idjpeg', RecipeController.showImage);
 app.put(
   '/recipes/:id/image/',
   validateJWT, 
@@ -25,6 +24,9 @@ app.put(
   upload.single('image'), 
   RecipeController.addImage,
 );
+
+app.get('/recipes/:id', RecipeController.getById);
+app.get('/recipes', RecipeController.getAll);
 app.post('/recipes', validateJWT, RecipeController.create);
 app.put('/recipes/:id', validateJWT, validatePermission, RecipeController.update);
 app.delete('/recipes/:id', validateJWT, validatePermission, RecipeController.deleteById);

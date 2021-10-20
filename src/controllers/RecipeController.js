@@ -65,6 +65,23 @@ const addImage = async (req, res) => {
   return res.status(200).json(recipe);
 };
 
+const showImage = async (req, res) => {
+  const { idjpeg } = req.params;
+  const id = idjpeg.split('.')[0];
+
+  const recipe = await RecipeModel.getById(id);
+
+  if (!recipe) {
+    return res.status(404).json({
+      message: 'recipe not found',
+    });
+  }
+
+  return res.status(200).sendFile(recipe.image.split('src')[1], {
+    root: `${__dirname}/..`,
+  });
+};
+
 module.exports = {
   create,
   getAll,
@@ -72,4 +89,5 @@ module.exports = {
   update,
   deleteById,
   addImage,
+  showImage,
 };
