@@ -31,6 +31,7 @@
     "express-rescue": "1.1.30",
     "express-router": "0.0.1",
     "frisby": "2.1.2",
+    "fs": "0.0.1-security",
     "jest": "26.4.1",
     "joi": "^17.4.2",
     "jsonwebtoken": "8.5.1",
