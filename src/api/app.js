@@ -4,7 +4,7 @@ const upload = require('../middlewares/multer');
 
 const UserController = require('../controllers/UserController');
 const RecipeController = require('../controllers/RecipeController');
-const { validateJWT, validatePermission } = require('./auth');
+const { validateJWT, validatePermission, validateAdmin } = require('./auth');
 
 const app = express();
 
@@ -12,6 +12,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static('src/uploads'));
 
+app.post('/users/admin', validateJWT, validateAdmin, UserController.create);
 app.post('/users', UserController.create);
 
 app.post('/login', UserController.login);

@@ -1,5 +1,3 @@
-// const RecipeModel = require('../../models/Recipes');
-
 module.exports = async (req, res, next) => {
     const { _id: userId, role } = req.user;
     

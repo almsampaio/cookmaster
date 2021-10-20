@@ -1,14 +1,14 @@
 const jwt = require('jsonwebtoken');
 
-// const UserModel = require('../models/Users');
 const UserService = require('../services/Users');
 
 const secret = 'seusecretdetoken';
 
 const create = async (req, res) => {
   const { name, email, password } = req.body;
+  const role = 'user' in req ? req.user.role : undefined;
 
-  const { status, json } = await UserService.create({ name, email, password });
+  const { status, json } = await UserService.create({ name, email, password, role });
 
   return res.status(status).json(json);
 };
