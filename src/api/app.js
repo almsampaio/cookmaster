@@ -13,6 +13,7 @@ app.post('/users', UserController.create);
 
 app.post('/login', UserController.login);
 
+app.get('/recipes/:id', RecipeController.getById);
 app.get('/recipes', RecipeController.getAll);
 app.post('/recipes', validateJWT, RecipeController.create);
 
