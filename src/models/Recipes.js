@@ -32,8 +32,18 @@ const create = async ({ name, ingredients, preparation, userId }) => {
     .then((db) => db
       .collection(COLLECTION_NAME)
       .insertOne({ name, ingredients, preparation, userId }));
+  
+  const { _id } = ops[0];
 
-  return ops[0];
+  return {
+    recipe: {
+      name,
+      ingredients,
+      preparation,
+      userId,
+      _id,
+    },
+  };
 };
 
 const update = async ({ id, name, ingredients, preparation, userId }) => {

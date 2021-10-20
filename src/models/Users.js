@@ -29,7 +29,6 @@ const getById = async (id) => {
 
 const getByEmail = async (email) => {
   try {
-    console.log(email, 'email');
     const user = await connection.getConnection()
       .then((db) => db.collection(COLLECTION_NAME).findOne({ email }));
 
