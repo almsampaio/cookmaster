@@ -16,8 +16,8 @@ app.use('/users', usersRoutes);
 app.use('/login', loginRoutes);
 
 app.use((err, _req, res, _next) => {
-  if (err.status) return res.status(err.status).json({ messege: err.message });
-  return res.status(500).json({ messege: err.message });
+  if (err.status) return res.status(err.status).json({ message: err.message });
+  return res.status(500).json({ message: err.message });
 });
 
 module.exports = app;

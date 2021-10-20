@@ -1,17 +1,13 @@
-const verifyEmailLogin = require('../auth/verifyEmailLogin');
-const verifyPasswordLogin = require('../auth/verifyPasswordLogin');
+const verifyCorrectLogin = require('../auth/verifyCorrectLogin');
+const verifyEmptyLogin = require('../auth/verifyEmptyLogin');
 const generateToken = require('../utils/generateToken');
 const { STATUS_OK } = require('../utils/statusSuccess');
 
 const login = async (email, password) => {
-  try {
-    const resEmail = await verifyEmailLogin(email);
-    const resPassword = await verifyPasswordLogin(resEmail, password);
-    const token = await generateToken(resPassword);
-    return { status: STATUS_OK, message: { token } };
-  } catch (err) {
-    return err;
-  }
+  const verifyEmpty = await verifyEmptyLogin(email, password);
+  const validateLogin = await verifyCorrectLogin(verifyEmpty);
+  const token = await generateToken(validateLogin);
+  return { status: STATUS_OK, message: { token } };
 };
 
 module.exports = {
