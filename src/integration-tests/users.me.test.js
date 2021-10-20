@@ -28,7 +28,7 @@ describe('POST /users', () => {
     after(async () => {
       MongoClient.connect.restore();
     });
-
+    
     it('retorna status 400', () => {
       expect(response).to.have.status(400);
     });
@@ -56,7 +56,7 @@ describe('POST /users', () => {
     after(async () => {
       MongoClient.connect.restore();
     });
-
+    
     it('retorna status 400', () => {
       expect(response).to.have.status(400);
     });
@@ -84,7 +84,7 @@ describe('POST /users', () => {
     after(async () => {
       MongoClient.connect.restore();
     });
-
+    
     it('retorna status 400', () => {
       expect(response).to.have.status(400);
     });
@@ -121,7 +121,7 @@ describe('POST /users', () => {
     after(async () => {
       MongoClient.connect.restore();
     });
-
+    
     it('retorna status 409', () => {
       expect(response).to.have.status(409);
     });
@@ -151,7 +151,7 @@ describe('POST /users', () => {
     after(async () => {
       MongoClient.connect.restore();
     });
-
+    
     it('retorna status 200', () => {
       expect(response).to.have.status(201);
     });
@@ -201,7 +201,7 @@ describe('POST /users/admin', () => {
         .set('Authorization', token)
         .send(data);
     });
-
+    
     it('retorna status 200', () => {
       expect(response).to.have.status(201);
     });
@@ -242,7 +242,7 @@ describe('POST /users/admin', () => {
         .set('Authorization', token)
         .send(data);
     });
-
+    
     it('retorna status 403', () => {
       expect(response).to.have.status(403);
     });
