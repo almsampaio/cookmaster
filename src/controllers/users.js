@@ -10,6 +10,14 @@ const create = async (req, res) => {
   res.status(status).json(data);
 };
 
+const createAdmin = async (req, res, _next) => {
+  const result = await serviceUsers.createAdmin(req.body);
+  return res.status(201).json({ 
+    user: result,
+  });
+};
+
 module.exports = {
   create,
+  createAdmin,
 };
