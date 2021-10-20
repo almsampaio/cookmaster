@@ -41,9 +41,22 @@ const update = async (req, res) => {
   return res.status(status).json(json);
 };
 
+const deleteById = async (req, res) => {
+  const { id } = req.params;
+
+  const deletedRecipe = await RecipeModel.deleteById(id);
+
+  if (!deletedRecipe) {
+    return res.status(404).json({ message: 'recipe not found' });
+  }
+
+  return res.status(204).json();
+};
+
 module.exports = {
   create,
   getAll,
   getById,
   update,
+  deleteById,
 };
