@@ -17,6 +17,23 @@ const validToken = async (token) => {
   }
 };
 
+const jwtAdminVerify = async (req, res, next) => {
+  const { authorization: token } = req.headers;
+
+  try {
+    const checkToken = jwtVerify.verify(token);
+    const user = await modelLogin.searchEmailUser(checkToken.email);
+    
+    const { role } = user;
+    if (role !== 'admin') throw new Error();
+
+    next();
+  } catch (e) {
+    return res.status(403).json({ message: 'Only admins can register new admins' });
+  }
+};
+
 module.exports = {
   validToken,
+  jwtAdminVerify,
 };
