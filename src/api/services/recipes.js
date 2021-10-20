@@ -1,84 +1,89 @@
-const {
-    createModel,
-    readAllModel,
-    readByIdModel,
-    updateModel,
-    updateImageModel,
-    deleteModel,
-  } = require('../models/recipes');
-  
-  const createServices = async (name, ingredients, preparation, userId) => {
-    const data = await createModel(name, ingredients, preparation, userId);
-  
-    return { data };
-  };
-  
-  const readAllServices = async () => {
-    const data = await readAllModel();
-  
-    return { data };
-  };
-  
-  const readByIdServices = async (id) => {
-    const data = await readByIdModel(id);
-  
-    if (!data) {
-      return { message: 'recipe not found' };
-    }
-  
-    return { data };
-  };
-  
-  const updateServices = async (idRecipes, userId, role, updatedData) => {
-    const foundData = await readByIdModel(idRecipes);
-  
-    if (role === 'user' && userId !== foundData.userId) {
-      return { message: 'this recipe is not yours' };
-    }
-    
-    await updateModel(updatedData);
-  
-    const data = await readByIdModel(idRecipes);
-    
-    return { data };
-  };
-  
-  const updateImageServices = async (idRecipes, image, userId, role) => {
-    const foundData = await readByIdModel(idRecipes);
-  
-    if (!foundData) {
-      return { isEmpty: true };
-    }
-  
-    if (role === 'admin' || userId === foundData.userId) {
-      await updateImageModel(idRecipes, image);
-      const data = await readByIdModel(idRecipes);
-      return { data };
-    }
-  
-    return { message: 'this recipe is not yours', notEqual: true };
-  };
-  
-  const deleteServices = async (id, userId, role) => {
-    const foundData = await readByIdModel(id);
-  
-    if (!foundData) {
-      return { isEmpty: true };
-    }
-  
-    if (role === 'admin' || userId === foundData.userId) {
-      await deleteModel(id);
-      return { deleted: true };
-    }
-  
-    return { message: 'this recipe is not yours', notEqual: true };
-  };
-  
-  module.exports = {
-    createServices,
-    readAllServices,
-    readByIdServices,
-    updateServices,
-    updateImageServices,
-    deleteServices,
-  };
+const Joi = require('joi');
+
+const recipesModel = require('../models/recipes');
+
+const INVALID_ENTRIES = { message: 'Invalid entries. Try again.', status: 400 };
+const RECIPE_NOT_FOUND = { message: 'recipe not found', status: 404 };
+
+const validateRecipe = Joi.object({
+  name: Joi.string().min(5).required(),
+  ingredients: Joi.string().min(5).required(),
+  preparation: Joi.string().min(5).required(),
+});
+
+const createRecipe = async (name, ingredients, preparation, userId) => {
+  const { value, error } = validateRecipe.validate({ name, ingredients, preparation });
+
+  if (error) return { error: INVALID_ENTRIES };
+
+  value.userId = userId;
+
+  const recipe = await recipesModel.createRecipe(value);
+
+  return { result: { recipe } };
+};
+
+const getRecipes = async () => {
+  const result = await recipesModel.getRecipes();
+
+  return result;
+};
+
+const getRecipeById = async (id) => {
+  const result = await recipesModel.getRecipeById(id);
+
+  if (!result) return { error: RECIPE_NOT_FOUND };
+
+  return { result };
+};
+
+const editRecipeById = async (recipeId, recipeData, { role, id }) => {
+  const { value, error } = validateRecipe.validate(recipeData);
+
+  if (error) return { error: INVALID_ENTRIES };
+
+  const { result: { userId } } = await getRecipeById(recipeId);
+
+  if (userId !== id && role !== 'admin') {
+    return { error: INVALID_ENTRIES };
+  }
+
+  const result = await recipesModel.editRecipeById(recipeId, value);
+
+  if (!result) return { error: RECIPE_NOT_FOUND };
+
+  return { result };
+};
+
+const deleteRecipeById = async (id) => {
+  const result = await recipesModel.deleteRecipeById(id);
+
+  if (!result) return { error: RECIPE_NOT_FOUND };
+
+  return { result };
+};
+
+const insertImage = async (id, filename, userData) => {
+  const imageLink = `localhost:3000/src/uploads/${filename}`;
+
+  const { result: { userId } } = await getRecipeById(id);
+
+  if (userId !== userData.id && userData.role !== 'admin') {
+    return { error: INVALID_ENTRIES };
+  }
+
+  const result = await recipesModel.insertImage(id, imageLink);
+
+  if (!result) return { error: RECIPE_NOT_FOUND };
+
+  return { result };
+};
+
+module.exports = {
+  createRecipe,
+  getRecipes,
+  getRecipeById,
+  editRecipeById,
+  deleteRecipeById,
+  insertImage,
+};

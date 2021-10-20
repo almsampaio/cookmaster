@@ -1,77 +1,77 @@
 const { ObjectId } = require('mongodb');
-
 const connection = require('./connect');
 
-const createModel = async (name, ingredients, preparation, userId) => {
+const createRecipe = async (recipeData) => {
   const db = await connection();
-  const insertUsers = await db.collection('recipes')
-    .insertOne({ name, ingredients, preparation, userId });
-  const result = { 
-    _id: insertUsers.insertedId,
-    userId,
-    name, 
-    ingredients, 
-    preparation,
-  };
 
-  return result;
+  const { ops } = await db.collection('recipes').insertOne(recipeData);
+
+  return ops[0];
 };
 
-const readAllModel = async () => {
+const getRecipes = async () => {
   const db = await connection();
+
   const result = await db.collection('recipes').find({}).toArray();
+
   return result;
 };
 
-const readByIdModel = async (id) => {
-  if (!ObjectId.isValid(id)) {
-    return null;
-  }
+const getRecipeById = async (id) => {
+  if (!ObjectId.isValid(id)) return null;
 
   const db = await connection();
-  const result = await db.collection('recipes').findOne({ _id: ObjectId(id) });
+
+  const result = await db.collection('recipes').findOne(ObjectId(id));
+
   return result;
 };
 
-const updateModel = async ({ id, name, ingredients, preparation }) => {
+const editRecipeById = async (id, recipeData) => {
+  if (!ObjectId.isValid(id)) return null;
+
   const db = await connection();
-  const result = await db.collection('recipes')
-    .updateOne(
-      { _id: ObjectId(id) },
-      {
-        $set: {
-          name,
-          ingredients,
-          preparation,
-        },
-      },
-    );
-  return result;
+
+  const { value } = await db.collection('recipes').findOneAndUpdate(
+    { _id: ObjectId(id) },
+    { $set: { ...recipeData } },
+    { returnOriginal: false },
+  );
+
+  return value;
 };
 
-const updateImageModel = async (id, image) => {
+const deleteRecipeById = async (id) => {
+  if (!ObjectId.isValid(id)) return null;
+
   const db = await connection();
-  await db.collection('recipes')
-    .updateOne(
-      { _id: ObjectId(id) },
-      {
-        $set: {
-          image,
-        },
-      },
-    );
+
+  const { value } = await db.collection('recipes').findOneAndDelete(
+    { _id: ObjectId(id) },
+  );
+
+  return value;
 };
 
-const deleteModel = async (id) => {
+const insertImage = async (id, image) => {
+  if (!ObjectId.isValid(id)) return null;
+
   const db = await connection();
-  await db.collection('recipes').deleteOne({ _id: ObjectId(id) });
+
+  const { value } = await db.collection('recipes').findOneAndUpdate(
+    { _id: ObjectId(id) },
+    { $set: { image } },
+    { returnOriginal: false },
+  );
+
+  return value;
 };
 
 module.exports = {
-  createModel,
-  readAllModel,
-  readByIdModel,
-  updateModel,
-  updateImageModel,
-  deleteModel,
+  createRecipe,
+  getRecipes,
+  getRecipeById,
+  editRecipeById,
+  deleteRecipeById,
+  insertImage,
 };

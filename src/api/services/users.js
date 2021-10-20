@@ -1,45 +1,48 @@
-const jwt = require('jsonwebtoken');
+const Joi = require('joi');
 
-const { Secret, jwtConfig } = require('./jwt');
+const usersModel = require('../models/user');
 
-const {
-  createModel,
-  readByEmailModel,
-  readByEmailAndPasswordModel,
-} = require('../models/user');
+const REGISTERED_EMAIL = { message: 'Email already registered', status: 409 };
+const INVALID_ENTRIES = { message: 'Invalid entries. Try again.', status: 400 };
+const FORBIDDEN = { message: 'Only admins can register new admins', status: 403 };
 
-const createServices = async (name, email, password, role) => {
-  const emailFound = await readByEmailModel(email);
+const validateUser = Joi.object({
+  name: Joi.string().min(4).required(),
+  password: Joi.string().min(5).required(),
+  email: Joi.string().email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } }).required(),
+});
 
-  if (emailFound) {
-    return { message: 'Email already registered' };
-  }
+const registerUser = async (userData) => {
+  const { value, error } = validateUser.validate(userData);
 
-  const data = await createModel(name, email, password, role);
-  return { data };
+  if (error) return { error: INVALID_ENTRIES };
+
+  const checkEmail = await usersModel.getEmail(userData.email);
+
+  if (checkEmail) return { error: REGISTERED_EMAIL };
+
+  const { _id, email, name, role } = await usersModel.registerUser(value);
+
+  return { result: { user: { id: _id, email, name, role } } };
 };
 
-const createTokenServices = async (email, password) => {
-  const data = await readByEmailAndPasswordModel(email, password);
+const registerAdmin = async (userData, userRole) => {
+  if (userRole !== 'admin') return { error: FORBIDDEN };
 
-  if (!data) {
-    return { message: 'Incorrect username or password' };
-  }
+  const { value, error } = validateUser.validate(userData);
 
-  const { _id, role } = data;
-  
-  const payload = {
-    _id,
-    email,
-    role,
-  };
+  if (error) return { error: INVALID_ENTRIES };
 
-  const token = jwt.sign(payload, Secret, jwtConfig);
-  
-  return { token };
+  const checkEmail = await usersModel.getEmail(userData.email);
+
+  if (checkEmail) return { error: REGISTERED_EMAIL };
+
+  const { _id, userData: { email, name }, role } = await usersModel.registerAdmin(value);
+
+  return { result: { user: { _id, email, name, role } } };
 };
 
 module.exports = {
-  createServices,
-  createTokenServices,
+  registerUser,
+  registerAdmin,
 };

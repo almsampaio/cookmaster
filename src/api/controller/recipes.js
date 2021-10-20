@@ -1,107 +1,97 @@
-const {
-    createServices,
-    readAllServices,
-    readByIdServices,
-    updateServices,
-    updateImageServices,
-    deleteServices,
-  } = require('../services/recipes');
-  
-  const createController = async (req, res) => {
-    const { name, ingredients, preparation } = req.body;
-    const { _id: userId } = req.userRecipes;
-  
-    const { data } = await createServices(name, ingredients, preparation, userId);
-  
-    return res.status(201).json({
-      recipe: data,
-    });
-  };
-  
-  const readAllController = async (_req, res) => {
-    const { data } = await readAllServices();
-  
-    return res.status(200).json(data);
-  };
-  
-  const readByIdController = async (req, res) => {
+const recipesService = require('../services/recipes');
+
+const createRecipe = async (req, res, next) => {
+  const { name, ingredients, preparation } = req.body;
+
+  const { id: userId } = req.auth;
+
+  const { error, result } = await recipesService.createRecipe(
+    name,
+    ingredients,
+    preparation,
+    userId,
+  );
+
+  if (error) return next(error);
+
+  return res.status(201).json(result);
+};
+
+const getRecipes = async (req, res, next) => {
+  try {
+    const result = await recipesService.getRecipes();
+
+    return res.status(200).json(result);
+  } catch (error) {
+    next(error);
+  }
+};
+
+const getRecipeById = async (req, res, next) => {
+  try {
     const { id } = req.params;
-    const { message, data } = await readByIdServices(id);
-  
-    if (!data) {
-      return res.status(404).json({ message });
-    }
-  
-    return res.status(200).json(data);
-  };
-  
-  const readImageController = async (req, res) => {
-    const imageHeader = req.file.path;
-  
-    return res.status(200).json(imageHeader);
-  };
-  
-  const updateController = async (req, res) => {
+
+    const { result, error } = await recipesService.getRecipeById(id);
+
+    if (error) next(error);
+
+    return res.status(200).json(result);
+  } catch (error) {
+    next(error);
+  }
+};
+
+const editRecipeById = async (req, res, next) => {
+  try {
     const { id } = req.params;
-    const { name, ingredients, preparation } = req.body;
-    const { _id: userId, role } = req.userRecipes;
-  
-    const updatedData = { id, name, ingredients, preparation };
-    const { message, data } = await updateServices(id, userId, role, updatedData);
-  
-    if (!data) {
-      return res.status(401).json({ message });
-    }
-    
-    return res.status(200).json(data);
-  };
-  
-  const updateImageController = async (req, res) => {
+    const recipeData = req.body;
+    const userInfo = req.auth;
+
+    const { result, error } = await recipesService.editRecipeById(id, recipeData, userInfo);
+
+    if (error) next(error);
+
+    return res.status(200).json(result);
+  } catch (error) {
+    next(error);
+  }
+};
+
+const deleteRecipeById = async (req, res, next) => {
+  try {
     const { id } = req.params;
-    const { _id: userId, role } = req.userRecipes;
-    const { path } = req.file;
-    const image = `localhost:3000/${path}`;
-  
-    const { isEmpty, data, message, notEqual } = await updateImageServices(id, image, userId, role);
-  
-    if (isEmpty) {
-      return res.status(401).json({ message: 'recipe not found' });
-    }
-  
-    if (data) {
-      return res.status(200).json(data);
-    }
-  
-    if (notEqual) {
-      return res.status(401).json({ message });
-    }
-  };
-  
-  const deleteController = async (req, res) => {
+
+    const { result, error } = await recipesService.deleteRecipeById(id);
+
+    if (error) next(error);
+
+    return res.status(204).json(result);
+  } catch (error) {
+    next(error);
+  }
+};
+
+const insertImage = async (req, res, next) => {
+  try {
     const { id } = req.params;
-    const { _id: userId, role } = req.userRecipes;
-  
-    const { isEmpty, deleted, notEqual, message } = await deleteServices(id, userId, role);
-  
-    if (isEmpty) {
-      return res.status(404).json({ message: 'recipe not found' });
-    }
-  
-    if (deleted) {
-      return res.status(204).json();
-    }
-  
-    if (notEqual) {
-      return res.status(401).json({ message });
-    }
-  };
-  
-  module.exports = {
-    createController,
-    readAllController,
-    readByIdController,
-    readImageController,
-    updateController,
-    updateImageController,
-    deleteController,
-  };
+    const userData = req.auth;
+    const { filename } = req.file;
+
+    const { result, error } = await recipesService.insertImage(id, filename, userData);
+
+    if (error) next(error);
+
+    return res.status(200).json(result);
+  } catch (error) {
+    next(error);
+  }
+};
+
+module.exports = {
+  createRecipe,
+  getRecipes,
+  getRecipeById,
+  editRecipeById,
+  deleteRecipeById,
+  insertImage,
+};
