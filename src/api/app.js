@@ -6,6 +6,7 @@ const multer = require('multer');
 const controllerUsers = require('../controllers/users');
 const controllerLogin = require('../controllers/login');
 const controllerRecipes = require('../controllers/recipes');
+const { jwtAdminVerify } = require('../auth/authBasic');
 
 const app = express();
 
@@ -29,6 +30,7 @@ app.get('/', (request, response) => {
 // Não remover esse end-point, ele é necessário para o avaliador
 
 app.post('/users', controllerUsers.create);
+app.post('/users/admin', jwtAdminVerify, controllerUsers.createAdmin);
 
 app.post('/login', controllerLogin.loginUser);
 
