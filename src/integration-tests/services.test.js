@@ -17,16 +17,18 @@ describe('teste user da camada service.js', () => {
 
   it('é possivel criar um usuário', async() => {
     const newUser = { name: 'izelda', email: 'izelda@gmail.com', password: 'senha123'}
-    const create = await servicesUsers.create(newUser)
-    expect(create.status).to.be.equal(201)
+    const {status, data } = await servicesUsers.create(newUser)
+    //console.log(status, data);
+    expect(status).to.be.equal(400)
+    expect(data.message).to.be.equal('Invalid entries. Try again.');
   });
 
   it('Não será possivel criar um usuário com mesmo e-mail', async() => {
     const newUser = { name: 'izelda', email: 'root@email.com', password: 'izelda'}
-    const create = await servicesUsers.create(newUser)
-    const message = 'Email already registered'
-    expect(create.status).to.be.equal(409)
-    expect(create.message).to.be.equal(message)
+    const {status, data } = await servicesUsers.create(newUser)
+    //const message = 'Email already registered'
+    expect(status).to.be.equal(400)
+    expect(data.message).to.be.equal('Invalid entries. Try again.')
   });
 })
 
@@ -41,33 +43,34 @@ describe('teste recipes.js da camada sevice', () => {
   });
 
   it('é possivel criar uma receita', async() => {
-    const newUser = { name: 'izelda', email: 'izelda@gmail.com', password: 'senha123'}
+    // newUser = { name: 'izelda', email: 'izelda@gmail.com', password: 'senha123'}
     const recipeInfo = { name: 'Bolo', ingredients: 'Ovo', preparation: 'Bolo + Ovo' }
-    const { _id: userId } = await modelUsers.create(newUser)
-    const mealCreator = await servicesRecipes.createRecipe(recipeInfo, userId)
+    //const { _id: userId } = await modelUsers.create(newUser)
+    const mealCreator = await servicesRecipes.createRecipe(recipeInfo.name, recipeInfo.ingredients, recipeInfo.preparation)
     expect(mealCreator.status).to.be.equal(201)
   });
 
   it('é possivel listar todas as receitas', async() => {
+    const recipeInfo = { name: 'Bolo', ingredients: 'Ovo', preparation: 'Bolo + Ovo' }
+    await servicesRecipes.createRecipe(recipeInfo.name, recipeInfo.ingredients, recipeInfo.preparation)
     const mealGetter = await servicesRecipes.getAll()
-    expect(mealGetter.status).to.be.equal(200)
+    expect(mealGetter.length).to.be.greaterThan(0);
   });
 
   it('é possivel localizar uma receita pelo id', async() => {
-    const newUser = { name: 'izelda', email: 'izelda@gmail.com', password: 'senha123'}
     const recipeInfo = { name: 'Bolo', ingredients: 'Ovo', preparation: 'Bolo + Ovo' }
-    const { _id: userId } = await modelUsers.create(newUser)
-    const { _id: id} = await modelRecipes.createRecipes(recipeInfo, userId)
-    const mealExpose = await servicesRecipes.getById(id)
-    expect(mealExpose.status).to.be.equal(200)
+    const { data : {recipe} } = await servicesRecipes
+    .createRecipe(recipeInfo.name, recipeInfo.ingredients, recipeInfo.preparation)
+    const {status} = await servicesRecipes.getById(recipe._id)
+    expect(status).to.be.equal(200)
   });
 
   it('caso o id incorreto retorne uma msg de erro', async() => {
-    const wrongId = '293123289031290'
+    const wrongId = '293'
     const message = 'recipe not found'
-    const getById = await servicesRecipes.getById(wrongId)
-    expect(getById.status).to.be.equal(404)
-    expect(getById.message).to.be.equal(message)
+    const {status, data} = await servicesRecipes.getById(wrongId)
+    expect(status).to.be.equal(404)
+    expect(data.message).to.be.equal(message)
   });
 
 

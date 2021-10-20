@@ -2,6 +2,7 @@ const modelsUsers = require('../models/users');
 const util = require('../util/users');
 
 const create = async (name, email, password) => {
+  // console.log(name, email, password);
     if (!name || !password || !util.validateEmail(email)) {
       return { status: 400, data: { message: 'Invalid entries. Try again.' } };
     }

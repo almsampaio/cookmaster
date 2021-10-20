@@ -5,6 +5,8 @@ const controllerRecipes = require('../controllers/recipes');
 const controllerUser = require('../controllers/users');
 const modelsRecipes = require('../models/recipes');
 const modelsUsers = require('../models/users');
+const serviceRecipes = require('../services/recipes');
+const servicesUsers = require('../services/users')
 const { request } = require('express');
 
 describe('testando a camada controllers', () => {
@@ -36,6 +38,26 @@ describe('testando a camada controllers', () => {
       expect(response.status.calledWith(409)).to.be.equal(true)
       expect(response.json.calledWith({ message })).to.be.equal(true)
     });
+
+    it( 'é possível encontrar um usúario pelo email e senha', async()=>{
+      request.body = { email: 'izelda@gmail.com', password: 'izelda'}
+      response.status = sinon.stub().returns(response);
+      response.json = sinon.stub().returns();
+      sinon.stub(servicesUsers,'findUser').resolves({status: 200, data:"0k" })
+      await controllerUser.findUser(request, response)
+      expect(response.status.calledWith(200)).to.be.equal(true)
+      //expect(response.json.calledWith("Ok")).to.be.equal(false)
+    })
+
+    it('é possivel criar um usuário ADM', async() => {
+      request.body = { name: 'izelda', email: 'izelda@gmail.com', password: 'izelda'}
+      request.user = { role: "admin" }
+      response.status = sinon.stub().returns(response);
+      response.json = sinon.stub().returns();
+      await controllerUser.creatAdm(request, response)
+      console.log(request)
+      expect(response.status.calledWith(201)).to.be.equal(true)
+    });
     
   })
   
@@ -51,7 +73,7 @@ describe('testando a camada controllers', () => {
       await db.collection('users').insertOne(users);
     });
   
-    it('ié possivel criar uma receita', async() => {
+    it('é possivel criar uma receita', async() => {
       const newUser = { name: 'Izelda', email: 'izelda@gmail.com', password: 'senha123'}
       request.body = { name: 'Bolo', ingredients: 'Ovo', preparation: 'Bolo + Ovo' }
       request.user = { _id: userId } = await modelsUsers.create(newUser)
@@ -84,4 +106,33 @@ describe('testando a camada controllers', () => {
       expect(response.status.calledWith(404)).to.be.equal(true)
       expect(response.json.calledWith({ message })).to.be.equal(true)
     });
+
+    it('è possivel atualizar uma receita pelo ID', async() =>{
+      request.params = {id}
+      request.user._id =  '123456'
+      response.status = sinon.stub().returns(response);
+      response.json = sinon.stub().returns();
+      sinon.stub(serviceRecipes,'update').resolves({status: 200, data:"0k" })
+      await controllerRecipes.update(request, response)
+      expect(response.status.calledWith(200)).to.be.equal(true)
+      expect(response.json.calledWith("Ok")).to.be.equal(false)
+    })
+
+    it('é possivel remover uma receita pelo ID', async() => {
+      request.params = {id}
+      response.status = sinon.stub().returns(response);
+      response.json = sinon.stub().returns();
+      sinon.stub(serviceRecipes,'remove').resolves({status: 200, data:"0k" })
+      await controllerRecipes.remove(request, response)
+      expect(response.status.calledWith(200)).to.be.equal(true)
+    }) 
+
+    it( 'teste se é possivel incluir uma imagem', async()=>{
+      request.params = {id}
+      response.status = sinon.stub().returns(response);
+      response.json = sinon.stub().returns();
+      sinon.stub(serviceRecipes,'uploadImage').resolves({status: 200, data:"0k" })
+      await controllerRecipes.uploadImage(request, response)
+      expect(response.status.calledWith(200)).to.be.equal(true)
+    })
   }) 

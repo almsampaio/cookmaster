@@ -3,6 +3,7 @@ const modelsRecipe = require('../models/recipes');
 // req 4 sem autenticação
 const getAll = async () => {
     const result = await modelsRecipe.getAll();
+    // console.log(result);
     return result;
 };
 
