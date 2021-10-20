@@ -7,7 +7,7 @@ const create = async (userName, userEmail, password) => {
 
   const validEmail = await validation.verifyEmail(userEmail);
   if (validEmail) return validEmail;
-  
+
   const result = await UserModels.create(userName, userEmail, password);
   const newUser = result.ops[0];
   const { name, email, _id } = newUser;

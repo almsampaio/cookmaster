@@ -11,15 +11,13 @@ const create = async (req, res) => {
 
 const createAdmin = async (req, res) => {
   const { role } = req.user;
-  console.log('qualquer');
   if (role !== 'admin') {
-    console.log('qualquer dentro');
     return res.status(403).json({ message: 'Only admins can register new admins' });    
   }
 
   const { name, email, password } = req.body;
   const result = await UsersServices.createAdmin(name, email, password);
-  console.log('outro qualquer');
+
   if (result.message) return res.status(result.code).json({ message: result.message });
   res.status(201).json(result);
 };
