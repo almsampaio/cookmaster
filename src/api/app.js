@@ -10,6 +10,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 app.post('/users', UserController.create);
 
+app.post('/login', UserController.login);
+
 // Não remover esse end-point, ele é necessário para o avaliador
 app.get('/', (request, response) => {
   response.send();

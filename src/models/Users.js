@@ -27,6 +27,20 @@ const getById = async (id) => {
   }
 };
 
+const getByEmail = async (email) => {
+  try {
+    console.log(email, 'email');
+    const user = await connection.getConnection()
+      .then((db) => db.collection(COLLECTION_NAME).findOne({ email }));
+
+    if (!user) return null;
+
+    return user;
+  } catch (err) {
+    return null;
+  }
+};
+
 const create = async ({ name, email, password, role }) => {
   const { ops } = await connection.getConnection()
     .then((db) => db.collection(COLLECTION_NAME).insertOne({ name, email, password, role }));
@@ -71,6 +85,7 @@ const deleteById = async (id) => {
 module.exports = {
   getAll,
   getById,
+  getByEmail,
   create,
   update,
   deleteById,

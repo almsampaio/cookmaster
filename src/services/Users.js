@@ -1,5 +1,22 @@
 const UserModel = require('../models/Users');
 
+const Errors = {
+  doesntMatch: {
+    isValid: false,
+    status: 401,
+    json: {
+      message: 'Incorrect username or password',
+    },
+  },
+  fieldsIncomplete: {
+    isValid: false,
+    status: 401,
+    json: {
+      message: 'All fields must be filled',
+    },
+  },
+};
+
 const isNameValid = (name) => {
   if (!name || typeof name !== 'string') {
     return {
@@ -93,6 +110,23 @@ const isValid = async (name, email, password) => {
   };
 };
 
+const isEmailAndPasswordCorrect = async (email, password) => {
+  const validateEmailRegexObj = validateEmailRegex(email);
+  if (!validateEmailRegexObj.isValid) {
+    return Errors.doesntMatch;
+  } 
+  
+  const user = await UserModel.getByEmail(email);
+  if (!user || user.password !== password) {
+    return Errors.doesntMatch;
+  }
+
+  return {
+    isValid: true,
+    user,
+  };
+};
+
 const create = async ({ name, email, password, role = 'user' }) => {
   const isValidObj = await isValid(name, email, password);
   if (!isValidObj.isValid) {
@@ -112,7 +146,28 @@ const create = async ({ name, email, password, role = 'user' }) => {
   };
 };
 
+const login = async ({ email, password }) => {
+  if (!email || !password) {
+    return Errors.fieldsIncomplete;
+  }
+
+  const isEmailAndPasswordCorrectObj = await isEmailAndPasswordCorrect(email, password);
+  if (!isEmailAndPasswordCorrectObj.isValid) return isEmailAndPasswordCorrectObj;
+  
+  const { _id: id, role } = isEmailAndPasswordCorrectObj.user;
+
+  return {
+    status: 200,
+    json: {
+      id,
+      email,
+      role,
+    },
+  };
+};
+
 module.exports = {
   create,
   isValid,
+  login,
 };
