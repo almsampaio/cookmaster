@@ -4,6 +4,7 @@ const FILLED_FIELDS = 'All fields must be filled';
 const INCORRECT_LOGIN = 'Incorrect username or password';
 const INVALID_USER = 'Invalid user';
 const RECIPE_FOUND = 'recipe not found';
+const MISSING_TOKEN = 'missing auth token';
 
 module.exports = {
   INVALID_ENTRIES,
@@ -12,4 +13,5 @@ module.exports = {
   INCORRECT_LOGIN,
   INVALID_USER,
   RECIPE_FOUND,
+  MISSING_TOKEN,
 };

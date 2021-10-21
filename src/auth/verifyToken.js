@@ -1,14 +1,16 @@
 const jwt = require('jsonwebtoken');
 const { findEmail } = require('../models/usersModel');
-const { invalidUser } = require('../utils/messages');
+const { invalidUser, missingToken } = require('../utils/messages');
 const { UNAUTHORIZED } = require('../utils/statusErrors');
 const { secret } = require('../utils/tokenConfigs');
 
 const verifyToken = async (request, response, next) => {
-  const token = request.headers.authorization;
-  // console.log(token);
-
   try {
+    const token = request.headers.authorization;
+    // console.log(token);
+
+    if (!token) throw missingToken;
+
     const payload = jwt.verify(token, secret);
 
     const user = await findEmail(payload.email);

@@ -1,5 +1,12 @@
-const { INVALID_ENTRIES, DUPLICITY_EMAIL,
-  FILLED_FIELDS, INCORRECT_LOGIN, INVALID_USER, RECIPE_FOUND } = require('./errorMessages');
+const {
+  INVALID_ENTRIES,
+  DUPLICITY_EMAIL,
+  FILLED_FIELDS,
+  INCORRECT_LOGIN,
+  INVALID_USER,
+  RECIPE_FOUND,
+  MISSING_TOKEN,
+} = require('./errorMessages');
 const { BAD_REQUEST, CONFLICT, UNAUTHORIZED, NOT_FOUND } = require('./statusErrors');
 
 const badRequest = { status: BAD_REQUEST, message: INVALID_ENTRIES };
@@ -8,6 +15,7 @@ const filledFields = { status: UNAUTHORIZED, message: FILLED_FIELDS };
 const incorrectLogin = { status: UNAUTHORIZED, message: INCORRECT_LOGIN };
 const invalidUser = { status: UNAUTHORIZED, message: INVALID_USER };
 const notFound = { status: NOT_FOUND, message: RECIPE_FOUND };
+const missingToken = { status: UNAUTHORIZED, message: MISSING_TOKEN };
 
 module.exports = {
   badRequest,
@@ -16,4 +24,5 @@ module.exports = {
   incorrectLogin,
   invalidUser,
   notFound,
+  missingToken,
 };
