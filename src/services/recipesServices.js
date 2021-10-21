@@ -1,8 +1,8 @@
 const verifyRecipe = require('../auth/verifyRecipe');
 const { createRecipe, getAllRecipes,
-  findRecipeById, editRecipe } = require('../models/recipesModel');
+  findRecipeById, editRecipe, deleteRecipe } = require('../models/recipesModel');
 const { notFound } = require('../utils/messages');
-const { CREATED, STATUS_OK } = require('../utils/statusSuccess');
+const { CREATED, STATUS_OK, NO_CONTENT } = require('../utils/statusSuccess');
 
 const create = async (name, ingredients, preparation, user) => {
   const verifyEmptyFields = await verifyRecipe(name, ingredients, preparation);
@@ -27,9 +27,16 @@ const update = async (id, obj, user) => {
   return { status: STATUS_OK, message: updateRecipe };
 };
 
+const deleted = async (id) => {
+  const deleteR = await deleteRecipe(id);
+  if (!deleteR) throw notFound;
+  return { status: NO_CONTENT, message: '' };
+};
+
 module.exports = {
   create,
   getAll,
   findRecipe,
   update,
+  deleted,
 };
