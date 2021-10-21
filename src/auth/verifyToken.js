@@ -1,12 +1,12 @@
 const jwt = require('jsonwebtoken');
 const { findEmail } = require('../models/usersModel');
-const { INVALID_JWT } = require('../utils/errorMessages');
 const { invalidUser } = require('../utils/messages');
 const { UNAUTHORIZED } = require('../utils/statusClientErrors');
 const { secret } = require('../utils/tokenConfigs');
 
 const verifyToken = async (request, response, next) => {
   const token = request.headers.authorization;
+  // console.log(token);
 
   try {
     const payload = jwt.verify(token, secret);
@@ -20,7 +20,7 @@ const verifyToken = async (request, response, next) => {
     request.user = userWithoutPassword;
     next();
   } catch (err) {
-    return { status: UNAUTHORIZED, message: INVALID_JWT };
+    return next({ status: UNAUTHORIZED, message: err.message });
   }
 };
 
