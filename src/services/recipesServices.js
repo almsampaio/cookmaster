@@ -1,5 +1,5 @@
 const verifyRecipe = require('../auth/verifyRecipe');
-const { createRecipe } = require('../models/recipesModel');
+const { createRecipe, getAllRecipes } = require('../models/recipesModel');
 const { CREATED } = require('../utils/statusSuccess');
 
 const create = async (name, ingredients, preparation, user) => {
@@ -9,4 +9,12 @@ const create = async (name, ingredients, preparation, user) => {
   return { status: CREATED, message: response };
 };
 
-module.exports = create;
+const getAll = async () => {
+  const getRecipes = await getAllRecipes();
+  return getRecipes;
+};
+
+module.exports = {
+  create,
+  getAll,
+};
