@@ -1,5 +1,6 @@
 const verifyRecipe = require('../auth/verifyRecipe');
-const { createRecipe, getAllRecipes } = require('../models/recipesModel');
+const { createRecipe, getAllRecipes, findRecipeById } = require('../models/recipesModel');
+const { notFound } = require('../utils/messages');
 const { CREATED, STATUS_OK } = require('../utils/statusSuccess');
 
 const create = async (name, ingredients, preparation, user) => {
@@ -14,7 +15,14 @@ const getAll = async () => {
   return { status: STATUS_OK, message: getRecipes };
 };
 
+const findRecipe = async (id) => {
+  const search = await findRecipeById(id);
+  if (!search) throw notFound;
+  return search;
+};
+
 module.exports = {
   create,
   getAll,
+  findRecipe,
 };
