@@ -1,6 +1,8 @@
 const connection = require('./connection');
 
-const createRecipe = async (name, ingredients, preparation, userId) => {
+const createRecipe = async (obj, user) => {
+  const { name, ingredients, preparation } = obj;
+  const { _id: userId } = user;
   const db = await connection();
   const newRecipe = await db.collection('recipes').insertOne({
     name,
