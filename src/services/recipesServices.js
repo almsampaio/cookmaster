@@ -18,7 +18,7 @@ const getAll = async () => {
 const findRecipe = async (id) => {
   const search = await findRecipeById(id);
   if (!search) throw notFound;
-  return search;
+  return { status: STATUS_OK, message: search };
 };
 
 module.exports = {
