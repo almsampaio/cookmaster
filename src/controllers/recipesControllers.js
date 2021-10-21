@@ -1,4 +1,4 @@
-const create = require('../services/recipesServices');
+const { create, getAll } = require('../services/recipesServices');
 
 const createRecipe = async (request, response, next) => {
   try {
@@ -12,6 +12,16 @@ const createRecipe = async (request, response, next) => {
   }
 };
 
+const getAllRecipes = async (_request, response, next) => {
+  try {
+    const getRecipes = await getAll();
+    return response.status(getRecipes.status).json(getRecipes.message);
+  } catch (err) {
+    return next(err);
+  }
+};
+
 module.exports = {
   createRecipe,
+  getAllRecipes,
 };
