@@ -6,7 +6,6 @@ const createRecipe = async (request, response, next) => {
 
   try {
     const validyRecipe = await create(name, ingredients, preparation, user);
-
     return response.status(validyRecipe.status).json(validyRecipe.message);
   } catch (err) {
     return next(err);
