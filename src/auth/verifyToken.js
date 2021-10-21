@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 const { findEmail } = require('../models/usersModel');
 const { invalidUser } = require('../utils/messages');
-const { UNAUTHORIZED } = require('../utils/statusClientErrors');
+const { UNAUTHORIZED } = require('../utils/statusErrors');
 const { secret } = require('../utils/tokenConfigs');
 
 const verifyToken = async (request, response, next) => {

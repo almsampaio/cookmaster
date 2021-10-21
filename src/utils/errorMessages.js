@@ -3,6 +3,7 @@ const DUPLICITY_EMAIL = 'Email already registered';
 const FILLED_FIELDS = 'All fields must be filled';
 const INCORRECT_LOGIN = 'Incorrect username or password';
 const INVALID_USER = 'Invalid user';
+const RECIPE_FOUND = 'Recipe not found';
 
 module.exports = {
   INVALID_ENTRIES,
@@ -10,4 +11,5 @@ module.exports = {
   FILLED_FIELDS,
   INCORRECT_LOGIN,
   INVALID_USER,
+  RECIPE_FOUND,
 };
