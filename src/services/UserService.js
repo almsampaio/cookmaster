@@ -45,8 +45,16 @@ const isLoged = async (body) => {
 };
 
 const createToken = (user) => {
-  const payload = { user, role: 'user' };
-  const token = jwt.sign(payload, JWT_SECRET);
+  const jwtConfig = JSON.stringify({ alg: 'HS256', typ: 'JWT' });
+  const payload = JSON.stringify({ user, role: 'user' });
+
+  // Convertemos o header e o payload para o formato Base64, conforme manda a especificação do JWT. Quando criamos uma string em Base64 é comum ter um ou mais caracteres de = em seu final: isso ocorre porque o número de caracteres de uma string Base64 é sempre múltiplo de 4 e quando isso não acontece naturalmente a string é preenchida com iguais =. Para remove-los utilizamos um replace:. link => https://www.devmedia.com.br/como-o-jwt-funciona/40265
+  // const base64Header = Buffer.from(header).toString('base64').replace(/=/g, '');
+  // const base64Payload = Buffer.from(payload).toString('base64').replace(/=/g, '');
+  // esta solucao so funciona com crypto
+  // const data = `${base64Header}.${base64Payload}`;
+
+  const token = jwt.sign(payload, JWT_SECRET, jwtConfig);
   return token;
 };
 
